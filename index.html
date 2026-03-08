@@ -66,7 +66,7 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="font-punjabi flex flex-col min-h-screen">
+<body class="font-punjabi flex flex-col min-h-screen pb-20 md:pb-0">
 
     <!-- ਹੈਡਰ -->
     <header class="bg-punjab-blue text-white shadow-lg sticky top-0 z-50">
@@ -101,53 +101,41 @@
         <div class="fade-right"></div>
     </div>
 
-    <!-- MAIN CONTENT AREA (Dynamic Views) -->
+    <!-- MAIN CONTENT AREA -->
     <main class="flex-grow container mx-auto px-4 py-8">
 
-        <!-- ================= VIEW 1: HOME (ਮੁੱਖ ਪੰਨਾ) ================= -->
+        <!-- ================= VIEW 1: HOME ================= -->
         <div id="home-view" class="view-section active">
-            
-            <!-- ਜਮਾਤਾਂ ਦਾ ਸੈਕਸ਼ਨ (Classes Section) -->
+            <!-- ਜਮਾਤਾਂ ਦਾ ਸੈਕਸ਼ਨ -->
             <div class="mb-12">
                 <h3 class="text-3xl font-bold text-gray-800 border-b-2 border-gray-300 pb-2 mb-6 flex items-center">
                     <i class="fa-solid fa-school text-punjab-blue mr-3"></i> ਜਮਾਤਾਂ (Classes)
                 </h3>
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-                    
-                    <!-- Class 1 -->
                     <button onclick="openClass(1)" class="bg-card-1 text-white rounded-2xl p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition transform flex flex-col items-center justify-center gap-3 border-b-4 border-orange-600">
                         <i class="fa-solid fa-1 text-4xl bg-white text-card-1 rounded-full w-16 h-16 flex items-center justify-center shadow-inner"></i>
                         <span class="text-xl font-bold">ਪਹਿਲੀ ਜਮਾਤ</span>
                     </button>
-                    
-                    <!-- Class 2 -->
                     <button onclick="openClass(2)" class="bg-card-2 text-white rounded-2xl p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition transform flex flex-col items-center justify-center gap-3 border-b-4 border-blue-600">
                         <i class="fa-solid fa-2 text-4xl bg-white text-card-2 rounded-full w-16 h-16 flex items-center justify-center shadow-inner"></i>
                         <span class="text-xl font-bold">ਦੂਜੀ ਜਮਾਤ</span>
                     </button>
-
-                    <!-- Class 3 -->
                     <button onclick="openClass(3)" class="bg-card-3 text-white rounded-2xl p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition transform flex flex-col items-center justify-center gap-3 border-b-4 border-red-700">
                         <i class="fa-solid fa-3 text-4xl bg-white text-card-3 rounded-full w-16 h-16 flex items-center justify-center shadow-inner"></i>
                         <span class="text-xl font-bold">ਤੀਜੀ ਜਮਾਤ</span>
                     </button>
-
-                    <!-- Class 4 -->
                     <button onclick="openClass(4)" class="bg-card-4 text-white rounded-2xl p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition transform flex flex-col items-center justify-center gap-3 border-b-4 border-green-700">
                         <i class="fa-solid fa-4 text-4xl bg-white text-card-4 rounded-full w-16 h-16 flex items-center justify-center shadow-inner"></i>
                         <span class="text-xl font-bold">ਚੌਥੀ ਜਮਾਤ</span>
                     </button>
-
-                    <!-- Class 5 -->
                     <button onclick="openClass(5)" class="bg-card-5 text-white rounded-2xl p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition transform flex flex-col items-center justify-center gap-3 border-b-4 border-purple-800">
                         <i class="fa-solid fa-5 text-4xl bg-white text-card-5 rounded-full w-16 h-16 flex items-center justify-center shadow-inner"></i>
                         <span class="text-xl font-bold">ਪੰਜਵੀਂ ਜਮਾਤ</span>
                     </button>
-
                 </div>
             </div>
 
-            <!-- ਸਵੇਰ ਦੀ ਸਭਾ ਸੈਕਸ਼ਨ (Morning Assembly Section) -->
+            <!-- ਸਵੇਰ ਦੀ ਸਭਾ ਸੈਕਸ਼ਨ -->
             <div>
                 <div class="flex items-center justify-between border-b-2 border-gray-300 pb-2 mb-6">
                     <h3 class="text-3xl font-bold text-gray-800 flex items-center">
@@ -157,29 +145,23 @@
                         ਸਾਰੀਆਂ ਦੇਖੋ <i class="fa-solid fa-arrow-right"></i>
                     </button>
                 </div>
-                <div id="latest-assembly-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- ਜਾਵਾਸਕ੍ਰਿਪਟ ਰਾਹੀਂ ਸਿਰਫ਼ ਤਾਜ਼ਾ 2 ਕਾਰਡ ਬਣਨਗੇ -->
-                </div>
+                <div id="latest-assembly-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
             </div>
-
         </div>
 
-        <!-- ================= VIEW 2: CLASS VIEW (ਜਮਾਤ ਅੰਦਰ ਵਿਸ਼ੇ) ================= -->
+        <!-- ================= VIEW 2: CLASS VIEW ================= -->
         <div id="class-view" class="view-section">
             <div class="flex items-center justify-between mb-6 border-b-2 border-gray-300 pb-3">
                 <h2 id="class-title" class="text-3xl md:text-4xl font-extrabold text-punjab-blue"></h2>
-                <button onclick="showHome()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-bold transition flex items-center gap-2">
+                <button onclick="showHome()" class="hidden md:flex bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-bold transition items-center gap-2">
                     <i class="fa-solid fa-arrow-left"></i> ਵਾਪਸ ਮੁੱਖ ਪੰਨੇ 'ਤੇ
                 </button>
             </div>
-            
             <h3 class="text-xl text-gray-600 mb-6 font-semibold">ਵਿਸ਼ਾ ਚੁਣੋ (Select Subject):</h3>
-            <div id="subjects-grid" class="grid grid-cols-2 md:grid-cols-3 gap-6">
-                <!-- Subjects will be rendered here -->
-            </div>
+            <div id="subjects-grid" class="grid grid-cols-2 md:grid-cols-3 gap-6"></div>
         </div>
 
-        <!-- ================= VIEW 3: SUBJECT VIEW (ਵਿਸ਼ੇ ਅੰਦਰ ਅਧਿਆਇ) ================= -->
+        <!-- ================= VIEW 3: SUBJECT VIEW ================= -->
         <div id="subject-view" class="view-section">
             <div class="flex items-center justify-between mb-6 border-b-2 border-gray-300 pb-3">
                 <div>
@@ -193,23 +175,46 @@
 
             <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
                 <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">ਅਧਿਆਇ (Chapters)</h3>
-                <ul id="chapters-list" class="space-y-3">
-                    <!-- Chapters will be rendered here -->
-                </ul>
+                <ul id="chapters-list" class="space-y-3"></ul>
             </div>
         </div>
 
-        <!-- ================= VIEW 4: ALL ASSEMBLY VIEW (ਸਾਰੀਆਂ ਸਲਾਈਡਾਂ) ================= -->
+        <!-- ================= VIEW 4: ALL ASSEMBLY VIEW ================= -->
         <div id="assembly-view" class="view-section">
             <div class="flex items-center justify-between mb-6 border-b-2 border-gray-300 pb-3">
                 <h2 class="text-3xl md:text-4xl font-extrabold text-punjab-blue"><i class="fa-solid fa-sun text-punjab-orange mr-2"></i> ਸਾਰੀਆਂ ਸਵੇਰ ਦੀਆਂ ਸਲਾਈਡਾਂ</h2>
-                <button onclick="showHome()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-bold transition flex items-center gap-2">
+                <button onclick="showHome()" class="hidden md:flex bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-bold transition items-center gap-2">
                     <i class="fa-solid fa-arrow-left"></i> ਵਾਪਸ ਮੁੱਖ ਪੰਨੇ 'ਤੇ
                 </button>
             </div>
+            <div id="all-assembly-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+
+        <!-- ================= ਕਵਿੱਕ ਨੈਵੀਗੇਸ਼ਨ ਬਲਾਕ ================= -->
+        <div id="quick-nav-block" class="hidden mt-16 bg-white rounded-3xl shadow-lg border-2 border-punjab-gold p-6 md:p-8 text-center bg-opacity-90 backdrop-blur-sm">
+            <h3 class="text-xl md:text-2xl font-black text-punjab-blue mb-5">
+                <i class="fa-solid fa-hand-pointer text-punjab-orange mr-2 animate-bounce"></i> 
+                ਕੀ ਤੁਸੀਂ ਕਲਾਸ ਬਦਲਣਾ ਚਾਹੁੰਦੇ ਹੋ? ਇੱਥੇ ਹੇਠਾਂ ਟੱਚ ਕਰੋ:
+            </h3>
             
-            <div id="all-assembly-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <!-- ਸਾਰੀਆਂ ਸਲਾਈਡਾਂ ਇੱਥੇ ਆਉਣਗੀਆਂ -->
+            <div class="flex flex-wrap justify-center gap-3 mb-6">
+                <button onclick="openClass(1); window.scrollTo({top: 0, behavior: 'smooth'});" class="bg-card-1 text-white px-5 py-3 rounded-xl font-bold shadow-md hover:-translate-y-1 transition text-lg">ਪਹਿਲੀ (1)</button>
+                <button onclick="openClass(2); window.scrollTo({top: 0, behavior: 'smooth'});" class="bg-card-2 text-white px-5 py-3 rounded-xl font-bold shadow-md hover:-translate-y-1 transition text-lg">ਦੂਜੀ (2)</button>
+                <button onclick="openClass(3); window.scrollTo({top: 0, behavior: 'smooth'});" class="bg-card-3 text-white px-5 py-3 rounded-xl font-bold shadow-md hover:-translate-y-1 transition text-lg">ਤੀਜੀ (3)</button>
+                <button onclick="openClass(4); window.scrollTo({top: 0, behavior: 'smooth'});" class="bg-card-4 text-white px-5 py-3 rounded-xl font-bold shadow-md hover:-translate-y-1 transition text-lg">ਚੌਥੀ (4)</button>
+                <button onclick="openClass(5); window.scrollTo({top: 0, behavior: 'smooth'});" class="bg-card-5 text-white px-5 py-3 rounded-xl font-bold shadow-md hover:-translate-y-1 transition text-lg">ਪੰਜਵੀਂ (5)</button>
+            </div>
+            
+            <hr class="border-gray-300 my-5">
+            
+            <h4 class="text-lg font-bold text-gray-700 mb-4">ਜਾਂ ਇਹਨਾਂ 'ਤੇ ਸਿੱਧਾ ਜਾਓ:</h4>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button onclick="showHome(); window.scrollTo({top: 0, behavior: 'smooth'});" class="bg-punjab-blue text-white px-6 py-4 rounded-xl font-bold shadow-md hover:bg-blue-800 transition flex items-center justify-center gap-3 text-lg w-full sm:w-auto">
+                    <i class="fa-solid fa-house text-xl"></i> ਮੁੱਖ ਪੰਨਾ (Home)
+                </button>
+                <button onclick="openAssemblyView(); window.scrollTo({top: 0, behavior: 'smooth'});" class="bg-punjab-orange text-white px-6 py-4 rounded-xl font-bold shadow-md hover:bg-orange-600 transition flex items-center justify-center gap-3 text-lg w-full sm:w-auto">
+                    <i class="fa-solid fa-sun text-xl animate-spin-slow"></i> ਸਵੇਰ ਦੀ ਸਭਾ
+                </button>
             </div>
         </div>
 
@@ -229,7 +234,7 @@
     </div>
 
     <!-- ਫੁੱਟਰ -->
-    <footer class="bg-gray-900 text-gray-300 pt-8 pb-4">
+    <footer class="bg-gray-900 text-gray-300 pt-8 pb-8 md:pb-4">
         <div class="container mx-auto px-4 text-center">
             <h4 class="text-white text-xl font-bold mb-2">ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ</h4>
             <p class="text-sm text-gray-400 mb-4">ਇਹ ਪਲੇਟਫਾਰਮ ਅਧਿਆਪਕਾਂ ਅਤੇ ਬੱਚਿਆਂ ਦੀ ਸਹੂਲਤ ਲਈ ਇੱਕ ਨਿੱਜੀ ਉਪਰਾਲਾ ਹੈ।</p>
@@ -237,169 +242,204 @@
         </div>
     </footer>
 
+    <!-- ================= ਮੋਬਾਈਲ ਲਈ ਐਪ ਵਾਂਗ ਹੇਠਲੀ ਪੱਟੀ (Sticky Mobile Nav) ================= -->
+    <div class="md:hidden fixed bottom-0 left-0 w-full bg-white shadow-[0_-4px_10px_rgba(0,0,0,0.15)] z-[100] border-t-2 border-punjab-gold flex justify-around items-center py-2 px-1">
+        <button onclick="showHome(); window.scrollTo({top: 0, behavior: 'smooth'});" class="flex flex-col items-center text-punjab-blue hover:text-punjab-orange w-1/3">
+            <i class="fa-solid fa-house text-xl mb-1"></i>
+            <span class="text-[12px] font-bold">ਮੁੱਖ ਪੰਨਾ</span>
+        </button>
+        <button onclick="scrollToClasses()" class="flex flex-col items-center text-punjab-blue hover:text-punjab-orange w-1/3 border-l border-r border-gray-200">
+            <i class="fa-solid fa-school text-xl mb-1"></i>
+            <span class="text-[12px] font-bold">ਜਮਾਤ ਬਦਲੋ</span>
+        </button>
+        <button onclick="openAssemblyView(); window.scrollTo({top: 0, behavior: 'smooth'});" class="flex flex-col items-center text-punjab-orange hover:text-orange-700 w-1/3">
+            <i class="fa-solid fa-sun text-xl mb-1"></i>
+            <span class="text-[12px] font-bold">ਸਵੇਰ ਦੀ ਸਭਾ</span>
+        </button>
+    </div>
+
     <!-- ਡਾਟਾ ਅਤੇ ਜਾਵਾਸਕ੍ਰਿਪਟ ਲੌਜਿਕ -->
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        // ---------------- 1. ਸਵੇਰ ਦੀ ਸਭਾ ਦਾ ਡਾਟਾ ----------------
         const assemblySlides = [
             { dateId: "09-03-2026", displayDate: "09 ਮਾਰਚ 2026", day: "ਸੋਮਵਾਰ" },
             { dateId: "8-3-2026", displayDate: "08 ਮਾਰਚ 2026", day: "ਐਤਵਾਰ" },
             { dateId: "07-03-2026", displayDate: "07 ਮਾਰਚ 2026", day: "ਸ਼ਨੀਵਾਰ" },
-            { dateId: "06-03-2026", displayDate: "06 ਮਾਰਚ 2026", day: "ਸ਼ੁੱਕਰਵਾਰ" },
-            { dateId: "05-03-2026", displayDate: "05 ਮਾਰਚ 2026", day: "ਬੁੱਧਵਾਰ" }
+            { dateId: "06-03-2026", displayDate: "06 ਮਾਰਚ 2026", day: "ਸ਼ੁੱਕਰਵਾਰ" }
         ];
 
-        // ---------------- 2. ਜਮਾਤਾਂ ਅਤੇ ਵਿਸ਼ਿਆਂ ਦਾ ਡਾਟਾ ----------------
+        // ---------------- ਜਮਾਤਾਂ, ਵਿਸ਼ਿਆਂ ਅਤੇ ਚੈਪਟਰਾਂ ਦਾ ਡਾਟਾ (1 ਤੋਂ 5 ਜਮਾਤਾਂ) ----------------
         const schoolData = {
             1: { 
                 name: "ਪਹਿਲੀ ਜਮਾਤ (Class 1)", 
                 subjects: [
-                    { id: "punjabi", name: "ਪੰਜਾਬੀ", icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" },
-                    { id: "math", name: "ਗਣਿਤ (Math)", icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" },
-                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" }
+                    { id: "punjabi", name: "ਪੰਜਾਬੀ", code: "P", chapters: ["ਪੰਜਾਬੀ ਵਰਣਮਾਲਾ (ੳ ਤੋਂ ੜ)", "ਮੁਕਤਾ (ਬਿਨਾਂ ਮਾਤਰਾ ਵਾਲੇ ਸ਼ਬਦ)", "ਕੰਨਾ (ਾ) ਦੀ ਮਾਤਰਾ", "ਸਿਹਾਰੀ (ਿ) ਦੀ ਮਾਤਰਾ", "ਬਿਹਾਰੀ (ੀ) ਦੀ ਮਾਤਰਾ", "ਔਂਕੜ (ੁ) ਦੀ ਮਾਤਰਾ", "ਦੁਲੈਂਕੜ (ੂ) ਦੀ ਮਾਤਰਾ", "ਲਾਂ (ੇ) ਦੀ ਮਾਤਰਾ", "ਦੁਲਾਵਾਂ (ੈ) ਦੀ ਮਾਤਰਾ", "ਹੋੜਾ (ੋ) ਦੀ ਮਾਤਰਾ", "ਕਨੌੜਾ (ੌ) ਦੀ ਮਾਤਰਾ", "ਬਿੰਦੀ, ਟਿੱਪੀ ਅਤੇ ਅੱਧਕ"], icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" },
+                    { id: "math", name: "ਗਣਿਤ (Math)", code: "M", chapters: ["ਆਕਾਰ ਅਤੇ ਸਥਾਨ", "1 ਤੋਂ 9 ਤੱਕ ਸੰਖਿਆਵਾਂ", "ਜੋੜ", "ਘਟਾਓ", "10 ਤੋਂ 20 ਤੱਕ ਸੰਖਿਆਵਾਂ", "ਸਮਾਂ", "ਮਾਪ", "21 ਤੋਂ 99 ਤੱਕ ਸੰਖਿਆਵਾਂ", "ਡਾਟਾ ਹੈਂਡਲਿੰਗ"], icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" },
+                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", code: "E", chapters: ["Let's Learn Alphabets (A to Z)", "Myself and My Family", "Parts of the Body", "Colours Around Us", "Animals and Birds", "Fruits and Vegetables", "Numbers (1 to 10)", "Action Words", "Good Habits", "Rhymes / Poems"], icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" }
                 ]
             },
             2: { 
                 name: "ਦੂਜੀ ਜਮਾਤ (Class 2)", 
                 subjects: [
-                    { id: "punjabi", name: "ਪੰਜਾਬੀ", icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" },
-                    { id: "math", name: "ਗਣਿਤ (Math)", icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" },
-                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" }
+                    { id: "punjabi", name: "ਪੰਜਾਬੀ", code: "P", chapters: ["ਸਾਡਾ ਤਿਰੰਗਾ (ਕਵਿਤਾ)", "ਚਿੜੀਆ ਘਰ ਦੀ ਸੈਰ", "ਮਾਤਾ ਗੁਜਰੀ ਜੀ", "ਸਿਆਣੀ ਗੱਲ", "ਮੇਰਾ ਪੰਜਾਬ (ਕਵਿਤਾ)", "ਚੰਗੀ ਆਦਤ", "ਸ਼ੇਰ ਅਤੇ ਚੂਹੀ", "ਬਾਤਾਂ ਪਾਈਏ", "ਸਾਡੀ ਧਰਤੀ", "ਰੰਗਾਂ ਦੀ ਦੁਨੀਆ"], icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" },
+                    { id: "math", name: "ਗਣਿਤ (Math)", code: "M", chapters: ["1 ਤੋਂ 99 ਤੱਕ ਸੰਖਿਆਵਾਂ", "ਜੋੜ (100 ਤੱਕ)", "ਘਟਾਓ (100 ਤੱਕ)", "ਗੁਣਾ (Multiplication)", "ਭਾਗ (Division)", "ਪੈਸਾ (Money)", "ਮਾਪ (Measurement)", "ਆਕਾਰ ਅਤੇ ਪੈਟਰਨ", "ਸਮਾਂ (Time)", "ਡਾਟਾ ਹੈਂਡਲਿੰਗ"], icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" },
+                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", code: "E", chapters: ["Let's Revise", "My Family", "Parts of My Body", "Days of the Week", "Months of the Year", "My Classroom", "Animals and their Babies", "Opposites", "Action Words", "Simple Sentences"], icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" }
                 ]
             },
             3: { 
                 name: "ਤੀਜੀ ਜਮਾਤ (Class 3)", 
                 subjects: [
-                    { id: "punjabi", name: "ਪੰਜਾਬੀ", icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" },
-                    { id: "math", name: "ਗਣਿਤ (Math)", icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" },
-                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" },
-                    { id: "evs", name: "ਵਾਤਾਵਰਨ (EVS)", icon: "fa-leaf", color: "bg-green-100 text-green-700 border-green-300 hover:bg-green-600 hover:text-white" }
-                ]
+                    { id: "punjabi", name: "ਪੰਜਾਬੀ", code: "P", chapters: ["ਸਾਡਾ ਦੇਸ਼ (ਕਵਿਤਾ)", "ਦਰੱਖਤ ਦੀ ਗਵਾਹੀ", "ਮਾਤਾ ਗੰਗਾ ਜੀ", "ਬਿੱਲੀ ਨੇ ਰੱਖੇ ਕੁੱਤੇ", "ਵੱਡਾ ਕੌਣ", "ਈਮਾਨਦਾਰੀ", "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", "ਮਿਹਨਤ ਦਾ ਫਲ", "ਬੱਦਲ (ਕਵਿਤਾ)", "ਸ੍ਰੀ ਹਰਿਮੰਦਰ ਸਾਹਿਬ"], icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" }, 
+                    { id: "math", name: "ਗਣਿਤ (Math)", code: "M", chapters: ["ਸੰਖਿਆਵਾਂ", "ਜੋੜ-ਘਟਾਓ", "ਗੁਣਾ", "ਭਾਗ", "ਰੁਪਏ-ਪੈਸੇ", "ਆਕਾਰ", "ਭਿੰਨਾਂ", "ਮਾਪ", "ਸਮਾਂ", "ਅੰਕੜਾ ਵਿਗਿਆਨ"], icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" }, 
+                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", code: "E", chapters: ["Me and My Family", "The Clock", "The Magic Box", "The Fox and the Grapes", "A Visit to a Park", "Our National Flag", "The Honest Woodcutter", "Traffic Rules", "Festivals", "The Peacock"], icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" }, 
+                    { id: "evs", name: "ਵਾਤਾਵਰਨ (EVS)", code: "EV", chapters: ["ਮੇਰਾ ਪਰਿਵਾਰ", "ਸਾਡੇ ਆਲੇ-ਦੁਆਲੇ ਦੇ ਪੌਦੇ", "ਸਾਡੇ ਆਲੇ-ਦੁਆਲੇ ਦੇ ਜਾਨਵਰ", "ਸਾਡਾ ਭੋਜਨ", "ਪਾਣੀ", "ਘਰ ਅਤੇ ਪਹਿਰਾਵਾ", "ਆਵਾਜਾਈ ਦੇ ਸਾਧਨ", "ਸੰਚਾਰ ਦੇ ਸਾਧਨ", "ਦਿਸ਼ਾਵਾਂ", "ਮੌਸਮ ਅਤੇ ਰੁੱਤਾਂ"], icon: "fa-leaf", color: "bg-green-100 text-green-700 border-green-300 hover:bg-green-600 hover:text-white" }
+                ] 
             },
             4: { 
                 name: "ਚੌਥੀ ਜਮਾਤ (Class 4)", 
                 subjects: [
-                    { id: "punjabi", name: "ਪੰਜਾਬੀ", icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" },
-                    { id: "math", name: "ਗਣਿਤ (Math)", icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" },
-                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" },
-                    { id: "evs", name: "ਵਾਤਾਵਰਨ (EVS)", icon: "fa-leaf", color: "bg-green-100 text-green-700 border-green-300 hover:bg-green-600 hover:text-white" },
-                    { id: "hindi", name: "ਹਿੰਦੀ (Hindi)", icon: "fa-om", color: "bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-600 hover:text-white" }
-                ]
+                    { id: "punjabi", name: "ਪੰਜਾਬੀ", code: "P", chapters: ["ਪ੍ਰਾਰਥਨਾ (ਕਵਿਤਾ)", "ਮੇਰਾ ਪਿੰਡ", "ਮਹਾਤਮਾ ਗਾਂਧੀ", "ਸਾਡਾ ਪੰਜਾਬ", "ਰੁੱਖਾਂ ਦੀ ਮਹੱਤਤਾ", "ਬਾਲ ਮੇਲਾ", "ਕੰਪਿਊਟਰ", "ਸ਼ੇਰ ਅਤੇ ਖਰਗੋਸ਼", "ਤਿਉਹਾਰ", "ਸਿਆਣਾ ਕਾਂ"], icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" }, 
+                    { id: "math", name: "ਗਣਿਤ (Math)", code: "M", chapters: ["ਸੰਖਿਆਵਾਂ", "ਜੋੜ ਅਤੇ ਘਟਾਓ", "ਗੁਣਾ", "ਭਾਗ", "ਧਨ (ਰੁਪਏ-ਪੈਸੇ)", "ਮਾਪ", "ਆਕਾਰ ਅਤੇ ਕੋਣ", "ਪੈਟਰਨ", "ਭਿੰਨਾਂ", "ਅੰਕੜਾ ਵਿਗਿਆਨ"], icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" }, 
+                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", code: "E", chapters: ["The King and His Sons", "The Farmer and the Bullock Cart", "Safety Rules", "A Visit to a Historical Place", "The Environment", "Health is Wealth", "A Friend in Need", "Pronouns and Nouns", "Good Manners", "Seasons"], icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" }, 
+                    { id: "evs", name: "ਵਾਤਾਵਰਨ (EVS)", code: "EV", chapters: ["ਸਾਡਾ ਪਰਿਵਾਰ", "ਖੇਡਾਂ ਅਤੇ ਸਿਹਤ", "ਸਾਡਾ ਭੋਜਨ", "ਸਾਡੇ ਆਵਾਸ", "ਪੌਦੇ ਅਤੇ ਜੰਤੂ", "ਪਾਣੀ ਦੀ ਸੰਭਾਲ", "ਹਵਾ ਅਤੇ ਪ੍ਰਦੂਸ਼ਣ", "ਆਵਾਜਾਈ ਦੇ ਸਾਧਨ", "ਸੰਚਾਰ ਦੇ ਸਾਧਨ", "ਧਰਤੀ ਅਤੇ ਆਕਾਸ਼"], icon: "fa-leaf", color: "bg-green-100 text-green-700 border-green-300 hover:bg-green-600 hover:text-white" }, 
+                    { id: "hindi", name: "ਹਿੰਦੀ (Hindi)", code: "H", chapters: ["वर्णमाला (ਵਰਣਮਾਲਾ)", "मात्राएँ (ਮਾਤਰਾਵਾਂ)", "प्रार्थना (ਪ੍ਰਾਰਥਨਾ)", "मेरा घर (ਮੇਰਾ ਘਰ)", "मेले की सैर (ਮੇਲੇ की ਸੈਰ)", "पेड़ हमारे मित्र (ਰੁੱਖ ਸਾਡੇ ਮਿੱਤਰ)", "तिरंगा (ਤਿਰੰਗਾ)", "मेरा भारत (ਮੇਰਾ ਭਾਰਤ)", "गिनती (ਗਿਣਤੀ)", "अच्छी आदतें (ਚੰਗੀਆਂ ਆਦਤਾਂ)"], icon: "fa-om", color: "bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-600 hover:text-white" }
+                ] 
             },
             5: { 
                 name: "ਪੰਜਵੀਂ ਜਮਾਤ (Class 5)", 
                 subjects: [
-                    { id: "punjabi", name: "ਪੰਜਾਬੀ", icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" },
-                    { id: "math", name: "ਗਣਿਤ (Math)", icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" },
-                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" },
-                    { id: "evs", name: "ਵਾਤਾਵਰਨ (EVS)", icon: "fa-leaf", color: "bg-green-100 text-green-700 border-green-300 hover:bg-green-600 hover:text-white" },
-                    { id: "hindi", name: "ਹਿੰਦੀ (Hindi)", icon: "fa-om", color: "bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-600 hover:text-white" }
-                ]
+                    { id: "punjabi", name: "ਪੰਜਾਬੀ", code: "P", chapters: ["ਮੇਰਾ ਹਿੰਦੁਸਤਾਨ", "ਗਤਕਾ", "ਬਾਰਾਂਮਾਂਹ", "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", "ਸਿਆਣੀ ਗੱਲ", "ਆਸਮਾਨ ਦੀਆਂ ਪਰੀਆਂ", "ਦਾਦੀ ਮਾਂ", "ਚਿੜੀਆ ਘਰ", "ਮੁਹਾਰਨੀ", "ਦੁਸਹਿਰਾ", "ਅਨੋਖਾ ਤੋਹਫ਼ਾ", "ਮਿੱਤਰ ਦੀ ਪਛਾਣ", "ਰੁੱਖਾਂ ਦੀ ਮਹੱਤਤਾ"], icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" }, 
+                    { id: "math", name: "ਗਣਿਤ (Math)", code: "M", chapters: ["ਸੰਖਿਆਵਾਂ", "ਸੰਖਿਆਵਾਂ 'ਤੇ ਮੂਲ ਕਿਰਿਆਵਾਂ", "ਮਹੱਤਮ ਸਮਾਪਵਰਤਕ ਅਤੇ ਲਘੂਤਮ ਸਮਾਪਵਰਤਯ", "ਹਿੱਸੇ ਅਤੇ ਪੂਰਨ (Fractions)", "ਦਸ਼ਮਲਵ (Decimals)", "ਮਾਪ (Measurement)", "ਜਮਾਇਤੀ (Geometry)", "ਘੇਰਾ ਅਤੇ ਖੇਤਰਫਲ", "ਆਇਤਨ (Volume)", "ਅੰਕੜਾ ਵਿਗਿਆਨ"], icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" }, 
+                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", code: "E", chapters: ["The Elves and the Shoemaker", "Two Frogs", "Child and Grandma", "The Flying Sikh : Milkha Singh", "Raja Birbal", "Bank of Our Village", "Global Warming", "A Glimpse from History", "Safe Circle"], icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" }, 
+                    { id: "evs", name: "ਵਾਤਾਵਰਨ (EVS)", code: "EV", chapters: ["ਬਦਲਦੇ ਪਰਿਵਾਰਕ ਰੁਝਾਨ", "ਪਰਵਾਸ ਦੇ ਪ੍ਰਭਾਵ", "ਖੇਡਾਂ", "ਬਾਗਾਂ ਦਾ ਰਾਖਾ : ਮਾਲੀ", "ਜੰਤੂਆਂ ਦੇ ਭੋਜਨ ਬਾਰੇ ਜਾਣੀਏ", "ਬੀਜ ਦਾ ਸਫ਼ਰ", "ਕਿੱਤੇ ਅਤੇ ਕਿਰਤੀ", "ਖਾਣੇ ਤੋਂ ਪਚਾਉਣ ਤੱਕ", "ਜੰਗਲ ਅਤੇ ਜੀਵਨ", "ਭੋਜਨ ਅਤੇ ਸਿਹਤ", "ਆਵਾਸ ਬਾਰੇ ਜਾਣੀਏ", "ਪਾਣੀ ਦੇ ਸੋਮੇ", "ਸਾਡੇ ਕੌਮੀ ਚਿੰਨ੍ਹ"], icon: "fa-leaf", color: "bg-green-100 text-green-700 border-green-300 hover:bg-green-600 hover:text-white" }, 
+                    { id: "hindi", name: "ਹਿੰਦੀ (Hindi)", code: "H", chapters: ["जय हिन्द (ਕਵਿਤਾ)", "सच्चा मित्र (ਕਹਾਣੀ)", "मेहनत का फल", "त्योहारों का देश", "हमारा राष्ट्रीय झंडा", "स्वच्छता (ਸਫ਼ਾਈ)", "पेड़ लगाओ", "मेरा प्यारा गाँव", "अच्छे बच्चे", "समय का मोल"], icon: "fa-om", color: "bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-600 hover:text-white" }
+                ] 
             }
         };
 
-        // ---------------- ਫੰਕਸ਼ਨਜ਼ (UI Logic) ----------------
+        // ---------------- ਫੰਕਸ਼ਨਜ਼ ----------------
 
-        // ਸਵੇਰ ਦੀ ਸਭਾ ਕਾਰਡ ਬਣਾਓ (ਨਵਾਂ ਲੌਜਿਕ: 2 ਕਾਰਡ ਮੇਨ ਸਕ੍ਰੀਨ 'ਤੇ, ਬਾਕੀ ਅੰਦਰ)
         function renderAssemblySlides() {
             const latestGrid = document.getElementById('latest-assembly-grid');
             const allGrid = document.getElementById('all-assembly-grid');
-            let latestHtml = '';
-            let allHtml = '';
+            let latestHtml = '', allHtml = '';
 
             assemblySlides.forEach((slide, index) => {
                 const isNew = index === 0 ? `<span class="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">ਨਵਾਂ</span>` : '';
                 const cardHtml = `
-                    <a href="${slide.dateId}.html" class="block relative bg-white rounded-xl shadow border border-gray-200 p-5 hover:shadow-xl hover:border-punjab-blue transition transform hover:-translate-y-1">
+                    <a href="${slide.dateId}.html" target="_blank" class="block relative bg-white rounded-xl shadow border border-gray-200 p-5 hover:shadow-xl hover:border-punjab-blue transition transform hover:-translate-y-1">
                         ${isNew}
                         <div class="flex items-center mb-2">
                             <i class="fa-regular fa-calendar-check text-punjab-orange text-xl mr-2"></i>
                             <span class="font-bold text-gray-800 text-lg">${slide.displayDate}</span>
                         </div>
-                        <p class="text-gray-500 text-sm mb-4">${slide.day}</p>
-                        <div class="text-punjab-blue font-bold flex items-center">
-                            <i class="fa-solid fa-play-circle mr-2"></i> ਸਲਾਈਡ ਚਲਾਓ
-                        </div>
+                        <p class="text-sm text-gray-600 mt-2 font-semibold">ਦਿਨ: <span class="text-punjab-blue">${slide.day}</span></p>
                     </a>`;
-                
-                // ਸਾਰੀਆਂ ਸਲਾਈਡਾਂ ਦੀ ਲਿਸਟ ਵਿੱਚ ਐਡ ਕਰੋ
+                if (index < 2) latestHtml += cardHtml;
                 allHtml += cardHtml;
-                
-                // ਮੁੱਖ ਪੰਨੇ ਲਈ ਸਿਰਫ਼ ਪਹਿਲੀਆਂ 2 ਸਲਾਈਡਾਂ
-                if(index < 2) {
-                    latestHtml += cardHtml;
-                }
             });
 
-            if(latestGrid) latestGrid.innerHTML = latestHtml;
-            if(allGrid) allGrid.innerHTML = allHtml;
+            if (latestGrid) latestGrid.innerHTML = latestHtml;
+            if (allGrid) allGrid.innerHTML = allHtml;
         }
 
-        // Views ਛੁਪਾਉਣਾ/ਦਿਖਾਉਣਾ
-        function hideAllViews() {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+        function toggleQuickNav(show) {
+            const quickNav = document.getElementById('quick-nav-block');
+            if(show) {
+                quickNav.classList.remove('hidden');
+            } else {
+                quickNav.classList.add('hidden');
+            }
+        }
+
+        function scrollToClasses() {
+            const homeView = document.getElementById('home-view');
+            if(homeView.classList.contains('active')) {
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            } else {
+                document.getElementById('quick-nav-block').scrollIntoView({behavior: 'smooth'});
+            }
         }
 
         function showHome() {
-            hideAllViews();
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById('home-view').classList.add('active');
-            window.scrollTo(0,0);
+            toggleQuickNav(false);
         }
 
         function openAssemblyView() {
-            hideAllViews();
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById('assembly-view').classList.add('active');
-            window.scrollTo(0,0);
+            renderAssemblySlides();
+            toggleQuickNav(true);
         }
 
         function openClass(classId) {
-            hideAllViews();
-            const classInfo = schoolData[classId];
-            document.getElementById('class-title').innerHTML = `<i class="fa-solid fa-chalkboard-user mr-2"></i> ${classInfo.name}`;
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+            document.getElementById('class-view').classList.add('active');
             
+            const classInfo = schoolData[classId];
+            document.getElementById('class-title').textContent = classInfo.name;
+            
+            const subjectsGrid = document.getElementById('subjects-grid');
             let subjectsHtml = '';
-            classInfo.subjects.forEach(sub => {
+            
+            classInfo.subjects.forEach(subject => {
                 subjectsHtml += `
-                    <div onclick="openSubject(${classId}, '${sub.id}', '${sub.name}')" class="cursor-pointer border-2 rounded-2xl p-6 flex flex-col items-center justify-center gap-4 transition transform hover:scale-105 shadow-sm hover:shadow-md ${sub.color}">
-                        <i class="fa-solid ${sub.icon} text-4xl"></i>
-                        <span class="text-xl font-bold">${sub.name}</span>
-                    </div>
+                    <button onclick="openSubject(${classId}, '${subject.id}')" class="${subject.color} rounded-2xl p-6 shadow-sm border hover:shadow-md transition transform hover:-translate-y-1 flex flex-col items-center justify-center gap-3">
+                        <i class="fa-solid ${subject.icon} text-4xl"></i>
+                        <span class="text-xl font-bold">${subject.name}</span>
+                    </button>
                 `;
             });
-            document.getElementById('subjects-grid').innerHTML = subjectsHtml;
-            document.getElementById('class-view').classList.add('active');
-            window.scrollTo(0,0);
+            subjectsGrid.innerHTML = subjectsHtml;
+            toggleQuickNav(true);
         }
 
-        function openSubject(classId, subjectId, subjectName) {
-            hideAllViews();
-            const className = schoolData[classId].name;
-            
-            document.getElementById('breadcrumb-class').textContent = className;
-            document.getElementById('subject-title').textContent = subjectName;
-            
-            document.getElementById('back-to-class-btn').onclick = function() { openClass(classId); };
-
-            // ਇੱਥੇ ਤੁਸੀਂ ਅਧਿਆਇ (Chapters) ਦੇ ਲਿੰਕ ਪਾ ਸਕਦੇ ਹੋ
-            let chaptersHtml = `
-                <a href="#" class="block p-4 border border-gray-200 rounded-lg hover:bg-blue-50 transition flex justify-between items-center">
-                    <span class="font-bold text-lg text-gray-800">ਅਧਿਆਇ 1 (Chapter 1)</span>
-                    <span class="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded">ਜਲਦੀ ਆ ਰਿਹਾ ਹੈ</span>
-                </a>
-                <a href="#" class="block p-4 border border-gray-200 rounded-lg hover:bg-blue-50 transition flex justify-between items-center">
-                    <span class="font-bold text-lg text-gray-800">ਅਧਿਆਇ 2 (Chapter 2)</span>
-                    <span class="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded">ਜਲਦੀ ਆ ਰਿਹਾ ਹੈ</span>
-                </a>
-            `;
-            
-            document.getElementById('chapters-list').innerHTML = chaptersHtml;
+        function openSubject(classId, subjectId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById('subject-view').classList.add('active');
-            window.scrollTo(0,0);
+            
+            const classInfo = schoolData[classId];
+            const subject = classInfo.subjects.find(s => s.id === subjectId);
+            
+            document.getElementById('breadcrumb-class').textContent = classInfo.name;
+            document.getElementById('subject-title').textContent = subject.name;
+            
+            document.getElementById('back-to-class-btn').onclick = function() {
+                document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+                document.getElementById('class-view').classList.add('active');
+            };
+            
+            const chaptersList = document.getElementById('chapters-list');
+            let chaptersHtml = '';
+            
+            const subjectChapters = subject.chapters;
+            const isArray = Array.isArray(subjectChapters);
+            const totalChapters = isArray ? subjectChapters.length : subjectChapters;
+
+            for(let i = 1; i <= totalChapters; i++) {
+                const chapterTitle = isArray ? `ਪਾਠ ${i}: ${subjectChapters[i-1]}` : `ਅਧਿਆਇ ${i}`;
+                const fileName = `ਪਾਠ/${classId}-${subject.code}-${i}.html`;
+                
+                chaptersHtml += `
+                    <li class="p-4 border rounded-lg bg-gray-50 flex flex-col md:flex-row justify-between md:items-center hover:bg-blue-50 transition gap-3">
+                        <span class="font-bold text-lg text-gray-800">${chapterTitle}</span>
+                        <a href="${fileName}" target="_blank" class="bg-punjab-blue text-white px-5 py-2 rounded-lg hover:bg-blue-800 text-sm shadow inline-flex items-center justify-center md:w-auto w-full">
+                            Read (ਪੜ੍ਹੋ) <i class="fa-solid fa-book-open ml-2"></i>
+                        </a>
+                    </li>
+                `;
+            }
+
+            chaptersList.innerHTML = chaptersHtml;
+            toggleQuickNav(true);
         }
 
-        // ਪੇਜ ਲੋਡ ਹੋਣ ਤੇ ਸਵੇਰ ਦੀ ਸਭਾ ਲੋਡ ਕਰੋ
-        document.addEventListener('DOMContentLoaded', renderAssemblySlides);
+        window.onload = () => { renderAssemblySlides(); };
     </script>
 </body>
 </html>
+
+
