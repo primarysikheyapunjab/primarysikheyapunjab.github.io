@@ -127,6 +127,12 @@
         <div id="border-frame"></div>
         <div id="playback-status">Paused</div>
 
+        <!-- ਫੁੱਲ ਸਕਰੀਨ ਬਟਨ -->
+        <button onclick="toggleFullScreen(event)" class="absolute top-2 right-2 bg-white/20 hover:bg-white/40 text-white rounded-full p-1.5 md:px-3 py-1 transition flex items-center gap-1 z-50 border border-white/40 shadow-sm backdrop-blur-sm" style="position: absolute; top: 15px; left: 15px; z-index: 50000; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; padding: 6px 15px; color: white; cursor: pointer; backdrop-filter: blur(4px); display: flex; align-items: center; gap: 8px;">
+            <span class="text-sm">🔲</span> 
+            <span class="hidden md:inline text-xs font-bold" style="font-size: 14px;">ਪੂਰੀ ਸਕਰੀਨ</span>
+        </button>
+
         <div id="start-overlay" onclick="startProduction(event)">
             <div id="init-box" style="text-align: center;">
                 <p style="font-size: 4vmin; margin-bottom: 30px;">ਸਕ੍ਰੀਨ ਰਿਕਾਰਡਰ (ਲੈਂਡਸਕੇਪ) ਚਾਲੂ ਕਰੋ</p>
@@ -152,6 +158,24 @@
     const player = new Audio();
     let isPaused = false;
     let currentIdx = 0;
+
+    // ਫੁੱਲ ਸਕਰੀਨ ਕਰਨ ਵਾਲਾ ਫੰਕਸ਼ਨ
+    function forceFullScreen() { 
+        try { 
+            if (!document.fullscreenElement) { 
+                if (document.documentElement.requestFullscreen) {
+                    document.documentElement.requestFullscreen(); 
+                } else if (document.documentElement.webkitRequestFullscreen) {
+                    document.documentElement.webkitRequestFullscreen(); // Safari/iOS ਲਈ
+                } 
+            } 
+        } catch (e) {} 
+    }
+
+    function toggleFullScreen(event) { 
+        if(event) event.stopPropagation(); // ਇਸ ਨਾਲ ਬਟਨ ਦਬਾਉਣ 'ਤੇ ਵੀਡੀਓ Pause ਨਹੀਂ ਹੋਵੇਗੀ
+        forceFullScreen();
+    }
 
     // --- 09 ਮਾਰਚ ਦਾ ਮੁਕੰਮਲ ਡਾਟਾ (ਪੂਰੇ ਵਾਕਾਂ ਵਿੱਚ ਉੱਤਰ) ---
     const slideSteps = [
@@ -371,5 +395,4 @@
 </script>
 </body>
 </html>
-
 
