@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ਸਵੇਰ ਦੀ ਸਭਾ - ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ</title>
-    <!-- Tailwind CSS ਫ੍ਰੇਮਵਰਕ (ਡਿਜ਼ਾਈਨ ਲਈ) -->
+    <title>ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ - ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome (ਆਈਕਨਾਂ ਲਈ) -->
+    <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <!-- ਗੁਰਮੁਖੀ ਫੋਂਟ -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gurmukhi:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -15,272 +15,305 @@
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        'punjabi': ['"Noto Sans Gurmukhi"', 'sans-serif'],
-                    },
+                    fontFamily: { 'punjabi': ['"Noto Sans Gurmukhi"', 'sans-serif'] },
                     colors: {
-                        'punjab-blue': '#003366',
-                        'punjab-gold': '#FFD700',
-                        'punjab-orange': '#FF8C00'
+                        'punjab-blue': '#003366', 'punjab-gold': '#FFD700', 'punjab-orange': '#FF8C00',
+                        'card-1': '#FF9F43', 'card-2': '#0abde3', 'card-3': '#ee5253', 'card-4': '#10ac84', 'card-5': '#5f27cd'
                     }
                 }
             }
         }
     </script>
     <style>
-        body { font-family: 'Noto Sans Gurmukhi', sans-serif; background-color: #f8fafc; }
+        body { font-family: 'Noto Sans Gurmukhi', sans-serif; background-color: #f0f4f8; }
         .hero-pattern {
             background-color: #003366;
             background-image: radial-gradient(#ffffff 1px, transparent 1px);
-            background-size: 20px 20px;
-            background-position: 0 0, 10px 10px;
-            background-opacity: 0.1;
+            background-size: 20px 20px; background-opacity: 0.1;
         }
-        /* Smooth scrolling */
-        html { scroll-behavior: smooth; }
-
-        /* --- ਫਲੋਟਿੰਗ (Scrolling) ਟੈਗਲਾਈਨ ਲਈ ਡਿਜ਼ਾਈਨ --- */
-        @keyframes scroll-text {
-            0% { transform: translateX(100vw); }
-            100% { transform: translateX(-100%); }
-        }
+        /* ਫਲੋਟਿੰਗ ਟੈਗਲਾਈਨ (Top) */
+        @keyframes scroll-text { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
         .scrolling-container {
-            width: 100%;
-            overflow: hidden;
-            white-space: nowrap;
+            width: 100%; overflow: hidden; white-space: nowrap;
             background: linear-gradient(90deg, #c59b08, #FFD700, #c59b08);
-            border-top: 2px solid #8b6508;
-            border-bottom: 2px solid #8b6508;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            position: relative;
-            padding: 10px 0;
-            display: flex;
-            align-items: center;
+            border-top: 2px solid #8b6508; border-bottom: 2px solid #8b6508;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15); position: relative; padding: 10px 0; display: flex; align-items: center;
         }
         .scrolling-text {
-            display: inline-block;
-            animation: scroll-text 22s linear infinite;
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: #002244;
-            text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+            display: inline-block; animation: scroll-text 25s linear infinite;
+            font-size: 1.1rem; font-weight: 800; color: #002244; text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
         }
-        .scrolling-text:hover {
-            animation-play-state: paused;
+        .fade-left { position: absolute; top: 0; left: 0; height: 100%; width: 40px; background: linear-gradient(to right, #b8860b, transparent); z-index: 2; }
+        .fade-right { position: absolute; top: 0; right: 0; height: 100%; width: 40px; background: linear-gradient(to left, #b8860b, transparent); z-index: 2; }
+        
+        /* ਫਲੋਟਿੰਗ ਟੈਗਲਾਈਨ (Bottom) */
+        .bottom-scrolling-container {
+            width: 100%; overflow: hidden; white-space: nowrap;
+            background: #001a33;
+            border-top: 2px solid #FFD700; border-bottom: 2px solid #FFD700;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.15); position: relative; padding: 8px 0; display: flex; align-items: center;
         }
-        /* ਕਿਨਾਰਿਆਂ ਦਾ ਸੁੰਦਰ ਡਿਜ਼ਾਈਨ */
-        .fade-left {
-            position: absolute; top: 0; left: 0; height: 100%; width: 40px;
-            background: linear-gradient(to right, #b8860b, transparent); z-index: 2;
+        .bottom-scrolling-text {
+            display: inline-block; animation: scroll-text 20s linear infinite;
+            font-size: 1.1rem; font-weight: 700; color: #FFD700; letter-spacing: 0.5px;
         }
-        .fade-right {
-            position: absolute; top: 0; right: 0; height: 100%; width: 40px;
-            background: linear-gradient(to left, #b8860b, transparent); z-index: 2;
-        }
+        .fade-left-bottom { position: absolute; top: 0; left: 0; height: 100%; width: 40px; background: linear-gradient(to right, #001a33, transparent); z-index: 2; }
+        .fade-right-bottom { position: absolute; top: 0; right: 0; height: 100%; width: 40px; background: linear-gradient(to left, #001a33, transparent); z-index: 2; }
+
+        /* Smooth View Transitions */
+        .view-section { display: none; animation: fadeIn 0.4s ease-in-out; }
+        .view-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body class="font-punjabi flex flex-col min-h-screen">
 
-    <!-- ਹੈਡਰ (Header) -->
+    <!-- ਹੈਡਰ -->
     <header class="bg-punjab-blue text-white shadow-lg sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <!-- ਲੋਗੋ ਆਈਕਨ -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showHome()">
                 <div class="bg-white text-punjab-blue p-2 rounded-full w-12 h-12 flex items-center justify-center text-2xl shadow-inner">
                     <i class="fa-solid fa-graduation-cap"></i>
                 </div>
                 <div>
-                    <h1 class="text-2xl font-bold text-punjab-gold leading-tight">ਸਵੇਰ ਦੀ ਸਭਾ</h1>
-                    <p class="text-xs text-blue-200">ਅਧਿਆਪਕਾਂ ਅਤੇ ਬੱਚਿਆਂ ਲਈ ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ</p>
+                    <h1 class="text-2xl font-bold text-punjab-gold leading-tight">ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ</h1>
+                    <p class="text-xs text-blue-200">ਬੱਚਿਆਂ ਅਤੇ ਅਧਿਆਪਕਾਂ ਲਈ ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ</p>
                 </div>
             </div>
             <nav class="hidden md:flex gap-6 font-semibold">
-                <a href="#" class="hover:text-punjab-gold transition"><i class="fa-solid fa-house mr-1"></i> ਮੁੱਖ ਪੰਨਾ</a>
-                <a href="#daily-slides" class="hover:text-punjab-gold transition"><i class="fa-solid fa-chalkboard-user mr-1"></i> ਰੋਜ਼ਾਨਾ ਸਲਾਈਡਾਂ</a>
-                <a href="#about" class="hover:text-punjab-gold transition"><i class="fa-solid fa-circle-info mr-1"></i> ਸਾਡੇ ਬਾਰੇ</a>
+                <button onclick="showHome()" class="hover:text-punjab-gold transition"><i class="fa-solid fa-house mr-1"></i> ਮੁੱਖ ਪੰਨਾ</button>
             </nav>
-            <!-- ਮੋਬਾਈਲ ਮੀਨੂ ਬਟਨ -->
-            <button class="md:hidden text-2xl text-white hover:text-punjab-gold">
-                <i class="fa-solid fa-bars"></i>
-            </button>
         </div>
     </header>
 
-    <!-- ਫਲੋਟ ਕਰਦੀ ਟੈਗਲਾਈਨ (Scrolling Marquee) -->
+    <!-- ਫਲੋਟ ਕਰਦੀ ਟੈਗਲਾਈਨ (Top) -->
     <div class="scrolling-container">
         <div class="fade-left"></div>
         <div class="scrolling-text">
             <i class="fa-solid fa-star text-white mx-3"></i> 
-            ਜੀ ਆਇਆਂ ਨੂੰ! ਇਹ ਪਲੇਟਫਾਰਮ ਬੱਚਿਆਂ ਅਤੇ ਅਧਿਆਪਕਾਂ ਦੀ ਸਹੂਲਤ ਲਈ ਵਿਸ਼ੇਸ਼ ਤੌਰ 'ਤੇ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਹੈ। 
+            ਜੀ ਆਇਆਂ ਨੂੰ! ਇਹ ਪਲੇਟਫਾਰਮ ਬੱਚਿਆਂ ਅਤੇ ਅਧਿਆਪਕਾਂ ਲਈ ਵਿਸ਼ੇਸ਼ ਤੌਰ 'ਤੇ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਹੈ। 
+            <i class="fa-solid fa-book-open text-red-600 mx-3"></i> 
+            ਇੱਥੇ ਤੁਹਾਨੂੰ ਰੋਜ਼ਾਨਾ ਸਵੇਰ ਦੀ ਸਭਾ ਦੀਆਂ ਸਲਾਈਡਾਂ ਮਿਲਣਗੀਆਂ।
             <i class="fa-solid fa-bell text-red-600 mx-3 animate-pulse"></i> 
-            ਰੋਜ਼ਾਨਾ ਨਵੀਆਂ ਸਲਾਈਡਾਂ ਅਤੇ ਤਾਜ਼ਾ ਅੱਪਡੇਟਸ ਲਈ ਸਾਡੇ ਨਾਲ ਜੁੜੇ ਰਹੋ! 
-            <i class="fa-brands fa-youtube text-red-600 mx-3"></i> 
-            ਨਵੀਆਂ ਸਿੱਖਿਆਦਾਇਕ ਵੀਡੀਓਜ਼ ਦੇਖਣ ਲਈ ਸਾਡੇ ਯੂਟਿਊਬ (YouTube) ਚੈਨਲ ਨੂੰ ਸਬਸਕ੍ਰਾਈਬ ਕਰਨਾ ਨਾ ਭੁੱਲੋ!
+            ਜਲਦੀ ਹੀ ਇਸ ਪੋਰਟਲ 'ਤੇ ਪਹਿਲੀ ਤੋਂ ਪੰਜਵੀਂ ਜਮਾਤ ਦੇ ਸਾਰੇ ਵਿਸ਼ਿਆਂ ਦਾ ਮਟੀਰੀਅਲ ਵੀ ਅਪਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ। ਸਾਡੇ ਨਾਲ ਜੁੜੇ ਰਹੋ!
             <i class="fa-solid fa-star text-white mx-3"></i>
         </div>
         <div class="fade-right"></div>
     </div>
 
-    <!-- ਹੀਰੋ ਸੈਕਸ਼ਨ (Hero Section) -->
-    <section class="hero-pattern relative text-white py-14 md:py-20 overflow-hidden">
-        <div class="absolute inset-0 bg-punjab-blue bg-opacity-80"></div>
-        <div class="container mx-auto px-4 relative z-10 text-center">
-            <h2 class="text-4xl md:text-6xl font-extrabold mb-4 text-white drop-shadow-md">
-                ਸਿੱਖਣ ਦਾ ਨਵਾਂ ਤਰੀਕਾ
-            </h2>
-            <p class="text-lg md:text-2xl text-blue-100 max-w-3xl mx-auto mb-8 leading-relaxed">
-                ਬੱਚਿਆਂ ਦੇ ਰੋਜ਼ਾਨਾ ਅਭਿਆਸ ਅਤੇ ਗਿਆਨ-ਵਿਗਿਆਨ ਵਿੱਚ ਵਾਧਾ ਕਰਨ ਲਈ ਤਿਆਰ ਕੀਤੀਆਂ ਖਾਸ ਇੰਟਰਐਕਟਿਵ ਸਲਾਈਡਾਂ।
-            </p>
-            <a href="#daily-slides" class="inline-block bg-punjab-gold text-punjab-blue font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:bg-yellow-300 hover:scale-105 transition transform duration-300">
-                ਅੱਜ ਦੀ ਸਲਾਈਡ ਦੇਖੋ <i class="fa-solid fa-arrow-down ml-2"></i>
-            </a>
-        </div>
-    </section>
+    <!-- MAIN CONTENT AREA (Dynamic Views) -->
+    <main class="flex-grow container mx-auto px-4 py-8">
 
-    <!-- ਮੁੱਖ ਕੰਟੈਂਟ - ਬਲੌਗ ਗ੍ਰਿਡ (Daily Slides) -->
-    <main id="daily-slides" class="flex-grow container mx-auto px-4 py-12">
-        <div class="flex items-center justify-between mb-8 border-b-2 border-gray-200 pb-3">
-            <h3 class="text-3xl font-bold text-gray-800">
-                <i class="fa-regular fa-calendar-days text-punjab-orange mr-2"></i> ਤਾਜ਼ਾ ਅੱਪਡੇਟ (Latest Slides)
-            </h3>
+        <!-- ================= VIEW 1: HOME (ਮੁੱਖ ਪੰਨਾ) ================= -->
+        <div id="home-view" class="view-section active">
+            
+            <!-- ਜਮਾਤਾਂ ਦਾ ਸੈਕਸ਼ਨ (Classes Section) -->
+            <div class="mb-12">
+                <h3 class="text-3xl font-bold text-gray-800 border-b-2 border-gray-300 pb-2 mb-6 flex items-center">
+                    <i class="fa-solid fa-school text-punjab-blue mr-3"></i> ਜਮਾਤਾਂ (Classes)
+                </h3>
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                    
+                    <!-- Class 1 -->
+                    <button onclick="openClass(1)" class="bg-card-1 text-white rounded-2xl p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition transform flex flex-col items-center justify-center gap-3 border-b-4 border-orange-600">
+                        <i class="fa-solid fa-1 text-4xl bg-white text-card-1 rounded-full w-16 h-16 flex items-center justify-center shadow-inner"></i>
+                        <span class="text-xl font-bold">ਪਹਿਲੀ ਜਮਾਤ</span>
+                    </button>
+                    
+                    <!-- Class 2 -->
+                    <button onclick="openClass(2)" class="bg-card-2 text-white rounded-2xl p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition transform flex flex-col items-center justify-center gap-3 border-b-4 border-blue-600">
+                        <i class="fa-solid fa-2 text-4xl bg-white text-card-2 rounded-full w-16 h-16 flex items-center justify-center shadow-inner"></i>
+                        <span class="text-xl font-bold">ਦੂਜੀ ਜਮਾਤ</span>
+                    </button>
+
+                    <!-- Class 3 -->
+                    <button onclick="openClass(3)" class="bg-card-3 text-white rounded-2xl p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition transform flex flex-col items-center justify-center gap-3 border-b-4 border-red-700">
+                        <i class="fa-solid fa-3 text-4xl bg-white text-card-3 rounded-full w-16 h-16 flex items-center justify-center shadow-inner"></i>
+                        <span class="text-xl font-bold">ਤੀਜੀ ਜਮਾਤ</span>
+                    </button>
+
+                    <!-- Class 4 -->
+                    <button onclick="openClass(4)" class="bg-card-4 text-white rounded-2xl p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition transform flex flex-col items-center justify-center gap-3 border-b-4 border-green-700">
+                        <i class="fa-solid fa-4 text-4xl bg-white text-card-4 rounded-full w-16 h-16 flex items-center justify-center shadow-inner"></i>
+                        <span class="text-xl font-bold">ਚੌਥੀ ਜਮਾਤ</span>
+                    </button>
+
+                    <!-- Class 5 -->
+                    <button onclick="openClass(5)" class="bg-card-5 text-white rounded-2xl p-6 shadow-md hover:shadow-xl hover:-translate-y-1 transition transform flex flex-col items-center justify-center gap-3 border-b-4 border-purple-800">
+                        <i class="fa-solid fa-5 text-4xl bg-white text-card-5 rounded-full w-16 h-16 flex items-center justify-center shadow-inner"></i>
+                        <span class="text-xl font-bold">ਪੰਜਵੀਂ ਜਮਾਤ</span>
+                    </button>
+
+                </div>
+            </div>
+
+            <!-- ਸਵੇਰ ਦੀ ਸਭਾ ਸੈਕਸ਼ਨ (Morning Assembly Section) -->
+            <div>
+                <div class="flex items-center justify-between border-b-2 border-gray-300 pb-2 mb-6">
+                    <h3 class="text-3xl font-bold text-gray-800 flex items-center">
+                        <i class="fa-solid fa-sun text-punjab-orange mr-3"></i> ਤਾਜ਼ਾ ਅੱਪਡੇਟ: ਸਵੇਰ ਦੀ ਸਭਾ
+                    </h3>
+                    <button onclick="openAssemblyView()" class="bg-punjab-blue hover:bg-blue-800 text-white px-4 py-2 rounded-lg font-bold transition flex items-center gap-2 shadow-sm text-sm md:text-base">
+                        ਸਾਰੀਆਂ ਦੇਖੋ <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </div>
+                <div id="latest-assembly-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- ਜਾਵਾਸਕ੍ਰਿਪਟ ਰਾਹੀਂ ਸਿਰਫ਼ ਤਾਜ਼ਾ 2 ਕਾਰਡ ਬਣਨਗੇ -->
+                </div>
+            </div>
+
         </div>
 
-        <!-- ਇੱਥੇ ਜਾਵਾਸਕ੍ਰਿਪਟ ਰਾਹੀਂ ਆਟੋਮੈਟਿਕ ਬਾਕਸ ਬਣਨਗੇ -->
-        <div id="slides-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <!-- Cards will be injected here by JavaScript -->
+        <!-- ================= VIEW 2: CLASS VIEW (ਜਮਾਤ ਅੰਦਰ ਵਿਸ਼ੇ) ================= -->
+        <div id="class-view" class="view-section">
+            <div class="flex items-center justify-between mb-6 border-b-2 border-gray-300 pb-3">
+                <h2 id="class-title" class="text-3xl md:text-4xl font-extrabold text-punjab-blue"></h2>
+                <button onclick="showHome()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-bold transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> ਵਾਪਸ ਮੁੱਖ ਪੰਨੇ 'ਤੇ
+                </button>
+            </div>
+            
+            <h3 class="text-xl text-gray-600 mb-6 font-semibold">ਵਿਸ਼ਾ ਚੁਣੋ (Select Subject):</h3>
+            <div id="subjects-grid" class="grid grid-cols-2 md:grid-cols-3 gap-6">
+                <!-- Subjects will be rendered here -->
+            </div>
         </div>
+
+        <!-- ================= VIEW 3: SUBJECT VIEW (ਵਿਸ਼ੇ ਅੰਦਰ ਅਧਿਆਇ) ================= -->
+        <div id="subject-view" class="view-section">
+            <div class="flex items-center justify-between mb-6 border-b-2 border-gray-300 pb-3">
+                <div>
+                    <span id="breadcrumb-class" class="text-gray-500 font-bold"></span>
+                    <h2 id="subject-title" class="text-3xl md:text-4xl font-extrabold text-punjab-orange mt-1"></h2>
+                </div>
+                <button id="back-to-class-btn" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-bold transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> ਪਿੱਛੇ ਜਾਓ
+                </button>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6">
+                <h3 class="text-2xl font-bold text-gray-800 mb-4 border-b pb-2">ਅਧਿਆਇ (Chapters)</h3>
+                <ul id="chapters-list" class="space-y-3">
+                    <!-- Chapters will be rendered here -->
+                </ul>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 4: ALL ASSEMBLY VIEW (ਸਾਰੀਆਂ ਸਲਾਈਡਾਂ) ================= -->
+        <div id="assembly-view" class="view-section">
+            <div class="flex items-center justify-between mb-6 border-b-2 border-gray-300 pb-3">
+                <h2 class="text-3xl md:text-4xl font-extrabold text-punjab-blue"><i class="fa-solid fa-sun text-punjab-orange mr-2"></i> ਸਾਰੀਆਂ ਸਵੇਰ ਦੀਆਂ ਸਲਾਈਡਾਂ</h2>
+                <button onclick="showHome()" class="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-lg font-bold transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> ਵਾਪਸ ਮੁੱਖ ਪੰਨੇ 'ਤੇ
+                </button>
+            </div>
+            
+            <div id="all-assembly-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- ਸਾਰੀਆਂ ਸਲਾਈਡਾਂ ਇੱਥੇ ਆਉਣਗੀਆਂ -->
+            </div>
+        </div>
+
     </main>
 
-    <!-- ਸਾਡੇ ਬਾਰੇ (About) -->
-    <section id="about" class="bg-white py-12 border-t border-gray-200">
-        <div class="container mx-auto px-4 text-center max-w-4xl">
-            <h3 class="text-2xl font-bold text-gray-800 mb-4">ਇਸ ਪਲੇਟਫਾਰਮ ਬਾਰੇ</h3>
-            <p class="text-gray-600 leading-relaxed text-lg">
-                ਇਹ ਪੋਰਟਲ ਪੰਜਾਬ ਦੇ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲਾਂ ਦੇ ਅਧਿਆਪਕਾਂ ਅਤੇ ਪਿਆਰੇ ਵਿਦਿਆਰਥੀਆਂ ਦੀ ਸਹੂਲਤ ਲਈ ਇੱਕ ਨਿੱਜੀ ਉਪਰਾਲੇ ਵਜੋਂ ਬਣਾਇਆ ਗਿਆ ਹੈ। ਸਾਡਾ ਮਕਸਦ ਬੱਚਿਆਂ ਨੂੰ 'ਸਵੇਰ ਦੀ ਸਭਾ' ਦੀ ਜਾਣਕਾਰੀ ਇੱਕ ਬਹੁਤ ਹੀ ਰੌਚਕ, ਇੰਟਰਐਕਟਿਵ ਅਤੇ ਡਿਜ਼ੀਟਲ ਫਾਰਮੈਟ ਵਿੱਚ ਪ੍ਰਦਾਨ ਕਰਨਾ ਹੈ ਤਾਂ ਜੋ ਉਹ ਖੇਡ-ਖੇਡ ਵਿੱਚ ਨਵੀਆਂ ਚੀਜ਼ਾਂ ਸਿੱਖ ਸਕਣ।
-            </p>
+    <!-- ਫਲੋਟ ਕਰਦੀ ਟੈਗਲਾਈਨ (Bottom) -->
+    <div class="bottom-scrolling-container mt-auto">
+        <div class="fade-left-bottom"></div>
+        <div class="bottom-scrolling-text">
+            <i class="fa-solid fa-user-tie text-white mx-3"></i>
+            ਤਿਆਰ ਕਰਤਾ :- ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ ਜਵੱਦੀ, ਬਲਾਕ ਲੁਧਿਆਣਾ-1 (ਜ਼ਿਲ੍ਹਾ ਲੁਧਿਆਣਾ)
+            <i class="fa-solid fa-award text-punjab-orange mx-3"></i>
+            ਤਿਆਰ ਕਰਤਾ :- ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ ਜਵੱਦੀ, ਬਲਾਕ ਲੁਧਿਆਣਾ-1 (ਜ਼ਿਲ੍ਹਾ ਲੁਧਿਆਣਾ)
+            <i class="fa-solid fa-user-tie text-white mx-3"></i>
         </div>
-    </section>
+        <div class="fade-right-bottom"></div>
+    </div>
 
-    <!-- ਫੁੱਟਰ (Footer) -->
-    <footer class="bg-gray-900 text-gray-300 pt-10 pb-6 border-t-4 border-punjab-gold">
-        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-center md:text-left">
-            <div>
-                <h4 class="text-white text-xl font-bold mb-4 border-b border-gray-700 pb-2 inline-block">ਸਵੇਰ ਦੀ ਸਭਾ</h4>
-                <p class="text-sm leading-relaxed mt-2 text-gray-400">
-                    ਵਿਦਿਆਰਥੀਆਂ ਦੇ ਸੁਨਹਿਰੇ ਭਵਿੱਖ ਲਈ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ। ਆਓ ਮਿਲ ਕੇ ਬੱਚਿਆਂ ਦਾ ਭਵਿੱਖ ਰੌਸ਼ਨ ਕਰੀਏ।
-                </p>
-            </div>
-            <div>
-                <h4 class="text-white text-xl font-bold mb-4 border-b border-gray-700 pb-2 inline-block">ਮਹੱਤਵਪੂਰਨ ਲਿੰਕ</h4>
-                <ul class="text-sm space-y-2 mt-2 flex flex-col items-center md:items-start">
-                    <li><a href="#daily-slides" class="hover:text-punjab-gold transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> ਅੱਜ ਦੀ ਸਲਾਈਡ</a></li>
-                    <li><a href="#about" class="hover:text-punjab-gold transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> ਸਾਡੇ ਬਾਰੇ ਜਾਣਕਾਰੀ</a></li>
-                    <li><a href="#" class="hover:text-punjab-gold transition"><i class="fa-brands fa-youtube text-xs mr-2"></i> ਸਾਡਾ YouTube ਚੈਨਲ</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-white text-xl font-bold mb-4 border-b border-gray-700 pb-2 inline-block">ਸੰਪਰਕ ਕਰੋ</h4>
-                <ul class="text-sm space-y-3 mt-2 flex flex-col items-center md:items-start">
-                    <li><i class="fa-solid fa-envelope text-punjab-gold mr-2"></i> info@morningassembly.com</li>
-                    <li><i class="fa-solid fa-location-dot text-punjab-gold mr-2"></i> ਪੰਜਾਬ, ਭਾਰਤ</li>
-                </ul>
-            </div>
-        </div>
-        <div class="container mx-auto px-4 text-center border-t border-gray-800 pt-6">
-            <p class="text-sm text-gray-500">
-                &copy; <span id="current-year"></span> ਸਵੇਰ ਦੀ ਸਭਾ ਪਲੇਟਫਾਰਮ | ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ।
-            </p>
-            <p class="text-xs text-gray-600 mt-2">ਇਹ ਪਲੇਟਫਾਰਮ ਸਿਰਫ਼ ਵਿਦਿਅਕ ਸਹਾਇਤਾ ਲਈ ਇੱਕ ਨਿੱਜੀ ਉਪਰਾਲਾ ਹੈ।</p>
+    <!-- ਫੁੱਟਰ -->
+    <footer class="bg-gray-900 text-gray-300 pt-8 pb-4">
+        <div class="container mx-auto px-4 text-center">
+            <h4 class="text-white text-xl font-bold mb-2">ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ</h4>
+            <p class="text-sm text-gray-400 mb-4">ਇਹ ਪਲੇਟਫਾਰਮ ਅਧਿਆਪਕਾਂ ਅਤੇ ਬੱਚਿਆਂ ਦੀ ਸਹੂਲਤ ਲਈ ਇੱਕ ਨਿੱਜੀ ਉਪਰਾਲਾ ਹੈ।</p>
+            <p class="text-sm text-gray-500">&copy; <span id="current-year"></span> | ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ।</p>
         </div>
     </footer>
 
-    <!-- ਜਾਵਾਸਕ੍ਰਿਪਟ: ਇੱਥੇ ਆਪਣਾ ਰੋਜ਼ਾਨਾ ਡਾਟਾ ਅੱਪਡੇਟ ਕਰੋ -->
+    <!-- ਡਾਟਾ ਅਤੇ ਜਾਵਾਸਕ੍ਰਿਪਟ ਲੌਜਿਕ -->
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
-        /* ========================================================================
-        ਨਵੀਂ ਸਲਾਈਡ ਜੋੜਨ ਲਈ ਹੇਠਾਂ ਦਿੱਤੀ ਲਿਸਟ ਵਿੱਚ ਬਦਲਾਅ ਕਰੋ:
-        ======================================================================== */
-        
-        const dailySlidesData = [
-            // ਨਵਾਂ ਡਾਟਾ ਹਮੇਸ਼ਾ ਉੱਪਰ ਰੱਖੋ
-            { 
-                dateId: "09-03-2026", 
-                displayDate: "09 ਮਾਰਚ 2026", 
-                day: "ਸੋਮਵਾਰ", 
-                title: "ਸਵੇਰ ਦੀ ਸਭਾ - ਇੰਟਰਐਕਟਿਵ ਵੀਡੀਓ ਸਲਾਈਡ" 
-            },
-            { 
-                dateId: "07-03-2026", 
-                displayDate: "07 ਮਾਰਚ 2026", 
-                day: "ਸ਼ਨੀਵਾਰ", 
-                title: "ਸਵੇਰ ਦੀ ਸਭਾ - ਇੰਟਰਐਕਟਿਵ ਵੀਡੀਓ ਸਲਾਈਡ" 
-            },
-            { 
-                dateId: "06-03-2026", 
-                displayDate: "06 ਮਾਰਚ 2026", 
-                day: "ਸ਼ੁੱਕਰਵਾਰ", 
-                title: "ਸਵੇਰ ਦੀ ਸਭਾ - ਇੰਟਰਐਕਟਿਵ ਵੀਡੀਓ ਸਲਾਈਡ" 
-            },
-            { 
-                dateId: "05-03-2026", 
-                displayDate: "05 ਮਾਰਚ 2026", 
-                day: "ਬੁੱਧਵਾਰ", 
-                title: "ਸਵੇਰ ਦੀ ਸਭਾ - ਇੰਟਰਐਕਟਿਵ ਵੀਡੀਓ ਸਲਾਈਡ" 
-            }
+        // ---------------- 1. ਸਵੇਰ ਦੀ ਸਭਾ ਦਾ ਡਾਟਾ ----------------
+        const assemblySlides = [
+            { dateId: "09-03-2026", displayDate: "09 ਮਾਰਚ 2026", day: "ਸੋਮਵਾਰ" },
+            { dateId: "8-3-2026", displayDate: "08 ਮਾਰਚ 2026", day: "ਐਤਵਾਰ" },
+            { dateId: "07-03-2026", displayDate: "07 ਮਾਰਚ 2026", day: "ਸ਼ਨੀਵਾਰ" },
+            { dateId: "06-03-2026", displayDate: "06 ਮਾਰਚ 2026", day: "ਸ਼ੁੱਕਰਵਾਰ" },
+            { dateId: "05-03-2026", displayDate: "05 ਮਾਰਚ 2026", day: "ਬੁੱਧਵਾਰ" }
         ];
 
-        function renderSlides() {
-            const grid = document.getElementById('slides-grid');
-            let htmlContent = '';
+        // ---------------- 2. ਜਮਾਤਾਂ ਅਤੇ ਵਿਸ਼ਿਆਂ ਦਾ ਡਾਟਾ ----------------
+        const schoolData = {
+            1: { 
+                name: "ਪਹਿਲੀ ਜਮਾਤ (Class 1)", 
+                subjects: [
+                    { id: "punjabi", name: "ਪੰਜਾਬੀ", icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" },
+                    { id: "math", name: "ਗਣਿਤ (Math)", icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" },
+                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" }
+                ]
+            },
+            2: { 
+                name: "ਦੂਜੀ ਜਮਾਤ (Class 2)", 
+                subjects: [
+                    { id: "punjabi", name: "ਪੰਜਾਬੀ", icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" },
+                    { id: "math", name: "ਗਣਿਤ (Math)", icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" },
+                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" }
+                ]
+            },
+            3: { 
+                name: "ਤੀਜੀ ਜਮਾਤ (Class 3)", 
+                subjects: [
+                    { id: "punjabi", name: "ਪੰਜਾਬੀ", icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" },
+                    { id: "math", name: "ਗਣਿਤ (Math)", icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" },
+                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" },
+                    { id: "evs", name: "ਵਾਤਾਵਰਨ (EVS)", icon: "fa-leaf", color: "bg-green-100 text-green-700 border-green-300 hover:bg-green-600 hover:text-white" }
+                ]
+            },
+            4: { 
+                name: "ਚੌਥੀ ਜਮਾਤ (Class 4)", 
+                subjects: [
+                    { id: "punjabi", name: "ਪੰਜਾਬੀ", icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" },
+                    { id: "math", name: "ਗਣਿਤ (Math)", icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" },
+                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" },
+                    { id: "evs", name: "ਵਾਤਾਵਰਨ (EVS)", icon: "fa-leaf", color: "bg-green-100 text-green-700 border-green-300 hover:bg-green-600 hover:text-white" },
+                    { id: "hindi", name: "ਹਿੰਦੀ (Hindi)", icon: "fa-om", color: "bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-600 hover:text-white" }
+                ]
+            },
+            5: { 
+                name: "ਪੰਜਵੀਂ ਜਮਾਤ (Class 5)", 
+                subjects: [
+                    { id: "punjabi", name: "ਪੰਜਾਬੀ", icon: "fa-book", color: "bg-orange-100 text-orange-700 border-orange-300 hover:bg-orange-500 hover:text-white" },
+                    { id: "math", name: "ਗਣਿਤ (Math)", icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" },
+                    { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" },
+                    { id: "evs", name: "ਵਾਤਾਵਰਨ (EVS)", icon: "fa-leaf", color: "bg-green-100 text-green-700 border-green-300 hover:bg-green-600 hover:text-white" },
+                    { id: "hindi", name: "ਹਿੰਦੀ (Hindi)", icon: "fa-om", color: "bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-600 hover:text-white" }
+                ]
+            }
+        };
 
-            dailySlidesData.forEach((slide, index) => {
-                const isNew = index === 0;
-                const badgeHtml = isNew ? `<span class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow border border-white animate-pulse">ਨਵਾਂ (New)</span>` : '';
+        // ---------------- ਫੰਕਸ਼ਨਜ਼ (UI Logic) ----------------
 
-                const fileLink = `${slide.dateId}.html`;
+        // ਸਵੇਰ ਦੀ ਸਭਾ ਕਾਰਡ ਬਣਾਓ (ਨਵਾਂ ਲੌਜਿਕ: 2 ਕਾਰਡ ਮੇਨ ਸਕ੍ਰੀਨ 'ਤੇ, ਬਾਕੀ ਅੰਦਰ)
+        function renderAssemblySlides() {
+            const latestGrid = document.getElementById('latest-assembly-grid');
+            const allGrid = document.getElementById('all-assembly-grid');
+            let latestHtml = '';
+            let allHtml = '';
 
-                htmlContent += `
-                    <a href="${fileLink}" class="group block relative bg-white rounded-2xl shadow-sm hover:shadow-2xl border border-gray-100 hover:border-punjab-gold transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
-                        ${badgeHtml}
-                        <!-- Card Header (Orange/Gold gradient) -->
-                        <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 h-2"></div>
-                        
-                        <div class="p-6">
-                            <div class="flex items-center justify-between mb-4">
-                                <div class="bg-yellow-50 text-yellow-800 font-bold px-4 py-2 rounded-lg text-sm flex items-center border border-yellow-200">
-                                    <i class="fa-regular fa-calendar text-punjab-orange mr-2"></i>
-                                    ${slide.displayDate}
-                                </div>
-                                <div class="text-gray-500 text-sm font-semibold">
-                                    ${slide.day}
-                                </div>
-                            </div>
-                            
-                            <h4 class="text-xl font-bold text-gray-800 mb-3 group-hover:text-yellow-600 transition-colors">
-                                ${slide.title}
-                            </h4>
-                            
-                            <p class="text-gray-600 text-sm mb-6 line-clamp-2">
-                                ਅੱਜ ਦਾ ਵਿਚਾਰ, ਗਿਆਨ-ਵਿਗਿਆਨ ਦੇ ਪ੍ਰਸ਼ਨ, ਬੁਝਾਰਤ, ਅਤੇ ਅੰਗਰੇਜ਼ੀ ਅਭਿਆਸ ਦੇਖਣ ਲਈ ਇੱਥੇ ਕਲਿੱਕ ਕਰੋ।
-                            </p>
-                            
-                            <div class="flex items-center text-punjab-orange font-bold text-sm group-hover:text-yellow-600 transition-colors">
-                                <i class="fa-solid fa-play-circle text-lg mr-2"></i> ਸਲਾਈਡ ਚਲਾਓ 
-                                <i class="fa-solid fa-arrow-right text-xs ml-auto group-hover:translate-x-2 transition-transform"></i>
-                            </div>
-                        </div>
-                    </a>
-                `;
-            });
-
-            grid.innerHTML = htmlContent;
-        }
-
-        document.addEventListener('DOMContentLoaded', renderSlides);
-    </script>
-
-</body>
-</html>
-
-
+            assemblySlides.forEach((slide, index) => {
+                const isNew = index === 0 ? `<span class="absolute top-3 right-3 bg-red-500 text-white text-xs px-2 py-1 rounded-full animate-pulse">ਨਵਾਂ</span>` : '';
+                const cardHtml = `
+                    <a href="${slide.dateId}.html" class="block relative bg-white rounded-xl shadow border border-gray-200 p-5 hover:shadow-xl hover:border-punjab-blue transition transform hover:-translate-y-1">
+                        ${isNew}
+                        <div class="flex items-center mb-2">
+                            <i class="fa-regular fa-calendar-check text-punjab-orange text-xl mr-2"></i>
+                            <span class="font-bold text-gray-800 text-lg">${slide.displayDate}</span>
+                       
