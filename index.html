@@ -2,455 +2,285 @@
 <html lang="pa">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ਗਣਿਤ ਦੀ ਦੁਨੀਆ - ਪਹਿਲੀ ਜਮਾਤ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ਸਵੇਰ ਦੀ ਸਭਾ - ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ</title>
+    <!-- Tailwind CSS ਫ੍ਰੇਮਵਰਕ (ਡਿਜ਼ਾਈਨ ਲਈ) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet">
-
-    <style>
-        /* --- ਮਾਸਟਰ ਲੇਆਊਟ (ਬਲੈਕ ਬੈਕਗਰਾਊਂਡ ਅਤੇ 16:9 ਕੰਟੇਨਰ) --- */
-        * { box-sizing: border-box; }
-        body {
-            background-color: #000; /* ਸਕਰੀਨ ਦੇ ਬਾਹਰਲਾ ਹਿੱਸਾ ਹਮੇਸ਼ਾ ਕਾਲਾ ਰਹੇਗਾ */
-            display: flex; justify-content: center; align-items: center;
-            height: 100dvh; width: 100vw; margin: 0; padding: 0; overflow: hidden;
-        }
-
-        #app-container {
-            position: relative;
-            background: linear-gradient(135deg, #fef08a 0%, #fbcfe8 50%, #fce7f3 100%); /* ਪੀਲਾ ਅਤੇ ਗੁਲਾਬੀ ਮਿਕਸ */
-            display: flex; flex-direction: column; overflow: hidden;
-            width: 100%; height: 100%;
-            font-family: 'Mukta Malar', sans-serif;
-            container-type: size;
-            container-name: app;
-        }
-
-        .sparkle-bg { position: absolute; inset: 0; pointer-events: none; z-index: 0; background-image: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.8) 1px, transparent 2px), radial-gradient(circle at 80% 10%, rgba(255,255,255,0.9) 2px, transparent 3px), radial-gradient(circle at 40% 80%, rgba(255,255,255,0.6) 1px, transparent 2px), radial-gradient(circle at 70% 60%, rgba(255,255,255,0.8) 1px, transparent 2px); background-size: 150px 150px; animation: twinkle 4s infinite alternate ease-in-out; }
-        @keyframes twinkle { 0% { opacity: 0.3; transform: translateY(0); } 100% { opacity: 1; transform: translateY(-10px); } }
-
-        .glitter { background: linear-gradient(-45deg, #ffd700, #fff, #ffaa00, #fff, #ffd700); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 3s linear infinite; filter: drop-shadow(0px 2px 4px rgba(200, 100, 0, 0.4)); }
-        @keyframes shine { to { background-position: 200% center; } }
-
-        .glass-panel { background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border: 2px solid rgba(255, 255, 255, 0.8); box-shadow: 0 8px 32px 0 rgba(255, 105, 180, 0.2); }
-
-        /* ਐਨੀਮੇਸ਼ਨਾਂ */
-        .bounce-animation { animation: bounce 2s infinite; } @keyframes bounce { 0%, 100% { transform: translateY(-5%); } 50% { transform: translateY(0); } }
-        .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; } @keyframes shake { 10%, 90% { transform: translate3d(-2px, 0, 0); } 20%, 80% { transform: translate3d(4px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-6px, 0, 0); } 40%, 60% { transform: translate3d(6px, 0, 0); } }
-        .slide-in { animation: slideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; } @keyframes slideIn { 0% { transform: translateY(30px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
-        .zoom-in { animation: zoomIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; } @keyframes zoomIn { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-
-        /* ਇਨਲਾਈਨ ਫੀਡਬੈਕ ਸੁੰਗੜਨਾ */
-        #question-visual-wrapper { transition: all 0.6s cubic-bezier(0.25, 0.8, 0.25, 1); transform-origin: top center; }
-        .answered-shrink { transform: scale(0.65) translateY(-5%); opacity: 0.9; }
-        #inline-feedback { transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); transform: translateY(20px); opacity: 0; }
-        #inline-feedback.show-feedback { transform: translateY(0); opacity: 1; display: flex !important; }
-
-        .card-hover { transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s; transform-style: preserve-3d; } .card-hover:hover { transform: translateY(-8px) scale(1.03) rotateX(5deg); box-shadow: 0 15px 30px rgba(255,20,147,0.3); border-color: white; }
-        .custom-scroll::-webkit-scrollbar { width: 6px; } .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.3); } .custom-scroll::-webkit-scrollbar-thumb { background: #f472b6; border-radius: 10px; }
-        .hidden-view { display: none !important; }
-        .typing-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #ec4899; } @keyframes blink { 50% { opacity: 0; } }
-
-        /* --- ਨਵੀਂ "X" ਕ੍ਰਾਸ (Cross) ਐਨੀਮੇਸ਼ਨ --- */
-        .sub-item { transition: transform 0.3s ease; position: relative; display: inline-flex; justify-content: center; align-items: center; margin: 4px; }
-        .sub-item.crossed { opacity: 0.85 !important; transform: scale(0.95); }
-        .sub-item.crossed::before, .sub-item.crossed::after {
-            content: ''; position: absolute; background-color: #ef4444; height: 12%; width: 130%; top: 50%; left: 50%; z-index: 10; border-radius: 4px; box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
-        }
-        .sub-item.crossed::before { transform: translate(-50%, -50%) rotate(-45deg); clip-path: inset(0 0 0 100%); animation: drawCross1 0.15s linear forwards; }
-        .sub-item.crossed::after { transform: translate(-50%, -50%) rotate(45deg); clip-path: inset(0 100% 0 0); animation: drawCross2 0.15s linear 0.15s forwards; }
-        @keyframes drawCross1 { to { clip-path: inset(0 0 0 0); } }
-        @keyframes drawCross2 { to { clip-path: inset(0 0 0 0); } }
-
-        /* ਗਿਣਤੀ ਲਾਈਨ (Number Tracker) ਸਟਾਈਲ */
-        .count-tracker { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .count-tracker.active { opacity: 1 !important; filter: blur(0px) !important; transform: scale(1.3); background: linear-gradient(-45deg, #ffd700, #ffaa00); color: #713f12 !important; box-shadow: 0 0 15px rgba(255, 215, 0, 0.8); border: 2px solid white; }
-
-        /* --- 16:9 ਸਿਨੇਮੈਟਿਕ ਲੈਂਡਸਕੇਪ ਮੋਡ (Strict YouTube Ratio) --- */
-        @media (orientation: landscape) {
-            #app-container {
-                /* ਇਹ ਕੋਡ ਐਪ ਨੂੰ ਸਿਰਫ਼ 16:9 ਦੇ ਡੱਬੇ ਵਿੱਚ ਲੌਕ ਕਰੇਗਾ ਅਤੇ ਬਲੈਕ ਬਾਰ ਲਗਾਏਗਾ */
-                max-width: calc(100dvh * (16 / 9)) !important; 
-                max-height: calc(100vw * (9 / 16)) !important; 
-                aspect-ratio: 16 / 9 !important;
-                margin: auto; border-radius: 0; box-shadow: 0 0 30px rgba(255,255,255,0.1);
-            }
-
-            #dynamic-content { flex-direction: row !important; align-items: stretch !important; justify-content: space-around !important; gap: 2cqw; height: 100%; padding: 2cqh 2cqw !important; box-sizing: border-box; }
-            #question-visual-wrapper { width: 50%; height: 100%; display: flex; flex-direction: column; justify-content: center; position: relative; }
-            #act-options { width: 50%; height: 100%; display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 3cqh; overflow-y: auto; }
-            #inline-feedback { width: 50%; height: auto; justify-content: center; margin-top: 0 !important; padding: 3cqh !important; border-width: 0.6cqh !important; border-radius: 3cqh !important;}
-
-            .answered-shrink { transform: scale(0.8) translateX(-5%); transform-origin: left center; }
-
-            /* ਲੈਂਡਸਕੇਪ ਵਿੱਚ ਟੈਕਸਟ ਅਤੇ ਬਟਨਾਂ ਦੀ ਆਟੋ ਸਕੇਲਿੰਗ */
-            #act-question { font-size: 6cqh !important; margin-bottom: 2cqh !important; line-height: 1.2; text-align: center; width: 100%; }
-            #act-visual { 
-                font-size: 12cqh !important; margin-bottom: 2cqh !important; width: 100%;
-                display: flex; flex-wrap: wrap; justify-content: center; align-items: center; align-content: center; gap: 1.5cqw;
-            }
-            .landscape-visual { font-size: 8cqh !important; margin-bottom: 1cqh !important; }
-            .landscape-btn { padding: 2cqh 3cqw !important; font-size: 5.5cqh !important; border-bottom-width: 0.6cqh !important; border-radius: 2cqh !important; min-width: 25cqw; }
-
-            /* ਲੈਂਡਸਕੇਪ ਵਿੱਚ ਟਰੈਕਰ ਅਤੇ ਬਲੈਕਬੋਰਡ ਦੀ ਸਕੇਲਿੰਗ */
-            .landscape-tracker { width: 7cqh !important; height: 7cqh !important; font-size: 3.5cqh !important; margin: 0.5cqh !important; }
-            .math-board { font-size: 14cqh !important; padding: 3cqh !important; border-width: 0.8cqh !important; border-radius: 3cqh !important; }
-            .math-board-border { border-bottom-width: 0.8cqh !important; padding-bottom: 1cqh !important; margin-bottom: 2cqh !important; }
-            #sub-instruction { font-size: 4cqh !important; padding: 1.5cqh 3cqw !important; border-width: 0.4cqh !important; border-radius: 4cqh !important; }
-
-            #teacher-controls-bottom { padding: 1.5cqh 2cqw !important; margin: 0 2cqw 1.5cqh 2cqw !important; border-radius: 1.5cqh !important; flex-shrink: 0; }
-            #teacher-controls-bottom button { padding: 1.2cqh 2cqw !important; font-size: 3.5cqh !important; border-radius: 1cqh !important; }
-            .teacher-icon { font-size: 4cqh !important; }
-            #speak-btn { font-size: 3cqh !important; padding: 1cqh 2cqw !important; border-width: 0.3cqh !important; position: absolute; top: 0; right: 0; transform: scale(0.9); }
-
-            /* ਫੀਡਬੈਕ ਦੀ ਸਕੇਲਿੰਗ */
-            #inline-feedback-icon { font-size: 12cqh !important; margin-bottom: 1cqh !important; }
-            #inline-feedback-message { font-size: 5cqh !important; margin-bottom: 2cqh !important; }
-            #inline-feedback button { font-size: 4cqh !important; padding: 1.5cqh 2cqw !important; border-radius: 1.5cqh !important; border-bottom-width: 0.6cqh !important; }
-        }
-        @media (max-width: 400px) and (orientation: portrait) { #act-question { font-size: 1.5rem !important; } .landscape-visual { font-size: 3rem !important; } .landscape-btn { font-size: 1.5rem !important; padding: 0.5rem 1rem !important; } }
-    </style>
-</head>
-<body>
-    <!-- 16:9 ਕੰਟੇਨਰ (YouTube ਸਕਰੀਨ) -->
-    <div id="app-container">
-        <div class="sparkle-bg"></div>
-
-        <header id="main-header" class="shrink-0 bg-gradient-to-r from-pink-400 via-rose-400 to-pink-500 text-white shadow-lg relative flex flex-col justify-center items-center py-2 md:py-3 rounded-b-3xl z-10 border-b-4 border-pink-300">
-            <button onclick="toggleFullScreen()" class="absolute top-2 right-2 bg-white/20 hover:bg-white/40 text-white rounded-full p-1.5 md:px-3 py-1 transition flex items-center gap-1 z-50 border border-white/40 shadow-sm backdrop-blur-sm">
-                <span class="text-sm">🔲</span> <span class="hidden md:inline text-xs font-bold">ਪੂਰੀ ਸਕਰੀਨ</span>
-            </button>
-            <div id="header-content" class="text-center px-4 w-full slide-in flex flex-col items-center">
-                <h2 class="text-sm md:text-base font-bold text-yellow-200 tracking-wide drop-shadow-md">🏫 ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ ਜਵੱਦੀ 🏫</h2>
-                <div class="flex items-center gap-3 mt-1">
-                    <h1 class="text-2xl md:text-3xl font-extrabold glitter">ਗਣਿਤ ਦੀ ਦੁਨੀਆ</h1>
-                    <span class="text-xs md:text-sm font-bold bg-white text-pink-600 px-3 py-0.5 rounded-full shadow-md border-2 border-pink-200">ਪਹਿਲੀ ਜਮਾਤ</span>
-                </div>
-            </div>
-        </header>
-
-        <div id="activity-top-bar" class="hidden-view shrink-0 glass-panel px-3 py-1.5 flex justify-between items-center text-xs md:text-sm z-20 shadow-sm w-full mx-auto max-w-6xl rounded-b-xl border-t-0">
-            <div class="flex gap-2 items-center">
-                <span class="font-bold text-pink-600 drop-shadow-sm">🏫 ਪਹਿਲੀ ਜਮਾਤ</span>
-                <span class="text-gray-400">|</span>
-                <span id="top-chapter-name" class="font-bold text-yellow-600 drop-shadow-sm">ਅਧਿਆਇ 1</span>
-            </div>
-            <div class="text-[0.6rem] md:text-xs bg-pink-100 px-2 py-0.5 rounded-md text-pink-800 border border-pink-300 font-bold opacity-80">ਅਧਿਆਪਕ ਵਿਊ</div>
-        </div>
-
-        <main id="dashboard-view" class="flex-grow overflow-y-auto custom-scroll p-4 md:p-6 w-full max-w-7xl mx-auto z-10 perspective-[1000px]">
-            <div class="text-center mb-6 slide-in">
-                <h3 class="text-xl md:text-2xl font-bold text-pink-700 drop-shadow-sm bg-white/50 inline-block px-6 py-1 rounded-full border border-pink-200">✨ ਪਿਆਰੇ ਬੱਚਿਓ, ਆਪਾਂ ਕੀ ਸਿੱਖਾਂਗੇ? ✨</h3>
-            </div>
-            <div id="chapters-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-5 pb-10"></div>
-        </main>
-
-        <main id="activity-view" class="hidden-view flex-grow flex flex-col w-full relative z-10 overflow-hidden">
-            <div id="question-container" class="flex-grow flex flex-col justify-center items-center text-center p-2 md:p-4 relative overflow-hidden w-full max-w-6xl mx-auto">
-                <div class="flex-grow flex flex-col justify-center items-center w-full slide-in glass-panel rounded-3xl p-4 shadow-2xl relative" id="dynamic-content">
-
-                    <!-- ਸਵਾਲ ਦਾ ਹਿੱਸਾ (Auto Center Objects) -->
-                    <div id="question-visual-wrapper" class="w-full flex flex-col items-center justify-center relative">
-                        <button id="speak-btn" onclick="playQuestionAudio()" class="absolute -top-2 -right-2 bg-yellow-400 hover:bg-yellow-300 text-yellow-900 rounded-full p-2 md:px-4 md:py-2 shadow-lg border-2 border-yellow-200 font-bold text-sm md:text-base transition z-30 flex items-center gap-1">🔊 <span class="hidden md:inline">ਸੁਣੋ</span></button>
-                        <h1 id="act-question" class="text-3xl md:text-5xl lg:text-5xl font-extrabold mb-4 md:mb-6 leading-tight px-2 text-pink-700 drop-shadow-sm h-[3em] md:h-auto flex items-center justify-center"></h1>
-                        <div id="act-visual" class="text-[5rem] sm:text-[6rem] md:text-[8rem] mb-6 md:mb-10 flex flex-wrap justify-center items-center content-center gap-2 md:gap-4 bounce-animation landscape-visual leading-none drop-shadow-xl min-h-[1em] w-full"></div>
-                    </div>
-
-                    <div id="act-options" class="flex flex-wrap justify-center gap-3 md:gap-6 w-full opacity-0 transition-all duration-500 translate-y-4"></div>
-
-                    <!-- ਇਨਲਾਈਨ ਫੀਡਬੈਕ ਪੈਨਲ -->
-                    <div id="inline-feedback" class="hidden flex-col items-center justify-center w-full mt-2 md:mt-4 p-4 md:p-6 rounded-[2rem] border-4 bg-white/80 shadow-inner z-40">
-                        <div id="inline-feedback-icon" class="text-6xl md:text-7xl mb-1 md:mb-2 drop-shadow-md">⭐</div>
-                        <h2 id="inline-feedback-message" class="text-xl md:text-3xl font-extrabold mb-4 md:mb-6 leading-tight">ਸੁਨੇਹਾ</h2>
-                        <div id="inline-feedback-actions" class="flex flex-wrap justify-center gap-2 md:gap-4 w-full"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="teacher-controls-bottom" class="shrink-0 glass-panel mb-2 mx-2 md:mx-4 px-2 md:px-4 py-2 flex justify-between items-center z-20 rounded-2xl">
-                <button onclick="goHome()" class="px-3 py-1.5 md:py-2 bg-white/80 hover:bg-white text-pink-600 rounded-lg shadow-sm font-bold flex items-center gap-1 transition border border-pink-200"><span class="text-lg md:text-xl teacher-icon">🏠</span> <span class="hidden sm:inline">ਮੁੱਖ ਪੰਨਾ</span></button>
-                <div class="flex gap-1 md:gap-2 items-center">
-                    <button onclick="navigateChapter('prev')" id="btn-prev" class="px-3 py-1.5 md:py-2 bg-white/50 hover:bg-white/80 text-gray-700 rounded-lg font-bold transition disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1"><span class="text-lg md:text-xl teacher-icon">⬅️</span> <span class="hidden md:inline">ਪਿੱਛੇ</span></button>
-                    <button onclick="generateAndLoadQuestion()" class="px-4 py-1.5 md:py-2 bg-gradient-to-r from-yellow-300 to-yellow-400 hover:from-yellow-400 hover:to-yellow-500 text-yellow-900 rounded-lg shadow-md font-extrabold transition flex items-center gap-1 border border-yellow-500"><span class="text-lg md:text-xl teacher-icon">✨</span> ਨਵਾਂ ਸਵਾਲ</button>
-                    <button onclick="navigateChapter('next')" id="btn-next" class="px-3 py-1.5 md:py-2 bg-white/50 hover:bg-white/80 text-gray-700 rounded-lg font-bold transition disabled:opacity-30 disabled:pointer-events-none flex items-center gap-1"><span class="hidden md:inline">ਅੱਗੇ</span> <span class="text-lg md:text-xl teacher-icon">➡️</span></button>
-                </div>
-            </div>
-        </main>
-
-        <div id="confetti-container" class="fixed inset-0 pointer-events-none z-[60] overflow-hidden"></div>
-    </div> <!-- ਐਪ ਕੰਟੇਨਰ ਦਾ ਅੰਤ -->
-
+    <!-- FontAwesome (ਆਈਕਨਾਂ ਲਈ) -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <!-- ਗੁਰਮੁਖੀ ਫੋਂਟ -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Gurmukhi:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
     <script>
-        let currentQuestionText = ""; let typingTimer; let currentChapterId = null;
-        window.subItemsCrossed = 0;
-
-        const chapters = [
-            { id: 1, title: "ਪੂਰਵ-ਸੰਖਿਆ", emoji: "🐘", color: "from-pink-400 to-rose-400" }, { id: 2, title: "1 ਤੋਂ 9 ਗਿਣਤੀ", emoji: "🔢", color: "from-purple-400 to-fuchsia-400" },
-            { id: 3, title: "ਸਿਫ਼ਰ (0)", emoji: "🍩", color: "from-yellow-400 to-amber-400" }, { id: 4, title: "ਜੋੜ (+)", emoji: "➕", color: "from-green-400 to-emerald-400" },
-            { id: 5, title: "ਘਟਾਓ (-)", emoji: "➖", color: "from-teal-400 to-cyan-400" }, { id: 6, title: "10 ਤੋਂ 20 ਸੰਖਿਆਵਾਂ", emoji: "🔟", color: "from-blue-400 to-indigo-400" },
-            { id: 7, title: "21 ਤੋਂ 99 ਸੰਖਿਆਵਾਂ", emoji: "💯", color: "from-indigo-400 to-violet-400" }, { id: 8, title: "ਆਕਾਰ", emoji: "🔺", color: "from-fuchsia-400 to-pink-500" },
-            { id: 9, title: "ਮਾਪ", emoji: "📏", color: "from-rose-400 to-red-400" }, { id: 10, title: "ਸਮਾਂ", emoji: "⏰", color: "from-amber-400 to-orange-400" },
-            { id: 11, title: "ਪੈਟਰਨ", emoji: "🎨", color: "from-cyan-400 to-blue-400" }, { id: 12, title: "ਧਨ (ਕਰੰਸੀ)", emoji: "💰", color: "from-emerald-400 to-green-500" },
-            { id: 13, title: "ਅੰਕੜਾ ਵਿਗਿਆਨ", emoji: "📊", color: "from-violet-500 to-purple-500" }
-        ];
-        const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
-        const shuffle = (array) => array.sort(() => Math.random() - 0.5);
-        const getUniqueRandoms = (count, min, max, exclude = []) => { let res = new Set(); while(res.size < count) { let n = rand(min, max); if(!exclude.includes(n)) res.add(n); } return Array.from(res); };
-        const draw = (char, count) => Array(count).fill(char).join(' ');
-
-        function generateQuestionData(chapterId) {
-            let q = { type: 'text_choice', question: "", visual: "", options: [] };
-            const itemsList = [ { e: '🍎', n: 'ਸੇਬ' }, { e: '⚽', n: 'ਗੇਂਦਾਂ' }, { e: '🎈', n: 'ਗੁਬਾਰੇ' }, { e: '⭐', n: 'ਤਾਰੇ' }, { e: '🍬', n: 'ਟੌਫੀਆਂ' }, { e: '🚗', n: 'ਕਾਰਾਂ' }, { e: '🍦', n: 'ਆਈਸਕ੍ਰੀਮਾਂ' }, { e: '🧸', n: 'ਖਿਡੌਣੇ' }, { e: '🦋', n: 'ਤਿਤਲੀਆਂ' }, { e: '🕊️', n: 'ਪੰਛੀ' } ];
-            let randItem = itemsList[rand(0, itemsList.length - 1)]; let e = randItem.e; let eName = randItem.n;
-
-            switch(chapterId) {
-                case 1: const pool1 = [{ q: "ਵੱਡਾ ਜਾਨਵਰ ਕਿਹੜਾ ਹੈ?", o: [{visual:'🐁', text:'ਚੂਹਾ', isCorrect:false}, {visual:'🐘', text:'ਹਾਥੀ', isCorrect:true}] }, { q: "ਲੰਬੀ ਚੀਜ਼ ਕਿਹੜੀ ਹੈ?", o: [{visual:'✏️', text:'ਪੈਨਸਿਲ', isCorrect:true}, {visual:'🖍️', text:'ਰੰਗ', isCorrect:false}] }, { q: "ਕਿਹੜਾ ਦਰੱਖਤ ਉੱਚਾ ਹੈ?", o: [{visual:'🌴', text:'ਖਜੂਰ', isCorrect:true}, {visual:'🌱', text:'ਪੌਦਾ', isCorrect:false}] }]; let sel1 = pool1[rand(0, pool1.length-1)]; q.type = 'visual_choice'; q.question = sel1.q; q.options = shuffle(sel1.o); break;
-                case 2: let ans2 = rand(1, 9); q.question = `ਗਿਣੋ: ਇਹ ਕਿੰਨੇ ${eName} ਹਨ?`; q.visual = draw(e, ans2); let wrong2 = getUniqueRandoms(2, 1, 9, [ans2]); q.options = shuffle([{text: ans2.toString(), isCorrect: true}, {text: wrong2[0].toString(), isCorrect: false}, {text: wrong2[1].toString(), isCorrect: false}]); break;
-                case 3: let n3 = rand(2, 5); q.question = `${n3} ${eName} ਸਨ, ਸਾਰੇ ਗਾਇਬ ਹੋ ਗਏ। ਕਿੰਨੇ ਬਚੇ?`; q.visual = `${draw(e, n3)} <br><span class="text-4xl opacity-50 mt-2 block filter grayscale w-full text-center">➡️ 💨 ਗਾਇਬ</span>`; q.options = shuffle([{text: '0', isCorrect: true}, {text: '1', isCorrect: false}, {text: n3.toString(), isCorrect: false}]); break;
-                case 4: let a4 = rand(1, 8); let b4 = rand(1, 9 - a4); let sum4 = a4 + b4; q.question = `ਜੋੜ ਕਰੋ: ${a4} ਅਤੇ ${b4} ਕਿੰਨੇ ਹੋਏ?`; q.visual = `<span class="drop-shadow-md">${draw(e, a4)}</span> <span class="text-black mx-2 opacity-50">➕</span> <span class="drop-shadow-md">${draw(e, b4)}</span>`; let wrong4 = getUniqueRandoms(2, 1, 9, [sum4]); q.options = shuffle([{text: sum4, isCorrect: true}, {text: wrong4[0], isCorrect: false}, {text: wrong4[1], isCorrect: false}]); break;
-
-                case 5: // ਘਟਾਓ (Manual X Cross Implementation)
-                    let a5 = rand(2, 9); let b5 = rand(1, a5); let sub5 = a5 - b5; 
-                    q.question = `ਘਟਾਓ: ${a5} ਵਿੱਚੋਂ ${b5} ਘਟਾਉਣੇ ਹਨ।`; 
-                    let itemsHtml = ''; for(let i=0; i<a5; i++) { itemsHtml += `<span class="sub-item relative inline-block mx-1 md:mx-2 drop-shadow-md">${e}</span>`; }
-
-                    let trackerHtml = '<div class="flex flex-col justify-between items-center bg-white/30 backdrop-blur-md rounded-full p-2 border-2 border-white/50 shadow-lg z-10 ml-1 md:ml-4 h-full max-h-[80%]">';
-                    for(let n=1; n<=9; n++) {
-                        trackerHtml += `<div id="count-tracker-${n}" class="count-tracker w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-sm sm:text-base md:text-xl font-extrabold opacity-40 blur-[1px] text-pink-800 bg-white/60 m-0.5 md:m-1 landscape-tracker">${n}</div>`;
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'punjabi': ['"Noto Sans Gurmukhi"', 'sans-serif'],
+                    },
+                    colors: {
+                        'punjab-blue': '#003366',
+                        'punjab-gold': '#FFD700',
+                        'punjab-orange': '#FF8C00'
                     }
-                    trackerHtml += '</div>';
-
-                    q.visual = `
-                    <div class="flex flex-row items-center justify-center w-full gap-2 md:gap-8 px-2 relative h-full">
-                        <div id="sub-touch-overlay" class="absolute inset-0 z-30 cursor-pointer" onclick="handleManualSubtraction(${b5})"></div>
-                        <div class="math-board bg-slate-800 text-white p-4 md:p-8 rounded-[2rem] shadow-2xl border-4 md:border-8 border-slate-500 font-mono text-5xl md:text-[6rem] leading-none flex flex-col items-end z-10">
-                            <div class="pr-2">${a5}</div>
-                            <div class="math-board-border border-b-4 md:border-b-8 border-white pb-2 mb-4 flex items-center w-full justify-between min-w-[2em]"><span class="text-pink-400 mr-2">-</span><span>${b5}</span></div>
-                            <div id="blackboard-answer" class="text-yellow-300 pr-2 min-h-[1em] transition-all duration-500 w-full text-right"></div>
-                        </div>
-                        <div class="flex flex-col items-center justify-center flex-1 z-10 pointer-events-none">
-                            <div class="flex flex-wrap justify-center w-full text-4xl md:text-[5rem] mb-4 gap-y-2 content-center">${itemsHtml}</div>
-                            <div id="sub-instruction" class="text-base md:text-2xl bg-yellow-100 border-2 md:border-4 border-yellow-500 text-yellow-800 px-4 py-2 md:px-6 md:py-2 rounded-full shadow-xl font-extrabold animate-pulse text-center">👉 ਸਕਰੀਨ 'ਤੇ ਟੱਚ ਕਰਕੇ ${b5} ਕੱਟੋ</div>
-                        </div>
-                        ${trackerHtml}
-                    </div>`;
-                    q.hideOptionsUntilInteraction = true; 
-                    let wrong5 = getUniqueRandoms(2, 0, 9, [sub5]); q.options = shuffle([{text: sub5, isCorrect: true}, {text: wrong5[0], isCorrect: false}, {text: wrong5[1], isCorrect: false}]); 
-                    break;
-
-                case 6: let ans6 = rand(10, 20); q.question = `ਇਹਨਾਂ ਵਿੱਚੋਂ '${ans6}' ਅੰਕ ਕਿਹੜਾ ਹੈ?`; let wrong6 = getUniqueRandoms(2, 10, 20, [ans6]); q.options = shuffle([{text: ans6, isCorrect: true}, {text: wrong6[0], isCorrect: false}, {text: wrong6[1], isCorrect: false}]); break;
-                case 7: let num7 = rand(22, 98); if(rand(1, 2) === 1) { q.question = `${num7} ਤੋਂ ਬਾਅਦ ਕੀ ਆਉਂਦਾ ਹੈ?`; q.visual = `${num7-1} ➡️ ${num7} ➡️ ❓`; let w = getUniqueRandoms(2, 21, 99, [num7+1]); q.options = shuffle([{text: num7+1, isCorrect: true}, {text: w[0], isCorrect: false}, {text: w[1], isCorrect: false}]); } else { q.question = `${num7} ਤੋਂ ਪਹਿਲਾਂ ਕੀ ਆਉਂਦਾ ਹੈ?`; q.visual = `❓ ➡️ ${num7} ➡️ ${num7+1}`; let w = getUniqueRandoms(2, 21, 99, [num7-1]); q.options = shuffle([{text: num7-1, isCorrect: true}, {text: w[0], isCorrect: false}, {text: w[1], isCorrect: false}]); } break;
-                case 8: const shapes = [{v:'🔴', t:'ਗੋਲਾ'}, {v:'🟦', t:'ਚੌਰਸ'}, {v:'🔺', t:'ਤਿਕੋਣ'}, {v:'⭐', t:'ਤਾਰਾ'}]; let sh = shuffle(shapes); q.type = 'visual_choice'; q.question = `${sh[0].t} ਲੱਭੋ!`; q.options = shuffle([{visual: sh[0].v, text: sh[0].t, isCorrect: true}, {visual: sh[1].v, text: sh[1].t, isCorrect: false}, {visual: sh[2].v, text: sh[2].t, isCorrect: false}]); break;
-                case 9: const pool9 = [{ q: "ਕਿਹੜੀ ਚੀਜ਼ ਭਾਰੀ ਹੈ?", o: [{visual:'🍉', text:'ਤਰਬੂਜ਼', isCorrect:true}, {visual:'🍓', text:'ਸਟ੍ਰਾਬੇਰੀ', isCorrect:false}] }, { q: "ਕਿਸ ਵਿੱਚ ਵੱਧ ਪਾਣੀ ਆਵੇਗਾ?", o: [{visual:'🪣', text:'ਬਾਲਟੀ', isCorrect:true}, {visual:'☕', text:'ਕੱਪ', isCorrect:false}] }]; let sel9 = pool9[rand(0, pool9.length-1)]; q.type = 'visual_choice'; q.question = sel9.q; q.options = shuffle(sel9.o); break;
-                case 10: const pool10 = [{ q: "ਚੰਨ ਕਦੋਂ ਨਿਕਲਦਾ ਹੈ?", o: [{visual:'🌞', text:'ਦਿਨ', isCorrect:false}, {visual:'🌙', text:'ਰਾਤ', isCorrect:true}] }, { q: "ਅਸੀਂ ਸਕੂਲ ਕਦੋਂ ਜਾਂਦੇ ਹਾਂ?", o: [{visual:'🌅', text:'ਸਵੇਰੇ', isCorrect:true}, {visual:'🌃', text:'ਰਾਤ', isCorrect:false}] }]; let sel10 = pool10[rand(0, pool10.length-1)]; q.type = 'visual_choice'; q.question = sel10.q; q.options = shuffle(sel10.o); break;
-                case 11: let pElems = shuffle(['🔴','🔵','🟢','🟡']); q.question = "ਪੈਟਰਨ ਪੂਰਾ ਕਰੋ:"; q.visual = `${pElems[0]} ${pElems[1]} ${pElems[0]} ❓`; q.options = shuffle([{text: pElems[1], isCorrect: true}, {text: pElems[2], isCorrect: false}, {text: pElems[3], isCorrect: false}]); break;
-                case 12: const notes = [{v:'10', t:'10 ਰੁਪਏ'}, {v:'20', t:'20 ਰੁਪਏ'}, {v:'50', t:'50 ਰੁਪਏ'}]; let n12 = shuffle(notes)[0]; q.question = "ਇਹ ਕਿੰਨੇ ਰੁਪਏ ਹਨ?"; q.visual = `💵 <span class="text-5xl font-bold bg-green-100 px-3 py-1 rounded-lg border-2 border-green-500 shadow-inner text-green-800">${n12.v}</span>`; let w12 = notes.filter(n => n.v !== n12.v); q.options = shuffle([{text: n12.t, isCorrect: true}, {text: w12[0].t, isCorrect: false}, {text: w12[1].t, isCorrect: false}]); break;
-                case 13: let targetItem = itemsList[rand(0, 4)]; let distractItem = itemsList[rand(5, 9)]; let a13 = rand(2, 5); let b13 = rand(1, 3); q.question = `ਗਿਣੋ: ਇੱਥੇ ਕਿੰਨੀਆਂ ${targetItem.n} ਹਨ?`; q.visual = shuffle((Array(a13).fill(targetItem.e).concat(Array(b13).fill(distractItem.e)))).join(' '); let wr13 = getUniqueRandoms(2, 1, 8, [a13]); q.options = shuffle([{text: a13, isCorrect: true}, {text: wr13[0], isCorrect: false}, {text: wr13[1], isCorrect: false}]); break;
-            }
-            return q;
-        }
-
-        function init() {
-            const grid = document.getElementById('chapters-grid');
-            chapters.forEach(chapter => {
-                const card = document.createElement('div');
-                card.className = `bg-gradient-to-br ${chapter.color} rounded-[2rem] p-4 text-white shadow-lg cursor-pointer card-hover flex flex-col items-center justify-center text-center border-2 border-white/40`;
-                card.onclick = () => loadActivity(chapter.id);
-                card.innerHTML = `<div class="bg-white/20 rounded-full w-16 h-16 md:w-20 md:h-20 flex items-center justify-center text-4xl md:text-5xl mb-3 shadow-inner backdrop-blur-sm border border-white/30">${chapter.emoji}</div><h3 class="text-xs md:text-sm font-bold bg-black/20 px-3 py-1 rounded-full mb-1">ਅਧਿਆਇ ${chapter.id}</h3><h2 class="text-lg md:text-xl font-extrabold leading-tight drop-shadow-md">${chapter.title}</h2>`;
-                grid.appendChild(card);
-            });
-        }
-
-        function loadActivity(id) {
-            forceFullScreen(); currentChapterId = id; 
-            document.getElementById('main-header').classList.add('hidden-view'); document.getElementById('dashboard-view').classList.add('hidden-view');
-            document.getElementById('activity-top-bar').classList.remove('hidden-view'); document.getElementById('activity-view').classList.remove('hidden-view');
-            document.getElementById('top-chapter-name').textContent = `ਅਧਿਆਇ ${id}: ${chapters.find(c=>c.id==id).title}`;
-            generateAndLoadQuestion();
-            document.getElementById('btn-prev').disabled = (id === 1); document.getElementById('btn-next').disabled = (id === chapters.length);
-        }
-
-        function typeWriter(element, text, speed = 50, callback) {
-            clearInterval(typingTimer); element.innerHTML = ''; element.classList.add('typing-cursor'); let i = 0;
-            typingTimer = setInterval(() => { element.innerHTML += text.charAt(i); i++; if (i >= text.length) { clearInterval(typingTimer); element.classList.remove('typing-cursor'); if(callback) callback(); } }, speed);
-        }
-
-        function generateAndLoadQuestion() {
-            window.subItemsCrossed = 0; // ਰੀਸੈੱਟ ਕਰੋ
-            document.getElementById('inline-feedback').classList.remove('show-feedback');
-            setTimeout(() => { document.getElementById('inline-feedback').classList.add('hidden'); }, 300);
-            document.getElementById('question-visual-wrapper').classList.remove('answered-shrink');
-
-            const contentDiv = document.getElementById('dynamic-content');
-            contentDiv.classList.remove('slide-in'); void contentDiv.offsetWidth; contentDiv.classList.add('slide-in');
-
-            const actData = generateQuestionData(currentChapterId); currentQuestionText = actData.question; 
-            const questionEl = document.getElementById('act-question'); const visualArea = document.getElementById('act-visual'); const optionsArea = document.getElementById('act-options');
-
-            visualArea.innerHTML = actData.visual || ''; optionsArea.innerHTML = ''; 
-            optionsArea.style.display = "flex"; optionsArea.style.opacity = "0"; optionsArea.style.pointerEvents = "none"; optionsArea.style.transform = "translateY(15px)";
-
-            typeWriter(questionEl, currentQuestionText, 60, () => { 
-                if(!actData.hideOptionsUntilInteraction) { optionsArea.style.opacity = "1"; optionsArea.style.pointerEvents = "auto"; optionsArea.style.transform = "translateY(0px)"; }
-            });
-
-            if (actData.type === 'text_choice') {
-                actData.options.forEach(opt => {
-                    const btn = document.createElement('button'); btn.className = 'bg-white hover:bg-pink-50 text-pink-700 border-b-[6px] border-pink-300 active:border-b-0 active:translate-y-[6px] font-extrabold text-4xl md:text-5xl py-3 md:py-4 px-8 md:px-10 rounded-3xl shadow-lg transition-all landscape-btn min-w-[100px] m-1 border-t-2 border-x-2 border-white';
-                    btn.innerHTML = opt.text; btn.onclick = (e) => checkAnswer(opt.isCorrect, btn); optionsArea.appendChild(btn);
-                });
-            } else if (actData.type === 'visual_choice') {
-                actData.options.forEach(opt => {
-                    const btn = document.createElement('button'); btn.className = 'bg-white hover:bg-pink-50 border-b-[6px] border-pink-300 active:border-b-0 active:translate-y-[6px] rounded-3xl p-4 md:p-6 shadow-lg transition-all flex flex-col items-center min-w-[120px] m-1 landscape-btn border-t-2 border-x-2 border-white';
-                    let displayVisual = opt.visual ? opt.visual : opt.text; btn.innerHTML = `<span class="text-6xl md:text-[5rem] mb-2 landscape-visual drop-shadow-md">${displayVisual}</span><span class="text-xl md:text-2xl font-bold text-pink-700">${opt.text}</span>`;
-                    btn.onclick = (e) => checkAnswer(opt.isCorrect, btn); optionsArea.appendChild(btn);
-                });
-            }
-        }
-
-        // --- ਮੈਨੂਅਲ ਟੱਚ ਕੰਟਰੋਲ (ਘਟਾਓ ਲਈ X Cross) ---
-        window.handleManualSubtraction = function(targetCount) {
-            if(window.subItemsCrossed >= targetCount) return;
-
-            const items = document.querySelectorAll('.sub-item:not(.crossed)');
-            if(items.length > 0) {
-                // ਪਿੱਛੇ ਵਾਲੇ ਪਾਸਿਓਂ ਕੱਟਣਾ ਸ਼ੁਰੂ ਕਰੋ
-                const item = items[items.length - 1]; 
-                item.classList.add('crossed');
-                window.subItemsCrossed++;
-
-                // ਟਰੈਕਰ ਹਾਈਲਾਈਟ ਕਰੋ
-                const trackerElement = document.getElementById(`count-tracker-${window.subItemsCrossed}`);
-                if(trackerElement) { trackerElement.classList.add('active'); }
-
-                // ਆਵਾਜ਼ 2 ਵਾਰ ਚੱਲੇਗੀ (ਕਿਉਂਕਿ 2 ਲਾਈਨਾਂ ਹਨ)
-                playSound('bell'); setTimeout(() => playSound('bell'), 150);
-
-                if(window.subItemsCrossed >= targetCount) {
-                    document.getElementById('sub-touch-overlay').style.display = 'none';
-                    document.getElementById('sub-instruction').style.display = 'none';
-                    const opts = document.getElementById('act-options');
-                    if(opts) { opts.style.opacity = "1"; opts.style.pointerEvents = "auto"; opts.style.transform = "translateY(0px)"; }
                 }
             }
-        };
-
-        function showInlineFeedback(isCorrect) {
-            const optionsArea = document.getElementById('act-options');
-            const wrapper = document.getElementById('question-visual-wrapper');
-            const feedbackBox = document.getElementById('inline-feedback');
-            const icon = document.getElementById('inline-feedback-icon');
-            const msg = document.getElementById('inline-feedback-message');
-            const actions = document.getElementById('inline-feedback-actions');
-
-            optionsArea.style.opacity = '0';
-            setTimeout(() => { optionsArea.style.display = 'none'; }, 300);
-            wrapper.classList.add('answered-shrink');
-
-            if (isCorrect) {
-                feedbackBox.className = "hidden flex-col items-center justify-center w-full mt-2 md:mt-4 p-4 md:p-6 rounded-[2rem] border-4 bg-green-50/90 border-green-400 shadow-inner z-40";
-                icon.textContent = "🌟"; icon.className = "text-6xl md:text-7xl mb-1 md:mb-2 bounce-animation drop-shadow-lg";
-                msg.innerHTML = "<span class='glitter'>ਬਹੁਤ ਵਧੀਆ! ਸਹੀ ਜਵਾਬ</span>"; msg.className = "text-2xl md:text-3xl font-extrabold mb-4 md:mb-6 leading-tight text-green-700 drop-shadow-sm";
-
-                let nextAction = currentChapterId < chapters.length 
-                    ? `<button onclick="loadActivity(${currentChapterId + 1})" class="py-2.5 px-6 bg-blue-100 hover:bg-blue-200 text-blue-800 rounded-xl font-bold transition shadow-sm text-lg border border-blue-300">ਅਗਲਾ ਅਧਿਆਇ ➡️</button>`
-                    : `<button onclick="goHome()" class="py-2.5 px-6 bg-pink-100 hover:bg-pink-200 text-pink-800 rounded-xl font-bold transition shadow-sm text-lg border border-pink-300">ਮੁੱਖ ਪੰਨਾ 🏠</button>`;
-
-                actions.innerHTML = `<button onclick="generateAndLoadQuestion()" class="py-2.5 px-6 bg-gradient-to-r from-green-400 to-green-500 text-white rounded-xl font-bold shadow-md transition text-lg border border-green-600 active:translate-y-1">✨ ਹੋਰ ਸਵਾਲ</button>${nextAction}`;
-                playSound('success'); createConfetti();
-            } else {
-                feedbackBox.className = "hidden flex-col items-center justify-center w-full mt-2 md:mt-4 p-4 md:p-6 rounded-[2rem] border-4 bg-red-50/90 border-red-400 shadow-inner z-40";
-                icon.textContent = "👀"; icon.className = "text-6xl md:text-7xl mb-1 md:mb-2 shake drop-shadow-md";
-                msg.textContent = "ਓਹੋ! ਧਿਆਨ ਨਾਲ ਦੇਖੋ"; msg.className = "text-2xl md:text-3xl font-extrabold mb-4 md:mb-6 leading-tight text-red-600";
-
-                actions.innerHTML = `
-                    <button onclick="resetForRetry()" class="py-2.5 px-6 bg-gradient-to-r from-red-400 to-red-500 text-white rounded-xl font-bold text-lg shadow-md transition border border-red-600 active:translate-y-1">🔄 ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼</button>
-                    <button onclick="generateAndLoadQuestion()" class="py-2.5 px-6 bg-gray-200 hover:bg-gray-300 text-gray-700 rounded-xl font-bold text-lg transition shadow-sm border border-gray-400 active:translate-y-1">ਛੱਡੋ ➡️</button>
-                `;
-                playSound('error');
-            }
-
-            setTimeout(() => {
-                feedbackBox.classList.remove('hidden');
-                setTimeout(() => { feedbackBox.classList.add('show-feedback'); }, 50);
-            }, 300);
         }
-
-        function resetForRetry() {
-            document.getElementById('inline-feedback').classList.remove('show-feedback');
-            setTimeout(() => { 
-                document.getElementById('inline-feedback').classList.add('hidden'); 
-                document.getElementById('question-visual-wrapper').classList.remove('answered-shrink');
-                const optionsArea = document.getElementById('act-options');
-                optionsArea.style.display = 'flex';
-                setTimeout(() => { optionsArea.style.opacity = '1'; }, 50);
-            }, 400);
-        }
-
-        function checkAnswer(isCorrect, btnElement) {
-            if(!isCorrect) {
-                btnElement.classList.add('shake', 'bg-red-50', 'border-red-300', 'text-red-600');
-                setTimeout(() => {
-                    btnElement.classList.remove('shake', 'bg-red-50', 'border-red-300', 'text-red-600');
-                    showInlineFeedback(false);
-                }, 500);
-            } else {
-                const bbAns = document.getElementById('blackboard-answer');
-                if (bbAns) { bbAns.textContent = btnElement.textContent.trim(); bbAns.classList.add('zoom-in'); }
-                showInlineFeedback(true);
-            }
-        }
-
-        async function playQuestionAudio() {
-            const btn = document.getElementById('speak-btn'); btn.classList.add('animate-pulse', 'scale-110');
-            try { const speech = new SpeechSynthesisUtterance(currentQuestionText); speech.lang = 'pa-IN'; speech.rate = 0.8; speech.onend = () => { btn.classList.remove('animate-pulse', 'scale-110'); }; window.speechSynthesis.speak(speech); } catch (e) { console.error(e); btn.classList.remove('animate-pulse', 'scale-110'); }
-        }
-
-        function navigateChapter(direction) { if (direction === 'prev' && currentChapterId > 1) loadActivity(currentChapterId - 1); else if (direction === 'next' && currentChapterId < chapters.length) loadActivity(currentChapterId + 1); }
-
-        function goHome() { 
-            try {
-                clearInterval(typingTimer); if ('speechSynthesis' in window) { window.speechSynthesis.cancel(); } 
-                document.getElementById('activity-view').classList.add('hidden-view'); document.getElementById('activity-top-bar').classList.add('hidden-view'); 
-                document.getElementById('main-header').classList.remove('hidden-view'); document.getElementById('dashboard-view').classList.remove('hidden-view'); 
-                document.getElementById('confetti-container').innerHTML = ''; 
-            } catch(e) { console.log(e); }
-        }
-
-        function forceFullScreen() { try { if (!document.fullscreenElement) { if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen(); else if (document.documentElement.webkitRequestFullscreen) document.documentElement.webkitRequestFullscreen(); } } catch (e) {} }
-        function toggleFullScreen() { forceFullScreen(); }
-
-        function playSound(type) {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator(); const gain = ctx.createGain();
-            osc.connect(gain); gain.connect(ctx.destination);
-            let currentTime = ctx.currentTime;
-
-            if (type === 'success') {
-                osc.type = 'sine'; osc.frequency.setValueAtTime(600, currentTime); osc.frequency.exponentialRampToValueAtTime(1200, currentTime + 0.1);
-                gain.gain.setValueAtTime(0.3, currentTime); gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.4);
-                osc.start(currentTime); osc.stop(currentTime + 0.4);
-            } else if (type === 'error') {
-                osc.type = 'triangle'; osc.frequency.setValueAtTime(250, currentTime); osc.frequency.exponentialRampToValueAtTime(150, currentTime + 0.3);
-                gain.gain.setValueAtTime(0.2, currentTime); gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.3);
-                osc.start(currentTime); osc.stop(currentTime + 0.4);
-            } else if (type === 'bell') {
-                const osc2 = ctx.createOscillator(); const gain2 = ctx.createGain();
-                osc2.connect(gain2); gain2.connect(ctx.destination);
-                osc.type = 'sine'; osc.frequency.setValueAtTime(880, currentTime); 
-                gain.gain.setValueAtTime(0.5, currentTime); gain.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.8);
-                osc.start(currentTime); osc.stop(currentTime + 0.8);
-                osc2.type = 'sine'; osc2.frequency.setValueAtTime(1760, currentTime); 
-                gain2.gain.setValueAtTime(0.3, currentTime); gain2.gain.exponentialRampToValueAtTime(0.01, currentTime + 0.4);
-                osc2.start(currentTime); osc2.stop(currentTime + 0.4);
-            }
-        }
-
-        function createConfetti() {
-            const container = document.getElementById('confetti-container'); container.innerHTML = ''; const emojis = ['✨', '🌟', '💖', '🎉'];
-            for(let i=0; i<35; i++) { const el = document.createElement('div'); el.innerText = emojis[Math.floor(Math.random() * emojis.length)]; el.style.position = 'absolute'; el.style.left = Math.random() * 100 + 'vw'; el.style.top = '-10vh'; el.style.fontSize = (Math.random() * 1.5 + 1.5) + 'rem'; el.style.transition = `transform ${Math.random() * 2 + 1.5}s linear, top ${Math.random() * 2 + 1.5}s ease-in, opacity 2s ease-in`; container.appendChild(el); setTimeout(() => { el.style.top = '110vh'; el.style.transform = `rotate(${Math.random() * 360}deg)`; el.style.opacity = 0; }, 50); }
-        }
-        init();
     </script>
+    <style>
+        body { font-family: 'Noto Sans Gurmukhi', sans-serif; background-color: #f8fafc; }
+        .hero-pattern {
+            background-color: #003366;
+            background-image: radial-gradient(#ffffff 1px, transparent 1px);
+            background-size: 20px 20px;
+            background-position: 0 0, 10px 10px;
+            background-opacity: 0.1;
+        }
+        /* Smooth scrolling */
+        html { scroll-behavior: smooth; }
+
+        /* --- ਫਲੋਟਿੰਗ (Scrolling) ਟੈਗਲਾਈਨ ਲਈ ਡਿਜ਼ਾਈਨ --- */
+        @keyframes scroll-text {
+            0% { transform: translateX(100vw); }
+            100% { transform: translateX(-100%); }
+        }
+        .scrolling-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            background: linear-gradient(90deg, #c59b08, #FFD700, #c59b08);
+            border-top: 2px solid #8b6508;
+            border-bottom: 2px solid #8b6508;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            position: relative;
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+        }
+        .scrolling-text {
+            display: inline-block;
+            animation: scroll-text 22s linear infinite;
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #002244;
+            text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+        }
+        .scrolling-text:hover {
+            animation-play-state: paused;
+        }
+        /* ਕਿਨਾਰਿਆਂ ਦਾ ਸੁੰਦਰ ਡਿਜ਼ਾਈਨ */
+        .fade-left {
+            position: absolute; top: 0; left: 0; height: 100%; width: 40px;
+            background: linear-gradient(to right, #b8860b, transparent); z-index: 2;
+        }
+        .fade-right {
+            position: absolute; top: 0; right: 0; height: 100%; width: 40px;
+            background: linear-gradient(to left, #b8860b, transparent); z-index: 2;
+        }
+    </style>
+</head>
+<body class="font-punjabi flex flex-col min-h-screen">
+
+    <!-- ਹੈਡਰ (Header) -->
+    <header class="bg-punjab-blue text-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <!-- ਲੋਗੋ ਆਈਕਨ -->
+                <div class="bg-white text-punjab-blue p-2 rounded-full w-12 h-12 flex items-center justify-center text-2xl shadow-inner">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-punjab-gold leading-tight">ਸਵੇਰ ਦੀ ਸਭਾ</h1>
+                    <p class="text-xs text-blue-200">ਅਧਿਆਪਕਾਂ ਅਤੇ ਬੱਚਿਆਂ ਲਈ ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ</p>
+                </div>
+            </div>
+            <nav class="hidden md:flex gap-6 font-semibold">
+                <a href="#" class="hover:text-punjab-gold transition"><i class="fa-solid fa-house mr-1"></i> ਮੁੱਖ ਪੰਨਾ</a>
+                <a href="#daily-slides" class="hover:text-punjab-gold transition"><i class="fa-solid fa-chalkboard-user mr-1"></i> ਰੋਜ਼ਾਨਾ ਸਲਾਈਡਾਂ</a>
+                <a href="#about" class="hover:text-punjab-gold transition"><i class="fa-solid fa-circle-info mr-1"></i> ਸਾਡੇ ਬਾਰੇ</a>
+            </nav>
+            <!-- ਮੋਬਾਈਲ ਮੀਨੂ ਬਟਨ -->
+            <button class="md:hidden text-2xl text-white hover:text-punjab-gold">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- ਫਲੋਟ ਕਰਦੀ ਟੈਗਲਾਈਨ (Scrolling Marquee) -->
+    <div class="scrolling-container">
+        <div class="fade-left"></div>
+        <div class="scrolling-text">
+            <i class="fa-solid fa-star text-white mx-3"></i> 
+            ਜੀ ਆਇਆਂ ਨੂੰ! ਇਹ ਪਲੇਟਫਾਰਮ ਬੱਚਿਆਂ ਅਤੇ ਅਧਿਆਪਕਾਂ ਦੀ ਸਹੂਲਤ ਲਈ ਵਿਸ਼ੇਸ਼ ਤੌਰ 'ਤੇ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਹੈ। 
+            <i class="fa-solid fa-bell text-red-600 mx-3 animate-pulse"></i> 
+            ਰੋਜ਼ਾਨਾ ਨਵੀਆਂ ਸਲਾਈਡਾਂ ਅਤੇ ਤਾਜ਼ਾ ਅੱਪਡੇਟਸ ਲਈ ਸਾਡੇ ਨਾਲ ਜੁੜੇ ਰਹੋ! 
+            <i class="fa-brands fa-youtube text-red-600 mx-3"></i> 
+            ਨਵੀਆਂ ਸਿੱਖਿਆਦਾਇਕ ਵੀਡੀਓਜ਼ ਦੇਖਣ ਲਈ ਸਾਡੇ ਯੂਟਿਊਬ (YouTube) ਚੈਨਲ ਨੂੰ ਸਬਸਕ੍ਰਾਈਬ ਕਰਨਾ ਨਾ ਭੁੱਲੋ!
+            <i class="fa-solid fa-star text-white mx-3"></i>
+        </div>
+        <div class="fade-right"></div>
+    </div>
+
+    <!-- ਹੀਰੋ ਸੈਕਸ਼ਨ (Hero Section) -->
+    <section class="hero-pattern relative text-white py-14 md:py-20 overflow-hidden">
+        <div class="absolute inset-0 bg-punjab-blue bg-opacity-80"></div>
+        <div class="container mx-auto px-4 relative z-10 text-center">
+            <h2 class="text-4xl md:text-6xl font-extrabold mb-4 text-white drop-shadow-md">
+                ਸਿੱਖਣ ਦਾ ਨਵਾਂ ਤਰੀਕਾ
+            </h2>
+            <p class="text-lg md:text-2xl text-blue-100 max-w-3xl mx-auto mb-8 leading-relaxed">
+                ਬੱਚਿਆਂ ਦੇ ਰੋਜ਼ਾਨਾ ਅਭਿਆਸ ਅਤੇ ਗਿਆਨ-ਵਿਗਿਆਨ ਵਿੱਚ ਵਾਧਾ ਕਰਨ ਲਈ ਤਿਆਰ ਕੀਤੀਆਂ ਖਾਸ ਇੰਟਰਐਕਟਿਵ ਸਲਾਈਡਾਂ।
+            </p>
+            <a href="#daily-slides" class="inline-block bg-punjab-gold text-punjab-blue font-bold text-lg px-8 py-3 rounded-full shadow-lg hover:bg-yellow-300 hover:scale-105 transition transform duration-300">
+                ਅੱਜ ਦੀ ਸਲਾਈਡ ਦੇਖੋ <i class="fa-solid fa-arrow-down ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- ਮੁੱਖ ਕੰਟੈਂਟ - ਬਲੌਗ ਗ੍ਰਿਡ (Daily Slides) -->
+    <main id="daily-slides" class="flex-grow container mx-auto px-4 py-12">
+        <div class="flex items-center justify-between mb-8 border-b-2 border-gray-200 pb-3">
+            <h3 class="text-3xl font-bold text-gray-800">
+                <i class="fa-regular fa-calendar-days text-punjab-orange mr-2"></i> ਤਾਜ਼ਾ ਅੱਪਡੇਟ (Latest Slides)
+            </h3>
+        </div>
+
+        <!-- ਇੱਥੇ ਜਾਵਾਸਕ੍ਰਿਪਟ ਰਾਹੀਂ ਆਟੋਮੈਟਿਕ ਬਾਕਸ ਬਣਨਗੇ -->
+        <div id="slides-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards will be injected here by JavaScript -->
+        </div>
+    </main>
+
+    <!-- ਸਾਡੇ ਬਾਰੇ (About) -->
+    <section id="about" class="bg-white py-12 border-t border-gray-200">
+        <div class="container mx-auto px-4 text-center max-w-4xl">
+            <h3 class="text-2xl font-bold text-gray-800 mb-4">ਇਸ ਪਲੇਟਫਾਰਮ ਬਾਰੇ</h3>
+            <p class="text-gray-600 leading-relaxed text-lg">
+                ਇਹ ਪੋਰਟਲ ਪੰਜਾਬ ਦੇ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲਾਂ ਦੇ ਅਧਿਆਪਕਾਂ ਅਤੇ ਪਿਆਰੇ ਵਿਦਿਆਰਥੀਆਂ ਦੀ ਸਹੂਲਤ ਲਈ ਇੱਕ ਨਿੱਜੀ ਉਪਰਾਲੇ ਵਜੋਂ ਬਣਾਇਆ ਗਿਆ ਹੈ। ਸਾਡਾ ਮਕਸਦ ਬੱਚਿਆਂ ਨੂੰ 'ਸਵੇਰ ਦੀ ਸਭਾ' ਦੀ ਜਾਣਕਾਰੀ ਇੱਕ ਬਹੁਤ ਹੀ ਰੌਚਕ, ਇੰਟਰਐਕਟਿਵ ਅਤੇ ਡਿਜ਼ੀਟਲ ਫਾਰਮੈਟ ਵਿੱਚ ਪ੍ਰਦਾਨ ਕਰਨਾ ਹੈ ਤਾਂ ਜੋ ਉਹ ਖੇਡ-ਖੇਡ ਵਿੱਚ ਨਵੀਆਂ ਚੀਜ਼ਾਂ ਸਿੱਖ ਸਕਣ।
+            </p>
+        </div>
+    </section>
+
+    <!-- ਫੁੱਟਰ (Footer) -->
+    <footer class="bg-gray-900 text-gray-300 pt-10 pb-6 border-t-4 border-punjab-gold">
+        <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-center md:text-left">
+            <div>
+                <h4 class="text-white text-xl font-bold mb-4 border-b border-gray-700 pb-2 inline-block">ਸਵੇਰ ਦੀ ਸਭਾ</h4>
+                <p class="text-sm leading-relaxed mt-2 text-gray-400">
+                    ਵਿਦਿਆਰਥੀਆਂ ਦੇ ਸੁਨਹਿਰੇ ਭਵਿੱਖ ਲਈ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ। ਆਓ ਮਿਲ ਕੇ ਬੱਚਿਆਂ ਦਾ ਭਵਿੱਖ ਰੌਸ਼ਨ ਕਰੀਏ।
+                </p>
+            </div>
+            <div>
+                <h4 class="text-white text-xl font-bold mb-4 border-b border-gray-700 pb-2 inline-block">ਮਹੱਤਵਪੂਰਨ ਲਿੰਕ</h4>
+                <ul class="text-sm space-y-2 mt-2 flex flex-col items-center md:items-start">
+                    <li><a href="#daily-slides" class="hover:text-punjab-gold transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> ਅੱਜ ਦੀ ਸਲਾਈਡ</a></li>
+                    <li><a href="#about" class="hover:text-punjab-gold transition"><i class="fa-solid fa-angle-right text-xs mr-2"></i> ਸਾਡੇ ਬਾਰੇ ਜਾਣਕਾਰੀ</a></li>
+                    <li><a href="#" class="hover:text-punjab-gold transition"><i class="fa-brands fa-youtube text-xs mr-2"></i> ਸਾਡਾ YouTube ਚੈਨਲ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white text-xl font-bold mb-4 border-b border-gray-700 pb-2 inline-block">ਸੰਪਰਕ ਕਰੋ</h4>
+                <ul class="text-sm space-y-3 mt-2 flex flex-col items-center md:items-start">
+                    <li><i class="fa-solid fa-envelope text-punjab-gold mr-2"></i> info@morningassembly.com</li>
+                    <li><i class="fa-solid fa-location-dot text-punjab-gold mr-2"></i> ਪੰਜਾਬ, ਭਾਰਤ</li>
+                </ul>
+            </div>
+        </div>
+        <div class="container mx-auto px-4 text-center border-t border-gray-800 pt-6">
+            <p class="text-sm text-gray-500">
+                &copy; <span id="current-year"></span> ਸਵੇਰ ਦੀ ਸਭਾ ਪਲੇਟਫਾਰਮ | ਸਾਰੇ ਹੱਕ ਰਾਖਵੇਂ ਹਨ।
+            </p>
+            <p class="text-xs text-gray-600 mt-2">ਇਹ ਪਲੇਟਫਾਰਮ ਸਿਰਫ਼ ਵਿਦਿਅਕ ਸਹਾਇਤਾ ਲਈ ਇੱਕ ਨਿੱਜੀ ਉਪਰਾਲਾ ਹੈ।</p>
+        </div>
+    </footer>
+
+    <!-- ਜਾਵਾਸਕ੍ਰਿਪਟ: ਇੱਥੇ ਆਪਣਾ ਰੋਜ਼ਾਨਾ ਡਾਟਾ ਅੱਪਡੇਟ ਕਰੋ -->
+    <script>
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        /* ========================================================================
+        ਨਵੀਂ ਸਲਾਈਡ ਜੋੜਨ ਲਈ ਹੇਠਾਂ ਦਿੱਤੀ ਲਿਸਟ ਵਿੱਚ ਬਦਲਾਅ ਕਰੋ:
+        ======================================================================== */
+        
+        const dailySlidesData = [
+            // ਨਵਾਂ ਡਾਟਾ ਹਮੇਸ਼ਾ ਉੱਪਰ ਰੱਖੋ
+            { 
+                dateId: "09-03-2026", 
+                displayDate: "09 ਮਾਰਚ 2026", 
+                day: "ਸੋਮਵਾਰ", 
+                title: "ਸਵੇਰ ਦੀ ਸਭਾ - ਇੰਟਰਐਕਟਿਵ ਵੀਡੀਓ ਸਲਾਈਡ" 
+            },
+            { 
+                dateId: "07-03-2026", 
+                displayDate: "07 ਮਾਰਚ 2026", 
+                day: "ਸ਼ਨੀਵਾਰ", 
+                title: "ਸਵੇਰ ਦੀ ਸਭਾ - ਇੰਟਰਐਕਟਿਵ ਵੀਡੀਓ ਸਲਾਈਡ" 
+            },
+            { 
+                dateId: "06-03-2026", 
+                displayDate: "06 ਮਾਰਚ 2026", 
+                day: "ਸ਼ੁੱਕਰਵਾਰ", 
+                title: "ਸਵੇਰ ਦੀ ਸਭਾ - ਇੰਟਰਐਕਟਿਵ ਵੀਡੀਓ ਸਲਾਈਡ" 
+            },
+            { 
+                dateId: "05-03-2026", 
+                displayDate: "05 ਮਾਰਚ 2026", 
+                day: "ਬੁੱਧਵਾਰ", 
+                title: "ਸਵੇਰ ਦੀ ਸਭਾ - ਇੰਟਰਐਕਟਿਵ ਵੀਡੀਓ ਸਲਾਈਡ" 
+            }
+        ];
+
+        function renderSlides() {
+            const grid = document.getElementById('slides-grid');
+            let htmlContent = '';
+
+            dailySlidesData.forEach((slide, index) => {
+                const isNew = index === 0;
+                const badgeHtml = isNew ? `<span class="absolute top-4 right-4 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow border border-white animate-pulse">ਨਵਾਂ (New)</span>` : '';
+
+                const fileLink = `${slide.dateId}.html`;
+
+                htmlContent += `
+                    <a href="${fileLink}" class="group block relative bg-white rounded-2xl shadow-sm hover:shadow-2xl border border-gray-100 hover:border-punjab-gold transition-all duration-300 transform hover:-translate-y-2 overflow-hidden">
+                        ${badgeHtml}
+                        <!-- Card Header (Orange/Gold gradient) -->
+                        <div class="bg-gradient-to-r from-yellow-500 to-yellow-600 h-2"></div>
+                        
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="bg-yellow-50 text-yellow-800 font-bold px-4 py-2 rounded-lg text-sm flex items-center border border-yellow-200">
+                                    <i class="fa-regular fa-calendar text-punjab-orange mr-2"></i>
+                                    ${slide.displayDate}
+                                </div>
+                                <div class="text-gray-500 text-sm font-semibold">
+                                    ${slide.day}
+                                </div>
+                            </div>
+                            
+                            <h4 class="text-xl font-bold text-gray-800 mb-3 group-hover:text-yellow-600 transition-colors">
+                                ${slide.title}
+                            </h4>
+                            
+                            <p class="text-gray-600 text-sm mb-6 line-clamp-2">
+                                ਅੱਜ ਦਾ ਵਿਚਾਰ, ਗਿਆਨ-ਵਿਗਿਆਨ ਦੇ ਪ੍ਰਸ਼ਨ, ਬੁਝਾਰਤ, ਅਤੇ ਅੰਗਰੇਜ਼ੀ ਅਭਿਆਸ ਦੇਖਣ ਲਈ ਇੱਥੇ ਕਲਿੱਕ ਕਰੋ।
+                            </p>
+                            
+                            <div class="flex items-center text-punjab-orange font-bold text-sm group-hover:text-yellow-600 transition-colors">
+                                <i class="fa-solid fa-play-circle text-lg mr-2"></i> ਸਲਾਈਡ ਚਲਾਓ 
+                                <i class="fa-solid fa-arrow-right text-xs ml-auto group-hover:translate-x-2 transition-transform"></i>
+                            </div>
+                        </div>
+                    </a>
+                `;
+            });
+
+            grid.innerHTML = htmlContent;
+        }
+
+        document.addEventListener('DOMContentLoaded', renderSlides);
+    </script>
+
 </body>
 </html>
+
+
