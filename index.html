@@ -262,6 +262,49 @@
     <script>
         document.getElementById('current-year').textContent = new Date().getFullYear();
 
+        // ---------------- ਆਟੋ ਫੁੱਲ-ਸਕਰੀਨ (ਡਬਲ ਟੈਪ) ਲੌਜਿਕ ----------------
+        function forceFullScreen() { 
+            try { 
+                if (!document.fullscreenElement && !document.webkitFullscreenElement) { 
+                    if (document.documentElement.requestFullscreen) {
+                        document.documentElement.requestFullscreen(); 
+                    } else if (document.documentElement.webkitRequestFullscreen) {
+                        document.documentElement.webkitRequestFullscreen(); // Safari/iOS ਲਈ
+                    } 
+                } else {
+                    // ਅਗਰ ਪਹਿਲਾਂ ਹੀ ਫੁੱਲ ਸਕਰੀਨ ਹੈ ਤਾਂ ਬਾਹਰ ਆ ਜਾਵੇ
+                    if (document.exitFullscreen) {
+                        document.exitFullscreen();
+                    } else if (document.webkitExitFullscreen) {
+                        document.webkitExitFullscreen();
+                    }
+                }
+            } catch (e) {
+                console.log("Fullscreen API error:", e);
+            } 
+        }
+
+        function toggleFullScreen() { 
+            forceFullScreen(); 
+        }
+
+        // ਕੰਪਿਊਟਰ ਲਈ ਡਬਲ ਕਲਿੱਕ ਇਵੈਂਟ
+        document.addEventListener('dblclick', toggleFullScreen);
+
+        // ਮੋਬਾਈਲ ਫੋਨਾਂ ਲਈ ਡਬਲ ਟੈਪ ਇਵੈਂਟ
+        let lastTap = 0;
+        document.addEventListener('touchend', function(event) {
+            const currentTime = new Date().getTime();
+            const tapLength = currentTime - lastTap;
+            if (tapLength < 400 && tapLength > 0) {
+                toggleFullScreen();
+                // event.preventDefault(); ਲਗਾਉਣ ਨਾਲ ਕਈ ਵਾਰ ਬਟਨ ਕੰਮ ਕਰਨਾ ਬੰਦ ਕਰ ਦਿੰਦੇ ਹਨ, ਇਸ ਲਈ ਇਹ ਹਟਾ ਦਿੱਤਾ ਗਿਆ ਹੈ
+            }
+            lastTap = currentTime;
+        });
+        // ---------------- ਆਟੋ ਫੁੱਲ-ਸਕਰੀਨ ਖਤਮ ----------------
+
+
         const assemblySlides = [
             { dateId: "09-03-2026", displayDate: "09 ਮਾਰਚ 2026", day: "ਸੋਮਵਾਰ" },
             { dateId: "8-3-2026", displayDate: "08 ਮਾਰਚ 2026", day: "ਐਤਵਾਰ" },
@@ -303,7 +346,7 @@
                     { id: "math", name: "ਗਣਿਤ (Math)", code: "M", chapters: ["ਸੰਖਿਆਵਾਂ", "ਜੋੜ ਅਤੇ ਘਟਾਓ", "ਗੁਣਾ", "ਭਾਗ", "ਧਨ (ਰੁਪਏ-ਪੈਸੇ)", "ਮਾਪ", "ਆਕਾਰ ਅਤੇ ਕੋਣ", "ਪੈਟਰਨ", "ਭਿੰਨਾਂ", "ਅੰਕੜਾ ਵਿਗਿਆਨ"], icon: "fa-calculator", color: "bg-blue-100 text-blue-700 border-blue-300 hover:bg-blue-500 hover:text-white" }, 
                     { id: "english", name: "ਅੰਗਰੇਜ਼ੀ (English)", code: "E", chapters: ["The King and His Sons", "The Farmer and the Bullock Cart", "Safety Rules", "A Visit to a Historical Place", "The Environment", "Health is Wealth", "A Friend in Need", "Pronouns and Nouns", "Good Manners", "Seasons"], icon: "fa-a", color: "bg-red-100 text-red-700 border-red-300 hover:bg-red-500 hover:text-white" }, 
                     { id: "evs", name: "ਵਾਤਾਵਰਨ (EVS)", code: "EV", chapters: ["ਸਾਡਾ ਪਰਿਵਾਰ", "ਖੇਡਾਂ ਅਤੇ ਸਿਹਤ", "ਸਾਡਾ ਭੋਜਨ", "ਸਾਡੇ ਆਵਾਸ", "ਪੌਦੇ ਅਤੇ ਜੰਤੂ", "ਪਾਣੀ ਦੀ ਸੰਭਾਲ", "ਹਵਾ ਅਤੇ ਪ੍ਰਦੂਸ਼ਣ", "ਆਵਾਜਾਈ ਦੇ ਸਾਧਨ", "ਸੰਚਾਰ ਦੇ ਸਾਧਨ", "ਧਰਤੀ ਅਤੇ ਆਕਾਸ਼"], icon: "fa-leaf", color: "bg-green-100 text-green-700 border-green-300 hover:bg-green-600 hover:text-white" }, 
-                    { id: "hindi", name: "ਹਿੰਦੀ (Hindi)", code: "H", chapters: ["वर्णमाला (ਵਰਣਮਾਲਾ)", "मात्राएँ (ਮਾਤਰਾਵਾਂ)", "प्रार्थना (ਪ੍ਰਾਰਥਨਾ)", "मेरा घर (ਮੇਰਾ ਘਰ)", "मेले की सैर (ਮੇਲੇ की ਸੈਰ)", "पेड़ हमारे मित्र (ਰੁੱਖ ਸਾਡੇ ਮਿੱਤਰ)", "तिरंगा (ਤਿਰੰਗਾ)", "मेरा भारत (ਮੇਰਾ ਭਾਰਤ)", "गिनती (ਗਿਣਤੀ)", "अच्छी आदतें (ਚੰਗੀਆਂ ਆਦਤਾਂ)"], icon: "fa-om", color: "bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-600 hover:text-white" }
+                    { id: "hindi", name: "ਹਿੰਦੀ (Hindi)", code: "H", chapters: ["वर्णमाला (ਵਰਣਮਾਲਾ)", "मात्राएँ (ਮਾਤਰਾਵਾਂ)", "प्रार्थना (ਪ੍ਰਾਰਥਨਾ)", "मेरा घर (ਮੇਰਾ ਘਰ)", "मेले की सैर (ਮੇਲੇ की सैर)", "पेड़ हमारे मित्र (ਰੁੱਖ ਸਾਡੇ ਮਿੱਤਰ)", "तिरंगा (ਤਿਰੰਗਾ)", "मेरा भारत (ਮੇਰਾ ਭਾਰਤ)", "गिनती (ਗਿਣਤੀ)", "अच्छी आदतें (ਚੰਗੀਆਂ ਆਦਤਾਂ)"], icon: "fa-om", color: "bg-purple-100 text-purple-700 border-purple-300 hover:bg-purple-600 hover:text-white" }
                 ] 
             },
             5: { 
