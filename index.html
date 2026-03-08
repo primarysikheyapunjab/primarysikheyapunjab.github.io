@@ -316,4 +316,90 @@
                         <div class="flex items-center mb-2">
                             <i class="fa-regular fa-calendar-check text-punjab-orange text-xl mr-2"></i>
                             <span class="font-bold text-gray-800 text-lg">${slide.displayDate}</span>
-                       
+                        </div>
+                        <p class="text-gray-500 text-sm mb-4">${slide.day}</p>
+                        <div class="text-punjab-blue font-bold flex items-center">
+                            <i class="fa-solid fa-play-circle mr-2"></i> ਸਲਾਈਡ ਚਲਾਓ
+                        </div>
+                    </a>`;
+                
+                // ਸਾਰੀਆਂ ਸਲਾਈਡਾਂ ਦੀ ਲਿਸਟ ਵਿੱਚ ਐਡ ਕਰੋ
+                allHtml += cardHtml;
+                
+                // ਮੁੱਖ ਪੰਨੇ ਲਈ ਸਿਰਫ਼ ਪਹਿਲੀਆਂ 2 ਸਲਾਈਡਾਂ
+                if(index < 2) {
+                    latestHtml += cardHtml;
+                }
+            });
+
+            if(latestGrid) latestGrid.innerHTML = latestHtml;
+            if(allGrid) allGrid.innerHTML = allHtml;
+        }
+
+        // Views ਛੁਪਾਉਣਾ/ਦਿਖਾਉਣਾ
+        function hideAllViews() {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
+        }
+
+        function showHome() {
+            hideAllViews();
+            document.getElementById('home-view').classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function openAssemblyView() {
+            hideAllViews();
+            document.getElementById('assembly-view').classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function openClass(classId) {
+            hideAllViews();
+            const classInfo = schoolData[classId];
+            document.getElementById('class-title').innerHTML = `<i class="fa-solid fa-chalkboard-user mr-2"></i> ${classInfo.name}`;
+            
+            let subjectsHtml = '';
+            classInfo.subjects.forEach(sub => {
+                subjectsHtml += `
+                    <div onclick="openSubject(${classId}, '${sub.id}', '${sub.name}')" class="cursor-pointer border-2 rounded-2xl p-6 flex flex-col items-center justify-center gap-4 transition transform hover:scale-105 shadow-sm hover:shadow-md ${sub.color}">
+                        <i class="fa-solid ${sub.icon} text-4xl"></i>
+                        <span class="text-xl font-bold">${sub.name}</span>
+                    </div>
+                `;
+            });
+            document.getElementById('subjects-grid').innerHTML = subjectsHtml;
+            document.getElementById('class-view').classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function openSubject(classId, subjectId, subjectName) {
+            hideAllViews();
+            const className = schoolData[classId].name;
+            
+            document.getElementById('breadcrumb-class').textContent = className;
+            document.getElementById('subject-title').textContent = subjectName;
+            
+            document.getElementById('back-to-class-btn').onclick = function() { openClass(classId); };
+
+            // ਇੱਥੇ ਤੁਸੀਂ ਅਧਿਆਇ (Chapters) ਦੇ ਲਿੰਕ ਪਾ ਸਕਦੇ ਹੋ
+            let chaptersHtml = `
+                <a href="#" class="block p-4 border border-gray-200 rounded-lg hover:bg-blue-50 transition flex justify-between items-center">
+                    <span class="font-bold text-lg text-gray-800">ਅਧਿਆਇ 1 (Chapter 1)</span>
+                    <span class="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded">ਜਲਦੀ ਆ ਰਿਹਾ ਹੈ</span>
+                </a>
+                <a href="#" class="block p-4 border border-gray-200 rounded-lg hover:bg-blue-50 transition flex justify-between items-center">
+                    <span class="font-bold text-lg text-gray-800">ਅਧਿਆਇ 2 (Chapter 2)</span>
+                    <span class="bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded">ਜਲਦੀ ਆ ਰਿਹਾ ਹੈ</span>
+                </a>
+            `;
+            
+            document.getElementById('chapters-list').innerHTML = chaptersHtml;
+            document.getElementById('subject-view').classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        // ਪੇਜ ਲੋਡ ਹੋਣ ਤੇ ਸਵੇਰ ਦੀ ਸਭਾ ਲੋਡ ਕਰੋ
+        document.addEventListener('DOMContentLoaded', renderAssemblySlides);
+    </script>
+</body>
+</html>
