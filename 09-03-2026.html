@@ -104,20 +104,6 @@
             background: rgba(255,215,0,0.9); color: #000; padding: 1vmin 3vmin;
             border-radius: 30px; font-weight: 900; display: none;
         }
-
-        #start-overlay {
-            position: absolute; inset: 0; z-index: 20000;
-            background: rgba(0,0,0,0.96); display: flex; flex-direction: column;
-            justify-content: center; align-items: center; color: white; cursor: pointer;
-        }
-
-        .btn-start {
-            background: #ffd700; color: #000; padding: 3vmin 10vmin;
-            border-radius: 60px; font-size: 5vmin; font-weight: 900;
-            border: none; box-shadow: 0 0 50px rgba(255,215,0,0.4);
-        }
-
-        #countdown { font-size: 30vmin; font-weight: 900; color: #ffd700; display: none; }
     </style>
 </head>
 <body>
@@ -126,18 +112,6 @@
         <div id="bg-layer"></div>
         <div id="border-frame"></div>
         <div id="playback-status">Paused</div>
-
-        <!-- ਲੁਕਵਾਂ (Hidden) ਫੁੱਲ ਸਕਰੀਨ ਬਟਨ - Top Right Corner -->
-        <button onclick="toggleFullScreen(event)" style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; z-index: 50000; background: transparent; border: none; outline: none; cursor: pointer; opacity: 0;">
-        </button>
-
-        <div id="start-overlay" onclick="startProduction(event)">
-            <div id="init-box" style="text-align: center;">
-                <p style="font-size: 4vmin; margin-bottom: 30px;">ਸਕ੍ਰੀਨ ਰਿਕਾਰਡਰ (ਲੈਂਡਸਕੇਪ) ਚਾਲੂ ਕਰੋ</p>
-                <button class="btn-start">ਰਿਕਾਰਡਿੰਗ ਸ਼ੁਰੂ ਕਰੋ</button>
-            </div>
-            <div id="countdown">3</div>
-        </div>
 
         <div id="viewport">
             <!-- ਡਾਇਨਾਮਿਕ ਕਾਰਡ ਜੋ ਬਾਰ-ਬਾਰ ਅਪਡੇਟ ਹੋਵੇਗਾ -->
@@ -156,8 +130,12 @@
     const player = new Audio();
     let isPaused = false;
     let currentIdx = 0;
+    
+    // ਨਵੇਂ ਵੇਰੀਏਬਲ ਆਟੋ-ਸਟਾਰਟ ਅਤੇ ਪੌਜ਼ ਕੰਟਰੋਲ ਲਈ
+    let hasStarted = false;
+    let isStartedSlide = false;
 
-    // ਫੁੱਲ ਸਕਰੀਨ ਕਰਨ ਵਾਲਾ ਫੰਕਸ਼ਨ
+    // --- ਫੁੱਲ ਸਕਰੀਨ ਕਰਨ ਵਾਲਾ ਫੰਕਸ਼ਨ ---
     function forceFullScreen() { 
         try { 
             if (!document.fullscreenElement) { 
@@ -170,10 +148,23 @@
         } catch (e) {} 
     }
 
-    function toggleFullScreen(event) { 
-        if(event) event.stopPropagation(); // ਇਸ ਨਾਲ ਬਟਨ ਦਬਾਉਣ 'ਤੇ ਵੀਡੀਓ Pause ਨਹੀਂ ਹੋਵੇਗੀ
+    // --- ਡਬਲ ਟੈਪ (Double Tap) ਲੌਜਿਕ ---
+    let lastTapTime = 0;
+    
+    // ਮੋਬਾਈਲ ਲਈ ਡਬਲ ਟੈਪ
+    document.addEventListener('touchstart', function(e) {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTapTime;
+        if (tapLength < 500 && tapLength > 0) {
+            forceFullScreen();
+        }
+        lastTapTime = currentTime;
+    });
+
+    // ਕੰਪਿਊਟਰ/ਮਾਊਸ ਲਈ ਡਬਲ ਕਲਿੱਕ
+    document.addEventListener('dblclick', function(e) {
         forceFullScreen();
-    }
+    });
 
     // --- 09 ਮਾਰਚ ਦਾ ਮੁਕੰਮਲ ਡਾਟਾ (ਪੂਰੇ ਵਾਕਾਂ ਵਿੱਚ ਉੱਤਰ) ---
     const slideSteps = [
@@ -286,18 +277,21 @@
         }
     ];
 
-    async function startProduction(e) {
-        e.stopPropagation();
-        document.getElementById('init-box').style.display = 'none';
-        const cd = document.getElementById('countdown');
-        cd.style.display = 'block';
-        let count = 3;
-        const timer = setInterval(() => {
-            count--;
-            if(count > 0) cd.innerText = count;
-            else { clearInterval(timer); document.getElementById('start-overlay').style.display = 'none'; executeStep(0); }
-        }, 1000);
+    // --- ਆਟੋ-ਸਟਾਰਟ ਲੌਜਿਕ (3 ਸੈਕਿੰਡ ਦੀ ਬਲੈਂਕ ਸਕ੍ਰੀਨ) ---
+    function startProduction() {
+        if (hasStarted) return;
+        hasStarted = true;
+        
+        // 3 ਸੈਕਿੰਡ ਲਈ ਸਕ੍ਰੀਨ ਬਲੈਂਕ ਰਹੇਗੀ (ਸਿਰਫ਼ ਬੈਕਗ੍ਰਾਊਂਡ), ਫਿਰ ਸਲਾਈਡਾਂ ਸ਼ੁਰੂ ਹੋਣਗੀਆਂ
+        setTimeout(() => {
+            isStartedSlide = true; // ਹੁਣ ਪੌਜ਼ ਬਟਨ ਕੰਮ ਕਰ ਸਕਦਾ ਹੈ
+            executeStep(0);
+        }, 3000);
     }
+
+    // ਪਹਿਲੇ ਟੱਚ ਜਾਂ ਕਲਿੱਕ 'ਤੇ ਆਟੋਮੈਟਿਕ ਸ਼ੁਰੂਆਤ (Audio Autoplay ਲਈ ਜ਼ਰੂਰੀ)
+    document.addEventListener('click', startProduction);
+    document.addEventListener('touchstart', startProduction, {passive: true});
 
     async function executeStep(idx) {
         if(idx >= slideSteps.length) return;
@@ -370,6 +364,7 @@
     }
 
     function togglePlayPause() {
+        if (!isStartedSlide) return; // ਸਲਾਈਡ ਸ਼ੁਰੂ ਹੋਣ ਤੋਂ ਪਹਿਲਾਂ ਕਲਿੱਕ ਨੂੰ ਇਗਨੋਰ ਕਰੋ
         isPaused = !isPaused;
         document.getElementById('playback-status').style.display = isPaused ? 'block' : 'none';
         if(!isPaused) { if(player.paused) player.play(); } else { player.pause(); }
@@ -393,4 +388,5 @@
 </script>
 </body>
 </html>
+
 
