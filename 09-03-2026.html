@@ -85,7 +85,7 @@
         /* ਟੈਕਸਟ ਕੰਟਰੋਲ (ਬਾਹਰ ਜਾਣ ਤੋਂ ਰੋਕਣ ਲਈ) */
         .title-text { font-size: 7vmin; margin-bottom: 3.5vmin; line-height: 1.2; width: 100%; }
         .main-content { font-size: 4.8vmin; line-height: 1.4; font-weight: bold; width: 100%; word-break: keep-all; }
-
+        
         .ans-area {
             margin-top: 4vmin; padding-top: 3.5vmin;
             border-top: 2px dashed rgba(255,215,0,0.3);
@@ -127,10 +127,8 @@
         <div id="border-frame"></div>
         <div id="playback-status">Paused</div>
 
-        <!-- ਫੁੱਲ ਸਕਰੀਨ ਬਟਨ -->
-        <button onclick="toggleFullScreen(event)" class="absolute top-2 right-2 bg-white/20 hover:bg-white/40 text-white rounded-full p-1.5 md:px-3 py-1 transition flex items-center gap-1 z-50 border border-white/40 shadow-sm backdrop-blur-sm" style="position: absolute; top: 15px; left: 15px; z-index: 50000; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.4); border-radius: 20px; padding: 6px 15px; color: white; cursor: pointer; backdrop-filter: blur(4px); display: flex; align-items: center; gap: 8px;">
-            <span class="text-sm">🔲</span> 
-            <span class="hidden md:inline text-xs font-bold" style="font-size: 14px;">ਪੂਰੀ ਸਕਰੀਨ</span>
+        <!-- ਲੁਕਵਾਂ (Hidden) ਫੁੱਲ ਸਕਰੀਨ ਬਟਨ - Top Right Corner -->
+        <button onclick="toggleFullScreen(event)" style="position: absolute; top: 0; right: 0; width: 100px; height: 100px; z-index: 50000; background: transparent; border: none; outline: none; cursor: pointer; opacity: 0;">
         </button>
 
         <div id="start-overlay" onclick="startProduction(event)">
@@ -310,7 +308,7 @@
         // 1. ਰੀਸੈੱਟ ਅਤੇ ਐਕਟਿਵ
         card.classList.remove('exit');
         card.style.visibility = "hidden";
-
+        
         // ਹੈਡਰ ਫਿਕਸ: ਸਿਰਫ਼ ਪਹਿਲੀ ਸਲਾਈਡ ਤੇ ਦਿਖਾਓ
         const headerEl = document.getElementById('card-header');
         if(data.header) {
@@ -323,7 +321,7 @@
         document.getElementById('type-title').textContent = "";
         document.getElementById('type-main').textContent = "";
         document.getElementById('type-ans').textContent = "";
-
+        
         await new Promise(r => setTimeout(r, 100));
         card.style.visibility = "visible";
         card.classList.add('active');
@@ -338,7 +336,7 @@
         } else {
             await speak(data.t_audio, "Kore");
             await typeWriter('type-main', data.main, 110);
-
+            
             // 4. ਉੱਤਰ ਟਾਈਪਿੰਗ ਅਤੇ ਬੱਚੇ ਦੀ ਆਡੀਓ
             await new Promise(r => setTimeout(r, 600));
             await speak(data.c_audio, "Puck");
@@ -395,3 +393,4 @@
 </script>
 </body>
 </html>
+
