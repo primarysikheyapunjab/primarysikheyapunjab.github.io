@@ -2,7 +2,7 @@
 <html lang="pa">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ - 3D ਪਲੇਟਫਾਰਮ</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,7 +24,7 @@
         }
     </script>
     <style>
-        /* ਬੈਕਗਰਾਊਂਡ ਅਤੇ ਬੇਸਿਕ ਸੈਟਿੰਗਜ਼ */
+        /* ਬੈਕਗਰਾਊਂਡ ਅਤੇ ਬੇਸਿਕ ਸੈਟਿੰਗਜ਼ (Original Simple Look) */
         body { 
             font-family: 'Mukta Malar', sans-serif; 
             background: linear-gradient(135deg, #e0f2fe 0%, #fef08a 50%, #fbcfe8 100%);
@@ -32,10 +32,14 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
         }
 
         /* 3D ਬੈਕਗਰਾਊਂਡ ਪੈਟਰਨ */
         .bg-3d-pattern {
+            position: fixed; inset: 0; pointer-events: none; z-index: -1;
             background-image: 
                 radial-gradient(circle at 100% 150%, rgba(255,255,255,0.3) 24%, white 24%, white 28%, rgba(255,255,255,0.3) 28%, rgba(255,255,255,0.3) 36%, white 36%, white 40%, transparent 40%, transparent),
                 radial-gradient(circle at 0    150%, rgba(255,255,255,0.3) 24%, white 24%, white 28%, rgba(255,255,255,0.3) 28%, rgba(255,255,255,0.3) 36%, white 36%, white 40%, transparent 40%, transparent);
@@ -46,17 +50,16 @@
         .clay-card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
-            border-radius: 2rem;
+            border-radius: 1.5rem;
             border: 2px solid rgba(255, 255, 255, 0.9);
             box-shadow: 
-                8px 12px 25px rgba(0, 0, 0, 0.15), 
-                inset 0 8px 15px rgba(255, 255, 255, 1), 
-                inset 0 -8px 15px rgba(0, 0, 0, 0.05);
+                8px 12px 25px rgba(0, 0, 0, 0.1), 
+                inset 0 8px 15px rgba(255, 255, 255, 1);
         }
 
         .btn-3d-super {
             position: relative;
-            border-radius: 1.5rem;
+            border-radius: 1.25rem;
             border: 2px solid rgba(255, 255, 255, 0.4);
             transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
             transform: translateY(0);
@@ -64,235 +67,278 @@
         
         .btn-3d-super::before {
             content: ""; position: absolute; inset: 0; border-radius: inherit;
-            box-shadow: inset 0 8px 20px rgba(255,255,255,0.6), inset 0 -8px 20px rgba(0,0,0,0.2);
+            box-shadow: inset 0 8px 20px rgba(255,255,255,0.6), inset 0 -6px 15px rgba(0,0,0,0.15);
             pointer-events: none;
         }
 
         .btn-3d-super:active {
-            transform: translateY(6px) !important;
-            box-shadow: 0 2px 0 var(--shadow-color), 0 4px 8px rgba(0,0,0,0.3) !important;
+            transform: translateY(4px) !important;
+            box-shadow: 0 2px 0 var(--shadow-color), 0 3px 6px rgba(0,0,0,0.2) !important;
         }
 
-        /* ਟੈਕਸਟ ਲਈ 3D ਸ਼ੈਡੋ */
-        .text-3d { text-shadow: 0 3px 3px rgba(0,0,0,0.3); }
+        .text-3d { text-shadow: 0 2px 3px rgba(0,0,0,0.2); }
         .text-3d-light { text-shadow: 0 2px 2px rgba(255,255,255,0.8); }
 
-        /* ਫਲੋਟਿੰਗ ਅਤੇ ਬਾਊਂਸ ਐਨੀਮੇਸ਼ਨ */
+        /* ਐਨੀਮੇਸ਼ਨ */
         .float-anim { animation: float 4s ease-in-out infinite; }
-        @keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-8px); } 100% { transform: translateY(0px); } }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
 
         .bounce-anim { animation: bounceIcon 2s ease-in-out infinite; }
         @keyframes bounceIcon { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15) rotate(5deg); } }
 
         /* ਸਕ੍ਰੋਲ ਬਾਰ ਡਿਜ਼ਾਈਨ */
-        .custom-scroll::-webkit-scrollbar { width: 8px; height: 8px; } 
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; } 
         .custom-scroll::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 10px; } 
-        .custom-scroll::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #38bdf8, #2563eb); border-radius: 10px; border: 1px solid white; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #38bdf8, #2563eb); border-radius: 10px; }
 
         /* ਵਿਊ ਕੰਟਰੋਲ */
-        .view-section { display: none; animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        .view-section { display: none; animation: popIn 0.3s ease-out; }
         .view-section.active { display: block; }
-        @keyframes popIn { 0% { opacity: 0; transform: scale(0.95) translateY(20px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.98) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
 
-        /* ਤਤਕਰਾ (Index) ਦੀਆਂ ਕਤਾਰਾਂ ਲਈ ਐਨੀਮੇਸ਼ਨ */
-        .index-row { transition: all 0.2s ease-in-out; }
-        .index-row:hover { transform: scale(1.01) translateX(4px); box-shadow: 0 4px 15px rgba(0,0,0,0.1); z-index: 10; position: relative; border-left: 4px solid #0ea5e9; }
-
-        /* ਫਲੋਟਿੰਗ ਟੈਗਲਾਈਨ */
+        /* ਟੈਗਲਾਈਨਾਂ */
         @keyframes scroll-text { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
-        .scrolling-container { width: 100%; overflow: hidden; white-space: nowrap; background: linear-gradient(90deg, #c59b08, #FFD700, #c59b08); padding: 8px 0; display: flex; align-items: center; border-bottom: 2px solid #b45309; }
-        .scrolling-text { display: inline-block; animation: scroll-text 25s linear infinite; font-size: 1rem; font-weight: 800; color: #002244; }
+        .scrolling-container { width: 100%; overflow: hidden; white-space: nowrap; background: linear-gradient(90deg, #fef9c3, #fce7f3, #fef9c3); padding: 8px 0; display: flex; align-items: center; border-bottom: 2px solid #fbcfe8; }
+        .scrolling-text { display: inline-block; animation: scroll-text 25s linear infinite; font-size: 1rem; font-weight: 800; color: #b45309; }
 
-        /* --- ਓਵਰਲੈਪਿੰਗ ਅਤੇ ਲੈਂਡਸਕੇਪ ਰਿਸਪੌਂਸਿਵ ਸੈਟਿੰਗਜ਼ --- */
-        @media (orientation: landscape) and (max-height: 600px) {
-            .btn-3d-super { padding: 0.75rem !important; }
-            .landscape-shrink { transform: scale(0.9); margin-top: -5px; }
-            #class-view .grid { gap: 1rem !important; }
-            .subject-card-icon { font-size: 3rem !important; }
-            .subject-card-title { font-size: 1.2rem !important; }
-            .index-table-header { font-size: 0.8rem !important; }
-            .index-table-content { font-size: 0.85rem !important; }
-            .index-btn { padding: 0.4rem 0.8rem !important; font-size: 0.8rem !important; }
-            /* ਲੈਂਡਸਕੇਪ ਵਿੱਚ ਟੇਬਲ ਨੂੰ ਸਕ੍ਰੋਲ ਕਰਨ ਲਈ ਥਾਂ ਦਿਓ */
-            #chapters-list-container { max-height: 50vh !important; }
-        }
-        
-        /* ਮੋਬਾਈਲ ਲਈ ਛੋਟੇ ਫੌਂਟ ਤਾਂ ਜੋ ਓਵਰਲੈਪ ਨਾ ਹੋਵੇ */
+        /* ਤਿਆਰ ਕਰਤਾ ਵਾਲੀ ਹੇਠਲੀ ਮੋਟੀ ਲਾਈਨ */
+        .bottom-scrolling-container { width: 100%; overflow: hidden; white-space: nowrap; background: #001a33; border-top: 3px solid #FFD700; padding: 10px 0; display: flex; align-items: center; margin-top: auto; }
+        .bottom-scrolling-text { display: inline-block; animation: scroll-text 20s linear infinite; font-size: 1.1rem; font-weight: 900; color: #FFD700; }
+
+        /* ਓਵਰਲੈਪਿੰਗ ਬਚਾਉਣ ਲਈ ਛੋਟੇ ਫੌਂਟ ਦੀ ਸੈਟਿੰਗ (ਮੋਬਾਈਲ ਲਈ) */
         @media (max-width: 640px) {
-            .table-col-sno { width: 3rem !important; }
-            .table-col-name { flex: 1; padding-left: 0.5rem !important; padding-right: 0.5rem !important; }
-            .table-col-type { width: 4rem !important; font-size: 0.7rem !important; }
-            .table-col-page { width: 3rem !important; font-size: 0.8rem !important; }
-            .table-col-btn { width: 5rem !important; }
-            .index-btn { px: 0.5rem !important; py: 0.3rem !important; font-size: 0.75rem !important; }
+            .table-col-sno { width: 2.5rem !important; }
+            .table-col-name { flex: 1; padding-left: 0.5rem !important; padding-right: 0.25rem !important; }
+            .table-col-type { width: 3.5rem !important; font-size: 0.65rem !important; }
+            .table-col-page { width: 2.5rem !important; font-size: 0.75rem !important; }
+            .table-col-btn { width: 4.5rem !important; }
+            .index-btn { padding: 0.25rem 0.5rem !important; font-size: 0.7rem !important; }
         }
     </style>
 </head>
-<body class="bg-3d-pattern pb-24 md:pb-8">
+<body class="pb-24 md:pb-0">
 
-    <!-- 3D ਹੈਡਰ -->
+    <div class="bg-3d-pattern"></div>
+
+    <!-- 3D ਹੈਡਰ (Original Style) -->
     <header class="sticky top-2 md:top-4 z-50 px-2 md:px-4 max-w-7xl mx-auto w-full pt-1">
-        <div class="clay-card bg-gradient-to-r from-blue-500 to-indigo-600 p-2 md:p-3 flex justify-between items-center shadow-[0_8px_20px_rgba(37,99,235,0.4)]">
+        <div class="clay-card bg-gradient-to-r from-blue-500 to-indigo-600 p-2 md:p-3 flex justify-between items-center shadow-[0_6px_15px_rgba(37,99,235,0.3)]">
             <div class="flex items-center gap-2 md:gap-3 cursor-pointer group" onclick="showHome()">
-                
-                <!-- 3D ਲੋਗੋ (ਡਿਗਰੀ ਵਾਲੀ ਟੋਪੀ - Graduation Cap) -->
-                <div class="relative w-12 h-12 sm:w-14 sm:h-14 md:w-16 md:h-16 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full border-[3px] border-white shadow-[0_4px_0_#b45309,0_8px_10px_rgba(0,0,0,0.3)] flex items-center justify-center shrink-0 z-20 group-hover:scale-105 transition-transform float-anim">
-                    <div class="absolute inset-0 rounded-full shadow-[inset_0_3px_8px_rgba(255,255,255,0.9),inset_0_-3px_8px_rgba(0,0,0,0.3)] pointer-events-none"></div>
-                    <span class="text-2xl sm:text-3xl md:text-4xl drop-shadow-[0_3px_2px_rgba(0,0,0,0.4)]">🎓</span>
+                <!-- 3D ਲੋਗੋ -->
+                <div class="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full border-2 border-white shadow-[0_3px_0_#b45309] flex items-center justify-center shrink-0 z-20 group-hover:scale-105 transition-transform float-anim">
+                    <span class="text-xl sm:text-2xl md:text-3xl drop-shadow-md">🎓</span>
                 </div>
-                
                 <div class="flex flex-col justify-center">
-                    <h1 class="text-lg sm:text-xl md:text-2xl font-extrabold text-white text-3d tracking-wide leading-tight">ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ</h1>
+                    <h1 class="text-base sm:text-lg md:text-2xl font-extrabold text-white text-3d tracking-wide leading-tight">ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ</h1>
                     <p class="text-[0.6rem] sm:text-[0.7rem] md:text-xs font-bold text-yellow-200 bg-black/20 px-2 py-0.5 rounded-full inline-block mt-0.5 shadow-inner border border-white/10 w-max">3D ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ</p>
                 </div>
             </div>
             
             <nav class="hidden md:flex">
-                <button onclick="showHome()" class="btn-3d-super bg-gradient-to-b from-white to-gray-200 text-blue-800 px-5 py-2 font-extrabold text-sm shadow-[0_4px_0_#94a3b8] flex items-center gap-2" style="--shadow-color: #94a3b8;">
+                <button onclick="showHome()" class="btn-3d-super bg-gradient-to-b from-white to-gray-100 text-blue-800 px-4 py-1.5 font-extrabold text-sm shadow-[0_4px_0_#94a3b8] flex items-center gap-2" style="--shadow-color: #94a3b8;">
                     <i class="fa-solid fa-house"></i> ਮੁੱਖ ਪੰਨਾ
                 </button>
             </nav>
         </div>
     </header>
 
-    <!-- ਫਲੋਟ ਕਰਦੀ ਟੈਗਲਾਈਨ -->
-    <div class="scrolling-container mt-2">
+    <!-- ਉੱਪਰਲੀ ਟੈਗਲਾਈਨ -->
+    <div class="scrolling-container mt-2 shadow-sm">
         <div class="scrolling-text">
-            <i class="fa-solid fa-star text-white mx-2"></i> ਜੀ ਆਇਆਂ ਨੂੰ! ਇਹ ਪਲੇਟਫਾਰਮ ਬੱਚਿਆਂ ਅਤੇ ਅਧਿਆਪਕਾਂ ਲਈ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਹੈ। 
-            <i class="fa-solid fa-book-open text-red-700 mx-2"></i> ਸਾਰੇ ਵਿਸ਼ਿਆਂ ਦਾ ਮਟੀਰੀਅਲ ਅਪਲੋਡ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ। <i class="fa-solid fa-star text-white mx-2"></i>
+            <i class="fa-solid fa-star text-orange-500 mx-2"></i> ਜੀ ਆਇਆਂ ਨੂੰ! ਇਹ ਪਲੇਟਫਾਰਮ ਬੱਚਿਆਂ ਅਤੇ ਅਧਿਆਪਕਾਂ ਲਈ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਹੈ। 
+            <i class="fa-solid fa-book-open text-blue-600 mx-2"></i> ਸਾਰੇ ਵਿਸ਼ਿਆਂ ਦਾ ਮਟੀਰੀਅਲ ਅਪਲੋਡ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ। <i class="fa-solid fa-star text-orange-500 mx-2"></i>
         </div>
     </div>
 
     <!-- ਮੁੱਖ ਕੰਟੈਂਟ ਏਰੀਆ -->
-    <main class="flex-grow container mx-auto px-2 md:px-4 py-4 md:py-6 relative max-w-6xl z-10">
+    <main class="flex-grow container mx-auto px-2 md:px-4 py-4 relative max-w-6xl z-10">
 
-        <!-- ================= VIEW 1: HOME (ਜਮਾਤਾਂ ਦੀ ਚੋਣ) ================= -->
+        <!-- ================= VIEW 1: HOME ================= -->
         <div id="home-view" class="view-section active">
             
-            <div class="text-center mb-6 md:mb-8">
-                <div class="inline-block clay-card bg-white px-6 md:px-8 py-2 mb-2">
-                    <h3 class="text-lg sm:text-xl md:text-3xl font-extrabold text-indigo-800 flex items-center gap-2">
-                        <span class="text-2xl md:text-3xl bounce-anim">🎒</span> ਆਪਣੀ ਜਮਾਤ ਚੁਣੋ
+            <div class="text-center mb-6">
+                <div class="inline-block clay-card bg-white px-6 py-2 mb-1 shadow-sm">
+                    <h3 class="text-lg md:text-2xl font-extrabold text-indigo-800 flex items-center gap-2">
+                        <span class="text-2xl bounce-anim">🎒</span> ਆਪਣੀ ਜਮਾਤ ਚੁਣੋ
                     </h3>
                 </div>
             </div>
             
-            <!-- 3D ਜਮਾਤਾਂ ਵਾਲੇ ਬਟਨ -->
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-5 md:gap-6 px-1 mb-10">
+            <!-- ਜਮਾਤਾਂ ਵਾਲੇ ਬਟਨ (Original Normal Size Grid) -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-5 px-1 mb-8">
                 <!-- ਪਹਿਲੀ -->
-                <button onclick="openClass(1)" class="btn-3d-super bg-gradient-to-b from-red-400 to-red-600 text-white p-3 sm:p-4 shadow-[0_8px_0_#991b1b,0_12px_15px_rgba(220,38,38,0.4)] flex flex-col items-center justify-center gap-2 group landscape-shrink" style="--shadow-color: #991b1b;">
-                    <div class="bg-white/20 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center backdrop-blur-md shadow-inner border-2 border-white/50 group-hover:scale-110 transition-transform">
-                        <span class="text-4xl sm:text-5xl font-black text-white text-3d pt-1">1</span>
+                <button onclick="openClass(1)" class="btn-3d-super bg-gradient-to-b from-red-400 to-red-600 text-white p-3 md:p-4 shadow-[0_6px_0_#991b1b] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: #991b1b;">
+                    <div class="bg-white/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform">
+                        <span class="text-3xl md:text-4xl font-black text-white text-3d pt-1">1</span>
                     </div>
-                    <span class="text-base sm:text-lg md:text-xl font-extrabold text-3d tracking-wider">ਪਹਿਲੀ</span>
+                    <span class="text-sm md:text-xl font-extrabold text-3d tracking-wider">ਪਹਿਲੀ</span>
                 </button>
                 <!-- ਦੂਜੀ -->
-                <button onclick="openClass(2)" class="btn-3d-super bg-gradient-to-b from-blue-400 to-blue-600 text-white p-3 sm:p-4 shadow-[0_8px_0_#1e3a8a,0_12px_15px_rgba(37,99,235,0.4)] flex flex-col items-center justify-center gap-2 group landscape-shrink" style="--shadow-color: #1e3a8a;">
-                    <div class="bg-white/20 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center backdrop-blur-md shadow-inner border-2 border-white/50 group-hover:scale-110 transition-transform">
-                        <span class="text-4xl sm:text-5xl font-black text-white text-3d pt-1">2</span>
+                <button onclick="openClass(2)" class="btn-3d-super bg-gradient-to-b from-blue-400 to-blue-600 text-white p-3 md:p-4 shadow-[0_6px_0_#1e3a8a] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: #1e3a8a;">
+                    <div class="bg-white/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform">
+                        <span class="text-3xl md:text-4xl font-black text-white text-3d pt-1">2</span>
                     </div>
-                    <span class="text-base sm:text-lg md:text-xl font-extrabold text-3d tracking-wider">ਦੂਜੀ</span>
+                    <span class="text-sm md:text-xl font-extrabold text-3d tracking-wider">ਦੂਜੀ</span>
                 </button>
                 <!-- ਤੀਜੀ -->
-                <button onclick="openClass(3)" class="btn-3d-super bg-gradient-to-b from-amber-400 to-orange-500 text-white p-3 sm:p-4 shadow-[0_8px_0_#9a3412,0_12px_15px_rgba(234,88,12,0.4)] flex flex-col items-center justify-center gap-2 group landscape-shrink" style="--shadow-color: #9a3412;">
-                    <div class="bg-white/20 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center backdrop-blur-md shadow-inner border-2 border-white/50 group-hover:scale-110 transition-transform">
-                        <span class="text-4xl sm:text-5xl font-black text-white text-3d pt-1">3</span>
+                <button onclick="openClass(3)" class="btn-3d-super bg-gradient-to-b from-amber-400 to-orange-500 text-white p-3 md:p-4 shadow-[0_6px_0_#9a3412] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: #9a3412;">
+                    <div class="bg-white/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform">
+                        <span class="text-3xl md:text-4xl font-black text-white text-3d pt-1">3</span>
                     </div>
-                    <span class="text-base sm:text-lg md:text-xl font-extrabold text-3d tracking-wider">ਤੀਜੀ</span>
+                    <span class="text-sm md:text-xl font-extrabold text-3d tracking-wider">ਤੀਜੀ</span>
                 </button>
                 <!-- ਚੌਥੀ -->
-                <button onclick="openClass(4)" class="btn-3d-super bg-gradient-to-b from-emerald-400 to-green-600 text-white p-3 sm:p-4 shadow-[0_8px_0_#14532d,0_12px_15px_rgba(22,163,74,0.4)] flex flex-col items-center justify-center gap-2 group landscape-shrink" style="--shadow-color: #14532d;">
-                    <div class="bg-white/20 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center backdrop-blur-md shadow-inner border-2 border-white/50 group-hover:scale-110 transition-transform">
-                        <span class="text-4xl sm:text-5xl font-black text-white text-3d pt-1">4</span>
+                <button onclick="openClass(4)" class="btn-3d-super bg-gradient-to-b from-emerald-400 to-green-600 text-white p-3 md:p-4 shadow-[0_6px_0_#14532d] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: #14532d;">
+                    <div class="bg-white/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform">
+                        <span class="text-3xl md:text-4xl font-black text-white text-3d pt-1">4</span>
                     </div>
-                    <span class="text-base sm:text-lg md:text-xl font-extrabold text-3d tracking-wider">ਚੌਥੀ</span>
+                    <span class="text-sm md:text-xl font-extrabold text-3d tracking-wider">ਚੌਥੀ</span>
                 </button>
                 <!-- ਪੰਜਵੀਂ -->
-                <button onclick="openClass(5)" class="col-span-2 sm:col-span-1 lg:col-span-1 btn-3d-super bg-gradient-to-b from-purple-400 to-fuchsia-600 text-white p-3 sm:p-4 shadow-[0_8px_0_#701a75,0_12px_15px_rgba(192,38,211,0.4)] flex flex-col items-center justify-center gap-2 group landscape-shrink" style="--shadow-color: #701a75;">
-                    <div class="bg-white/20 w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center backdrop-blur-md shadow-inner border-2 border-white/50 group-hover:scale-110 transition-transform">
-                        <span class="text-4xl sm:text-5xl font-black text-white text-3d pt-1">5</span>
+                <button onclick="openClass(5)" class="col-span-2 sm:col-span-1 lg:col-span-1 btn-3d-super bg-gradient-to-b from-purple-400 to-fuchsia-600 text-white p-3 md:p-4 shadow-[0_6px_0_#701a75] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: #701a75;">
+                    <div class="bg-white/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform">
+                        <span class="text-3xl md:text-4xl font-black text-white text-3d pt-1">5</span>
                     </div>
-                    <span class="text-base sm:text-lg md:text-xl font-extrabold text-3d tracking-wider">ਪੰਜਵੀਂ</span>
+                    <span class="text-sm md:text-xl font-extrabold text-3d tracking-wider">ਪੰਜਵੀਂ</span>
                 </button>
             </div>
 
-            <!-- 3D ਸਵੇਰ ਦੀ ਸਭਾ -->
-            <div class="clay-card bg-gradient-to-br from-yellow-50 to-orange-50 p-4 md:p-6">
-                <div class="flex flex-col sm:flex-row items-center justify-between border-b-2 border-yellow-200 pb-3 mb-4">
-                    <h3 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-orange-700 flex items-center gap-2">
-                        <span class="text-3xl md:text-4xl float-anim">🌞</span> ਸਵੇਰ ਦੀ ਸਭਾ
+            <!-- ਮਿਸ਼ਨ ਸਮਰੱਥ (Normal Size Banner) -->
+            <div class="px-1 mb-6">
+                <button onclick="openMissionSamarth()" class="btn-3d-super w-full bg-gradient-to-r from-purple-600 via-fuchsia-500 to-pink-500 text-white rounded-[1.5rem] p-3 md:p-5 shadow-[0_6px_0_#86198f] flex flex-row items-center justify-between group" style="--shadow-color: #86198f;">
+                    <div class="flex items-center gap-3">
+                        <div class="bg-white/20 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center border border-white/50 group-hover:scale-110 transition-transform float-anim shrink-0">
+                            <span class="text-2xl md:text-3xl drop-shadow-md">🚀</span>
+                        </div>
+                        <div class="text-left flex flex-col justify-center">
+                            <h3 class="text-lg md:text-2xl font-black text-white text-3d leading-tight">ਮਿਸ਼ਨ ਸਮਰੱਥ</h3>
+                            <p class="text-[10px] md:text-xs font-bold text-fuchsia-100 mt-0.5 bg-black/20 px-2 py-0.5 rounded-md inline-block w-max">ਤੀਸਰੀ ਤੋਂ ਪੰਜਵੀਂ (2026-27)</p>
+                        </div>
+                    </div>
+                    <div class="bg-white/20 px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-black text-white shadow-inner border border-white/30 flex items-center gap-1.5 shrink-0 ml-2">
+                        ਖੋਲ੍ਹੋ <i class="fa-solid fa-folder-open group-hover:scale-110 transition-transform"></i>
+                    </div>
+                </button>
+            </div>
+
+            <!-- ਸਵੇਰ ਦੀ ਸਭਾ -->
+            <div class="clay-card bg-gradient-to-br from-yellow-50 to-orange-50 p-4 shadow-sm border border-yellow-200">
+                <div class="flex flex-col sm:flex-row items-center justify-between border-b border-yellow-300 pb-2 mb-3">
+                    <h3 class="text-lg md:text-xl font-extrabold text-orange-700 flex items-center gap-2">
+                        <span class="text-2xl md:text-3xl float-anim">🌞</span> ਸਵੇਰ ਦੀ ਸਭਾ
                     </h3>
-                    <button onclick="openAssemblyView()" class="btn-3d-super mt-3 sm:mt-0 bg-gradient-to-b from-orange-400 to-red-500 text-white px-5 py-2 font-extrabold text-sm md:text-base shadow-[0_5px_0_#991b1b] flex items-center gap-2" style="--shadow-color: #991b1b;">
+                    <button onclick="openAssemblyView()" class="btn-3d-super mt-2 sm:mt-0 bg-gradient-to-b from-orange-400 to-red-500 text-white px-4 py-1.5 font-bold text-xs md:text-sm shadow-[0_4px_0_#991b1b] flex items-center gap-2" style="--shadow-color: #991b1b;">
                         ਸਾਰੀਆਂ ਦੇਖੋ <i class="fa-solid fa-play"></i>
                     </button>
                 </div>
-                <div id="latest-assembly-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-4"></div>
+                <div id="latest-assembly-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
             </div>
         </div>
 
-        <!-- ================= VIEW 2: CLASS VIEW (3D ਵਿਸ਼ੇ) ================= -->
+        <!-- ================= VIEW 2: CLASS VIEW ================= -->
         <div id="class-view" class="view-section">
-            <div class="clay-card bg-white p-3 md:p-4 mb-6 flex items-center justify-between">
-                <h2 id="class-title" class="text-xl sm:text-2xl md:text-4xl font-black text-blue-700 flex items-center gap-2 sm:gap-3 text-3d-light"></h2>
-                <button onclick="showHome()" class="btn-3d-super bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 px-3 md:px-5 py-1.5 md:py-2 font-bold shadow-[0_4px_0_#64748b] flex items-center gap-1 sm:gap-2 text-xs sm:text-sm" style="--shadow-color: #64748b;">
+            <div class="clay-card bg-white p-3 md:p-4 mb-4 flex items-center justify-between shadow-sm">
+                <h2 id="class-title" class="text-lg md:text-2xl font-black text-blue-700 flex items-center gap-2 text-3d-light"></h2>
+                <button onclick="showHome()" class="btn-3d-super bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 px-3 md:px-4 py-1.5 font-bold shadow-[0_4px_0_#64748b] flex items-center gap-1 text-xs md:text-sm" style="--shadow-color: #64748b;">
                     <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">ਮੁੱਖ ਪੰਨਾ</span>
                 </button>
             </div>
             
-            <!-- ਵਿਸ਼ੇ ਦਾ ਗਰਿੱਡ -->
-            <div id="subjects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 px-1 md:px-6"></div>
+            <div id="subjects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 px-1"></div>
         </div>
 
-        <!-- ================= VIEW 3: SUBJECT VIEW (3D ਤਤਕਰਾ) ================= -->
+        <!-- ================= VIEW 3: SUBJECT VIEW (ਤਤਕਰਾ) ================= -->
         <div id="subject-view" class="view-section">
-            <div class="flex items-center justify-between mb-4 clay-card p-2 md:p-3 bg-white">
-                <div class="flex flex-col overflow-hidden">
-                    <span id="breadcrumb-class" class="text-gray-500 font-extrabold text-[10px] sm:text-xs md:text-sm bg-gray-200 px-2 sm:px-3 py-0.5 rounded-full shadow-inner border border-gray-300 w-max mb-1"></span>
-                    <h2 id="subject-title" class="text-lg sm:text-xl md:text-3xl font-black text-orange-600 flex items-center gap-1 sm:gap-2 text-3d-light truncate"></h2>
+            <!-- ਸਿੰਗਲ ਲਾਈਨ ਹੈਡਰ -->
+            <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-orange-100 flex items-center justify-between shrink-0 shadow-sm">
+                <div class="flex items-center gap-2 w-[85%] overflow-hidden">
+                    <span id="breadcrumb-class" class="text-gray-600 font-bold text-[10px] md:text-sm bg-gray-100 px-2 py-0.5 rounded-md border border-gray-200 shrink-0 whitespace-nowrap"></span>
+                    <i class="fa-solid fa-caret-right text-gray-400 text-[10px] shrink-0"></i>
+                    <h2 id="subject-title" class="text-sm md:text-lg font-black text-orange-700 flex items-center gap-1.5 truncate"></h2>
                 </div>
-                <button id="back-to-class-btn" class="btn-3d-super shrink-0 bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 px-3 py-1.5 md:py-2 font-bold shadow-[0_4px_0_#64748b] flex items-center gap-1 sm:gap-2 text-xs sm:text-sm" style="--shadow-color: #64748b;">
-                    <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">ਪਿੱਛੇ</span>
+                <button onclick="goBack()" class="btn-3d-super shrink-0 bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 px-2.5 py-1 font-bold shadow-[0_3px_0_#64748b] flex items-center gap-1 text-[10px] md:text-xs" style="--shadow-color: #64748b;">
+                    <i class="fa-solid fa-arrow-left"></i>
                 </button>
             </div>
 
-            <div class="clay-card bg-white overflow-hidden flex flex-col p-1.5 md:p-2">
-                <div class="bg-gradient-to-r from-blue-500 to-sky-500 text-white text-center py-2 md:py-3 rounded-t-xl md:rounded-xl shadow-inner mb-1 md:mb-2 border-b-2 md:border-b-4 border-blue-700">
-                    <h1 class="text-lg sm:text-xl md:text-2xl font-black tracking-wide text-3d"><i class="fa-solid fa-list-ol mr-2 opacity-80"></i> ਪਾਠ ਸੂਚੀ (Index)</h1>
+            <!-- ਤਤਕਰਾ ਟੇਬਲ (Original Flex Layout) -->
+            <div class="clay-card bg-white flex flex-col p-1 shadow-md">
+                <div class="flex bg-sky-100 text-sky-900 font-black text-[10px] md:text-sm border-b-2 border-sky-300 rounded-t-lg mx-1">
+                    <div class="table-col-sno text-center py-2 border-r border-sky-200 w-10 md:w-16">ਨੰ.</div>
+                    <div class="table-col-name flex-1 py-2 px-2 border-r border-sky-200 truncate">ਪਾਠ ਦਾ ਨਾਂ</div>
+                    <div class="table-col-type text-center py-2 border-r border-sky-200 w-12 md:w-20">ਵਿਧਾ</div>
+                    <div class="table-col-page text-center py-2 border-r border-sky-200 w-10 md:w-16">ਪੰਨਾ</div>
+                    <div class="table-col-btn text-center py-2 w-14 md:w-24">ਖੋਲ੍ਹੋ</div>
                 </div>
 
-                <!-- ਟੇਬਲ ਹੈਡਰ (Responsive constraints applied) -->
-                <div class="flex bg-sky-100 text-sky-900 font-black text-[10px] sm:text-xs md:text-base border-b-2 md:border-b-4 border-sky-300 shadow-sm rounded-t-lg mx-1 index-table-header">
-                    <div class="w-10 sm:w-12 md:w-16 text-center py-2 md:py-3 border-r border-sky-300 table-col-sno">ਨੰ.</div>
-                    <div class="flex-1 py-2 md:py-3 px-1 sm:px-2 md:px-4 border-r border-sky-300 table-col-name truncate">ਪਾਠ ਦਾ ਨਾਂ</div>
-                    <div class="w-14 sm:w-16 md:w-24 text-center py-2 md:py-3 border-r border-sky-300 table-col-type">ਵਿਧਾ</div>
-                    <div class="w-10 sm:w-12 md:w-16 text-center py-2 md:py-3 border-r border-sky-300 table-col-page">ਪੰਨਾ</div>
-                    <div class="w-16 sm:w-20 md:w-28 text-center py-2 md:py-3 flex items-center justify-center table-col-btn">ਖੋਲ੍ਹੋ</div>
-                </div>
-
-                <!-- ਲਿਸਟ ਕੰਟੇਨਰ (Scrollable) -->
-                <div id="chapters-list-container" class="flex flex-col text-gray-700 font-bold text-xs sm:text-sm md:text-lg overflow-y-auto max-h-[60vh] custom-scroll px-1 pb-2">
-                    <!-- JS ਰਾਹੀਂ ਕਤਾਰਾਂ ਬਣਨਗੀਆਂ -->
+                <!-- ਸਕ੍ਰੋਲ ਏਰੀਆ -->
+                <div id="chapters-list-container" class="flex flex-col text-gray-700 font-bold overflow-y-auto max-h-[60vh] custom-scroll px-1 pb-2">
+                    <!-- JS Data -->
                 </div>
             </div>
         </div>
 
-        <!-- ================= VIEW 5: CONTENT (IFRAME) ================= -->
-        <div id="content-view" class="view-section">
-            <div class="clay-card bg-white p-2 md:p-3 mb-3 flex items-center justify-between">
-                <h2 id="content-title" class="text-base sm:text-lg md:text-2xl font-black text-blue-700 truncate flex items-center gap-2 w-[70%]">
-                    <i class="fa-solid fa-book-open text-orange-500"></i> <span class="truncate">ਪੜ੍ਹੋ</span>
+        <!-- ================= VIEW 4: MISSION SAMARTH (Folders) ================= -->
+        <div id="mission-samarth-view" class="view-section">
+            <div class="clay-card bg-white p-3 mb-4 border border-fuchsia-200 flex items-center justify-between shadow-sm">
+                <h2 class="text-lg md:text-2xl font-black text-purple-700 flex items-center gap-2">
+                    <span class="text-xl md:text-2xl">🚀</span> ਮਿਸ਼ਨ ਸਮਰੱਥ
                 </h2>
-                <button onclick="closeContent()" class="btn-3d-super shrink-0 bg-gradient-to-b from-red-400 to-red-600 text-white px-3 sm:px-5 py-1.5 md:py-2 font-bold shadow-[0_4px_0_#991b1b] flex items-center gap-1 text-xs md:text-sm" style="--shadow-color: #991b1b;">
-                    <i class="fa-solid fa-xmark"></i> <span class="hidden sm:inline">ਬੰਦ ਕਰੋ</span>
+                <button onclick="showHome()" class="btn-3d-super bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 px-3 md:px-4 py-1.5 font-bold shadow-[0_4px_0_#64748b] flex items-center gap-1 text-xs md:text-sm" style="--shadow-color: #64748b;">
+                    <i class="fa-solid fa-house"></i> <span class="hidden sm:inline">ਮੁੱਖ ਪੰਨਾ</span>
                 </button>
             </div>
             
-            <div class="w-full h-[65vh] md:h-[75vh] rounded-2xl overflow-hidden border-4 md:border-8 border-gray-300 shadow-[inset_0_10px_20px_rgba(0,0,0,0.2)] relative bg-white">
-                <div id="iframe-loader" class="absolute inset-0 flex items-center justify-center bg-gray-50 z-0">
-                    <div class="flex flex-col items-center">
-                        <div class="text-4xl md:text-5xl animate-spin mb-3">⏳</div>
-                        <p class="text-blue-700 font-black text-base md:text-xl bg-blue-100 px-4 py-1.5 rounded-full border-2 border-blue-200">ਜਾਦੂ ਹੋ ਰਿਹਾ ਹੈ...</p>
-                    </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 px-2">
+                <button onclick="openMissionSubject('ਪੰਜਾਬੀ', 'ੳ')" class="btn-3d-super bg-gradient-to-b from-pink-400 to-rose-600 text-white rounded-[1.5rem] p-5 shadow-[0_6px_0_#be123c] flex flex-col items-center justify-center gap-3 group" style="--shadow-color: #be123c;">
+                    <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform"><span class="text-3xl drop-shadow-md">ੳ</span></div>
+                    <span class="text-lg font-black text-3d">ਪੰਜਾਬੀ</span>
+                </button>
+                <button onclick="openMissionSubject('ਗਣਿਤ', '🔢')" class="btn-3d-super bg-gradient-to-b from-cyan-400 to-blue-600 text-white rounded-[1.5rem] p-5 shadow-[0_6px_0_#1d4ed8] flex flex-col items-center justify-center gap-3 group" style="--shadow-color: #1d4ed8;">
+                    <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform"><span class="text-3xl drop-shadow-md">🔢</span></div>
+                    <span class="text-lg font-black text-3d">ਗਣਿਤ</span>
+                </button>
+                <button onclick="openMissionSubject('English', '🔠')" class="btn-3d-super bg-gradient-to-b from-orange-400 to-red-500 text-white rounded-[1.5rem] p-5 shadow-[0_6px_0_#b91c1c] flex flex-col items-center justify-center gap-3 group" style="--shadow-color: #b91c1c;">
+                    <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform"><span class="text-3xl drop-shadow-md">🔠</span></div>
+                    <span class="text-lg font-black text-3d">English</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 5: MISSION MATERIALS (List) ================= -->
+        <div id="mission-materials-view" class="view-section">
+            <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-fuchsia-100 flex items-center justify-between shadow-sm">
+                <div class="flex items-center gap-2 w-[85%] overflow-hidden">
+                    <span class="text-gray-600 font-bold text-[9px] md:text-xs bg-gray-100 px-2 py-0.5 rounded-md border border-gray-200 shrink-0 whitespace-nowrap">ਮਿਸ਼ਨ ਸਮਰੱਥ</span>
+                    <i class="fa-solid fa-caret-right text-gray-400 text-[10px] shrink-0"></i>
+                    <h2 id="mission-subject-title" class="text-sm md:text-lg font-black text-purple-700 flex items-center gap-1.5 truncate"></h2>
+                </div>
+                <button onclick="goBack()" class="btn-3d-super shrink-0 bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 px-2.5 py-1 font-bold shadow-[0_3px_0_#64748b] flex items-center gap-1 text-[10px] md:text-xs" style="--shadow-color: #64748b;">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+            </div>
+            
+            <div class="clay-card bg-white p-2 flex flex-col min-h-[40vh] shadow-sm">
+                <div id="mission-materials-list" class="flex flex-col gap-2 overflow-y-auto custom-scroll pr-1">
+                    <!-- Dynamic Items -->
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= VIEW 6: CONTENT IFRAME ================= -->
+        <div id="content-view" class="view-section">
+            <div class="clay-card bg-white p-2 md:p-3 mb-3 flex items-center justify-between shadow-sm">
+                <h2 id="content-title" class="text-sm md:text-lg font-black text-blue-700 truncate flex items-center gap-2 w-[75%]">
+                    <i class="fa-solid fa-book-open text-orange-500"></i> <span class="truncate">ਪੜ੍ਹੋ</span>
+                </h2>
+                <button onclick="closeContent()" class="btn-3d-super shrink-0 bg-gradient-to-b from-red-400 to-red-600 text-white px-3 py-1.5 font-bold shadow-[0_3px_0_#991b1b] flex items-center gap-1 text-[10px] md:text-xs" style="--shadow-color: #991b1b;">
+                    <i class="fa-solid fa-xmark"></i> ਬੰਦ
+                </button>
+            </div>
+            <div class="w-full h-[60vh] md:h-[70vh] rounded-xl overflow-hidden border-4 border-gray-300 shadow-inner relative bg-white">
+                <div id="iframe-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-0">
+                    <div class="text-4xl animate-spin mb-2">⏳</div>
+                    <p class="text-blue-700 font-bold text-sm bg-blue-100 px-3 py-1 rounded-full">ਜਾਦੂ ਹੋ ਰਿਹਾ ਹੈ...</p>
                 </div>
                 <iframe id="app-iframe" src="" class="w-full h-full border-0 relative z-10" onload="document.getElementById('iframe-loader').style.display='none'" allowfullscreen></iframe>
             </div>
@@ -300,274 +346,224 @@
 
     </main>
 
-    <!-- ਮੋਬਾਈਲ ਲਈ ਫਲੋਟਿੰਗ 3D ਪੱਟੀ (Floating Pill Navigation) -->
-    <div class="md:hidden fixed bottom-4 left-1/2 transform -translate-x-1/2 w-[90%] max-w-sm bg-white/95 backdrop-blur-lg shadow-[0_10px_25px_rgba(0,0,0,0.3)] z-[100] border-2 border-gray-200 rounded-[2rem] flex justify-around items-center py-2 px-2">
-        <button onclick="showHome(); window.scrollTo({top: 0, behavior: 'smooth'});" class="flex flex-col items-center justify-center bg-blue-50 text-blue-700 w-[30%] h-12 rounded-2xl border-b-4 border-blue-200 active:border-b-0 active:translate-y-1 transition-all">
+    <!-- ਤਿਆਰ ਕਰਤਾ ਵਾਲੀ ਹੇਠਲੀ ਮੋਟੀ ਲਾਈਨ (Original Request) -->
+    <div class="bottom-scrolling-container mt-auto shrink-0 z-20 relative">
+        <div class="bottom-scrolling-text">
+            ਤਿਆਰ ਕਰਤਾ :- ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸ.ਪ.ਸ ਜਵੱਦੀ, ਬਲਾਕ ਲੁਧਿਆਣਾ-1 (ਜ਼ਿਲ੍ਹਾ ਲੁਧਿਆਣਾ) ★ ਤਿਆਰ ਕਰਤਾ :- ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸ.ਪ.ਸ ਜਵੱਦੀ, ਬਲਾਕ ਲੁਧਿਆਣਾ-1 (ਜ਼ਿਲ੍ਹਾ ਲੁਧਿਆਣਾ) ★
+        </div>
+    </div>
+
+    <!-- ਮੋਬਾਈਲ ਲਈ ਫਲੋਟਿੰਗ 3D ਪੱਟੀ (Original Floating Pill Layout) -->
+    <div class="md:hidden fixed bottom-14 left-1/2 transform -translate-x-1/2 w-[90%] max-w-sm bg-white/95 backdrop-blur-md shadow-[0_10px_25px_rgba(0,0,0,0.3)] z-[100] border-2 border-gray-200 rounded-full flex justify-around items-center py-1.5 px-2">
+        <button onclick="showHome();" class="flex flex-col items-center justify-center bg-blue-50 text-blue-700 w-[30%] h-12 rounded-full border-b-2 border-blue-200 active:border-b-0 active:translate-y-1 transition-all">
             <i class="fa-solid fa-house text-lg mb-0.5"></i><span class="text-[9px] font-black">ਹੋਮ</span>
         </button>
-        <button onclick="scrollToClasses()" class="flex flex-col items-center justify-center bg-green-50 text-green-700 w-[30%] h-12 rounded-2xl border-b-4 border-green-200 active:border-b-0 active:translate-y-1 transition-all">
-            <i class="fa-solid fa-school text-lg mb-0.5"></i><span class="text-[9px] font-black">ਜਮਾਤ</span>
+        <button onclick="goBack();" class="flex flex-col items-center justify-center bg-gray-50 text-gray-700 w-[30%] h-12 rounded-full border-b-2 border-gray-200 active:border-b-0 active:translate-y-1 transition-all">
+            <i class="fa-solid fa-arrow-left text-lg mb-0.5"></i><span class="text-[9px] font-black">ਪਿੱਛੇ</span>
         </button>
-        <button onclick="openAssemblyView(); window.scrollTo({top: 0, behavior: 'smooth'});" class="flex flex-col items-center justify-center bg-orange-50 text-orange-700 w-[30%] h-12 rounded-2xl border-b-4 border-orange-200 active:border-b-0 active:translate-y-1 transition-all">
+        <button onclick="openAssemblyView();" class="flex flex-col items-center justify-center bg-orange-50 text-orange-700 w-[30%] h-12 rounded-full border-b-2 border-orange-200 active:border-b-0 active:translate-y-1 transition-all">
             <i class="fa-solid fa-sun text-lg mb-0.5"></i><span class="text-[9px] font-black">ਸਭਾ</span>
         </button>
     </div>
 
-    <!-- ਡਾਟਾ ਅਤੇ ਜਾਵਾਸਕ੍ਰਿਪਟ -->
+    <!-- JavaScript Data and Logic -->
     <script>
-        // ---------------- ਆਟੋ ਫੁੱਲ-ਸਕਰੀਨ ----------------
-        function forceFullScreen() { 
+        let viewHistory = ['home-view'];
+
+        // --- ਫੁੱਲ ਸਕਰੀਨ ਲੌਜਿਕ ---
+        function enterFullScreen() { 
             try { 
-                if (!document.fullscreenElement && !document.webkitFullscreenElement) { 
+                if (!document.fullscreenElement) { 
                     if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); }
                     else if (document.documentElement.webkitRequestFullscreen) { document.documentElement.webkitRequestFullscreen(); } 
-                } else {
-                    if (document.exitFullscreen) { document.exitFullscreen(); }
-                    else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
                 }
             } catch (e) {} 
         }
-        document.addEventListener('dblclick', forceFullScreen);
+        document.addEventListener('dblclick', enterFullScreen);
         let lastTap = 0;
-        document.addEventListener('touchend', function(event) {
-            const currentTime = new Date().getTime();
-            const tapLength = currentTime - lastTap;
-            if (tapLength < 400 && tapLength > 0) { forceFullScreen(); }
-            lastTap = currentTime;
+        document.addEventListener('touchend', function(e) {
+            if (e.changedTouches.length > 1) return;
+            const t = new Date().getTime();
+            if (t - lastTap < 400 && t - lastTap > 0) enterFullScreen();
+            lastTap = t;
         });
 
-        const assemblySlides = [
-            { dateId: "09-03-2026", displayDate: "09 ਮਾਰਚ 2026", day: "ਸੋਮਵਾਰ" },
-            { dateId: "8-3-2026", displayDate: "08 ਮਾਰਚ 2026", day: "ਐਤਵਾਰ" }
-        ];
+        function showHome() { 
+            navigateTo('home-view', true, true); 
+        }
 
-        // ---------------- ਸਾਰੀਆਂ ਕਲਾਸਾਂ ਅਤੇ ਵਿਸ਼ਿਆਂ ਦਾ ਅਸਲ ਡਾਟਾਬੇਸ (Real Index Data) ----------------
+        function goBack() {
+            if (viewHistory.length > 1) {
+                viewHistory.pop();
+                navigateTo(viewHistory[viewHistory.length - 1], false);
+            }
+        }
+
+        function navigateTo(viewId, pushToHistory = true, reset = false) {
+            if(reset) viewHistory = ['home-view'];
+            document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            if (pushToHistory && viewHistory[viewHistory.length-1] !== viewId) viewHistory.push(viewId);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            if(viewId !== 'content-view') document.getElementById('app-iframe').src = "";
+        }
+
+        function openMissionSamarth() { 
+            navigateTo('mission-samarth-view'); 
+        }
+        
+        function openMissionSubject(name, emoji) {
+            document.getElementById('mission-subject-title').innerHTML = `<span class="bg-purple-100 w-6 h-6 rounded-full flex items-center justify-center text-xs shadow-sm border border-purple-200 mr-1.5 shrink-0 inline-flex">${emoji}</span> <span class="truncate">${name}</span>`;
+            
+            const container = document.getElementById('mission-materials-list');
+            container.innerHTML = "";
+            const materials = missionSamarthData[name] || [];
+            
+            if(materials.length === 0) {
+                container.innerHTML = `
+                    <div class="py-10 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 flex flex-col items-center justify-center">
+                        <div class="text-3xl mb-2 animate-bounce">🚧</div>
+                        <h3 class="text-sm font-black text-gray-500">ਮਟੀਰੀਅਲ ਜਲਦੀ ਆਵੇਗਾ</h3>
+                    </div>`;
+            } else {
+                materials.forEach((mat) => {
+                    container.innerHTML += `
+                    <button onclick="openContent('${mat.url}', '${mat.t}')" class="btn-3d-super bg-gradient-to-r from-sky-400 to-blue-500 text-white p-3 flex flex-row justify-between items-center rounded-xl shadow-[0_3px_0_#1d4ed8] border border-white/50 w-full group" style="--shadow-color: #1d4ed8; flex-direction: row;">
+                        <div class="flex items-center gap-2">
+                            <span class="bg-white/30 w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-inner group-hover:scale-110 transition-transform"><i class="fa-solid fa-file-pdf"></i></span>
+                            <span class="text-sm font-black tracking-wide">${mat.t}</span>
+                        </div>
+                        <div class="bg-blue-800/40 w-7 h-7 rounded-full flex items-center justify-center border border-white/20 shadow-inner group-hover:bg-white group-hover:text-blue-600 transition-colors text-xs">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                    </button>`;
+                });
+            }
+            navigateTo('mission-materials-view');
+        }
+
+        function openAssemblyView() { 
+            openContent('assembly.html', 'ਸਵੇਰ ਦੀ ਸਭਾ'); 
+        }
+
+        // ================= 100% ਮੁਕੰਮਲ ਡਾਟਾਬੇਸ (Class 1 to 5) =================
         const schoolData = {
-            1: { 
-                name: "ਪਹਿਲੀ ਜਮਾਤ", 
-                subjects: [
-                    { id: "punjabi", name: "ਪੰਜਾਬੀ", code: "P", icon: "fa-book-open", bgInfo: {grad: "from-pink-400 to-rose-600", shadow: "#be123c", emoji: "ੳ", iconAnim: "bounce-anim", specialCrown: true}, chapters: [
-                        {t: "ਪੰਜਾਬੀ ਵਰਣਮਾਲਾ (ੳ ਤੋਂ ੜ)", ty: "ਅੱਖਰ", p: "1"}, {t: "ਮੁਕਤਾ (ਬਿਨਾਂ ਮਾਤਰਾ)", ty: "ਸ਼ਬਦ", p: "15"}, {t: "ਕੰਨਾ (ਾ)", ty: "ਮਾਤਰਾ", p: "25"}, {t: "ਸਿਹਾਰੀ (ਿ)", ty: "ਮਾਤਰਾ", p: "32"}, {t: "ਬਿਹਾਰੀ (ੀ)", ty: "ਮਾਤਰਾ", p: "38"}, {t: "ਔਂਕੜ (ੁ)", ty: "ਮਾਤਰਾ", p: "45"}, {t: "ਦੁਲੈਂਕੜ (ੂ)", ty: "ਮਾਤਰਾ", p: "52"}, {t: "ਲਾਂ (ੇ)", ty: "ਮਾਤਰਾ", p: "60"}, {t: "ਦੁਲਾਵਾਂ (ੈ)", ty: "ਮਾਤਰਾ", p: "68"}, {t: "ਹੋੜਾ (ੋ)", ty: "ਮਾਤਰਾ", p: "75"}, {t: "ਕਨੌੜਾ (ੌ)", ty: "ਮਾਤਰਾ", p: "82"}, {t: "ਬਿੰਦੀ, ਟਿੱਪੀ, ਅੱਧਕ", ty: "ਲਗਾਖਰ", p: "90"}
-                    ]},
-                    { id: "math", name: "ਗਣਿਤ", code: "M", icon: "fa-calculator", bgInfo: {grad: "from-cyan-400 to-blue-600", shadow: "#1d4ed8", emoji: "🔢", iconAnim: "float-anim"}, chapters: [
-                        {t: "ਆਕਾਰ ਅਤੇ ਸਥਾਨ", ty: "ਗਣਿਤ", p: "1"}, {t: "1 ਤੋਂ 9 ਤੱਕ ਸੰਖਿਆਵਾਂ", ty: "ਗਿਣਤੀ", p: "12"}, {t: "ਜੋੜ", ty: "ਕਿਰਿਆ", p: "30"}, {t: "ਘਟਾਓ", ty: "ਕਿਰਿਆ", p: "45"}, {t: "10 ਤੋਂ 20 ਤੱਕ ਸੰਖਿਆਵਾਂ", ty: "ਗਿਣਤੀ", p: "58"}, {t: "ਸਮਾਂ", ty: "ਗਣਿਤ", p: "72"}, {t: "ਮਾਪ", ty: "ਗਣਿਤ", p: "84"}, {t: "21 ਤੋਂ 99 ਤੱਕ ਸੰਖਿਆਵਾਂ", ty: "ਗਿਣਤੀ", p: "95"}, {t: "ਡਾਟਾ ਹੈਂਡਲਿੰਗ", ty: "ਗਣਿਤ", p: "110"}
-                    ]},
-                    { id: "english", name: "English", code: "E", icon: "fa-a", bgInfo: {grad: "from-orange-400 to-red-500", shadow: "#b91c1c", emoji: "🔠", iconAnim: "float-anim"}, chapters: [
-                        {t: "Let's Learn Alphabets", ty: "Lesson", p: "1"}, {t: "Myself and My Family", ty: "Lesson", p: "22"}, {t: "Parts of the Body", ty: "Lesson", p: "35"}, {t: "Colours Around Us", ty: "Poem", p: "46"}, {t: "Animals and Birds", ty: "Lesson", p: "58"}, {t: "Fruits and Vegetables", ty: "Lesson", p: "69"}, {t: "Numbers (1 to 10)", ty: "Rhyme", p: "80"}, {t: "Action Words", ty: "Lesson", p: "92"}, {t: "Good Habits", ty: "Lesson", p: "105"}
-                    ]}
-                ]
-            },
-            2: { 
-                name: "ਦੂਜੀ ਜਮਾਤ", 
-                subjects: [
-                    { id: "punjabi", name: "ਪੰਜਾਬੀ", code: "P", icon: "fa-book-open", bgInfo: {grad: "from-pink-400 to-rose-600", shadow: "#be123c", emoji: "ੳ", iconAnim: "bounce-anim", specialCrown: true}, chapters: [
-                        {t: "ਸਾਡਾ ਤਿਰੰਗਾ", ty: "ਕਵਿਤਾ", p: "1"}, {t: "ਚਿੜੀਆ ਘਰ ਦੀ ਸੈਰ", ty: "ਲੇਖ", p: "7"}, {t: "ਮਾਤਾ ਗੁਜਰੀ ਜੀ", ty: "ਜੀਵਨੀ", p: "15"}, {t: "ਸਿਆਣੀ ਗੱਲ", ty: "ਕਹਾਣੀ", p: "24"}, {t: "ਮੇਰਾ ਪੰਜਾਬ", ty: "ਕਵਿਤਾ", p: "33"}, {t: "ਚੰਗੀ ਆਦਤ", ty: "ਕਹਾਣੀ", p: "42"}, {t: "ਸ਼ੇਰ ਅਤੇ ਚੂਹੀ", ty: "ਕਹਾਣੀ", p: "51"}, {t: "ਬਾਤਾਂ ਪਾਈਏ", ty: "ਬੁਝਾਰਤਾਂ", p: "60"}, {t: "ਸਾਡੀ ਧਰਤੀ", ty: "ਲੇਖ", p: "70"}, {t: "ਰੰਗਾਂ ਦੀ ਦੁਨੀਆ", ty: "ਕਵਿਤਾ", p: "82"}
-                    ]},
-                    { id: "math", name: "ਗਣਿਤ", code: "M", icon: "fa-calculator", bgInfo: {grad: "from-cyan-400 to-blue-600", shadow: "#1d4ed8", emoji: "🔢", iconAnim: "float-anim"}, chapters: [
-                        {t: "1 ਤੋਂ 99 ਤੱਕ ਸੰਖਿਆਵਾਂ", ty: "ਗਿਣਤੀ", p: "1"}, {t: "ਜੋੜ (100 ਤੱਕ)", ty: "ਗਣਿਤ", p: "18"}, {t: "ਘਟਾਓ (100 ਤੱਕ)", ty: "ਗਣਿਤ", p: "36"}, {t: "ਗੁਣਾ (Multiplication)", ty: "ਗਣਿਤ", p: "52"}, {t: "ਭਾਗ (Division)", ty: "ਗਣਿਤ", p: "70"}, {t: "ਪੈਸਾ (Money)", ty: "ਗਣਿਤ", p: "85"}, {t: "ਮਾਪ (Measurement)", ty: "ਗਣਿਤ", p: "98"}, {t: "ਆਕਾਰ ਅਤੇ ਪੈਟਰਨ", ty: "ਗਣਿਤ", p: "112"}, {t: "ਸਮਾਂ (Time)", ty: "ਗਣਿਤ", p: "125"}, {t: "ਡਾਟਾ ਹੈਂਡਲਿੰਗ", ty: "ਗਣਿਤ", p: "135"}
-                    ]},
-                    { id: "english", name: "English", code: "E", icon: "fa-a", bgInfo: {grad: "from-orange-400 to-red-500", shadow: "#b91c1c", emoji: "🔠", iconAnim: "float-anim"}, chapters: [
-                        {t: "Let's Revise", ty: "Lesson", p: "1"}, {t: "My Family", ty: "Lesson", p: "14"}, {t: "Parts of My Body", ty: "Lesson", p: "28"}, {t: "Days of the Week", ty: "Poem", p: "41"}, {t: "Months of the Year", ty: "Poem", p: "55"}, {t: "My Classroom", ty: "Lesson", p: "70"}, {t: "Animals and their Babies", ty: "Lesson", p: "86"}, {t: "Opposites", ty: "Lesson", p: "102"}
-                    ]}
-                ]
-            },
-            3: { 
-                name: "ਤੀਜੀ ਜਮਾਤ", 
-                subjects: [
-                    { id: "punjabi", name: "ਪੰਜਾਬੀ", code: "P", icon: "fa-book-open", bgInfo: {grad: "from-pink-400 to-rose-600", shadow: "#be123c", emoji: "ੳ", iconAnim: "bounce-anim", specialCrown: true}, chapters: [
-                        {t: "ਸਾਡਾ ਦੇਸ਼", ty: "ਕਵਿਤਾ", p: "1"}, {t: "ਦਰੱਖਤ ਦੀ ਗਵਾਹੀ", ty: "ਕਹਾਣੀ", p: "6"}, {t: "ਮਾਤਾ ਗੰਗਾ ਜੀ", ty: "ਜੀਵਨੀ", p: "12"}, {t: "ਬਿੱਲੀ ਨੇ ਰੱਖੇ ਕੁੱਤੇ", ty: "ਕਵਿਤਾ", p: "18"}, {t: "ਵੱਡਾ ਕੌਣ", ty: "ਕਹਾਣੀ", p: "24"}, {t: "ਈਮਾਨਦਾਰੀ", ty: "ਲੇਖ", p: "31"}, {t: "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", ty: "ਜੀਵਨੀ", p: "38"}, {t: "ਮਿਹਨਤ ਦਾ ਫਲ", ty: "ਕਹਾਣੀ", p: "45"}, {t: "ਬੱਦਲ", ty: "ਕਵਿਤਾ", p: "53"}, {t: "ਸ੍ਰੀ ਹਰਿਮੰਦਰ ਸਾਹਿਬ", ty: "ਲੇਖ", p: "60"}
-                    ]},
-                    { id: "math", name: "ਗਣਿਤ", code: "M", icon: "fa-calculator", bgInfo: {grad: "from-cyan-400 to-blue-600", shadow: "#1d4ed8", emoji: "🔢", iconAnim: "float-anim"}, chapters: [
-                        {t: "ਸੰਖਿਆਵਾਂ", ty: "ਗਣਿਤ", p: "1"}, {t: "ਜੋੜ-ਘਟਾਓ", ty: "ਗਣਿਤ", p: "22"}, {t: "ਗੁਣਾ", ty: "ਗਣਿਤ", p: "48"}, {t: "ਭਾਗ", ty: "ਗਣਿਤ", p: "70"}, {t: "ਰੁਪਏ-ਪੈਸੇ", ty: "ਗਣਿਤ", p: "92"}, {t: "ਆਕਾਰ", ty: "ਗਣਿਤ", p: "115"}, {t: "ਭਿੰਨਾਂ", ty: "ਗਣਿਤ", p: "130"}, {t: "ਮਾਪ", ty: "ਗਣਿਤ", p: "148"}, {t: "ਸਮਾਂ", ty: "ਗਣਿਤ", p: "165"}, {t: "ਅੰਕੜਾ ਵਿਗਿਆਨ", ty: "ਗਣਿਤ", p: "180"}
-                    ]},
-                    { id: "english", name: "English", code: "E", icon: "fa-a", bgInfo: {grad: "from-orange-400 to-red-500", shadow: "#b91c1c", emoji: "🔠", iconAnim: "float-anim"}, chapters: [
-                        {t: "Me and My Family", ty: "Lesson", p: "1"}, {t: "The Clock", ty: "Poem", p: "15"}, {t: "The Magic Box", ty: "Lesson", p: "28"}, {t: "The Fox and the Grapes", ty: "Story", p: "45"}, {t: "A Visit to a Park", ty: "Lesson", p: "62"}, {t: "Our National Flag", ty: "Lesson", p: "80"}, {t: "The Honest Woodcutter", ty: "Story", p: "98"}, {t: "Traffic Rules", ty: "Poem", p: "115"}
-                    ]},
-                    { id: "evs", name: "ਵਾਤਾਵਰਨ", code: "EV", icon: "fa-leaf", bgInfo: {grad: "from-emerald-400 to-green-600", shadow: "#15803d", emoji: "🌿", iconAnim: "float-anim"}, chapters: [
-                        {t: "ਮੇਰਾ ਪਰਿਵਾਰ", ty: "ਪਾਠ", p: "1"}, {t: "ਸਾਡੇ ਆਲੇ-ਦੁਆਲੇ ਦੇ ਪੌਦੇ", ty: "ਪਾਠ", p: "10"}, {t: "ਸਾਡੇ ਆਲੇ-ਦੁਆਲੇ ਦੇ ਜਾਨਵਰ", ty: "ਪਾਠ", p: "19"}, {t: "ਸਾਡਾ ਭੋਜਨ", ty: "ਪਾਠ", p: "28"}, {t: "ਪਾਣੀ", ty: "ਪਾਠ", p: "38"}, {t: "ਘਰ ਅਤੇ ਪਹਿਰਾਵਾ", ty: "ਪਾਠ", p: "49"}, {t: "ਆਵਾਜਾਈ ਦੇ ਸਾਧਨ", ty: "ਪਾਠ", p: "60"}, {t: "ਸੰਚਾਰ ਦੇ ਸਾਧਨ", ty: "ਪਾਠ", p: "72"}, {t: "ਦਿਸ਼ਾਵਾਂ", ty: "ਪਾਠ", p: "85"}, {t: "ਮੌਸਮ ਅਤੇ ਰੁੱਤਾਂ", ty: "ਪਾਠ", p: "95"}
-                    ]}
-                ]
-            },
-            4: { 
-                name: "ਚੌਥੀ ਜਮਾਤ", 
-                subjects: [
-                    { id: "punjabi", name: "ਪੰਜਾਬੀ", code: "P", icon: "fa-book-open", bgInfo: {grad: "from-pink-400 to-rose-600", shadow: "#be123c", emoji: "ੳ", iconAnim: "bounce-anim", specialCrown: true}, chapters: [
-                        {t: "ਪ੍ਰਾਰਥਨਾ", ty: "ਕਵਿਤਾ", p: "1"}, {t: "ਮੇਰਾ ਪਿੰਡ", ty: "ਲੇਖ", p: "8"}, {t: "ਮਹਾਤਮਾ ਗਾਂਧੀ", ty: "ਜੀਵਨੀ", p: "15"}, {t: "ਸਾਡਾ ਪੰਜਾਬ", ty: "ਕਵਿਤਾ", p: "24"}, {t: "ਰੁੱਖਾਂ ਦੀ ਮਹੱਤਤਾ", ty: "ਲੇਖ", p: "32"}, {t: "ਬਾਲ ਮੇਲਾ", ty: "ਲੇਖ", p: "40"}, {t: "ਕੰਪਿਊਟਰ", ty: "ਕਵਿਤਾ", p: "49"}, {t: "ਸ਼ੇਰ ਅਤੇ ਖਰਗੋਸ਼", ty: "ਕਹਾਣੀ", p: "58"}, {t: "ਤਿਉਹਾਰ", ty: "ਲੇਖ", p: "67"}, {t: "ਸਿਆਣਾ ਕਾਂ", ty: "ਕਹਾਣੀ", p: "76"}
-                    ]}, 
-                    { id: "math", name: "ਗਣਿਤ", code: "M", icon: "fa-calculator", bgInfo: {grad: "from-cyan-400 to-blue-600", shadow: "#1d4ed8", emoji: "🔢", iconAnim: "float-anim"}, chapters: [
-                        {t: "ਸੰਖਿਆਵਾਂ", ty: "ਗਣਿਤ", p: "1"}, {t: "ਜੋੜ ਅਤੇ ਘਟਾਓ", ty: "ਗਣਿਤ", p: "25"}, {t: "ਗੁਣਾ", ty: "ਗਣਿਤ", p: "50"}, {t: "ਭਾਗ", ty: "ਗਣਿਤ", p: "78"}, {t: "ਧਨ (ਰੁਪਏ-ਪੈਸੇ)", ty: "ਗਣਿਤ", p: "105"}, {t: "ਮਾਪ", ty: "ਗਣਿਤ", p: "128"}, {t: "ਆਕਾਰ ਅਤੇ ਕੋਣ", ty: "ਗਣਿਤ", p: "152"}, {t: "ਪੈਟਰਨ", ty: "ਗਣਿਤ", p: "175"}, {t: "ਭਿੰਨਾਂ", ty: "ਗਣਿਤ", p: "185"}, {t: "ਅੰਕੜਾ ਵਿਗਿਆਨ", ty: "ਗਣਿਤ", p: "200"}
-                    ]}, 
-                    { id: "english", name: "English", code: "E", icon: "fa-a", bgInfo: {grad: "from-orange-400 to-red-500", shadow: "#b91c1c", emoji: "🔠", iconAnim: "float-anim"}, chapters: [
-                        {t: "The King and His Sons", ty: "Story", p: "1"}, {t: "The Farmer and the Bullock Cart", ty: "Story", p: "16"}, {t: "Safety Rules", ty: "Poem", p: "32"}, {t: "A Visit to a Historical Place", ty: "Lesson", p: "48"}, {t: "The Environment", ty: "Lesson", p: "65"}, {t: "Health is Wealth", ty: "Lesson", p: "82"}, {t: "A Friend in Need", ty: "Story", p: "99"}
-                    ]}, 
-                    { id: "evs", name: "ਵਾਤਾਵਰਨ", code: "EV", icon: "fa-leaf", bgInfo: {grad: "from-emerald-400 to-green-600", shadow: "#15803d", emoji: "🌿", iconAnim: "float-anim"}, chapters: [
-                        {t: "ਸਾਡਾ ਪਰਿਵਾਰ", ty: "ਪਾਠ", p: "1"}, {t: "ਖੇਡਾਂ ਅਤੇ ਸਿਹਤ", ty: "ਪਾਠ", p: "12"}, {t: "ਸਾਡਾ ਭੋਜਨ", ty: "ਪਾਠ", p: "24"}, {t: "ਸਾਡੇ ਆਵਾਸ", ty: "ਪਾਠ", p: "36"}, {t: "ਪੌਦੇ ਅਤੇ ਜੰਤੂ", ty: "ਪਾਠ", p: "49"}, {t: "ਪਾਣੀ ਦੀ ਸੰਭਾਲ", ty: "ਪਾਠ", p: "62"}, {t: "ਹਵਾ ਅਤੇ ਪ੍ਰਦੂਸ਼ਣ", ty: "ਪਾਠ", p: "75"}
-                    ]}, 
-                    { id: "hindi", name: "हिंदी", code: "H", icon: "fa-om", bgInfo: {grad: "from-fuchsia-500 to-purple-600", shadow: "#7e22ce", emoji: "अ", iconAnim: "float-anim"}, chapters: [
-                        {t: "वर्णमाला", ty: "पाठ", p: "1"}, {t: "मात्राएँ", ty: "पाठ", p: "18"}, {t: "प्रार्थना", ty: "कविता", p: "35"}, {t: "मेरा घर", ty: "पाठ", p: "48"}, {t: "मेले की सैर", ty: "पाठ", p: "60"}, {t: "पेड़ हमारे मित्र", ty: "पाठ", p: "75"}, {t: "तिरंगा", ty: "कविता", p: "88"}
-                    ]}
-                ] 
-            },
+            1: { name: "ਪਹਿਲੀ ਜਮਾਤ", subjects: [
+                { id: "p", name: "ਪੰਜਾਬੀ", emoji: "ੳ", grad: "from-pink-400 to-rose-600", shadow: "#be123c", chapters: [{t:"ਪੰਜਾਬੀ ਵਰਣਮਾਲਾ (ੳ ਤੋਂ ੜ)", ty:"ਅੱਖਰ", p:"1"}, {t:"ਮੁਕਤਾ (ਬਿਨਾਂ ਮਾਤਰਾ ਵਾਲੇ ਸ਼ਬਦ)", ty:"ਸ਼ਬਦ", p:"15"}, {t:"ਕੰਨਾ (ਾ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"25"}, {t:"ਸਿਹਾਰੀ (ਿ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"32"}, {t:"ਬਿਹਾਰੀ (ੀ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"38"}, {t:"ਔਂਕੜ (ੁ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"45"}, {t:"ਦੁਲੈਂਕੜ (ੂ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"52"}, {t:"ਲਾਂ (ੇ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"60"}, {t:"ਦੁਲਾਵਾਂ (ੈ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"68"}, {t:"ਹੋੜਾ (ੋ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"75"}, {t:"ਕਨੌੜਾ (ੌ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"82"}, {t:"ਬਿੰਦੀ, ਟਿੱਪੀ ਅਤੇ ਅੱਧਕ", ty:"ਲਗਾਖਰ", p:"90"}]},
+                { id: "m", name: "ਗਣਿਤ", emoji: "🔢", grad: "from-cyan-400 to-blue-600", shadow: "#1d4ed8", chapters: [{t:"ਆਕਾਰ ਅਤੇ ਸਥਾਨ", ty:"ਗਣਿਤ", p:"1"}, {t:"1 ਤੋਂ 9 ਤੱਕ ਸੰਖਿਆਵਾਂ", ty:"ਗਿਣਤੀ", p:"12"}, {t:"ਜੋੜ", ty:"ਕਿਰਿਆ", p:"30"}, {t:"ਘਟਾਓ", ty:"ਕਿਰਿਆ", p:"45"}, {t:"10 ਤੋਂ 20 ਤੱਕ ਸੰਖਿਆਵਾਂ", ty:"ਗਿਣਤੀ", p:"58"}, {t:"ਸਮਾਂ", ty:"ਗਣਿਤ", p:"72"}, {t:"ਮਾਪ", ty:"ਗਣਿਤ", p:"84"}, {t:"21 ਤੋਂ 99 ਤੱਕ ਸੰਖਿਆਵਾਂ", ty:"ਗਿਣਤੀ", p:"95"}, {t:"ਡਾਟਾ ਹੈਂਡਲਿੰਗ", ty:"ਗਣਿਤ", p:"110"}]},
+                { id: "e", name: "English", emoji: "🔠", grad: "from-orange-400 to-red-500", shadow: "#b91c1c", chapters: [{t:"Let's Learn Alphabets", ty:"Lesson", p:"1"}, {t:"Myself and My Family", ty:"Lesson", p:"22"}, {t:"Parts of the Body", ty:"Lesson", p:"35"}, {t:"Colours Around Us", ty:"Poem", p:"46"}, {t:"Animals and Birds", ty:"Lesson", p:"58"}, {t:"Fruits and Vegetables", ty:"Lesson", p:"69"}, {t:"Numbers (1 to 10)", ty:"Rhyme", p:"80"}, {t:"Action Words", ty:"Lesson", p:"92"}, {t:"Good Habits", ty:"Lesson", p:"105"}]}
+            ]},
+            2: { name: "ਦੂਜੀ ਜਮਾਤ", subjects: [
+                { id: "p", name: "ਪੰਜਾਬੀ", emoji: "ੳ", grad: "from-pink-400 to-rose-600", shadow: "#be123c", chapters: [{t:"ਸਾਡਾ ਤਿਰੰਗਾ", ty:"ਕਵਿਤਾ", p:"1"}, {t:"ਚਿੜੀਆ ਘਰ ਦੀ ਸੈਰ", ty:"ਲੇਖ", p:"7"}, {t:"ਮਾਤਾ ਗੁਜਰੀ ਜੀ", ty:"ਜੀਵਨੀ", p:"15"}, {t:"ਸਿਆਣੀ ਗੱਲ", ty:"ਕਹਾਣੀ", p:"24"}, {t:"ਮੇਰਾ ਪੰਜਾਬ", ty:"ਕਵਿਤਾ", p:"33"}, {t:"ਚੰਗੀ ਆਦਤ", ty:"ਕਹਾਣੀ", p:"42"}, {t:"ਸ਼ੇਰ ਅਤੇ ਚੂਹੀ", ty:"ਕਹਾਣੀ", p:"51"}, {t:"ਬਾਤਾਂ ਪਾਈਏ", ty:"ਬੁਝਾਰਤਾਂ", p:"60"}, {t:"ਸਾਡੀ ਧਰਤੀ", ty:"ਲੇਖ", p:"70"}, {t:"ਰੰਗਾਂ ਦੀ ਦੁਨੀਆ", ty:"ਕਵਿਤਾ", p:"82"}]},
+                { id: "m", name: "ਗਣਿਤ", emoji: "🔢", grad: "from-cyan-400 to-blue-600", shadow: "#1d4ed8", chapters: [{t:"1 ਤੋਂ 99 ਤੱਕ ਸੰਖਿਆਵਾਂ", ty:"ਗਿਣਤੀ", p:"1"}, {t:"ਜੋੜ (100 ਤੱਕ)", ty:"ਗਣਿਤ", p:"18"}, {t:"ਘਟਾਓ (100 ਤੱਕ)", ty:"ਗਣਿਤ", p:"36"}, {t:"ਗੁਣਾ (Multiplication)", ty:"ਗਣਿਤ", p:"52"}, {t:"ਭਾਗ (Division)", ty:"ਗਣਿਤ", p:"70"}, {t:"ਪੈਸਾ (Money)", ty:"ਗਣਿਤ", p:"85"}, {t:"ਮਾਪ (Measurement)", ty:"ਗਣਿਤ", p:"98"}, {t:"ਆਕਾਰ ਅਤੇ ਪੈਟਰਨ", ty:"ਗਣਿਤ", p:"112"}, {t:"ਸਮਾਂ (Time)", ty:"ਗਣਿਤ", p:"125"}, {t:"ਡਾਟਾ ਹੈਂਡਲਿੰਗ", ty:"ਗਣਿਤ", p:"135"}]},
+                { id: "e", name: "English", emoji: "🔠", grad: "from-orange-400 to-red-500", shadow: "#b91c1c", chapters: [{t:"Let's Revise", ty:"Lesson", p:"1"}, {t:"My Family", ty:"Lesson", p:"14"}, {t:"Parts of My Body", ty:"Lesson", p:"28"}, {t:"Days of the Week", ty:"Poem", p:"41"}, {t:"Months of the Year", ty:"Poem", p:"55"}, {t:"My Classroom", ty:"Lesson", p:"70"}, {t:"Animals and their Babies", ty:"Lesson", p:"86"}, {t:"Opposites", ty:"Lesson", p:"102"}, {t:"Action Words", ty:"Lesson", p:"115"}, {t:"Simple Sentences", ty:"Lesson", p:"128"}]}
+            ]},
+            3: { name: "ਤੀਜੀ ਜਮਾਤ", subjects: [
+                { id: "p", name: "ਪੰਜਾਬੀ", emoji: "ੳ", grad: "from-pink-400 to-rose-600", shadow: "#be123c", chapters: [{t:"ਸਾਡਾ ਦੇਸ਼", ty:"ਕਵਿਤਾ", p:"1"}, {t:"ਦਰੱਖਤ ਦੀ ਗਵਾਹੀ", ty:"ਕਹਾਣੀ", p:"6"}, {t:"ਮਾਤਾ ਗੰਗਾ ਜੀ", ty:"ਜੀਵਨੀ", p:"12"}, {t:"ਬਿੱਲੀ ਨੇ ਰੱਖੇ ਕੁੱਤੇ", ty:"ਕਵਿਤਾ", p:"18"}, {t:"ਵੱਡਾ ਕੌਣ", ty:"ਕਹਾਣੀ", p:"24"}, {t:"ਈਮਾਨਦਾਰੀ", ty:"ਲੇਖ", p:"31"}, {t:"ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", ty:"ਜੀਵਨੀ", p:"38"}, {t:"ਮਿਹਨਤ ਦਾ ਫਲ", ty:"ਕਹਾਣੀ", p:"45"}, {t:"ਬੱਦਲ", ty:"ਕਵਿਤਾ", p:"53"}, {t:"ਸ੍ਰੀ ਹਰਿਮੰਦਰ ਸਾਹਿਬ", ty:"ਲੇਖ", p:"60"}]},
+                { id: "m", name: "ਗਣਿਤ", emoji: "🔢", grad: "from-cyan-400 to-blue-600", shadow: "#1d4ed8", chapters: [{t:"ਸੰਖਿਆਵਾਂ", ty:"ਗਣਿਤ", p:"1"}, {t:"ਜੋੜ-ਘਟਾਓ", ty:"ਗਣਿਤ", p:"22"}, {t:"ਗੁਣਾ", ty:"ਗਣਿਤ", p:"48"}, {t:"ਭਾਗ", ty:"ਗਣਿਤ", p:"70"}, {t:"ਰੁਪਏ-ਪੈਸੇ", ty:"ਗਣਿਤ", p:"92"}, {t:"ਆਕਾਰ", ty:"ਗਣਿਤ", p:"115"}, {t:"ਭਿੰਨਾਂ", ty:"ਗਣਿਤ", p:"130"}, {t:"ਮਾਪ", ty:"ਗਣਿਤ", p:"148"}, {t:"ਸਮਾਂ", ty:"ਗਣਿਤ", p:"165"}, {t:"ਅੰਕੜਾ ਵਿਗਿਆਨ", ty:"ਗਣਿਤ", p:"180"}]},
+                { id: "e", name: "English", emoji: "🔠", grad: "from-orange-400 to-red-500", shadow: "#b91c1c", chapters: [{t:"Me and My Family", ty:"Lesson", p:"1"}, {t:"The Clock", ty:"Poem", p:"15"}, {t:"The Magic Box", ty:"Lesson", p:"28"}, {t:"The Fox and the Grapes", ty:"Story", p:"45"}, {t:"A Visit to a Park", ty:"Lesson", p:"62"}, {t:"Our National Flag", ty:"Lesson", p:"80"}, {t:"The Honest Woodcutter", ty:"Story", p:"98"}, {t:"Traffic Rules", ty:"Poem", p:"115"}, {t:"Festivals", ty:"Lesson", p:"125"}, {t:"The Peacock", ty:"Poem", p:"138"}]},
+                { id: "ev", name: "ਵਾਤਾਵਰਨ", emoji: "🌿", grad: "from-green-400 to-green-600", shadow: "#14532d", chapters: [{t:"ਮੇਰਾ ਪਰਿਵਾਰ", ty:"ਪਾਠ", p:"1"}, {t:"ਸਾਡੇ ਆਲੇ-ਦੁਆਲੇ ਦੇ ਪੌਦੇ", ty:"ਪਾਠ", p:"10"}, {t:"ਸਾਡੇ ਆਲੇ-ਦੁਆਲੇ ਦੇ ਜਾਨਵਰ", ty:"ਪਾਠ", p:"19"}, {t:"ਸਾਡਾ ਭੋਜਨ", ty:"ਪਾਠ", p:"28"}, {t:"ਪਾਣੀ", ty:"ਪਾਠ", p:"38"}, {t:"ਘਰ ਅਤੇ ਪਹਿਰਾਵਾ", ty:"ਪਾਠ", p:"49"}, {t:"ਆਵਾਜਾਈ ਦੇ ਸਾਧਨ", ty:"ਪਾਠ", p:"60"}, {t:"ਸੰਚਾਰ ਦੇ ਸਾਧਨ", ty:"ਪਾਠ", p:"72"}, {t:"ਦਿਸ਼ਾਵਾਂ", ty:"ਪਾਠ", p:"85"}, {t:"ਮੌਸਮ ਅਤੇ ਰੁੱਤਾਂ", ty:"ਪਾਠ", p:"95"}]}
+            ]},
+            4: { name: "ਚੌਥੀ ਜਮਾਤ", subjects: [
+                { id: "p", name: "ਪੰਜਾਬੀ", emoji: "ੳ", grad: "from-pink-400 to-rose-600", shadow: "#be123c", chapters: [{t:"ਪ੍ਰਾਰਥਨਾ", ty:"ਕਵਿਤਾ", p:"1"}, {t:"ਮੇਰਾ ਪਿੰਡ", ty:"ਲੇਖ", p:"8"}, {t:"ਮਹਾਤਮਾ ਗਾਂਧੀ", ty:"ਜੀਵਨੀ", p:"15"}, {t:"ਸਾਡਾ ਪੰਜਾਬ", ty:"ਕਵਿਤਾ", p:"24"}, {t:"ਰੁੱਖਾਂ ਦੀ ਮਹੱਤਤਾ", ty:"ਲੇਖ", p:"32"}, {t:"ਬਾਲ ਮੇਲਾ", ty:"ਲੇਖ", p:"40"}, {t:"ਕੰਪਿਊਟਰ", ty:"ਕਵਿਤਾ", p:"49"}, {t:"ਸ਼ੇਰ ਅਤੇ ਖਰਗੋਸ਼", ty:"ਕਹਾਣੀ", p:"58"}, {t:"ਤਿਉਹਾਰ", ty:"ਲੇਖ", p:"67"}, {t:"ਸਿਆਣਾ ਕਾਂ", ty:"ਕਹਾਣੀ", p:"76"}]},
+                { id: "m", name: "ਗਣਿਤ", emoji: "🔢", grad: "from-cyan-400 to-blue-600", shadow: "#1d4ed8", chapters: [{t:"ਸੰਖਿਆਵਾਂ", ty:"ਗਣਿਤ", p:"1"}, {t:"ਜੋੜ ਅਤੇ ਘਟਾਓ", ty:"ਗਣਿਤ", p:"25"}, {t:"ਗੁਣਾ", ty:"ਗਣਿਤ", p:"50"}, {t:"ਭਾਗ", ty:"ਗਣਿਤ", p:"78"}, {t:"ਧਨ (ਰੁਪਏ-ਪੈਸੇ)", ty:"ਗਣਿਤ", p:"105"}, {t:"ਮਾਪ", ty:"ਗਣਿਤ", p:"128"}, {t:"ਆਕਾਰ ਅਤੇ ਕੋਣ", ty:"ਗਣਿਤ", p:"152"}, {t:"ਪੈਟਰਨ", ty:"ਗਣਿਤ", p:"175"}, {t:"ਭਿੰਨਾਂ", ty:"ਗਣਿਤ", p:"185"}, {t:"ਅੰਕੜਾ ਵਿਗਿਆਨ", ty:"ਗਣਿਤ", p:"200"}]},
+                { id: "e", name: "English", emoji: "🔠", grad: "from-orange-400 to-red-500", shadow: "#b91c1c", chapters: [{t:"The King and His Sons", ty:"Story", p:"1"}, {t:"The Farmer and the Bullock Cart", ty:"Story", p:"16"}, {t:"Safety Rules", ty:"Poem", p:"32"}, {t:"A Visit to a Historical Place", ty:"Lesson", p:"48"}, {t:"The Environment", ty:"Lesson", p:"65"}, {t:"Health is Wealth", ty:"Lesson", p:"82"}, {t:"A Friend in Need", ty:"Story", p:"99"}, {t:"Pronouns and Nouns", ty:"Grammar", p:"115"}, {t:"Good Manners", ty:"Lesson", p:"130"}, {t:"Seasons", ty:"Poem", p:"145"}]},
+                { id: "ev", name: "ਵਾਤਾਵਰਨ", emoji: "🌿", grad: "from-green-400 to-green-600", shadow: "#14532d", chapters: [{t:"ਸਾਡਾ ਪਰਿਵਾਰ", ty:"ਪਾਠ", p:"1"}, {t:"ਖੇਡਾਂ ਅਤੇ ਸਿਹਤ", ty:"ਪਾਠ", p:"12"}, {t:"ਸਾਡਾ ਭੋਜਨ", ty:"ਪਾਠ", p:"24"}, {t:"ਸਾਡੇ ਆਵਾਸ", ty:"ਪਾਠ", p:"36"}, {t:"ਪੌਦੇ ਅਤੇ ਜੰਤੂ", ty:"ਪਾਠ", p:"49"}, {t:"ਪਾਣੀ ਦੀ ਸੰਭਾਲ", ty:"ਪਾਠ", p:"62"}, {t:"ਹਵਾ ਅਤੇ ਪ੍ਰਦੂਸ਼ਣ", ty:"ਪਾਠ", p:"75"}, {t:"ਆਵਾਜਾਈ ਦੇ ਸਾਧਨ", ty:"ਪਾਠ", p:"88"}, {t:"ਸੰਚਾਰ ਦੇ ਸਾਧਨ", ty:"ਪਾਠ", p:"102"}, {t:"ਧਰਤੀ ਅਤੇ ਆਕਾਸ਼", ty:"ਪਾਠ", p:"115"}]},
+                { id: "h", name: "हिंदी", emoji: "अ", grad: "from-purple-500 to-fuchsia-600", shadow: "#701a75", chapters: [{t:"वर्णमाला", ty:"पाठ", p:"1"}, {t:"मात्राएँ", ty:"पाठ", p:"18"}, {t:"प्रार्थना", ty:"कविता", p:"35"}, {t:"मेरा घर", ty:"पाठ", p:"48"}, {t:"मेले की सैर", ty:"पाठ", p:"60"}, {t:"पेड़ हमारे मित्र", ty:"पाठ", p:"75"}, {t:"तिरंगा", ty:"कविता", p:"88"}, {t:"मेरा भारत", ty:"पाठ", p:"100"}, {t:"गिनती", ty:"पाठ", p:"112"}, {t:"अच्छी आदतें", ty:"पाठ", p:"125"}]}
+            ]},
             5: { 
                 name: "ਪੰਜਵੀਂ ਜਮਾਤ", 
                 subjects: [
-                    { id: "punjabi", name: "ਪੰਜਾਬੀ", code: "P", icon: "fa-book-open", bgInfo: {grad: "from-pink-400 to-rose-600", shadow: "#be123c", emoji: "ੳ", iconAnim: "bounce-anim", specialCrown: true}, chapters: [
+                    { id: "p", name: "ਪੰਜਾਬੀ", emoji: "ੳ", grad: "from-pink-400 to-rose-600", shadow: "#be123c", chapters: [
                         {t: "ਮੇਰਾ ਹਿੰਦੁਸਤਾਨ", ty: "ਕਵਿਤਾ", p: "1"}, {t: "ਗਤਕਾ", ty: "ਲੇਖ", p: "5"}, {t: "ਬਾਰਾਂਮਾਂਹ", ty: "ਕਵਿਤਾ", p: "10"}, {t: "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", ty: "ਜੀਵਨੀ", p: "14"}, {t: "ਸਿਆਣੀ ਗੱਲ", ty: "ਕਹਾਣੀ", p: "20"}, {t: "ਆਸਮਾਨ ਦੀਆਂ ਪਰੀਆਂ", ty: "ਕਵਿਤਾ", p: "26"}, {t: "ਦਾਦੀ ਮਾਂ", ty: "ਲੇਖ", p: "31"}, {t: "ਚਿੜੀਆ ਘਰ", ty: "ਕਵਿਤਾ", p: "37"}, {t: "ਸੁੰਢ ਤੇ ਹਲਦੀ", ty: "ਕਹਾਣੀ", p: "41"}, {t: "ਦੁਸਹਿਰਾ", ty: "ਲੇਖ", p: "47"}, {t: "ਅਨੋਖਾ ਤੋਹਫ਼ਾ", ty: "ਕਹਾਣੀ", p: "53"}, {t: "ਮਿੱਤਰ ਦੀ ਪਛਾਣ", ty: "ਕਹਾਣੀ", p: "59"}, {t: "ਰੁੱਖਾਂ ਦੀ ਮਹੱਤਤਾ", ty: "ਲੇਖ", p: "64"}, {t: "ਕਲਪਨਾ ਚਾਵਲਾ", ty: "ਜੀਵਨੀ", p: "69"}, {t: "ਰਬੜ ਦੀ ਕਹਾਣੀ", ty: "ਲੇਖ", p: "75"}, {t: "ਸ਼ਹੀਦ ਭਗਤ ਸਿੰਘ", ty: "ਜੀਵਨੀ", p: "81"}, {t: "ਸਾਡਾ ਪੰਜਾਬ", ty: "ਲੇਖ", p: "86"}, {t: "ਸ਼ੇਰ ਅਤੇ ਖਰਗੋਸ਼", ty: "ਕਹਾਣੀ", p: "92"}, {t: "ਮੇਲਾ", ty: "ਲੇਖ", p: "98"}, {t: "ਸਿਆਣਾ ਕਾਂ", ty: "ਕਹਾਣੀ", p: "104"}
-                    ]}, 
-                    { id: "math", name: "ਗਣਿਤ", code: "M", icon: "fa-calculator", bgInfo: {grad: "from-cyan-400 to-blue-600", shadow: "#1d4ed8", emoji: "🔢", iconAnim: "float-anim"}, chapters: [
-                        {t: "ਸੰਖਿਆਵਾਂ", ty: "ਗਣਿਤ", p: "1"}, {t: "ਸੰਖਿਆਵਾਂ 'ਤੇ ਮੂਲ ਕਿਰਿਆਵਾਂ", ty: "ਗਣਿਤ", p: "28"}, {t: "ਮਹੱਤਮ ਸਮਾਪਵਰਤਕ (HCF/LCM)", ty: "ਗਣਿਤ", p: "62"}, {t: "ਹਿੱਸੇ ਅਤੇ ਪੂਰਨ (Fractions)", ty: "ਗਣਿਤ", p: "95"}, {t: "ਦਸ਼ਮਲਵ (Decimals)", ty: "ਗਣਿਤ", p: "124"}, {t: "ਮਾਪ (Measurement)", ty: "ਗਣਿਤ", p: "155"}, {t: "ਜਮਾਇਤੀ (Geometry)", ty: "ਗਣਿਤ", p: "182"}, {t: "ਘੇਰਾ ਅਤੇ ਖੇਤਰਫਲ", ty: "ਗਣਿਤ", p: "205"}, {t: "ਆਇਤਨ (Volume)", ty: "ਗਣਿਤ", p: "220"}, {t: "ਅੰਕੜਾ ਵਿਗਿਆਨ", ty: "ਗਣਿਤ", p: "230"}
-                    ]}, 
-                    { id: "english", name: "English", code: "E", icon: "fa-a", bgInfo: {grad: "from-orange-400 to-red-500", shadow: "#b91c1c", emoji: "🔠", iconAnim: "float-anim"}, chapters: [
-                        {t: "The Elves and the Shoemaker", ty: "Story", p: "1"}, {t: "Two Frogs", ty: "Lesson", p: "18"}, {t: "Child and Grandma", ty: "Poem", p: "35"}, {t: "The Flying Sikh", ty: "Biography", p: "50"}, {t: "Raja Birbal", ty: "Story", p: "68"}, {t: "Bank of Our Village", ty: "Lesson", p: "86"}, {t: "Global Warming", ty: "Lesson", p: "105"}, {t: "A Glimpse from History", ty: "Lesson", p: "122"}, {t: "Safe Circle", ty: "Poem", p: "140"}
-                    ]}, 
-                    { id: "evs", name: "ਵਾਤਾਵਰਨ", code: "EV", icon: "fa-leaf", bgInfo: {grad: "from-emerald-400 to-green-600", shadow: "#15803d", emoji: "🌿", iconAnim: "float-anim"}, chapters: [
-                        {t: "ਬਦਲਦੇ ਪਰਿਵਾਰਕ ਰੁਝਾਨ", ty: "ਪਾਠ", p: "1"}, {t: "ਪਰਵਾਸ ਦੇ ਪ੍ਰਭਾਵ", ty: "ਪਾਠ", p: "12"}, {t: "ਖੇਡਾਂ", ty: "ਪਾਠ", p: "24"}, {t: "ਬਾਗਾਂ ਦਾ ਰਾਖਾ : ਮਾਲੀ", ty: "ਪਾਠ", p: "35"}, {t: "ਜੰਤੂਆਂ ਦੇ ਭੋਜਨ", ty: "ਪਾਠ", p: "48"}, {t: "ਬੀਜ ਦਾ ਸਫ਼ਰ", ty: "ਪਾਠ", p: "60"}, {t: "ਕਿੱਤੇ ਅਤੇ ਕਿਰਤੀ", ty: "ਪਾਠ", p: "72"}, {t: "ਖਾਣੇ ਤੋਂ ਪਚਾਉਣ ਤੱਕ", ty: "ਪਾਠ", p: "85"}, {t: "ਜੰਗਲ ਅਤੇ ਜੀਵਨ", ty: "ਪਾਠ", p: "98"}, {t: "ਭੋਜਨ ਅਤੇ ਸਿਹਤ", ty: "ਪਾਠ", p: "112"}, {t: "ਆਵਾਸ ਬਾਰੇ ਜਾਣੀਏ", ty: "ਪਾਠ", p: "125"}, {t: "ਪਾਣੀ ਦੇ ਸੋਮੇ", ty: "ਪਾਠ", p: "138"}, {t: "ਸਾਡੇ ਕੌਮੀ ਚਿੰਨ੍ਹ", ty: "ਪਾਠ", p: "150"}
-                    ]}, 
-                    { id: "hindi", name: "हिंदी", code: "H", icon: "fa-om", bgInfo: {grad: "from-fuchsia-500 to-purple-600", shadow: "#7e22ce", emoji: "अ", iconAnim: "float-anim"}, chapters: [
-                        {t: "जय हिन्द", ty: "कविता", p: "1"}, {t: "सच्चा मित्र", ty: "कहानी", p: "6"}, {t: "मेहनत का फल", ty: "पाठ", p: "12"}, {t: "त्योहारों का देश", ty: "पाठ", p: "18"}, {t: "हमारा राष्ट्रीय झंडा", ty: "पाठ", p: "25"}, {t: "स्वच्छता", ty: "पाठ", p: "32"}, {t: "पेड़ लगाओ", ty: "पाठ", p: "39"}, {t: "मेरा प्यारा गाँव", ty: "पाठ", p: "45"}, {t: "अच्छे बच्चे", ty: "पाठ", p: "52"}, {t: "समय का मोल", ty: "पाठ", p: "60"}
-                    ]}
+                    ]},
+                    { id: "m", name: "ਗਣਿਤ", emoji: "🔢", grad: "from-cyan-400 to-blue-600", shadow: "#1d4ed8", chapters: [{t: "ਸੰਖਿਆਵਾਂ", ty: "ਗਣਿਤ", p: "1"}, {t: "ਸੰਖਿਆਵਾਂ 'ਤੇ ਮੂਲ ਕਿਰਿਆਵਾਂ", ty: "ਗਣਿਤ", p: "28"}, {t: "ਮਹੱਤਮ ਸਮਾਪਵਰਤਕ (HCF)", ty: "ਗਣਿਤ", p: "62"}, {t: "ਹਿੱਸੇ ਅਤੇ ਪੂਰਨ (Fractions)", ty: "ਗਣਿਤ", p: "95"}, {t: "ਦਸ਼ਮਲਵ (Decimals)", ty: "ਗਣਿਤ", p: "124"}, {t: "ਮਾਪ (Measurement)", ty: "ਗਣਿਤ", p: "155"}, {t: "ਜਮਾਇਤੀ (Geometry)", ty: "ਗਣਿਤ", p: "182"}, {t: "ਘੇਰਾ ਅਤੇ ਖੇਤਰਫਲ", ty: "ਗਣਿਤ", p: "205"}, {t: "ਆਇਤਨ (Volume)", ty: "ਗਣਿਤ", p: "220"}, {t: "ਅੰਕੜਾ ਵਿਗਿਆਨ", ty: "ਗਣਿਤ", p: "230"}]},
+                    { id: "e", name: "English", emoji: "🔠", grad: "from-orange-400 to-red-500", shadow: "#b91c1c", chapters: [{t: "The Elves and the Shoemaker", ty: "Story", p: "1"}, {t: "Two Frogs", ty: "Lesson", p: "18"}, {t: "Child and Grandma", ty: "Poem", p: "35"}, {t: "The Flying Sikh", ty: "Biography", p: "50"}, {t: "Raja Birbal", ty: "Story", p: "68"}, {t: "Bank of Our Village", ty: "Lesson", p: "86"}, {t: "Global Warming", ty: "Lesson", p: "105"}, {t: "A Glimpse from History", ty: "Lesson", p: "122"}, {t: "Safe Circle", ty: "Poem", p: "140"}]},
+                    { id: "ev", name: "ਵਾਤਾਵਰਨ", emoji: "🌿", grad: "from-green-400 to-green-600", shadow: "#14532d", chapters: [{t: "ਬਦਲਦੇ ਪਰਿਵਾਰਕ ਰੁਝਾਨ", ty: "ਪਾਠ", p: "1"}, {t: "ਪਰਵਾਸ ਦੇ ਪ੍ਰਭਾਵ", ty: "ਪਾਠ", p: "12"}, {t: "ਖੇਡਾਂ", ty: "ਪਾਠ", p: "24"}, {t: "ਬਾਗਾਂ ਦਾ ਰਾਖਾ : ਮਾਲੀ", ty: "ਪਾਠ", p: "35"}, {t: "ਜੰਤੂਆਂ ਦੇ ਭੋਜਨ", ty: "ਪਾਠ", p: "48"}, {t: "ਬੀਜ ਦਾ ਸਫ਼ਰ", ty: "ਪਾਠ", p: "60"}, {t: "ਕਿੱਤੇ ਅਤੇ ਕਿਰਤੀ", ty: "ਪਾਠ", p: "72"}, {t: "ਖਾਣੇ ਤੋਂ ਪਚਾਉਣ ਤੱਕ", ty: "ਪਾਠ", p: "85"}, {t: "ਜੰਗਲ ਅਤੇ ਜੀਵਨ", ty: "ਪਾਠ", p: "98"}, {t: "ਭੋਜਨ ਅਤੇ ਸਿਹਤ", ty: "ਪਾਠ", p: "112"}, {t: "ਆਵਾਸ ਬਾਰੇ ਜਾਣੀਏ", ty: "ਪਾਠ", p: "125"}, {t: "ਪਾਣੀ ਦੇ ਸੋਮੇ", ty: "ਪਾਠ", p: "138"}, {t: "ਸਾਡੇ ਕੌਮੀ ਚਿੰਨ੍ਹ", ty: "ਪਾਠ", p: "150"}]},
+                    { id: "h", name: "हिंदी", emoji: "अ", grad: "from-purple-500 to-fuchsia-600", shadow: "#701a75", chapters: [{t: "जय हिन्द (ਕਵਿਤਾ)", ty: "कविता", p: "1"}, {t: "सच्चा मित्र (ਕਹਾਣੀ)", ty: "कहानी", p: "6"}, {t: "मेहनत का फल", ty: "पाठ", p: "12"}, {t: "त्योहारों का देश", ty: "पाठ", p: "18"}, {t: "हमारा राष्ट्रीय झंडा", ty: "पाठ", p: "25"}, {t: "स्वच्छता (ਸਫ਼ਾਈ)", ty: "पाठ", p: "32"}, {t: "पेड़ लगाओ", ty: "पाठ", p: "39"}, {t: "मेरा प्यारा गाँव", ty: "पाठ", p: "45"}, {t: "अच्छे बच्चे", ty: "पाठ", p: "52"}, {t: "समय का मोल", ty: "पाठ", p: "60"}]}
                 ] 
             }
         };
 
-        // ---------------- ਫੰਕਸ਼ਨਜ਼ ----------------
-        let previousViewId = 'home-view';
+        // ================= ਮਿਸ਼ਨ ਸਮਰੱਥ ਦਾ ਨਵਾਂ ਡਾਟਾਬੇਸ (Mission Samarth Data) =================
+        const missionSamarthData = {
+            "ਪੰਜਾਬੀ": [],
+            "ਗਣਿਤ": [
+                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 1", url: "math-1.pdf" } // ਉਦਾਹਰਨ
+            ],
+            "English": []
+        };
 
-        function renderAssemblySlides() {
-            const latestGrid = document.getElementById('latest-assembly-grid');
-            let latestHtml = '';
-            assemblySlides.forEach((slide, index) => {
-                const isNew = index === 0 ? `<div class="absolute -top-3 -right-3 bg-red-500 text-white font-black px-4 py-1 rounded-full shadow-[0_4px_0_#991b1b] animate-bounce border-2 border-white text-xs z-20">ਨਵਾਂ</div>` : '';
-                latestHtml += `
-                    <a href="javascript:void(0)" onclick="openContent('${slide.dateId}.html', '${slide.displayDate}')" class="btn-3d-super block bg-white rounded-3xl p-4 sm:p-5 shadow-[0_6px_0_#cbd5e1,0_10px_15px_rgba(0,0,0,0.1)] hover:shadow-[0_6px_0_#cbd5e1,0_15px_20px_rgba(0,0,0,0.15)] border-2 border-gray-200" style="--shadow-color: #cbd5e1;">
-                        ${isNew}
-                        <div class="flex items-center gap-3 sm:gap-4">
-                            <div class="bg-gradient-to-b from-orange-300 to-orange-500 text-white w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-inner border-2 border-white/50 text-xl sm:text-2xl shrink-0">
-                                <i class="fa-regular fa-calendar-check"></i>
-                            </div>
-                            <div class="overflow-hidden">
-                                <h4 class="font-extrabold text-gray-800 text-lg sm:text-xl truncate">${slide.displayDate}</h4>
-                                <span class="bg-blue-100 text-blue-700 px-2 sm:px-3 py-1 rounded-lg text-[10px] sm:text-xs font-black uppercase tracking-wider shadow-sm inline-block mt-1">${slide.day}</span>
-                            </div>
-                        </div>
-                    </a>`;
+        function openClass(id) {
+            const subjectsGrid = document.getElementById('subjects-grid');
+            subjectsGrid.innerHTML = "";
+            const data = schoolData[id];
+            document.getElementById('class-title').innerHTML = `🎒 ${data.name}`;
+            
+            data.subjects.forEach(s => {
+                subjectsGrid.innerHTML += `
+                <button onclick="openSubject(${id}, '${s.id}')" class="btn-3d-super bg-gradient-to-b ${s.grad} text-white p-4 shadow-[0_6px_0_${s.shadow}] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: ${s.shadow};">
+                    <div class="w-16 h-16 rounded-full flex items-center justify-center bg-white/20 group-hover:scale-105 transition-transform"><span class="text-4xl drop-shadow-md">${s.emoji}</span></div>
+                    <span class="text-lg font-black text-3d tracking-wide mt-1">${s.name}</span>
+                </button>`;
             });
-            if (latestGrid) latestGrid.innerHTML = latestHtml;
+            navigateTo('class-view');
+        }
+
+        function openSubject(cId, sId) {
+            const subject = schoolData[cId].subjects.find(s => s.id === sId);
+            const container = document.getElementById('chapters-list-container');
+            
+            document.getElementById('subject-title').innerHTML = `
+                <span class="bg-white/50 w-6 h-6 rounded-full flex items-center justify-center text-xs shadow-sm border border-gray-300 mr-1.5 shrink-0 inline-flex">${subject.emoji}</span>
+                <span class="truncate">${subject.name}</span>`;
+            document.getElementById('breadcrumb-class').innerText = schoolData[cId].name;
+            
+            container.innerHTML = "";
+            subject.chapters.forEach((ch, i) => {
+                const fileName = `ਪਾਠ/${cId}-${sId.toUpperCase()}-${i+1}.html`;
+                
+                // ਤਤਕਰੇ ਦੀ ਸਿੰਪਲ ਫਲੈਕਸ ਲੇਆਊਟ (V1 ਵਾਲੀ)
+                container.innerHTML += `
+                <div class="flex items-center bg-white border-b border-gray-200 text-gray-800 hover:bg-sky-50 transition-all rounded-md my-0.5 shadow-sm">
+                    <div class="table-col-sno text-center py-2 font-black text-xs text-sky-700 border-r border-dashed border-sky-200 bg-sky-50/50">${i+1}</div>
+                    <div class="table-col-name py-2 font-bold text-xs truncate text-gray-800">${ch.t}</div>
+                    <div class="table-col-type text-center py-2"><span class="bg-gray-100 px-1.5 py-0.5 rounded text-[9px] font-bold border border-gray-200">${ch.ty}</span></div>
+                    <div class="table-col-page text-center py-2 font-black text-[10px] text-blue-800 bg-sky-50/50">${ch.p}</div>
+                    <div class="table-col-btn flex justify-center py-2">
+                        <button onclick="openContent('${fileName}', '${ch.t}')" class="btn-3d-super index-btn bg-gradient-to-b from-sky-400 to-blue-600 text-white shadow-[0_3px_0_#1d4ed8] flex items-center justify-center gap-1 w-[90%]" style="--shadow-color: #1d4ed8;"><i class="fa-solid fa-play"></i> <span class="hidden sm:inline">ਖੇਡੋ</span></button>
+                    </div>
+                </div>`;
+            });
+            navigateTo('subject-view');
         }
 
         function openContent(url, title) {
-            const activeEl = document.querySelector('.view-section.active');
-            if (activeEl && activeEl.id !== 'content-view') previousViewId = activeEl.id;
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById('content-view').classList.add('active');
-            document.getElementById('content-title').innerHTML = `<i class="fa-solid fa-gamepad text-orange-500 float-anim inline-block mr-2"></i> <span class="truncate">${title}</span>`;
-            document.getElementById('iframe-loader').style.display = 'flex';
             document.getElementById('app-iframe').src = url;
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            document.getElementById('content-title').innerHTML = `<i class="fa-solid fa-gamepad text-orange-500 float-anim inline-block mr-1"></i> <span class="truncate">${title}</span>`;
+            navigateTo('content-view');
         }
 
         function closeContent() {
-            document.getElementById('app-iframe').src = ""; 
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById(previousViewId).classList.add('active');
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            goBack();
         }
 
-        function showHome() {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById('home-view').classList.add('active');
-        }
-
-        function openAssemblyView() {
-            openContent('assembly.html', 'ਸਵੇਰ ਦੀ ਸਭਾ');
-        }
-
-        function openClass(classId) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById('class-view').classList.add('active');
-            
-            const classInfo = schoolData[classId];
-            document.getElementById('class-title').innerHTML = `
-                <span class="bg-gradient-to-b from-blue-400 to-blue-600 text-white w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center shadow-inner border-2 border-white/50 text-2xl md:text-3xl shrink-0">
-                    <i class="fa-solid fa-layer-group"></i>
-                </span>
-                <span class="drop-shadow-sm truncate">${classInfo.name}</span>
+        function renderAssemblySlides() {
+            const latestGrid = document.getElementById('latest-assembly-grid');
+            latestGrid.innerHTML = `
+                <button onclick="openContent('09-03-2026.html', '09 ਮਾਰਚ')" class="btn-3d-super bg-white p-2 rounded-xl flex flex-row items-center gap-2 shadow-[0_3px_0_#cbd5e1] border border-gray-100 relative overflow-hidden" style="--shadow-color: #cbd5e1;">
+                    <div class="absolute top-0 right-0 bg-red-600 text-white px-2 py-0.5 font-black text-[8px] animate-pulse rounded-bl-lg">ਨਵਾਂ</div>
+                    <div class="text-2xl shrink-0">📅</div>
+                    <div class="text-left leading-tight overflow-hidden"><h4 class="text-[10px] md:text-sm font-black truncate">09 ਮਾਰਚ 2026</h4><span class="text-blue-600 font-bold text-[8px] md:text-[10px]">ਸੋਮਵਾਰ</span></div>
+                </button>
+                <button onclick="openContent('08-03-2026.html', '08 ਮਾਰਚ')" class="btn-3d-super bg-white p-2 rounded-xl flex flex-row items-center gap-2 shadow-[0_3px_0_#cbd5e1] border border-gray-100" style="--shadow-color: #cbd5e1;">
+                    <div class="text-2xl shrink-0">📅</div>
+                    <div class="text-left leading-tight overflow-hidden"><h4 class="text-[10px] md:text-sm font-black truncate">08 ਮਾਰਚ 2026</h4><span class="text-blue-600 font-bold text-[8px] md:text-[10px]">ਐਤਵਾਰ</span></div>
+                </button>
             `;
-            
-            const subjectsGrid = document.getElementById('subjects-grid');
-            let subjectsHtml = '';
-            
-            classInfo.subjects.forEach(subject => {
-                const bgInfo = subject.bgInfo;
-                const crownHtml = bgInfo.specialCrown ? `<div class="absolute -top-4 -right-2 md:-top-6 md:-right-2 text-4xl md:text-5xl drop-shadow-lg z-20" style="transform: rotate(15deg);">👑</div>` : '';
-                
-                subjectsHtml += `
-                    <button onclick="openSubject(${classId}, '${subject.id}')" class="btn-3d-super bg-gradient-to-b ${bgInfo.grad} text-white rounded-[2.5rem] p-5 md:p-8 shadow-[0_10px_0_${bgInfo.shadow},0_15px_20px_rgba(0,0,0,0.3)] hover:shadow-[0_10px_0_${bgInfo.shadow},0_20px_25px_rgba(0,0,0,0.5)] flex flex-col items-center justify-center gap-3 md:gap-5 border-4 border-white/20 group relative overflow-hidden landscape-shrink" style="--shadow-color: ${bgInfo.shadow};">
-                        <div class="absolute -left-6 -bottom-6 text-white/10 text-7xl md:text-9xl rotate-[-20deg] group-hover:rotate-0 transition-transform duration-700 subject-card-icon">
-                            <i class="fa-solid ${subject.icon}"></i>
-                        </div>
-                        ${crownHtml}
-                        <div class="bg-white/20 w-16 h-16 md:w-24 md:h-24 rounded-full flex items-center justify-center backdrop-blur-md border-4 border-white/60 z-10 shadow-[inset_0_4px_10px_rgba(255,255,255,0.8),0_10px_15px_rgba(0,0,0,0.2)] ${bgInfo.iconAnim}">
-                            <span class="text-3xl md:text-5xl drop-shadow-md">${bgInfo.emoji}</span>
-                        </div>
-                        <span class="text-xl sm:text-2xl lg:text-4xl font-black z-10 text-3d tracking-wide text-center w-full px-1 leading-tight subject-card-title">${subject.name}</span>
-                        <div class="bg-black/20 px-4 md:px-6 py-1.5 md:py-2 rounded-full text-[10px] md:text-sm font-extrabold text-white/90 z-10 shadow-inner border border-white/10">
-                            ਖੋਲ੍ਹੋ <i class="fa-solid fa-hand-pointer ml-1"></i>
-                        </div>
-                    </button>
-                `;
-            });
-            subjectsGrid.innerHTML = subjectsHtml;
-            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
-        function openSubject(classId, subjectId) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
-            document.getElementById('subject-view').classList.add('active');
-            
-            const classInfo = schoolData[classId];
-            const subject = classInfo.subjects.find(s => s.id === subjectId);
-            
-            document.getElementById('breadcrumb-class').textContent = classInfo.name;
-            document.getElementById('subject-title').innerHTML = `<span class="text-2xl md:text-4xl ${subject.bgInfo.iconAnim} inline-block">${subject.bgInfo.emoji}</span> <span class="truncate">${subject.name}</span>`;
-            
-            const chaptersListContainer = document.getElementById('chapters-list-container');
-            let chaptersHtml = '';
-            const chapters = subject.chapters;
-
-            for(let i = 1; i <= chapters.length; i++) {
-                const chapter = chapters[i-1];
-                const fileName = `ਪਾਠ/${classId}-${subject.code}-${i}.html`;
-                const bgColor = (i-1) % 2 === 0 ? 'bg-white' : 'bg-sky-50/50';
-                
-                chaptersHtml += `
-                    <div class="flex items-center ${bgColor} border-b-2 border-gray-100 text-gray-700 hover:bg-sky-100 transition-all hover:scale-[1.01] hover:shadow-md hover:z-10 relative">
-                        <div class="table-col-sno w-10 sm:w-14 md:w-20 text-center py-2 md:py-4 text-sky-700 font-black text-xs md:text-xl border-r-2 border-dashed border-sky-200">
-                            <div class="bg-sky-200/50 w-6 h-6 md:w-10 md:h-10 mx-auto rounded-full flex items-center justify-center shadow-inner">${i}</div>
-                        </div>
-                        <div class="table-col-name flex-1 py-2 md:py-4 px-2 md:px-4 font-black text-xs sm:text-sm md:text-2xl truncate text-gray-800 drop-shadow-sm index-table-content">
-                            ${chapter.t}
-                        </div>
-                        <div class="table-col-type w-14 sm:w-20 md:w-28 text-center py-2 md:py-4">
-                            <span class="bg-gradient-to-r from-gray-100 to-gray-200 px-1 md:px-3 py-1 md:py-1.5 rounded-md md:rounded-lg border border-gray-300 font-extrabold text-[9px] sm:text-[10px] md:text-sm shadow-sm truncate block mx-0.5 md:mx-1">${chapter.ty}</span>
-                        </div>
-                        <div class="table-col-page w-10 sm:w-12 md:w-20 text-center py-2 md:py-4 font-black text-sky-800 text-[10px] sm:text-xs md:text-lg border-l-2 border-dashed border-sky-200">
-                            ${chapter.p}
-                        </div>
-                        <div class="table-col-btn w-16 sm:w-24 md:w-36 flex items-center justify-center py-2 md:py-4 px-1 md:px-0">
-                            <button onclick="openContent('${fileName}', 'ਪਾਠ ${i}: ${chapter.t}')" class="btn-3d-super index-btn bg-gradient-to-b from-sky-400 to-blue-600 text-white px-2 sm:px-4 md:px-8 py-1 md:py-3 rounded-lg md:rounded-xl text-[10px] sm:text-xs md:text-lg font-black shadow-[0_3px_0_#1d4ed8] md:shadow-[0_6px_0_#1d4ed8] flex items-center gap-1 md:gap-2 w-full justify-center mx-0.5 md:mx-1" style="--shadow-color: #1d4ed8;">
-                                <i class="fa-solid fa-play"></i> <span class="hidden sm:inline">ਖੇਡੋ</span>
-                            </button>
-                        </div>
-                    </div>
-                `;
-            }
-
-            chaptersListContainer.innerHTML = chaptersHtml;
-            window.scrollTo({top: 0, behavior: 'smooth'});
-        }
-
-        window.onload = () => { renderAssemblySlides(); };
+        window.onload = renderAssemblySlides;
     </script>
 </body>
 </html>
