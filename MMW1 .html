@@ -9,7 +9,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }
         html, body { width: 100%; height: 100%; overflow: hidden; background-color: #000; }
         
-        /* --- ਫਿਕਸਡ ਸਟੂਡੀਓ ਫਰੇਮ --- */
+        /* --- ਫਿਕwਸਡ ਸਟੂਡੀਓ ਫਰੇਮ --- */
         #studio-frame { 
             background: #fffdf5; position: absolute; top: 50%; left: 50%; 
             transform: translate(-50%, -50%); overflow: hidden; 
@@ -33,28 +33,41 @@
         @keyframes moveBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         #border-frame { position: absolute; inset: 0; z-index: 1000; pointer-events: none; border: 2cqmin solid rgba(255, 255, 255, 0.8); box-shadow: inset 0 0 3cqmin rgba(0,0,0,0.3); }
         
-        #viewport { position: absolute; inset: 0; z-index: 10; display: flex; gap: 2cqmin; padding: 3cqmin; align-items: stretch; }
+        #viewport { position: absolute; inset: 0; z-index: 10; display: flex; gap: 2cqmin; padding: 2.5cqmin; align-items: stretch; }
         
         /* --- ਫਲੈਸ਼ ਕਾਰਡ --- */
-        .flash-card { flex-grow: 1; position: relative; height: 100%; background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 100%); border: 0.8cqmin solid #fff; border-radius: 4cqmin; padding: 4cqmin; color: #111; box-shadow: 0 3cqmin 8cqmin rgba(0,0,0,0.4), inset 0 1cqmin 2cqmin rgba(255,255,255,0.8); opacity: 0; transform: scale(0.95); transition: all 1s cubic-bezier(0.25, 1, 0.5, 1); visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 2cqmin; overflow: hidden; }
+        .flash-card { flex-grow: 1; position: relative; height: 100%; background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 100%); border: 0.8cqmin solid #fff; border-radius: 4cqmin; padding: 2cqmin 3cqmin; color: #111; box-shadow: 0 3cqmin 8cqmin rgba(0,0,0,0.4), inset 0 1cqmin 2cqmin rgba(255,255,255,0.8); opacity: 0; transform: scale(0.95); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; overflow: hidden; }
         .flash-card.active { opacity: 1; transform: scale(1); visibility: visible; z-index: 100; }
-        .flash-card.exit { animation: swipeOutUp 0.8s forwards cubic-bezier(0.5, -0.2, 0.5, 1.2); pointer-events: none; }
-        .flash-card.exit-down { animation: swipeOutDown 0.8s forwards cubic-bezier(0.5, -0.2, 0.5, 1.2); pointer-events: none; }
+        .flash-card.exit { animation: swipeOutUp 0.6s forwards cubic-bezier(0.5, -0.2, 0.5, 1.2); pointer-events: none; }
+        .flash-card.exit-down { animation: swipeOutDown 0.6s forwards cubic-bezier(0.5, -0.2, 0.5, 1.2); pointer-events: none; }
         @keyframes swipeOutUp { 0% { transform: scale(1) translateY(0); opacity: 1; } 100% { transform: scale(0.9) translateY(-100vh); opacity: 0; } }
         @keyframes swipeOutDown { 0% { transform: scale(1) translateY(0); opacity: 1; } 100% { transform: scale(0.9) translateY(100vh); opacity: 0; } }
-        .gentle-exit { animation: smoothFadeOut 1.5s ease-in-out forwards !important; pointer-events: none; }
+        .gentle-exit { animation: smoothFadeOut 1s ease-in-out forwards !important; pointer-events: none; }
         @keyframes smoothFadeOut { 0% { opacity: 1; filter: blur(0); } 100% { opacity: 0; filter: blur(10px); transform: scale(1.05); } }
 
+        /* --- ਟੌਪ ਬਾਰ (ਸਿਰਲੇਖ ਅਤੇ ਰਫ਼ ਕੰਮ ਬਟਨ) --- */
+        .top-bar { display: flex; width: 100%; justify-content: center; align-items: center; border-bottom: 0.4cqmin dashed #ff6b81; padding-bottom: 1cqmin; margin-bottom: 1cqmin; flex-shrink: 0; position: relative; min-height: 7cqmin;}
+        .header-msg { font-size: 4cqmin; line-height: 1.2; font-weight: 900; color: #ff6b81; text-align: center; }
+        
+        #math-toggle-btn {
+            position: absolute; right: 0; top: 50%; transform: translateY(-50%);
+            background: linear-gradient(135deg, #e74c3c, #c0392b); color: #fff; /* Red Background */
+            border: 0.3cqmin solid #fff; border-radius: 2cqmin; padding: 1cqmin 2cqmin;
+            font-size: 2.8cqmin; font-weight: 900; cursor: pointer;
+            box-shadow: 0 0.5cqmin 1cqmin rgba(0,0,0,0.3); transition: all 0.2s;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.4); display: none; z-index: 100;
+        }
+        #math-toggle-btn:active { transform: translateY(-30%); box-shadow: none; }
+
         /* --- ਅੱਖਰਾਂ ਦੀ ਸੈਟਿੰਗ --- */
-        .header-msg { font-size: 5cqmin; line-height: 1.3; padding-bottom: 1cqmin; width: 100%; font-weight: 900; text-align: center; color: #ff6b81; border-bottom: 0.5cqmin dashed #ff6b81; flex-shrink: 0; margin-bottom: 1cqmin; }
-        .text-container { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; flex-grow: 1; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 2cqmin;}
+        .text-container { display: flex; flex-direction: column; align-items: center; justify-content: flex-start; width: 100%; flex-grow: 1; overflow-y: auto; overscroll-behavior: contain; padding-bottom: 1cqmin; padding-top: 1cqmin;}
         .type-block { text-align: center; white-space: pre-wrap; word-wrap: break-word; width: 100%; }
-        .title-text { font-weight: 900; color: #d32f2f; line-height: 1.3; margin-bottom: 2cqmin; background: rgba(255, 255, 255, 0.7); padding: 1.5cqmin; border-radius: 1.5cqmin; border-left: 1cqmin solid #ff6b81; box-shadow: 0 0.5cqmin 1.5cqmin rgba(0,0,0,0.05); flex-shrink: 0; }
+        .title-text { font-weight: 900; color: #d32f2f; line-height: 1.3; margin-bottom: 2cqmin; background: rgba(255, 255, 255, 0.7); padding: 1.5cqmin; border-radius: 1.5cqmin; border-left: 1cqmin solid #ff6b81; box-shadow: 0 0.5cqmin 1.5cqmin rgba(0,0,0,0.05); flex-shrink: 0; width: 100%; text-align: left; }
         .main-content { line-height: 1.4; font-weight: bold; color: #000; flex-shrink: 0; margin-bottom: 1cqmin; }
         .ans-area { color: #1b5e20; font-weight: 900; line-height: 1.4; margin-top: 1cqmin; flex-shrink: 0; transition: opacity 0.5s; opacity: 0; }
         
         /* --- 3D Elements & Step Logic --- */
-        #html-block { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2cqmin; margin: 1cqmin 0; transition: opacity 0.5s; opacity: 0; }
+        #html-block { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5cqmin; margin: 1cqmin 0; transition: opacity 0.5s; opacity: 0; }
         .flex-row { display: flex; align-items: center; justify-content: center; gap: 2cqmin; flex-wrap: wrap; width: 100%; }
         .emoji-box { font-size: 6cqmin; letter-spacing: 0.2cqmin; filter: drop-shadow(0px 0.5cqmin 0.5cqmin rgba(0,0,0,0.4)); background: #fff; padding: 1cqmin 2cqmin; border-radius: 1.5cqmin; box-shadow: inset 0 0.5cqmin 1cqmin rgba(0,0,0,0.1); display: inline-block; text-align: center; }
         
@@ -73,35 +86,55 @@
         .ans-target { opacity: 0 !important; visibility: hidden; transform: scale(0.5); transition: all 0.3s ease; }
         .ans-target.revealed { opacity: 1 !important; visibility: visible; transform: scale(1); text-shadow: 1px 1px 0px #fff; }
 
-        /* --- FADE OUT & STEP LOGIC (ਸਵਾਲ ਨੂੰ ਧੁੰਦਲਾ ਕਰਨ ਲਈ) --- */
+        /* --- FADE OUT & STEP LOGIC (ਸਿਰਫ 20% ਧੁੰਦਲਾ) --- */
         .hidden-step { display: none !important; }
         .q-step { transition: all 0.6s ease; opacity: 1; transform: scale(1); width: 100%; display: flex; justify-content: center; transform-origin: center center; }
         
         .active-step { animation: highlightStep 1.5s infinite alternate; z-index: 10; position: relative;}
-        @keyframes highlightStep { 0% { transform: scale(1); } 100% { transform: scale(1.02); } }
+        @keyframes highlightStep { 0% { transform: scale(1); } 100% { transform: scale(1.01); } }
         
-        /* ਇਹ ਕਲਾਸ ਪੁਰਾਣੇ ਸਵਾਲਾਂ ਨੂੰ ਧੁੰਦਲਾ ਕਰੇਗੀ */
-        .dimmed-step { opacity: 0.35 !important; transform: scale(0.95) !important; filter: grayscale(50%); pointer-events: none; }
+        /* 80% Visible, No Grayscale */
+        .dimmed-step { opacity: 0.8 !important; transform: scale(0.98) !important; filter: none !important; pointer-events: none; }
 
-        /* Emoji individual items for fading */
-        .e-item { display: inline-block; transition: all 0.4s ease; }
-        .e-item.faded { opacity: 0.15 !important; transform: scale(0.7); filter: grayscale(100%); }
+        /* Emoji individual items for fading when counting */
+        .e-item { position: relative; display: inline-block; transition: all 0.4s ease; }
+        .e-item.faded { opacity: 0.8 !important; transform: scale(0.85); filter: grayscale(20%); } /* Clear visual cue but highly visible */
+        .e-item.faded::after { content: ''; position: absolute; top: 50%; left: -10%; width: 120%; height: 0.5cqmin; background-color: rgba(220, 53, 69, 0.8); transform: translateY(-50%) rotate(-30deg); z-index: 10; pointer-events: none; border-radius: 0.2cqmin; box-shadow: 0 0.2cqmin 0.4cqmin rgba(0,0,0,0.3); }
 
         .grid-layout { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.5cqmin; width: 100%; justify-items: center; }
         .mcq-box { border: 0.4cqmin solid #70a1ff; padding: 1.5cqmin; text-align: center; background: #fff; border-radius: 1.5cqmin; box-shadow: 0 1cqmin 2cqmin rgba(0,0,0,0.1); display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; }
         .mcq-label { background: #ffeb3b; padding: 0.5cqmin 1.5cqmin; border-radius: 1cqmin; box-shadow: 0 0.5cqmin 1cqmin rgba(0,0,0,0.2); font-weight: bold; font-size: 4cqmin; margin-bottom: 1cqmin; }
 
-        /* --- Creator Strip --- */
-        #creator-strip { display: none; opacity: 0; transform: translateY(2cqmin); transition: all 1s ease-out; border-top: 0.3cqmin dashed #ffb6c1; padding-top: 1cqmin; width: 100%; line-height: 1.2; text-align: center; flex-shrink: 0; margin-top: auto; }
-        .creator-label { font-size: 3cqmin; color: #333; font-weight: 900; }
-        .creator-name { font-size: 4.5cqmin; color: #d32f2f; font-weight: 900; margin: 0.2cqmin 0; }
+        /* --- ਬੌਟਮ ਰਿਬਨ (Bottom Ribbon for Nav & Indicator) --- */
+        .bottom-ribbon {
+            display: flex; width: 100%; justify-content: space-between; align-items: center;
+            margin-top: auto; padding-top: 1.5cqmin; border-top: 0.3cqmin solid rgba(0,0,0,0.1); flex-shrink: 0;
+        }
+
+        #tap-indicator { 
+            background: #ffeb3b; color: #d32f2f; font-weight: 900; 
+            padding: 1cqmin 2.5cqmin; border-radius: 2cqmin; font-size: 3.5cqmin; 
+            box-shadow: 0 0.5cqmin 1cqmin rgba(0,0,0,0.3); animation: pulseScale 1s infinite alternate; 
+            display: none; border: 0.3cqmin solid #d32f2f; white-space: nowrap; margin: 0;
+        }
+        @keyframes pulseScale { 0% { transform: scale(1); } 100% { transform: scale(1.05); } }
+
+        .nav-controls { display: flex; gap: 2cqmin; }
+        .nav-btn { background: linear-gradient(135deg, #3498db, #2980b9); color: white; border: 0.3cqmin solid #fff; border-radius: 2cqmin; padding: 1cqmin 2cqmin; font-size: 3cqmin; font-weight: bold; cursor: pointer; box-shadow: 0 0.5cqmin 1cqmin rgba(0,0,0,0.3); transition: all 0.2s; }
+        .nav-btn:active { transform: translateY(0.4cqmin); box-shadow: none; }
+        .nav-btn.btn-next { background: linear-gradient(135deg, #2ecc71, #27ae60); }
+        .nav-btn.btn-prev { background: linear-gradient(135deg, #e67e22, #d35400); }
+        .nav-btn.btn-restart { background: linear-gradient(135deg, #9b59b6, #8e44ad); }
+        
+        /* --- Creator Strip (Single Line Bold) --- */
+        #creator-strip { display: none; opacity: 0; transform: translateY(2cqmin); transition: all 1s ease-out; width: 100%; text-align: center; flex-shrink: 0; padding-bottom: 1cqmin; margin-top: 1cqmin;}
+        .creator-single-line { font-size: 4cqmin; color: #d32f2f; font-weight: 900; background: #fffde7; padding: 1.2cqmin 2cqmin; border-radius: 2cqmin; display: inline-block; border: 0.4cqmin dashed #ff8f00; box-shadow: 0 0.5cqmin 1cqmin rgba(0,0,0,0.15); width: 95%; text-shadow: 1px 1px 0px #fff; }
         
         /* --- Intro Screen --- */
-        .intro-wrapper { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+        .intro-wrapper { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 100%); z-index: 500; }
         .intro-date-top { position: absolute; top: 4cqmin; left: 50%; transform: translateX(-50%); font-weight: 900; color: #fff; background: #ff6b81; padding: 1.5cqmin 4cqmin; border-radius: 5cqmin; box-shadow: 0 1cqmin 3cqmin rgba(0,0,0,0.25); border: 0.5cqmin dashed #fff; z-index: 100; font-size: 4.5cqmin; white-space: nowrap; animation: popCenterAnim 0.8s forwards; opacity: 0; }
         
         .center-circle { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); background: radial-gradient(circle, #ffffff 40%, #ffeb3b 100%); border: 1.5cqmin solid #ff9f43; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; box-shadow: 0 2cqmin 6cqmin rgba(0,0,0,0.5); z-index: 50; animation: popCenterAnim 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.2s; opacity: 0; width: 42cqmin; height: 42cqmin; }
-        
         @keyframes popCenterAnim { 0% { transform: translate(-50%, -50%) scale(0); opacity: 0; } 100% { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
         
         .intro-title { font-weight: 900; color: #d32f2f; text-align: center; line-height: 1.1; font-size: 6cqmin; display: flex; flex-direction: column; align-items: center; gap: 0.8cqmin; }
@@ -131,19 +164,9 @@
         .pos-4 { top: 40%; right: 5%; opacity: 0; animation: dropBalloon 1.5s cubic-bezier(0.25, 1, 0.5, 1) 1.4s forwards; }
         .pos-6 { bottom: 10%; right: 15%; opacity: 0; animation: dropBalloon 1.5s cubic-bezier(0.25, 1, 0.5, 1) 2.2s forwards; }
 
-        /* --- Math Toggle Button --- */
-        #math-toggle-btn {
-            position: absolute; top: 2cqmin; right: 2cqmin; z-index: 2000;
-            background: linear-gradient(135deg, #fbc531, #e1b12c); color: #fff;
-            border: 0.4cqmin solid #fff; border-radius: 3cqmin; padding: 1cqmin 2cqmin;
-            font-size: 3cqmin; font-weight: 900; cursor: pointer;
-            box-shadow: 0 0.5cqmin 1cqmin rgba(0,0,0,0.3); transition: all 0.2s;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.4); display: none; /* Initially hidden until start */
-        }
-        #math-toggle-btn:active { transform: translateY(0.3cqmin); box-shadow: none; }
-
-        /* --- Math Panel --- */
+        /* --- Math Panel (Rough Work) --- */
         #math-panel { 
+            position: relative; 
             display: none; 
             background: linear-gradient(135deg, #ffffff 0%, #f4f4f4 100%); border: 0.8cqmin solid #fff; border-radius: 4cqmin; flex-direction: column; padding: 3cqmin; color: #111; box-shadow: 0 3cqmin 8cqmin rgba(0,0,0,0.4), inset 0 1cqmin 2cqmin rgba(255,255,255,0.8); z-index: 100; flex-shrink: 0; 
         }
@@ -163,7 +186,16 @@
         .mp-btn.clear { background: linear-gradient(135deg, #8e9eab 0%, #eef2f3 100%); color: #333; text-shadow: none; box-shadow: 0 0.8cqmin 0 #6e7a84, 0 1.5cqmin 2cqmin rgba(0,0,0,0.3); grid-column: span 2; }
         .mp-btn.clear:active { box-shadow: 0 0.2cqmin 0 #6e7a84, 0 0.5cqmin 1cqmin rgba(0,0,0,0.2); }
         
-        #mp-display { flex-grow: 1; background: rgba(0, 0, 0, 0.04); border-radius: 2.5cqmin; padding: 2cqmin; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 1.5cqmin; overflow-y: auto; overscroll-behavior: contain; box-shadow: inset 0 1cqmin 2cqmin rgba(0,0,0,0.1), 0 0 0 0.3cqmin #fff; }
+        #math-warning-popup { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -40%) scale(0.9); background: linear-gradient(135deg, #e74c3c, #c0392b); color: white; padding: 2cqmin; border-radius: 2cqmin; font-weight: 900; box-shadow: 0 1cqmin 3cqmin rgba(0,0,0,0.5); border: 0.4cqmin solid #ffcccc; opacity: 0; pointer-events: none; z-index: 3000; transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); display: flex; flex-direction: column; align-items: center; justify-content: center; width: 85%; text-align: center; }
+        #math-warning-popup.show-popup { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+        #mp-number-track { display: flex; justify-content: space-between; background: rgba(0, 0, 0, 0.05); border-radius: 2cqmin; padding: 1cqmin; margin-bottom: 1.5cqmin; flex-shrink: 0; box-shadow: inset 0 0.5cqmin 1cqmin rgba(0,0,0,0.1); }
+        .nt-num { font-size: 3.5cqmin; font-weight: bold; color: #111; opacity: 0.2; transition: all 0.3s; width: 4.5cqmin; height: 4.5cqmin; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+        .nt-num.active { opacity: 1; background: #fbc531; color: #d32f2f; transform: scale(1.1); box-shadow: 0 0.2cqmin 0.5cqmin rgba(0,0,0,0.3); }
+
+        #mp-display-wrapper { position: relative; flex-grow: 1; display: flex; min-height: 0; }
+        #mp-display { flex-grow: 1; width: 100%; background: rgba(0, 0, 0, 0.04); border-radius: 2.5cqmin; padding: 2cqmin; display: flex; flex-wrap: wrap; align-content: flex-start; gap: 1.5cqmin; overflow-y: auto; overscroll-behavior: contain; box-shadow: inset 0 1cqmin 2cqmin rgba(0,0,0,0.1), 0 0 0 0.3cqmin #fff; }
+        
         .mp-total { font-size: 5cqmin; font-weight: 900; text-align: center; margin-top: 1.5cqmin; background: linear-gradient(135deg, #ff9a9e, #fecfef); color: #d32f2f; padding: 1.5cqmin; border-radius: 3cqmin; flex-shrink: 0; box-shadow: 0 1cqmin 2cqmin rgba(0,0,0,0.15), inset 0 0.5cqmin 1cqmin rgba(255,255,255,0.8); border: 0.4cqmin solid #fff; }
         
         .stick { width: 1cqmin; height: 8cqmin; background: #fbc531; border-radius: 0.3cqmin; position: relative; margin: 0 0.2cqmin; box-shadow: 0 0.2cqmin 0.4cqmin rgba(0,0,0,0.3); display: inline-block; }
@@ -171,9 +203,8 @@
         .bundle { display: inline-flex; align-items: center; justify-content: center; position: relative; padding: 0.5cqmin; margin: 0.5cqmin; background: rgba(0,0,0,0.1); border-radius: 1cqmin; box-shadow: inset 0 0 1cqmin rgba(0,0,0,0.05);}
         .bundle::after { content: ''; position: absolute; top: 50%; left: -0.5cqmin; right: -0.5cqmin; height: 1.5cqmin; background: #e84118; transform: translateY(-50%); z-index: 2; border-radius: 0.5cqmin; box-shadow: 0 0.3cqmin 0.6cqmin rgba(0,0,0,0.4); }
 
-        /* --- Live Mode Tap Indicator --- */
-        #tap-indicator { position: absolute; bottom: 3cqmin; left: 50%; transform: translateX(-50%); background: #ffeb3b; color: #d32f2f; font-weight: 900; padding: 1.5cqmin 4cqmin; border-radius: 3cqmin; font-size: 4cqmin; box-shadow: 0 1cqmin 2cqmin rgba(0,0,0,0.3); animation: bounceUp 1s infinite alternate; z-index: 1000; display: none; pointer-events: none; border: 0.4cqmin solid #d32f2f; white-space: nowrap; }
-        @keyframes bounceUp { 0% { transform: translate(-50%, 0) scale(1); } 100% { transform: translate(-50%, -1.5cqmin) scale(1.05); } }
+        #black-screen { position: fixed; inset: 0; z-index: 900000; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); display: none; }
+        #start-countdown { position: fixed; inset: 0; z-index: 900001; display: none; justify-content: center; align-items: center; font-size: 30cqmin; font-weight: 900; color: #ffd700; text-shadow: 0 1cqmin 3cqmin rgba(0,0,0,0.8); }
 
     </style>
 </head>
@@ -183,14 +214,18 @@
         <div id="bg-layer"></div>
         <div id="border-frame"></div>
         
-        <!-- Toggle Button for Rough Work -->
-        <button id="math-toggle-btn" onclick="toggleMathPanel()">📝 ਰਫ਼ ਕੰਮ</button>
+        <div id="black-screen"></div>
+        <div id="start-countdown">3</div>
 
-        <!-- Viewport Container -->
         <div id="viewport" class="">
             <!-- Left Side: Flash Card -->
             <div class="flash-card" id="master-card">
-                <div class="header-msg" id="card-header" style="display: none;"></div>
+                
+                <!-- TOP BAR (Centered Header & Fixed Rough Work Button) -->
+                <div class="top-bar">
+                    <div class="header-msg" id="card-header">ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1</div>
+                    <button id="math-toggle-btn" onclick="toggleMathPanel(event)">📝 ਰਫ਼ ਕੰਮ</button>
+                </div>
                 
                 <div class="text-container">
                     <div class="title-text type-block" id="type-title"></div>
@@ -200,24 +235,45 @@
                 </div>
                 
                 <div id="creator-strip">
-                    <div class="creator-label">ਸਿੱਖਿਆ ਵਿਭਾਗ, ਪੰਜਾਬ ਦੁਆਰਾ ਜਾਰੀ</div>
-                    <div class="creator-name">ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27</div>
+                    <div class="creator-single-line">ਤਿਆਰ ਕਰਤਾ: ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸ.ਪ.ਸ. ਜਵੱਦੀ</div>
                 </div>
                 
-                <div id="tap-indicator">👉 ਅੱਗੇ ਵਧਣ ਲਈ ਟੈਪ ਕਰੋ</div>
+                <!-- BOTTOM RIBBON (Indicator & Nav Buttons) -->
+                <div class="bottom-ribbon">
+                    <div class="nav-controls" id="nav-controls" style="display: none;">
+                        <button class="nav-btn btn-prev" onclick="handlePrev(event)">⏮️ ਪਿੱਛੇ</button>
+                        <button class="nav-btn btn-restart" onclick="handleRestart(event)">🔄 ਦੁਬਾਰਾ</button>
+                        <button class="nav-btn btn-next" onclick="handleNext(event)">ਅੱਗੇ ⏭️</button>
+                    </div>
+                    <div id="tap-indicator">👉 ਉੱਤਰ ਦੇਖਣ ਲਈ ਕਲਿੱਕ/ਟੱਚ ਕਰੋ</div>
+                </div>
+                
             </div>
             
             <!-- Right Side: Math Panel -->
             <div id="math-panel">
                 <div class="mp-title">ਰਫ਼ ਕੰਮ (ਬੰਡਲ-ਤੀਲੀ)</div>
                 <div class="mp-buttons">
-                    <button class="mp-btn add-bundle" onclick="addTen()">+ ਬੰਡਲ</button>
-                    <button class="mp-btn add-stick" onclick="addOne()">+ ਤੀਲੀ</button>
-                    <button class="mp-btn sub-bundle" onclick="subTen()">- ਬੰਡਲ</button>
-                    <button class="mp-btn sub-stick" onclick="subOne()">- ਤੀਲੀ</button>
-                    <button class="mp-btn clear" onclick="clearMath()">ਸਾਫ਼ ਕਰੋ (Clear)</button>
+                    <button class="mp-btn add-bundle" onclick="addTen(event)">+ ਬੰਡਲ</button>
+                    <button class="mp-btn add-stick" onclick="addOne(event)">+ ਤੀਲੀ</button>
+                    <button class="mp-btn sub-bundle" onclick="subTen(event)">- ਬੰਡਲ</button>
+                    <button class="mp-btn sub-stick" onclick="subOne(event)">- ਤੀਲੀ</button>
+                    <button class="mp-btn clear" onclick="clearMath(event)">ਸਾਫ਼ ਕਰੋ (Clear)</button>
                 </div>
-                <div id="mp-display"></div>
+                <!-- 1 to 10 Counting Track -->
+                <div id="mp-number-track">
+                    <div class="nt-num">1</div><div class="nt-num">2</div><div class="nt-num">3</div><div class="nt-num">4</div><div class="nt-num">5</div><div class="nt-num">6</div><div class="nt-num">7</div><div class="nt-num">8</div><div class="nt-num">9</div><div class="nt-num">10</div>
+                </div>
+                
+                <!-- Display Area Wrapper with Warning Popup Inside -->
+                <div id="mp-display-wrapper">
+                    <div id="mp-display"></div>
+                    <div id="math-warning-popup">
+                        <div style="font-size: 6cqmin; line-height:1; filter: drop-shadow(0 0.5cqmin 1cqmin rgba(0,0,0,0.5));">🛑</div>
+                        <div style="font-size: 2.8cqmin; line-height: 1.3; margin-top: 1cqmin; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">ਧਿਆਨ ਦਿਓ!<br>ਗਿਣਤੀ ਵਸਤੂਆਂ ਤੋਂ<br>ਵੱਧ ਨਹੀਂ ਹੋ ਸਕਦੀ।</div>
+                    </div>
+                </div>
+                
                 <div class="mp-total">ਕੁੱਲ = <span id="mp-total-val">0</span></div>
             </div>
         </div>
@@ -228,52 +284,117 @@
     let isTransitioning = false;
     let renderSessionId = 0; 
     let resolveTap = null;
+    let isBundling = false;
     
-    // ਬਿਨਾਂ ਮੇਨੂ ਦੇ ਸਿੱਧਾ ਲਾਈਵ ਮੋਡ ਸ਼ੁਰੂ ਕਰੋ
+    // --- Direct Start (Live Mode ONLY) ---
     window.onload = () => {
         document.body.classList.add('ratio-16-9-active');
-        document.getElementById('math-toggle-btn').style.display = 'block';
-        currentStep = 0; 
-        renderSlide(currentStep); 
+        document.getElementById('black-screen').style.display = 'block';
+        
+        const cdEl = document.getElementById('start-countdown');
+        cdEl.style.display = 'flex';
+        let count = 3; cdEl.innerText = count;
+
+        const timer = setInterval(() => {
+            count--;
+            if (count > 0) { cdEl.innerText = count; } 
+            else {
+                clearInterval(timer);
+                cdEl.style.display = 'none'; 
+                setTimeout(() => {
+                    document.getElementById('black-screen').style.display = 'none';
+                    goToSlide(0, 'up'); 
+                }, 500); 
+            }
+        }, 1000);
     };
 
-    // --- Toggle Rough Work Panel ---
-    function toggleMathPanel() {
+    function toggleMathPanel(e) {
+        if(e) e.stopPropagation();
         const vp = document.getElementById('viewport');
         vp.classList.toggle('math-active');
     }
 
-    // --- Math Tools Logic (Carry + Borrow Logic & Dynamic Fading) ---
+    // --- Math Tools Logic (SYNC WITH EMOJIS GLOBAL) ---
     let mathTens = 0;
     let mathOnes = 0;
+    let warningTimeout = null;
 
-    function addTen() { mathTens++; updateMath(); }
-    function subTen() { if(mathTens > 0) mathTens--; updateMath(); }
+    function getMaxAllowedObjects() {
+        let step = document.querySelector('.q-step.active-step');
+        let countables = step ? step.querySelectorAll('.countable .e-item') : [];
+        if (countables.length === 0) {
+            countables = document.querySelectorAll('#html-block .countable .e-item');
+        }
+        return countables.length > 0 ? countables.length : Infinity;
+    }
+
+    function showMathWarning() {
+        const popup = document.getElementById('math-warning-popup');
+        popup.classList.add('show-popup');
+        
+        if(warningTimeout) clearTimeout(warningTimeout);
+        warningTimeout = setTimeout(() => {
+            popup.classList.remove('show-popup');
+        }, 2500);
+    }
+
+    function addTen(e) { 
+        if(e) e.stopPropagation();
+        let currentTotal = (mathTens * 10) + mathOnes;
+        let maxAllowed = getMaxAllowedObjects();
+        
+        if (currentTotal + 10 > maxAllowed) { showMathWarning(); return; }
+        
+        mathTens++; 
+        for(let i=0; i<10; i++) fadeActiveEmoji(true);
+        updateMath(); 
+    }
     
-    function addOne() { 
+    function subTen(e) { 
+        if(e) e.stopPropagation();
+        if(mathTens > 0) { 
+            mathTens--; 
+            for(let i=0; i<10; i++) fadeActiveEmoji(false);
+            updateMath(); 
+        } 
+    }
+    
+    function addOne(e) { 
+        if(e) e.stopPropagation();
+        if(isBundling) return;
+        
+        let currentTotal = (mathTens * 10) + mathOnes;
+        let maxAllowed = getMaxAllowedObjects();
+        if (currentTotal >= maxAllowed) { showMathWarning(); return; }
+
         mathOnes++; 
-        if(mathOnes >= 10) { // 10 ਤੀਲੀਆਂ ਹੋਣ ਤੇ 1 ਬੰਡਲ ਬਣੇਗਾ
-            mathOnes = 0;
-            mathTens++;
-        }
-        fadeActiveEmoji(false); // ਫੇਡ ਹਟਾਓ (ਉਜਾਗਰ ਕਰੋ)
+        fadeActiveEmoji(true); 
         updateMath(); 
+        
+        if(mathOnes >= 10) { 
+            isBundling = true;
+            setTimeout(() => {
+                mathOnes = 0; mathTens++; updateMath(); isBundling = false;
+            }, 800); 
+        }
     }
     
-    function subOne() { 
+    function subOne(e) { 
+        if(e) e.stopPropagation();
+        if(isBundling) return;
         if(mathOnes > 0) {
-            mathOnes--; 
-        } else if(mathTens > 0) { // ਤੀਲੀ ਨਹੀਂ ਹੈ ਪਰ ਬੰਡਲ ਹੈ, ਤਾਂ ਬੰਡਲ ਖੋਲ੍ਹੋ
-            mathTens--;
-            mathOnes = 9;
-        } else {
-            return; // ਕੁਝ ਨਹੀਂ ਬਚਿਆ
-        }
-        fadeActiveEmoji(true); // ਐਕਟਿਵ ਸਵਾਲ ਵਿੱਚੋਂ ਇੱਕ ਓਬਜੈਕਟ ਫੇਡ ਕਰੋ
-        updateMath(); 
+            mathOnes--; fadeActiveEmoji(false); updateMath(); 
+        } else if(mathTens > 0) { 
+            isBundling = true; mathTens--; mathOnes = 10; updateMath(); 
+            setTimeout(() => {
+                mathOnes = 9; fadeActiveEmoji(false); updateMath(); isBundling = false;
+            }, 600); 
+        } 
     }
     
-    function clearMath() { 
+    function clearMath(e) { 
+        if(e) e.stopPropagation();
         mathTens = 0; mathOnes = 0; updateMath(); 
         document.querySelectorAll('.e-item.faded').forEach(el => el.classList.remove('faded'));
     }
@@ -286,228 +407,253 @@
         display.innerHTML = ''; 
         
         for(let i=0; i<mathTens; i++) {
-            let bundle = document.createElement('div');
-            bundle.className = 'bundle';
-            for(let j=0; j<10; j++) {
-                let stick = document.createElement('div');
-                stick.className = 'stick';
-                bundle.appendChild(stick);
-            }
+            let bundle = document.createElement('div'); bundle.className = 'bundle';
+            for(let j=0; j<10; j++) { let stick = document.createElement('div'); stick.className = 'stick'; bundle.appendChild(stick); }
             display.appendChild(bundle);
         }
         
         for(let i=0; i<mathOnes; i++) {
-            let stick = document.createElement('div');
-            stick.className = 'stick';
-            display.appendChild(stick);
+            let stick = document.createElement('div'); stick.className = 'stick'; display.appendChild(stick);
         }
+
+        let trackNums = document.querySelectorAll('.nt-num');
+        trackNums.forEach((el, index) => {
+            if (index < mathOnes) el.classList.add('active'); else el.classList.remove('active');
+        });
     }
 
-    // ਸਕਰੀਨ 'ਤੇ ਮੌਜੂਦ ਐਕਟਿਵ ਸਵਾਲ ਦੇ ਓਬਜੈਕਟ ਫੇਡ ਕਰਨ ਲਈ
     function fadeActiveEmoji(isFadingOut) {
-        let container = document.getElementById('html-block');
+        let step = document.querySelector('.q-step.active-step');
+        let emojis = step ? step.querySelectorAll('.countable .e-item') : [];
+        if (emojis.length === 0) {
+            emojis = document.querySelectorAll('#html-block .countable .e-item');
+        }
         
         if(isFadingOut) {
-            let emojis = container.querySelectorAll('.active-step .e-item:not(.faded)');
-            if(emojis.length > 0) emojis[emojis.length - 1].classList.add('faded');
+            let unfaded = Array.from(emojis).filter(e => !e.classList.contains('faded'));
+            if(unfaded.length > 0) unfaded[0].classList.add('faded');
         } else {
-            let emojis = container.querySelectorAll('.active-step .e-item.faded');
-            if(emojis.length > 0) emojis[0].classList.remove('faded');
+            let faded = Array.from(emojis).filter(e => e.classList.contains('faded'));
+            if(faded.length > 0) faded[faded.length - 1].classList.remove('faded');
         }
     }
 
-    // ਇਮੋਜੀਆਂ ਨੂੰ ਫੇਡ ਕਰਨ ਲਈ ਹਰ ਇਮੋਜੀ ਨੂੰ ਇੱਕ <span> ਵਿੱਚ ਰੱਖਣਾ
     function wrapEmojisWithSpan(html) {
-        const emojiRegex = /([\u2700-\u27BF]|[\uE000-\uF8FF]|\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|[\u2011-\u26FF]|\uD83E[\uDD10-\uDDFF])/g;
-        return html.replace(emojiRegex, '<span class="e-item">$1</span>');
+        let tempDiv = document.createElement('div');
+        tempDiv.innerHTML = html;
+        function processNode(node) {
+            if (node.nodeType === 3) { 
+                let chars = Array.from(node.nodeValue);
+                let newHtml = chars.map(c => {
+                    // Emojis typically fall in higher unicode blocks
+                    if (c.trim() !== '' && c.codePointAt(0) > 0x2000) {
+                        return `<span class="e-item">${c}</span>`;
+                    }
+                    return c;
+                }).join('');
+                
+                if (newHtml !== node.nodeValue) {
+                    let newSpan = document.createElement('span'); 
+                    newSpan.innerHTML = newHtml;
+                    node.replaceWith(...newSpan.childNodes);
+                }
+            } else if (node.nodeType === 1 && !node.classList.contains('e-item')) { 
+                Array.from(node.childNodes).forEach(processNode);
+            }
+        }
+        Array.from(tempDiv.childNodes).forEach(processNode);
+        return tempDiv.innerHTML;
     }
     
-    // --- Mission Samrath Worksheet 1 Script (Step-by-Step Layout) ---
+    // --- Mission Samrath Worksheet 1 Script (Grouped Logically) ---
     const slideSteps = [
+        { isIntro: true, dateStr: "ਮਿਸ਼ਨ ਸਮਰੱਥ (2026-27)", activities: ["ਅਭਿਆਸ ਸ਼ੀਟ 1", "ਗਣਿਤ (Maths)", "ਜਮਾਤ 3 ਤੋਂ 5", "ਗਿਣਤੀ", "ਜੋੜ-ਘਟਾਓ", "ਆਕ੍ਰਿਤੀਆਂ"] },
+        { header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1", title: "ਪਿਆਰੇ ਬੱਚਿਓ, ਸਵਾਗਤ ਹੈ!", main: "ਅੱਜ ਅਸੀਂ ਮਿਸ਼ਨ ਸਮਰੱਥ ਦੀ ਗਣਿਤ ਦੀ 'ਅਭਿਆਸ ਸ਼ੀਟ 1' ਹੱਲ ਕਰਾਂਗੇ।", ans: "ਆਓ ਮਿਲ ਕੇ ਸਿੱਖੀਏ!" },
+        
         { 
-            isIntro: true, 
-            dateStr: "ਮਿਸ਼ਨ ਸਮਰੱਥ (2026-27)", 
-            activities: ["ਅਭਿਆਸ ਸ਼ੀਟ 1", "ਗਣਿਤ (Maths)", "ਜਮਾਤ 3 ਤੋਂ 5", "ਗਿਣਤੀ", "ਜੋੜ-ਘਟਾਓ", "ਆਕ੍ਰਿਤੀਆਂ"] 
-        },
-        { 
-            header: "ਸਕੂਲ ਸਿੱਖਿਆ ਵਿਭਾਗ, ਪੰਜਾਬ<br>ਮਿਸ਼ਨ ਸਮਰੱਥ - ਗਣਿਤ", 
-            title: "ਪਿਆਰੇ ਬੱਚਿਓ, ਸਵਾਗਤ ਹੈ!", 
-            main: "ਅੱਜ ਅਸੀਂ ਮਿਸ਼ਨ ਸਮਰੱਥ ਦੀ ਗਣਿਤ ਦੀ 'ਅਭਿਆਸ ਸ਼ੀਟ 1' ਹੱਲ ਕਰਾਂਗੇ।", 
-            ans: "ਆਓ ਮਿਲ ਕੇ ਸਿੱਖੀਏ!"
-        },
-        { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "1. ਹੇਠਾਂ ਦਿੱਤੇ ਗੁਬਾਰਿਆਂ ਨੂੰ ਗਿਣ ਕੇ ਉਹਨਾਂ ਦੀ ਗਿਣਤੀ ਲਿਖੋ:", 
             htmlContent: `
-                <div class="flex-row q-step hidden-step" style="background:#fff; padding:1.5cqmin; border-radius:1cqmin; width:90%; justify-content:space-between;"><div style="font-size:5cqmin; font-weight:bold; width:10%;">i)</div> <div class="emoji-box" style="flex-grow:1;">🎈🎈🎈</div> <div class="input-box ans-box"><span class="ans-target">3</span></div></div>
-                <div class="flex-row q-step hidden-step" style="background:#fff; padding:1.5cqmin; border-radius:1cqmin; width:90%; justify-content:space-between;"><div style="font-size:5cqmin; font-weight:bold; width:10%;">ii)</div> <div class="emoji-box" style="flex-grow:1;">🎈🎈🎈🎈🎈🎈🎈</div> <div class="input-box ans-box"><span class="ans-target">7</span></div></div>
-                <div class="flex-row q-step hidden-step" style="background:#fff; padding:1.5cqmin; border-radius:1cqmin; width:90%; justify-content:space-between;"><div style="font-size:5cqmin; font-weight:bold; width:10%;">iii)</div> <div class="emoji-box" style="flex-grow:1;">🎈🎈🎈🎈🎈</div> <div class="input-box ans-box"><span class="ans-target">5</span></div></div>
-            `,
-            ans: "ਸ਼ਾਬਾਸ਼! ਬਿਲਕੁਲ ਸਹੀ ਗਿਣਿਆ।"
+                <div class="flex-row q-step hidden-step" style="background:#fff; padding:1.5cqmin; border-radius:1cqmin; width:90%; justify-content:space-between;"><div style="font-size:5cqmin; font-weight:bold; width:10%;">i)</div> <div class="emoji-box countable" style="flex-grow:1;">🎈🎈🎈</div> <div class="input-box ans-box"><span class="ans-target">3</span></div></div>
+                <div class="flex-row q-step hidden-step" style="background:#fff; padding:1.5cqmin; border-radius:1cqmin; width:90%; justify-content:space-between;"><div style="font-size:5cqmin; font-weight:bold; width:10%;">ii)</div> <div class="emoji-box countable" style="flex-grow:1;">🎈🎈🎈🎈🎈🎈🎈</div> <div class="input-box ans-box"><span class="ans-target">7</span></div></div>
+                <div class="flex-row q-step hidden-step" style="background:#fff; padding:1.5cqmin; border-radius:1cqmin; width:90%; justify-content:space-between;"><div style="font-size:5cqmin; font-weight:bold; width:10%;">iii)</div> <div class="emoji-box countable" style="flex-grow:1;">🎈🎈🎈🎈🎈</div> <div class="input-box ans-box"><span class="ans-target">5</span></div></div>
+            `
         },
         { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "2. ਦਿਖਾਈਆਂ ਵਸਤੂਆਂ ਦੀ ਗਿਣਤੀ ਕਰੋ ਅਤੇ ਲਿਖੋ:", 
             htmlContent: `
                 <div class="flex-row q-step hidden-step" style="background: rgba(255,255,255,0.7); padding: 2cqmin; border-radius: 2cqmin;">
-                    <span style="font-size:5cqmin; font-weight:bold;">i)</span> <span class="emoji-box" style="font-size:5cqmin;">⭐⭐⭐⭐⭐⭐⭐⭐</span> 
-                    <div style="text-align:left; font-size: 4cqmin; font-weight:bold;">ਅੰਕਾਂ ਵਿੱਚ: <span class="input-box ans-box" style="min-width: 6cqmin; min-height: 6cqmin; font-size: 4.5cqmin;"><span class="ans-target">8</span></span><br>ਸ਼ਬਦਾਂ ਵਿੱਚ: <span class="input-box ans-box" style="min-width: 10cqmin; min-height: 6cqmin; font-size: 4.5cqmin;"><span class="ans-target">ਅੱਠ</span></span></div>
+                    <span style="font-size:5cqmin; font-weight:bold;">i)</span> <span class="emoji-box countable" style="font-size:6cqmin;">⭐⭐⭐⭐⭐⭐⭐⭐</span> 
+                    <div style="text-align:left; font-size: 4cqmin; font-weight:bold; margin-left:2cqmin;">ਅੰਕਾਂ ਵਿੱਚ: <span class="input-box ans-box" style="min-width: 6cqmin; min-height: 6cqmin;"><span class="ans-target">8</span></span><br>ਸ਼ਬਦਾਂ ਵਿੱਚ: <span class="input-box ans-box" style="min-width: 10cqmin; min-height: 6cqmin; margin-top:1cqmin;"><span class="ans-target">ਅੱਠ</span></span></div>
                 </div>
                 <div class="flex-row q-step hidden-step" style="background: rgba(255,255,255,0.7); padding: 2cqmin; border-radius: 2cqmin;">
-                    <span style="font-size:5cqmin; font-weight:bold;">ii)</span> <span class="emoji-box" style="font-size:5cqmin;">🍎🍎🍎🍎🍎🍎🍎</span> 
-                    <div style="text-align:left; font-size: 4cqmin; font-weight:bold;">ਅੰਕਾਂ ਵਿੱਚ: <span class="input-box ans-box" style="min-width: 6cqmin; min-height: 6cqmin; font-size: 4.5cqmin;"><span class="ans-target">7</span></span><br>ਸ਼ਬਦਾਂ ਵਿੱਚ: <span class="input-box ans-box" style="min-width: 10cqmin; min-height: 6cqmin; font-size: 4.5cqmin;"><span class="ans-target">ਸੱਤ</span></span></div>
+                    <span style="font-size:5cqmin; font-weight:bold;">ii)</span> <span class="emoji-box countable" style="font-size:6cqmin;">🍎🍎🍎🍎🍎🍎🍎</span> 
+                    <div style="text-align:left; font-size: 4cqmin; font-weight:bold; margin-left:2cqmin;">ਅੰਕਾਂ ਵਿੱਚ: <span class="input-box ans-box" style="min-width: 6cqmin; min-height: 6cqmin;"><span class="ans-target">7</span></span><br>ਸ਼ਬਦਾਂ ਵਿੱਚ: <span class="input-box ans-box" style="min-width: 10cqmin; min-height: 6cqmin; margin-top:1cqmin;"><span class="ans-target">ਸੱਤ</span></span></div>
                 </div>
             `
         },
         { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "3. ਸਹੀ ਗਿਣਤੀ ਹੇਠਾਂ (✓) ਅਤੇ ਗਲਤ ਹੇਠਾਂ (X) ਲਗਾਓ:", 
             htmlContent: `
-                <div class="flex-row" style="width:100%;">
-                    <div class="mcq-box q-step hidden-step"><div class="mcq-label">7</div><div class="emoji-box" style="font-size:4cqmin; margin-bottom:1cqmin;">🔵🔵🔵🔵<br>🔵🔵🔵🔵<br>🔵</div><div class="tick-box ans-box" style="border-radius:50%;"><span class="ans-target" style="color:#d32f2f;">❌</span></div></div>
-                    <div class="mcq-box q-step hidden-step"><div class="mcq-label">4</div><div class="emoji-box" style="font-size:4cqmin; margin-bottom:1cqmin;">🚗 🚗<br>🚗 🚗</div><div class="tick-box ans-box" style="border-radius:50%;"><span class="ans-target" style="color:#388e3c;">✓</span></div></div>
-                    <div class="mcq-box q-step hidden-step"><div class="mcq-label">8</div><div class="emoji-box" style="font-size:4cqmin; margin-bottom:1cqmin;">⚽⚽⚽⚽<br>⚽⚽⚽⚽</div><div class="tick-box ans-box" style="border-radius:50%;"><span class="ans-target" style="color:#388e3c;">✓</span></div></div>
+                <div class="flex-row" style="width:100%; justify-content:space-around;">
+                    <div class="mcq-box q-step hidden-step" style="width: 30%;"><div class="mcq-label">7</div><div class="emoji-box countable" style="font-size:4cqmin; margin-bottom:1.5cqmin;">🔵🔵🔵🔵<br>🔵🔵🔵🔵<br>🔵</div><div class="tick-box ans-box" style="border-radius:50%; width:7cqmin; height:7cqmin;"><span class="ans-target" style="color:#d32f2f; font-size:4cqmin;">❌</span></div></div>
+                    <div class="mcq-box q-step hidden-step" style="width: 30%;"><div class="mcq-label">4</div><div class="emoji-box countable" style="font-size:4cqmin; margin-bottom:1.5cqmin;">🚗 🚗<br>🚗 🚗</div><div class="tick-box ans-box" style="border-radius:50%; width:7cqmin; height:7cqmin;"><span class="ans-target" style="color:#388e3c; font-size:4cqmin;">✓</span></div></div>
+                    <div class="mcq-box q-step hidden-step" style="width: 30%;"><div class="mcq-label">8</div><div class="emoji-box countable" style="font-size:4cqmin; margin-bottom:1.5cqmin;">⚽⚽⚽⚽<br>⚽⚽⚽⚽</div><div class="tick-box ans-box" style="border-radius:50%; width:7cqmin; height:7cqmin;"><span class="ans-target" style="color:#388e3c; font-size:4cqmin;">✓</span></div></div>
                 </div>
             `
         },
         { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "4. 2-2 ਦੇ ਸਮੂਹ ਬਣਾ ਕੇ ਚੱਕਰ ਲਗਾਓ:", 
             htmlContent: `
-                <div class="flex-row q-step hidden-step" style="background:#fff; padding:3cqmin; border-radius:2cqmin;">
-                    <span style="font-size:5cqmin; font-weight:bold;">i)</span> 
-                    <div style="position:relative; display:inline-flex; padding:0.5cqmin;"><span class="emoji-box" style="font-size:5cqmin; background:transparent; box-shadow:none; padding:0;">🪁🪁</span><div class="ans-target" style="position:absolute; inset:0; border:0.5cqmin dashed #ff4757; border-radius:3cqmin;"></div></div>
-                    <div style="position:relative; display:inline-flex; padding:0.5cqmin;"><span class="emoji-box" style="font-size:5cqmin; background:transparent; box-shadow:none; padding:0;">🪁🪁</span><div class="ans-target" style="position:absolute; inset:0; border:0.5cqmin dashed #ff4757; border-radius:3cqmin;"></div></div>
-                    <div style="position:relative; display:inline-flex; padding:0.5cqmin;"><span class="emoji-box" style="font-size:5cqmin; background:transparent; box-shadow:none; padding:0;">🪁🪁</span><div class="ans-target" style="position:absolute; inset:0; border:0.5cqmin dashed #ff4757; border-radius:3cqmin;"></div></div>
+                <div class="flex-row q-step hidden-step" style="background:#fff; padding:2cqmin; border-radius:2cqmin;">
+                    <span style="font-size:5cqmin; font-weight:bold; margin-right:2cqmin;">i)</span> 
+                    <div style="position:relative; display:inline-flex; padding:0.5cqmin;"><span class="emoji-box countable" style="font-size:6cqmin; background:transparent; box-shadow:none; padding:0;">🪁🪁</span><div class="ans-target" style="position:absolute; inset:0; border:0.5cqmin dashed #ff4757; border-radius:3cqmin;"></div></div>
+                    <div style="position:relative; display:inline-flex; padding:0.5cqmin;"><span class="emoji-box countable" style="font-size:6cqmin; background:transparent; box-shadow:none; padding:0;">🪁🪁</span><div class="ans-target" style="position:absolute; inset:0; border:0.5cqmin dashed #ff4757; border-radius:3cqmin;"></div></div>
+                    <div style="position:relative; display:inline-flex; padding:0.5cqmin;"><span class="emoji-box countable" style="font-size:6cqmin; background:transparent; box-shadow:none; padding:0;">🪁🪁</span><div class="ans-target" style="position:absolute; inset:0; border:0.5cqmin dashed #ff4757; border-radius:3cqmin;"></div></div>
                 </div>
-                <div class="flex-row q-step hidden-step" style="background:#fff; padding:3cqmin; border-radius:2cqmin;">
-                    <span style="font-size:5cqmin; font-weight:bold;">ii)</span> 
-                    <div style="position:relative; display:inline-flex; padding:0.5cqmin;"><span class="emoji-box" style="font-size:5cqmin; background:transparent; box-shadow:none; padding:0;">⭐⭐</span><div class="ans-target" style="position:absolute; inset:0; border:0.5cqmin dashed #2ed573; border-radius:3cqmin;"></div></div>
-                    <div style="position:relative; display:inline-flex; padding:0.5cqmin;"><span class="emoji-box" style="font-size:5cqmin; background:transparent; box-shadow:none; padding:0;">⭐⭐</span><div class="ans-target" style="position:absolute; inset:0; border:0.5cqmin dashed #2ed573; border-radius:3cqmin;"></div></div>
+                <div class="flex-row q-step hidden-step" style="background:#fff; padding:2cqmin; border-radius:2cqmin;">
+                    <span style="font-size:5cqmin; font-weight:bold; margin-right:2cqmin;">ii)</span> 
+                    <div style="position:relative; display:inline-flex; padding:0.5cqmin;"><span class="emoji-box countable" style="font-size:6cqmin; background:transparent; box-shadow:none; padding:0;">⭐⭐</span><div class="ans-target" style="position:absolute; inset:0; border:0.5cqmin dashed #2ed573; border-radius:3cqmin;"></div></div>
+                    <div style="position:relative; display:inline-flex; padding:0.5cqmin;"><span class="emoji-box countable" style="font-size:6cqmin; background:transparent; box-shadow:none; padding:0;">⭐⭐</span><div class="ans-target" style="position:absolute; inset:0; border:0.5cqmin dashed #2ed573; border-radius:3cqmin;"></div></div>
                 </div>
-            `,
-            ans: "ਦੋ-ਦੋ ਦੇ ਸਮੂਹ ਬਣਾ ਦਿੱਤੇ ਗਏ ਹਨ।"
+            `
         },
         { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "5. ਵਧਦੇ ਕ੍ਰਮ ਅਨੁਸਾਰ ਡੱਬਿਆਂ ਵਿੱਚ ਲਿਖੋ:", 
             htmlContent: `
-                <div class="flex-row q-step hidden-step" style="background: rgba(255,255,255,0.7); padding: 2cqmin; border-radius: 2cqmin; width:95%;">
-                    <div style="font-size:4.5cqmin; font-weight:bold; width:25cqmin;">i) 7, 8, 9, 6</div>
+                <div class="flex-row q-step hidden-step" style="background: rgba(255,255,255,0.7); padding: 3cqmin; border-radius: 2cqmin; width:95%;">
+                    <div style="font-size:5cqmin; font-weight:bold; width:25cqmin;">i) 7, 8, 9, 6</div>
                     <div class="grid-layout" style="flex-grow:1;"><span class="input-box ans-box"><span class="ans-target">6</span></span><span class="input-box ans-box"><span class="ans-target">7</span></span><span class="input-box ans-box"><span class="ans-target">8</span></span><span class="input-box ans-box"><span class="ans-target">9</span></span></div>
                 </div>
-                <div class="flex-row q-step hidden-step" style="background: rgba(255,255,255,0.7); padding: 2cqmin; border-radius: 2cqmin; width:95%;">
-                    <div style="font-size:4.5cqmin; font-weight:bold; width:25cqmin;">ii) 3, 4, 5, 2</div>
+                <div class="flex-row q-step hidden-step" style="background: rgba(255,255,255,0.7); padding: 3cqmin; border-radius: 2cqmin; width:95%;">
+                    <div style="font-size:5cqmin; font-weight:bold; width:25cqmin;">ii) 3, 4, 5, 2</div>
                     <div class="grid-layout" style="flex-grow:1;"><span class="input-box ans-box"><span class="ans-target">2</span></span><span class="input-box ans-box"><span class="ans-target">3</span></span><span class="input-box ans-box"><span class="ans-target">4</span></span><span class="input-box ans-box"><span class="ans-target">5</span></span></div>
                 </div>
             `
         },
         { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "6. ਬਿਲਕੁਲ ਪਹਿਲਾਂ, ਬਿਲਕੁਲ ਬਾਅਦ ਅਤੇ ਵਿਚਕਾਰਲੀ ਸੰਖਿਆ ਲਿਖੋ:", 
             htmlContent: `
-                <div class="flex-row" style="background: #fff; padding: 4cqmin; border-radius: 2cqmin; font-size: 5cqmin; font-weight: bold; width:100%; justify-content:space-around;">
-                    <div class="q-step hidden-step">i) <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target">4</span></span> , 5</div>
-                    <div class="q-step hidden-step">ii) 8 , <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target">9</span></span></div>
-                    <div class="q-step hidden-step">iii) 5 , <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target">6</span></span> , 7</div>
+                <div class="flex-row" style="background: #fff; padding: 4cqmin; border-radius: 2cqmin; font-size: 6cqmin; font-weight: bold; width:100%; justify-content:space-around;">
+                    <div class="q-step hidden-step">i) <span class="input-box ans-box"><span class="ans-target">4</span></span> , 5</div>
+                    <div class="q-step hidden-step">ii) 8 , <span class="input-box ans-box"><span class="ans-target">9</span></span></div>
+                    <div class="q-step hidden-step">iii) 5 , <span class="input-box ans-box"><span class="ans-target">6</span></span> , 7</div>
                 </div>
             `
         },
         { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "7. ਵੱਧ ਵਸਤੂਆਂ ਦੇ ਖਾਨੇ ਵਿੱਚ ਠੀਕ (✓) ਦਾ ਨਿਸ਼ਾਨ ਲਗਾਓ:", 
             htmlContent: `
-                <div class="flex-row q-step hidden-step" style="background: #fff; padding: 2cqmin; border-radius: 2cqmin; width: 90%;">
-                    <div style="font-size:5cqmin; font-weight:bold;">i)</div>
-                    <div style="display:flex; flex-direction:column; gap:2cqmin; flex-grow:1;">
-                        <div class="flex-row" style="justify-content:space-between;"><span class="emoji-box" style="font-size:4cqmin;">🍷🍷🍷🍷🍷🍷🍷🍷</span> <span class="tick-box ans-box" style="border-radius:50%; width:6cqmin; height:6cqmin;"><span class="ans-target" style="font-size:4cqmin; color:#388e3c;">✓</span></span></div>
-                        <div class="flex-row" style="justify-content:space-between;"><span class="emoji-box" style="font-size:4cqmin;">🍷🍷🍷🍷🍷🍷</span> <span class="tick-box" style="border-radius:50%; width:6cqmin; height:6cqmin;"></span></div>
+                <div class="flex-row" style="background: #fff; padding: 3cqmin; border-radius: 2cqmin; width: 90%;">
+                    <div style="display:flex; flex-direction:column; gap:3cqmin; flex-grow:1;">
+                        <div class="flex-row q-step hidden-step" style="justify-content:space-between;"><span class="emoji-box countable" style="font-size:5cqmin;">🍷🍷🍷🍷🍷🍷🍷🍷</span> <span class="tick-box ans-box" style="border-radius:50%; width:8cqmin; height:8cqmin;"><span class="ans-target" style="font-size:5cqmin; color:#388e3c;">✓</span></span></div>
+                        <div class="flex-row q-step hidden-step" style="justify-content:space-between;"><span class="emoji-box countable" style="font-size:5cqmin;">🍷🍷🍷🍷🍷🍷</span> <span class="tick-box" style="border-radius:50%; width:8cqmin; height:8cqmin;"></span></div>
                     </div>
                 </div>
             `
         },
         { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "8. ਹੇਠਾਂ ਦਿੱਤੀ ਤਸਵੀਰ ਦੇਖੋ ਅਤੇ ਸਵਾਲਾਂ ਦੇ ਜਵਾਬ ਦਿਓ:", 
             htmlContent: `
-                <div class="emoji-box" style="font-size: 6cqmin; margin-bottom: 2cqmin; padding: 2cqmin; width:100%;">🥭🥭 🍎🍎🍎 🥭🥭🥭</div>
-                <div class="flex-row q-step hidden-step" style="font-size: 4cqmin; font-weight: bold; background: rgba(255,255,255,0.7); padding: 1.5cqmin; border-radius: 1.5cqmin; width:100%; justify-content:space-between;">i) ਤਸਵੀਰ ਵਿੱਚ ਕਿੰਨੇ ਅੰਬ ਹਨ? <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target">5</span></span></div>
-                <div class="flex-row q-step hidden-step" style="font-size: 4cqmin; font-weight: bold; background: rgba(255,255,255,0.7); padding: 1.5cqmin; border-radius: 1.5cqmin; width:100%; justify-content:space-between;">ii) ਸੇਬਾਂ ਦੀ ਗਿਣਤੀ ਦੱਸੋ। <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target">3</span></span></div>
-                <div class="flex-row q-step hidden-step" style="font-size: 4cqmin; font-weight: bold; background: rgba(255,255,255,0.7); padding: 1.5cqmin; border-radius: 1.5cqmin; width:100%; justify-content:space-between;">iii) ਸਾਰੇ ਫਲਾਂ ਦੀ ਗਿਣਤੀ ਦੱਸੋ। <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target">8</span></span></div>
+                <div class="emoji-box countable" style="font-size: 8cqmin; margin-bottom: 2cqmin; padding: 2cqmin; width:100%;">🥭🥭 🍎🍎🍎 🥭🥭🥭</div>
+                <div class="flex-row q-step hidden-step" style="font-size: 4.5cqmin; font-weight: bold; background: rgba(255,255,255,0.7); padding: 1.5cqmin; border-radius: 1.5cqmin; width:100%; justify-content:space-between;">i) ਤਸਵੀਰ ਵਿੱਚ ਕਿੰਨੇ ਅੰਬ ਹਨ? <span class="input-box ans-box"><span class="ans-target">5</span></span></div>
+                <div class="flex-row q-step hidden-step" style="font-size: 4.5cqmin; font-weight: bold; background: rgba(255,255,255,0.7); padding: 1.5cqmin; border-radius: 1.5cqmin; width:100%; justify-content:space-between;">ii) ਸੇਬਾਂ ਦੀ ਗਿਣਤੀ ਦੱਸੋ। <span class="input-box ans-box"><span class="ans-target">3</span></span></div>
+                <div class="flex-row q-step hidden-step" style="font-size: 4.5cqmin; font-weight: bold; background: rgba(255,255,255,0.7); padding: 1.5cqmin; border-radius: 1.5cqmin; width:100%; justify-content:space-between;">iii) ਸਾਰੇ ਫਲਾਂ ਦੀ ਗਿਣਤੀ ਦੱਸੋ। <span class="input-box ans-box"><span class="ans-target">8</span></span></div>
             `
         },
         { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "9. ਕਰੰਸੀ ਨੋਟਾਂ ਅਤੇ ਸਿੱਕਿਆਂ ਦੀ ਪਛਾਣ ਕਰੋ ਅਤੇ ਗਿਣਤੀ ਲਿਖੋ:", 
             htmlContent: `
-                <div class="emoji-box" style="font-size: 5cqmin; text-align:center; margin-bottom: 2cqmin; width:100%;">
-                    💵 🪙 🪙 💵 💵 💵 💵<br>💵 🪙 💵 🪙 🪙 🪙 🪙<br>🪙 🪙
-                </div>
-                <div class="flex-row q-step hidden-step" style="font-size: 4.5cqmin; font-weight: bold; background:#fff; padding: 3cqmin; border-radius: 2cqmin; width:100%; justify-content:space-around;">
-                    <div>ਨੋਟ 💵 = <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target">7</span></span></div>
-                    <div>ਸਿੱਕੇ 🪙 = <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target">8</span></span></div>
+                <div class="emoji-box countable" style="font-size: 6cqmin; text-align:center; margin-bottom: 2cqmin; width:100%;">💵 🪙 🪙 💵 💵 💵 💵<br>💵 🪙 💵 🪙 🪙 🪙 🪙<br>🪙 🪙</div>
+                <div class="flex-row" style="font-size: 5.5cqmin; font-weight: bold; background:#fff; padding: 3cqmin; border-radius: 2cqmin; width:100%; justify-content:space-around;">
+                    <div class="q-step hidden-step">ਨੋਟ 💵 = <span class="input-box ans-box"><span class="ans-target">7</span></span></div>
+                    <div class="q-step hidden-step">ਸਿੱਕੇ 🪙 = <span class="input-box ans-box"><span class="ans-target">8</span></span></div>
                 </div>
             `
         },
         { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "10. ਸਹੀ ਚਿੰਨ੍ਹ (>, <, =) ਦੀ ਵਰਤੋਂ ਕਰਦੇ ਹੋਏ ਤੁਲਨਾ ਕਰੋ:", 
             htmlContent: `
-                <div class="flex-row" style="background: #fff; padding: 3cqmin; border-radius: 2cqmin; font-size: 5.5cqmin; font-weight: bold; width:100%; justify-content:space-around;">
-                    <div class="q-step hidden-step">i) 9 <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target" style="color:#d32f2f;">></span></span> 6</div>
-                    <div class="q-step hidden-step">ii) 4 <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target" style="color:#d32f2f;"><</span></span> 8</div>
-                    <div class="q-step hidden-step">iii) 5 <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target" style="color:#d32f2f;">=</span></span> 5</div>
+                <div class="flex-row" style="background: #fff; padding: 4cqmin; border-radius: 2cqmin; font-size: 6cqmin; font-weight: bold; width:100%; justify-content:space-around;">
+                    <div class="q-step hidden-step">i) 9 <span class="input-box ans-box" style="min-width:8cqmin; min-height:8cqmin;"><span class="ans-target" style="color:#d32f2f;">></span></span> 6</div>
+                    <div class="q-step hidden-step">ii) 4 <span class="input-box ans-box" style="min-width:8cqmin; min-height:8cqmin;"><span class="ans-target" style="color:#d32f2f;"><</span></span> 8</div>
+                    <div class="q-step hidden-step">iii) 5 <span class="input-box ans-box" style="min-width:8cqmin; min-height:8cqmin;"><span class="ans-target" style="color:#d32f2f;">=</span></span> 5</div>
                 </div>
             `
         },
         { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "11-12. ਬਹੁਵਿਕਲਪਿਕ ਸਵਾਲ। ਸਹੀ ਉੱਤਰ ਚੁਣੋ:", 
             htmlContent: `
                 <div class="q-step hidden-step" style="background: rgba(255,255,255,0.7); padding: 2cqmin; border-radius: 2cqmin; margin-bottom: 2cqmin; width:100%;">
                     <div style="font-size: 4cqmin; font-weight:bold; margin-bottom: 1cqmin; color:#d32f2f;">11. ਵਸਤੂਆਂ ਗਿਣੋ ਅਤੇ ਸਹੀ ਸੰਖਿਆ ਪਤਾ ਕਰੋ:</div>
                     <div class="flex-row" style="justify-content:space-around;">
-                        <span class="emoji-box" style="font-size:4cqmin;">✏️✏️✏️✏️<br>✏️✏️✏️✏️</span>
-                        <div style="font-size:4cqmin; font-weight:bold;">i) 8 <span class="tick-box ans-box" style="width:5cqmin; height:5cqmin;"><span class="ans-target" style="font-size:3.5cqmin; color:#388e3c;">✓</span></span></div>
-                        <div style="font-size:4cqmin; font-weight:bold;">ii) 5 <span class="tick-box" style="width:5cqmin; height:5cqmin;"></span></div>
+                        <span class="emoji-box countable" style="font-size:5cqmin;">✏️✏️✏️✏️<br>✏️✏️✏️✏️</span>
+                        <div style="font-size:4.5cqmin; font-weight:bold; display:flex; flex-direction:column; gap:2cqmin;">
+                            <div>i) 8 <span class="tick-box ans-box"><span class="ans-target" style="color:#388e3c;">✓</span></span></div>
+                            <div>ii) 5 <span class="tick-box"></span></div>
+                        </div>
                     </div>
                 </div>
                 <div class="q-step hidden-step" style="background: rgba(255,255,255,0.7); padding: 2cqmin; border-radius: 2cqmin; width:100%;">
                     <div style="font-size: 4cqmin; font-weight:bold; margin-bottom: 1cqmin; color:#d32f2f;">12. 8 ਗੇਂਦਾਂ ਵਾਲਾ ਡੱਬਾ ਚੁਣੋ:</div>
                     <div class="flex-row" style="justify-content:space-around;">
-                        <div style="text-align:center; font-weight:bold; font-size:4cqmin;"><div class="emoji-box" style="font-size:3cqmin;">🔴🔴🔴<br>🔴🔴🔴🔴</div>(i)</div>
-                        <div style="text-align:center; font-weight:bold; font-size:4cqmin;"><div class="emoji-box" style="font-size:3cqmin; position:relative;">🔵🔵🔵🔵<br>🔵🔵🔵🔵<span class="ans-target" style="position:absolute; bottom:1cqmin; left:40%; font-size:5cqmin; color:#388e3c; background:#fff; padding:0 1cqmin; border-radius:1cqmin; box-shadow:0 0.5cqmin 1cqmin rgba(0,0,0,0.2);">✓</span></div>(ii)</div>
+                        <div style="text-align:center; font-weight:bold; font-size:4cqmin;"><div class="emoji-box" style="font-size:4cqmin;">🔴🔴🔴<br>🔴🔴🔴🔴</div>(i)</div>
+                        <div style="text-align:center; font-weight:bold; font-size:4cqmin;"><div class="emoji-box countable" style="font-size:4cqmin; position:relative;">🔵🔵🔵🔵<br>🔵🔵🔵🔵<span class="ans-target" style="position:absolute; bottom:1cqmin; left:40%; font-size:6cqmin; color:#388e3c; background:#fff; padding:0 1cqmin; border-radius:1cqmin; box-shadow:0 0.5cqmin 1cqmin rgba(0,0,0,0.2);">✓</span></div>(ii)</div>
                     </div>
                 </div>
             `
         },
         { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "13-15. ਬਹੁਵਿਕਲਪਿਕ ਸਵਾਲ। ਸਹੀ ਉੱਤਰ ਚੁਣੋ:", 
             htmlContent: `
                 <div class="flex-row q-step hidden-step" style="background:#fff; padding: 2cqmin; border-radius: 2cqmin; margin-bottom: 2cqmin; width:100%; justify-content:space-between;">
-                    <div style="font-size:4cqmin; font-weight:bold; color:#d32f2f;">13. ਅਗਲੀਆਂ ਸੰਖਿਆਵਾਂ: <span class="input-box" style="background:#ffeb3b; font-size:4cqmin; min-height:5cqmin;">4, 5, 6</span> -></div>
-                    <div style="font-size:4cqmin; font-weight:bold;">i) 7, 8, 9 <span class="tick-box ans-box" style="width:5cqmin; height:5cqmin;"><span class="ans-target" style="font-size:3.5cqmin; color:#388e3c;">✓</span></span></div>
+                    <div style="font-size:4.5cqmin; font-weight:bold; color:#d32f2f;">13. ਅਗਲੀਆਂ ਸੰਖਿਆਵਾਂ: <span class="input-box" style="background:#ffeb3b;">4, 5, 6</span> -></div>
+                    <div style="font-size:4.5cqmin; font-weight:bold;">i) 7, 8, 9 <span class="tick-box ans-box"><span class="ans-target" style="color:#388e3c;">✓</span></span></div>
                 </div>
                 <div class="flex-row q-step hidden-step" style="background:#fff; padding: 2cqmin; border-radius: 2cqmin; margin-bottom: 2cqmin; width:100%; justify-content:space-around;">
-                    <div style="font-size:4cqmin; font-weight:bold; color:#d32f2f;">14. ਪੰਜ ਦਾ ਸਿੱਕਾ:</div>
-                    <div style="font-size:5cqmin;">💵10</div>
-                    <div style="font-size:5cqmin; position:relative;">🪙5 <span class="ans-target" style="position:absolute; bottom:0; left:20%; font-size:4cqmin; color:#388e3c; font-weight:bold; background:#fff; border-radius:50%;">✓</span></div>
+                    <div style="font-size:4.5cqmin; font-weight:bold; color:#d32f2f;">14. ਪੰਜ ਦਾ ਸਿੱਕਾ:</div>
+                    <div style="font-size:6cqmin;">💵10</div>
+                    <div style="font-size:6cqmin; position:relative;">🪙5 <span class="ans-target" style="position:absolute; bottom:0; left:20%; font-size:5cqmin; color:#388e3c; font-weight:bold; background:#fff; border-radius:50%;">✓</span></div>
                 </div>
                 <div class="flex-row q-step hidden-step" style="background:#fff; padding: 2cqmin; border-radius: 2cqmin; width:100%; justify-content:space-around;">
-                    <div style="font-size:4cqmin; font-weight:bold; color:#d32f2f;">15. ਗੋਲਾਕਾਰ ਤਲ:</div>
-                    <div style="font-size:5cqmin;">🍦</div>
-                    <div style="font-size:5cqmin; position:relative;">🍅 <span class="ans-target" style="position:absolute; bottom:0; left:20%; font-size:4cqmin; color:#388e3c; font-weight:bold; background:#fff; border-radius:50%;">✓</span></div>
+                    <div style="font-size:4.5cqmin; font-weight:bold; color:#d32f2f;">15. ਗੋਲਾਕਾਰ ਤਲ:</div>
+                    <div style="font-size:6cqmin;">🍦</div>
+                    <div style="font-size:6cqmin; position:relative;">🍅 <span class="ans-target" style="position:absolute; bottom:0; left:20%; font-size:5cqmin; color:#388e3c; font-weight:bold; background:#fff; border-radius:50%;">✓</span></div>
                 </div>
             `
         },
         { 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "16. ਸ਼ਾਬਦਿਕ ਸਵਾਲ ਹੱਲ ਕਰੋ (ਰਫ਼ ਕੰਮ ਦੀ ਵਰਤੋਂ ਕਰੋ):", 
             htmlContent: `
-                <div class="q-step hidden-step" style="background: #e0f7fa; padding: 2cqmin; border-radius: 2cqmin; border: 0.3cqmin solid #b2ebf2; margin-bottom: 2cqmin; color: #006064; font-size: 4cqmin; font-weight: bold; width: 100%;">
-                    (i) ਇੱਕ ਰੁੱਖ 'ਤੇ 4 ਕਬੂਤਰ ਬੈਠੇ ਸਨ। 3 ਕਬੂਤਰ ਹੋਰ ਆ ਗਏ। ਹੁਣ ਕਿੰਨੇ ਕਬੂਤਰ ਹਨ? <br>
-                    <span style="float:right; display:flex; align-items:center; gap:1cqmin;">ਉੱਤਰ: <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target">7</span></span></span><div style="clear:both;"></div>
+                <div class="q-step hidden-step" style="background: #e0f7fa; padding: 3cqmin; border-radius: 2cqmin; border: 0.3cqmin solid #b2ebf2; color: #006064; font-size: 4.5cqmin; font-weight: bold; width: 100%;">
+                    (i) ਇੱਕ ਰੁੱਖ 'ਤੇ 4 ਕਬੂਤਰ ਬੈਠੇ ਸਨ। 3 ਕਬੂਤਰ ਹੋਰ ਆ ਗਏ। ਹੁਣ ਕਿੰਨੇ ਕਬੂਤਰ ਹਨ? <br><br>
+                    <span style="float:right; display:flex; align-items:center; gap:1cqmin;">ਉੱਤਰ: <span class="input-box ans-box"><span class="ans-target">7</span></span></span><div style="clear:both;"></div>
                 </div>
-                <div class="q-step hidden-step" style="background: #ede7f6; padding: 2cqmin; border-radius: 2cqmin; border: 0.3cqmin solid #d1c4e9; margin-bottom: 2cqmin; color: #311b92; font-size: 4cqmin; font-weight: bold; width: 100%;">
-                    (ii) ਤੁਹਾਡੇ ਕੋਲ 6 ਟਾਫੀਆਂ ਸਨ। ਤੁਹਾਡੇ ਭਰਾ ਨੇ 2 ਟਾਫੀਆਂ ਹੋਰ ਦੇ ਦਿੱਤੀਆਂ। ਹੁਣ ਕਿੰਨੀਆਂ ਹਨ? <br>
-                    <span style="float:right; display:flex; align-items:center; gap:1cqmin;">ਉੱਤਰ: <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target">8</span></span></span><div style="clear:both;"></div>
+                <div class="q-step hidden-step" style="background: #ede7f6; padding: 3cqmin; border-radius: 2cqmin; border: 0.3cqmin solid #d1c4e9; color: #311b92; font-size: 4.5cqmin; font-weight: bold; width: 100%;">
+                    (ii) ਤੁਹਾਡੇ ਕੋਲ 6 ਟਾਫੀਆਂ ਸਨ। ਤੁਹਾਡੇ ਭਰਾ ਨੇ 2 ਟਾਫੀਆਂ ਹੋਰ ਦੇ ਦਿੱਤੀਆਂ। ਹੁਣ ਕਿੰਨੀਆਂ ਹਨ? <br><br>
+                    <span style="float:right; display:flex; align-items:center; gap:1cqmin;">ਉੱਤਰ: <span class="input-box ans-box"><span class="ans-target">8</span></span></span><div style="clear:both;"></div>
                 </div>
-                <div class="q-step hidden-step" style="background: #fce4ec; padding: 2cqmin; border-radius: 2cqmin; border: 0.3cqmin solid #f8bbd0; color: #880e4f; font-size: 4cqmin; font-weight: bold; width: 100%;">
-                    (iii) ਰਜਨੀ ਕੋਲ 3 ਖਿਡੌਣੇ ਸਨ। ਸ਼ਿਖਾ ਨੇ 4 ਖਿਡੌਣੇ ਹੋਰ ਦੇ ਦਿੱਤੇ। ਕਿੰਨੇ ਖਿਡੌਣੇ ਹੋ ਗਏ? <br>
-                    <span style="float:right; display:flex; align-items:center; gap:1cqmin;">ਉੱਤਰ: <span class="input-box ans-box" style="min-width:6cqmin; min-height:6cqmin;"><span class="ans-target">7</span></span></span><div style="clear:both;"></div>
+                <div class="q-step hidden-step" style="background: #fce4ec; padding: 3cqmin; border-radius: 2cqmin; border: 0.3cqmin solid #f8bbd0; color: #880e4f; font-size: 4.5cqmin; font-weight: bold; width: 100%;">
+                    (iii) ਰਜਨੀ ਕੋਲ 3 ਖਿਡੌਣੇ ਸਨ। ਸ਼ਿਖਾ ਨੇ 4 ਖਿਡੌਣੇ ਹੋਰ ਦੇ ਦਿੱਤੇ। ਕਿੰਨੇ ਖਿਡੌਣੇ ਹੋ ਗਏ? <br><br>
+                    <span style="float:right; display:flex; align-items:center; gap:1cqmin;">ਉੱਤਰ: <span class="input-box ans-box"><span class="ans-target">7</span></span></span><div style="clear:both;"></div>
                 </div>
             `
         },
         { 
             isEnd: true, 
+            header: "ਮਿਸ਼ਨ ਸਮਰੱਥ 2026-27 | ਵਿਸ਼ਾ: ਗਣਿਤ | ਅਭਿਆਸ ਸ਼ੀਟ 1",
             title: "ਧੰਨਵਾਦ ਜੀ!", 
             main: "ਮਿਸ਼ਨ ਸਮਰੱਥ ਦੀ ਅਭਿਆਸ ਸ਼ੀਟ 1 ਪੂਰੀ ਹੋਈ।\nਸ਼ਾਬਾਸ਼ ਬੱਚਿਓ!" 
         }
@@ -546,9 +692,8 @@
         return elements;
     }
 
-    async function playTypewriter(elements, speed, sessionId) {
+    async function playTypewriter(elements, speed) {
         for (let i = 0; i < elements.length; i++) {
-            if(renderSessionId !== sessionId) return; 
             elements[i].style.opacity = '1';
             await new Promise(r => setTimeout(r, speed));
         }
@@ -566,29 +711,75 @@
         container.querySelectorAll('.ans-target').forEach(el => el.classList.add('revealed'));
     }
 
-    async function renderSlide(idx) {
-        if(idx < 0 || idx >= slideSteps.length) return;
+    async function goToSlide(index, animationType) {
+        if(isTransitioning || index < 0 || index >= slideSteps.length) return;
         isTransitioning = true;
         resolveTap = null;
         document.getElementById('tap-indicator').style.display = 'none';
         
-        renderSessionId++; let currentSession = renderSessionId;
+        clearMath(); 
+        
+        const card = document.getElementById('master-card');
+        card.classList.remove('active');
+        
+        if (currentStep === 0) {
+             card.classList.add('gentle-exit'); 
+        } else {
+             card.classList.add(animationType === 'up' ? 'exit' : 'exit-down');
+        }
+        
+        setTimeout(() => { 
+            currentStep = index; 
+            renderSlide(currentStep); 
+        }, 800);
+    }
+
+    function handlePrev(e) {
+        if(e) e.stopPropagation();
+        if(isTransitioning) return;
+        if(currentStep > 1) goToSlide(currentStep - 1, 'down');
+        else if (currentStep === 1) goToSlide(0, 'down');
+    }
+
+    function handleNext(e) {
+        if(e) e.stopPropagation();
+        if(isTransitioning) return;
+        if (resolveTap) {
+            let tempResolve = resolveTap;
+            resolveTap = null;
+            tempResolve();
+        } else if (currentStep < slideSteps.length - 1) {
+            goToSlide(currentStep + 1, 'up');
+        }
+    }
+
+    function handleRestart(e) {
+        if(e) e.stopPropagation();
+        if(isTransitioning) return;
+        goToSlide(0, 'down');
+    }
+
+    async function renderSlide(idx) {
+        let currentSession = ++renderSessionId;
         const data = slideSteps[idx];
         const card = document.getElementById('master-card');
         const creatorStrip = document.getElementById('creator-strip');
         const htmlBlock = document.getElementById('html-block');
         const typeAns = document.getElementById('type-ans');
+        const navControls = document.getElementById('nav-controls');
+        const toggleBtn = document.getElementById('math-toggle-btn');
 
         card.classList.remove('exit', 'exit-down', 'gentle-exit', 'active'); 
         card.style.visibility = "hidden";
         creatorStrip.style.display = "none"; creatorStrip.style.opacity = "0"; creatorStrip.style.transform = "translateY(2cqmin)";
         
-        clearMath();
-
-        const headerEl = document.getElementById('card-header');
-        if(data.header) { headerEl.innerHTML = data.header; headerEl.style.display = "block"; } else { headerEl.style.display = "none"; }
+        clearMath(); 
 
         if(data.isIntro) {
+            navControls.style.display = 'none';
+            toggleBtn.style.display = 'none';
+            document.querySelector('.top-bar').style.display = 'none';
+            
             document.getElementById('type-title').style.display = 'none'; 
             document.getElementById('type-main').style.display = 'none'; 
             htmlBlock.style.display = 'none';
@@ -607,14 +798,17 @@
             typeAns.style.display = 'block'; typeAns.style.opacity = '1';
             card.style.visibility = "visible"; card.classList.add('active');
 
-            // Wait for tap to start
             isTransitioning = false;
-            await waitForTap("👉 ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਟੈਪ ਕਰੋ");
+            await waitForTap("👉 ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਕਲਿੱਕ/ਟੱਚ ਕਰੋ");
             if(renderSessionId !== currentSession) return;
             document.getElementById('tap-indicator').style.display = 'none';
-            changeSlide(1, 'up');
+            goToSlide(1, 'up');
             return;
         }
+
+        document.querySelector('.top-bar').style.display = 'flex';
+        navControls.style.display = 'flex';
+        toggleBtn.style.display = 'block';
 
         document.getElementById('type-title').innerHTML = ""; document.getElementById('type-main').innerHTML = ""; typeAns.innerHTML = "";
         
@@ -635,11 +829,10 @@
         let mainSpans = prepareTypewriter('type-main', data.main || "");
         let ansSpans = prepareTypewriter('type-ans', data.ans || "");
 
-        // --- Live Mode ONLY Logic ---
         htmlBlock.style.opacity = '1'; typeAns.style.opacity = '0';
         
-        if(data.title) await playTypewriter(titleSpans, 30, currentSession);
-        if(data.main) await playTypewriter(mainSpans, 40, currentSession);
+        if(data.title) await playTypewriter(titleSpans, 30);
+        if(data.main) await playTypewriter(mainSpans, 40);
         
         let qSteps = htmlBlock.querySelectorAll('.q-step');
         
@@ -647,34 +840,31 @@
             for (let i = 0; i < qSteps.length; i++) {
                 let step = qSteps[i];
                 
-                // ਪਿਛਲੇ ਸਾਰੇ ਸਵਾਲਾਂ ਨੂੰ ਧੁੰਦਲਾ (Dim) ਕਰੋ
+                // Dim previous steps (80% visible)
                 for(let prev = 0; prev < i; prev++) {
                     qSteps[prev].classList.remove('active-step');
                     qSteps[prev].classList.add('dimmed-step');
                 }
                 
-                // ਮੌਜੂਦਾ ਸਵਾਲ ਦਿਖਾਓ
                 step.classList.remove('hidden-step');
                 step.classList.add('active-step'); 
                 
-                // ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੈਪ ਦਾ ਇੰਤਜ਼ਾਰ
-                await waitForTap("👉 ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੈਪ ਕਰੋ");
+                await waitForTap("👉 ਉੱਤਰ ਦੇਖਣ ਲਈ ਕਲਿੱਕ/ਟੱਚ ਕਰੋ");
                 if(renderSessionId !== currentSession) return;
                 document.getElementById('tap-indicator').style.display = 'none';
                 
-                // ਉੱਤਰ ਦਿਖਾਓ
                 revealAnswers(step);
                 
-                // ਅਗਲੇ ਸਵਾਲ ਲਈ ਟੈਪ ਦਾ ਇੰਤਜ਼ਾਰ (ਜੇਕਰ ਬਾਕੀ ਹਨ)
                 if (i < qSteps.length - 1) {
-                    await waitForTap("👉 ਅਗਲੇ ਪ੍ਰਸ਼ਨ ਲਈ ਟੈਪ ਕਰੋ");
+                    await waitForTap("👉 ਅਗਲੇ ਪ੍ਰਸ਼ਨ ਲਈ ਕਲਿੱਕ/ਟੱਚ ਕਰੋ");
                     if(renderSessionId !== currentSession) return;
                     document.getElementById('tap-indicator').style.display = 'none';
+                    clearMath(); // Auto clear rough work on next sub-question
                 }
             }
         } else {
             if(!data.isEnd) {
-                await waitForTap("👉 ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੈਪ ਕਰੋ");
+                await waitForTap("👉 ਉੱਤਰ ਦੇਖਣ ਲਈ ਕਲਿੱਕ/ਟੱਚ ਕਰੋ");
                 if(renderSessionId !== currentSession) return;
                 document.getElementById('tap-indicator').style.display = 'none';
                 revealAnswers(htmlBlock);
@@ -682,35 +872,18 @@
         }
         
         typeAns.style.opacity = '1';
-        if(data.ans) await playTypewriter(ansSpans, 40, currentSession);
-        if(data.isEnd) { creatorStrip.style.display = "block"; setTimeout(() => { creatorStrip.style.opacity = "1"; creatorStrip.style.transform = "translateY(0)"; }, 50); }
+        if(data.ans) await playTypewriter(ansSpans, 40);
         
-        // ਸਲਾਈਡ ਖਤਮ ਹੋਣ 'ਤੇ ਅਗਲੀ ਸਲਾਈਡ ਲਈ ਟੈਪ ਦਾ ਇੰਤਜ਼ਾਰ
+        if(data.isEnd) { 
+            creatorStrip.style.display = "block"; 
+            setTimeout(() => { creatorStrip.style.opacity = "1"; creatorStrip.style.transform = "translateY(0)"; }, 50); 
+        }
+        
         if(!data.isEnd) {
-            await waitForTap("👉 ਅਗਲੀ ਸਲਾਈਡ ਲਈ ਟੈਪ ਕਰੋ");
+            await waitForTap("👉 ਅਗਲੀ ਸਲਾਈਡ ਲਈ ਕਲਿੱਕ/ਟੱਚ ਕਰੋ");
             if(renderSessionId !== currentSession) return;
             document.getElementById('tap-indicator').style.display = 'none';
-            changeSlide(1, 'up');
-        }
-    }
-
-    function changeSlide(direction, animationType) {
-        if(isTransitioning) return;
-        let nextIndex = currentStep + direction;
-        if(nextIndex >= 0 && nextIndex < slideSteps.length) {
-            isTransitioning = true;
-            resolveTap = null;
-            document.getElementById('tap-indicator').style.display = 'none';
-            
-            const card = document.getElementById('master-card');
-            card.classList.remove('active');
-            
-            if(slideSteps[currentStep].isIntro) {
-                card.classList.add('gentle-exit'); setTimeout(() => { currentStep = nextIndex; renderSlide(currentStep); }, 1500); 
-            } else {
-                if(animationType === 'up') card.classList.add('exit'); else card.classList.add('exit-down'); 
-                setTimeout(() => { currentStep = nextIndex; renderSlide(currentStep); }, 800); 
-            }
+            goToSlide(currentStep + 1, 'up');
         }
     }
 
@@ -721,7 +894,7 @@
     let touchStartX_tap = 0; let touchStartY_tap = 0; let isSwiping = false; let lastTapTime = 0;
 
     document.addEventListener('touchstart', e => { 
-        if(e.target.closest('#math-panel') || e.target.closest('#math-toggle-btn') || e.target.tagName === 'BUTTON') return;
+        if(e.target.closest('#math-panel') || e.target.closest('#math-toggle-btn') || e.target.closest('.nav-controls') || e.target.tagName === 'BUTTON') return;
         touchStartX_tap = e.changedTouches[0].screenX; touchStartY_tap = e.changedTouches[0].screenY; isSwiping = false; 
     }, {passive: false});
 
@@ -731,15 +904,22 @@
     }, {passive: false});
 
     document.addEventListener('touchend', e => {
-        if(e.target.closest('#math-panel') || e.target.closest('#math-toggle-btn') || e.target.tagName === 'BUTTON') return;
+        if(e.target.closest('#math-panel') || e.target.closest('#math-toggle-btn') || e.target.closest('.nav-controls') || e.target.tagName === 'BUTTON') return;
         let diffY = touchStartY_tap - e.changedTouches[0].screenY;
         
         if(isSwiping && Math.abs(diffY) > 50) {
-            if(diffY > 0) changeSlide(1, 'up'); else changeSlide(-1, 'down'); return; 
+            if(diffY > 0 && currentStep < slideSteps.length - 1) goToSlide(currentStep + 1, 'up'); 
+            else if(diffY < 0 && currentStep > 0) goToSlide(currentStep - 1, 'down'); 
+            return; 
         } 
         
         if (!isSwiping) {
-            if (resolveTap) { resolveTap(); return; } 
+            if (resolveTap) { 
+                let tempResolve = resolveTap; 
+                resolveTap = null;
+                tempResolve(); 
+                return; 
+            } 
             const currentTime = new Date().getTime(); const tapLength = currentTime - lastTapTime;
             if (tapLength < 400 && tapLength > 0) { toggleFullScreen(); lastTapTime = 0; if(e.cancelable) e.preventDefault(); } 
             else { lastTapTime = currentTime; }
@@ -747,18 +927,16 @@
     }, {passive: false});
 
     document.addEventListener('click', e => {
-        if(e.target.closest('#math-panel') || e.target.closest('#math-toggle-btn') || e.target.tagName === 'BUTTON') return;
+        if(e.target.closest('#math-panel') || e.target.closest('#math-toggle-btn') || e.target.closest('.nav-controls') || e.target.tagName === 'BUTTON') return;
         if (resolveTap) { 
             let tempResolve = resolveTap; 
             resolveTap = null;
             tempResolve(); 
-        } else if (!isTransitioning) {
-            changeSlide(1, 'up');
         }
     });
 
     document.addEventListener('dblclick', e => { 
-        if (!e.target.closest('#math-panel') && !e.target.closest('#math-toggle-btn') && e.target.tagName !== 'BUTTON') toggleFullScreen(); 
+        if (!e.target.closest('#math-panel') && !e.target.closest('#math-toggle-btn') && !e.target.closest('.nav-controls') && e.target.tagName !== 'BUTTON') toggleFullScreen(); 
     });
 
 </script>
