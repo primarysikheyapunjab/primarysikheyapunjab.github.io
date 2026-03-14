@@ -24,7 +24,7 @@
         }
     </script>
     <style>
-        /* ਬੈਕਗਰਾਊਂਡ ਅਤੇ ਬੇਸਿਕ ਸੈਟਿੰਗਜ਼ (Clean Yellow-Pink Gradient) */
+        /* ਬੈਕਗਰਾਊਂਡ ਅਤੇ ਬੇਸਿਕ ਸੈਟਿੰਗਜ਼ */
         body { 
             font-family: 'Mukta Malar', sans-serif; 
             background: linear-gradient(135deg, #fef9c3 0%, #fef08a 40%, #fce7f3 100%);
@@ -48,9 +48,7 @@
             backdrop-filter: blur(20px);
             border-radius: 1.5rem;
             border: 2px solid rgba(255, 255, 255, 0.9);
-            box-shadow: 
-                8px 12px 25px rgba(0, 0, 0, 0.1), 
-                inset 0 8px 15px rgba(255, 255, 255, 1);
+            box-shadow: 8px 12px 25px rgba(0, 0, 0, 0.1), inset 0 8px 15px rgba(255, 255, 255, 1);
         }
 
         .btn-3d-super {
@@ -92,24 +90,35 @@
         .view-section.active { display: block; }
         @keyframes popIn { 0% { opacity: 0; transform: scale(0.98) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
 
-        /* ਟੈਗਲਾਈਨਾਂ */
+        /* ਉੱਪਰਲੀ ਟੈਗਲਾਈਨ (ਮੋਟੀ ਅਤੇ ਹੌਲੀ) */
         @keyframes scroll-text { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
-        .scrolling-container { width: 100%; overflow: hidden; white-space: nowrap; background: linear-gradient(90deg, #fef9c3, #fce7f3, #fef9c3); padding: 8px 0; display: flex; align-items: center; border-bottom: 2px solid #fbcfe8; }
-        .scrolling-text { display: inline-block; animation: scroll-text 25s linear infinite; font-size: 1rem; font-weight: 800; color: #b45309; }
+        @keyframes text-shine { to { background-position: 200% center; } }
+        
+        .scrolling-container { 
+            width: 100%; overflow: hidden; white-space: nowrap; 
+            background: linear-gradient(90deg, #fef9c3, #fce7f3, #fef9c3); 
+            padding: 8px 0; display: flex; align-items: center; border-bottom: 2px solid #fbcfe8; 
+        }
+        .scrolling-text { 
+            display: inline-block; 
+            background: linear-gradient(90deg, #8b4513, #1e3a8a, #d4af37, #1e3a8a, #8b4513);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem); /* ਮੋਟਾ ਅਤੇ ਵੱਡਾ */
+            font-weight: 900; 
+            letter-spacing: 0.5px;
+            filter: drop-shadow(1px 1px 0px rgba(255,255,255,0.9));
+            animation: scroll-text 45s linear infinite, text-shine 4s linear infinite; /* ਬਹੁਤ ਹੌਲੀ ਸਪੀਡ (45s) */
+            padding-bottom: 2px;
+        }
 
         /* ਤਿਆਰ ਕਰਤਾ ਵਾਲੀ ਹੇਠਲੀ ਮੋਟੀ ਲਾਈਨ */
-        .bottom-scrolling-container { width: 100%; overflow: hidden; white-space: nowrap; background: #001a33; border-top: 3px solid #FFD700; padding: 10px 0; display: flex; align-items: center; margin-top: auto; }
-        .bottom-scrolling-text { display: inline-block; animation: scroll-text 20s linear infinite; font-size: 1.1rem; font-weight: 900; color: #FFD700; }
+        .bottom-scrolling-container { width: 100%; overflow: hidden; white-space: nowrap; background: linear-gradient(90deg, #fef4a9, #fde047, #fef4a9); border-top: 3px solid #b45309; padding: 10px 0; display: flex; align-items: center; margin-top: auto; }
+        .bottom-scrolling-text { display: inline-block; animation: scroll-text 35s linear infinite; font-size: 1.2rem; font-weight: 900; color: #78350f; text-shadow: 1px 1px 0px rgba(255,255,255,0.6); }
 
         /* ===== ਸੋਸ਼ਲ ਮੀਡੀਆ ਬਟਨਾਂ ਲਈ ਸਪੈਸ਼ਲ ਸਪਾਰਕਲ (Shimmer) ਡਿਜ਼ਾਈਨ ===== */
-        .social-float-btn {
-            position: relative; text-decoration: none; transition: transform 0.2s ease, filter 0.2s ease;
-        }
+        .social-float-btn { position: relative; text-decoration: none; transition: transform 0.2s ease, filter 0.2s ease; }
         .social-float-btn:active { transform: scale(0.95); }
-        .shimmer-effect {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            border-radius: inherit; overflow: hidden; pointer-events: none;
-        }
+        .shimmer-effect { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: inherit; overflow: hidden; pointer-events: none; }
         .shimmer-effect::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
             background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
@@ -129,19 +138,27 @@
             .card-subject{ min-height:100px; }
             .icon-box-3d{ min-width:50px; min-height:50px; }
         }
-        @media (min-width:1400px){
-            #subjects-grid{ grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
-        }
+        @media (min-width:1400px){ #subjects-grid{ grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); } }
         .btn-3d-super{ overflow:hidden; }
         #main-content{ scroll-behavior:smooth; }
         #app-iframe{ background:white; }
         
-        /* Universal Nav Button Style */
-        .header-nav-btn {
-            padding: 0.35rem 0.75rem; font-size: 0.75rem; display: flex; align-items: center; gap: 0.25rem;
+        .header-nav-btn { padding: 0.35rem 0.75rem; font-size: 0.75rem; display: flex; align-items: center; gap: 0.25rem; }
+        @media (min-width: 768px) { .header-nav-btn { padding: 0.5rem 1rem; font-size: 0.875rem; } }
+
+        /* ================= ਨਵਾਂ: ਲੈਂਡਸਕੇਪ ਕਲਾਸ ਸਿਲੈਕਟਰ (Quick Class Switcher) ================= */
+        .landscape-class-selector { display: none; }
+        @media (orientation: landscape) {
+            .landscape-class-selector { display: flex; }
         }
+        .class-btn-mini {
+            width: 22px; height: 22px; border-radius: 6px; color: white; font-weight: 900; font-size: 11px;
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.1s; border: 1px solid rgba(255,255,255,0.5);
+        }
+        .class-btn-mini:active { transform: scale(0.9); }
         @media (min-width: 768px) {
-            .header-nav-btn { padding: 0.5rem 1rem; font-size: 0.875rem; }
+            .class-btn-mini { width: 28px; height: 28px; font-size: 14px; border-radius: 8px; }
         }
     </style>
 </head>
@@ -170,11 +187,10 @@
         </div>
     </header>
 
-    <!-- ਉੱਪਰਲੀ ਟੈਗਲਾਈਨ -->
-    <div class="scrolling-container mt-2 shadow-sm">
+    <!-- ਉੱਪਰਲੀ ਟੈਗਲਾਈਨ (ਅੱਪਡੇਟਿਡ ਵਰਡਿੰਗ) -->
+    <div class="scrolling-container mt-1 shrink-0 shadow-sm">
         <div class="scrolling-text">
-            <i class="fa-solid fa-star text-orange-500 mx-2"></i> ਜੀ ਆਇਆਂ ਨੂੰ! ਇਹ ਪਲੇਟਫਾਰਮ ਬੱਚਿਆਂ ਅਤੇ ਅਧਿਆਪਕਾਂ ਲਈ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਹੈ। 
-            <i class="fa-solid fa-book-open text-blue-600 mx-2"></i> ਸਾਰੇ ਵਿਸ਼ਿਆਂ ਦਾ ਮਟੀਰੀਅਲ ਅਪਲੋਡ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ। <i class="fa-solid fa-star text-orange-500 mx-2"></i>
+            ✨ ਜੀ ਆਇਆਂ ਨੂੰ! ਨਵੇਂ ਵਿਦਿਅਕ ਸੈਸ਼ਨ 2026-27 ਲਈ ਬੱਚਿਆਂ ਵਾਸਤੇ ਇਹ ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ ਤਿਆਰ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ। 🚀 ਹੋਰ ਵਿਦਿਅਕ ਸਹਾਇਕ ਸਮੱਗਰੀ ਲਈ ਸਾਡੇ ਨਾਲ ਜੁੜੇ ਰਹੋ, ਬਾਕੀ ਸਮੱਗਰੀ ਜਲਦ ਹੀ ਅਪਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ! 📚
         </div>
     </div>
 
@@ -261,7 +277,7 @@
                 </button>
             </div>
 
-            <!-- ਨਵਾਂ YouTube ਵੀਡੀਓ ਸੈਕਸ਼ਨ -->
+            <!-- YouTube ਵੀਡੀਓ ਸੈਕਸ਼ਨ -->
             <div class="clay-card bg-gradient-to-br from-red-50 to-orange-50 p-4 shadow-sm border border-red-200">
                 <div class="flex flex-col sm:flex-row items-center justify-between border-b border-red-200 pb-2 mb-3">
                     <h3 class="text-lg md:text-xl font-extrabold text-red-700 flex items-center gap-2">
@@ -271,18 +287,32 @@
                         ਸਾਰੀਆਂ ਦੇਖੋ <i class="fa-solid fa-play"></i>
                     </button>
                 </div>
-                <!-- YouTube Video Grid -->
                 <div id="latest-youtube-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
             </div>
         </div>
+
+        <!-- HTML Snippet for Landscape Class Selector (Used in Headers) -->
+        <template id="landscape-selector-template">
+            <div class="landscape-class-selector items-center gap-1.5 bg-gray-100 p-1 md:p-1.5 rounded-xl border border-gray-300 shadow-inner mr-1 md:mr-3">
+                <span class="text-[9px] md:text-xs font-black text-gray-600 px-1 uppercase tracking-wide">ਜਮਾਤ:</span>
+                <button onclick="openClass(1)" class="class-btn-mini bg-gradient-to-b from-red-400 to-red-600">1</button>
+                <button onclick="openClass(2)" class="class-btn-mini bg-gradient-to-b from-blue-400 to-blue-600">2</button>
+                <button onclick="openClass(3)" class="class-btn-mini bg-gradient-to-b from-orange-400 to-orange-600">3</button>
+                <button onclick="openClass(4)" class="class-btn-mini bg-gradient-to-b from-green-400 to-green-600">4</button>
+                <button onclick="openClass(5)" class="class-btn-mini bg-gradient-to-b from-purple-400 to-purple-600">5</button>
+            </div>
+        </template>
 
         <!-- ================= VIEW 2: CLASS VIEW ================= -->
         <div id="class-view" class="view-section">
             <div class="clay-card bg-white p-3 md:p-4 mb-4 flex items-center justify-between shadow-sm">
                 <h2 id="class-title" class="text-lg md:text-2xl font-black text-blue-700 flex items-center gap-2 text-3d-light"></h2>
-                <div class="flex items-center gap-1.5 shrink-0">
-                    <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
-                    <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                <div class="flex items-center shrink-0">
+                    <div id="class-view-selector"></div>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                    </div>
                 </div>
             </div>
             <div id="subjects-grid" class="gap-4 md:gap-5 px-1 w-full"></div>
@@ -291,14 +321,17 @@
         <!-- ================= VIEW 3: SUBJECT VIEW (ਤਤਕਰਾ) ================= -->
         <div id="subject-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-orange-100 flex items-center justify-between shrink-0 shadow-sm">
-                <div class="flex items-center gap-2 w-[70%] overflow-hidden">
+                <div class="flex items-center gap-2 w-[55%] md:w-[65%] overflow-hidden">
                     <span id="breadcrumb-class" class="text-gray-600 font-bold text-[10px] md:text-sm bg-gray-100 px-2 py-0.5 rounded-md border border-gray-200 shrink-0 whitespace-nowrap"></span>
                     <i class="fa-solid fa-caret-right text-gray-400 text-[10px] shrink-0"></i>
                     <h2 id="subject-title" class="text-sm md:text-lg font-black text-orange-700 flex items-center gap-1.5 truncate"></h2>
                 </div>
-                <div class="flex items-center gap-1.5 shrink-0">
-                    <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
-                    <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                <div class="flex items-center shrink-0">
+                    <div id="subject-view-selector"></div>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                    </div>
                 </div>
             </div>
 
@@ -320,9 +353,12 @@
                 <h2 class="text-lg md:text-2xl font-black text-purple-700 flex items-center gap-2">
                     <span class="text-xl md:text-2xl">🚀</span> ਮਿਸ਼ਨ ਸਮਰੱਥ
                 </h2>
-                <div class="flex items-center gap-1.5 shrink-0">
-                    <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
-                    <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                <div class="flex items-center shrink-0">
+                    <div id="mission-samarth-view-selector"></div>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                    </div>
                 </div>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 px-2">
@@ -344,14 +380,17 @@
         <!-- ================= VIEW 5: MISSION MATERIALS ================= -->
         <div id="mission-materials-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-fuchsia-100 flex items-center justify-between shadow-sm">
-                <div class="flex items-center gap-2 w-[70%] overflow-hidden">
+                <div class="flex items-center gap-2 w-[55%] md:w-[65%] overflow-hidden">
                     <span class="text-gray-600 font-bold text-[9px] md:text-xs bg-gray-100 px-2 py-0.5 rounded-md border border-gray-200 shrink-0 whitespace-nowrap">ਮਿਸ਼ਨ ਸਮਰੱਥ</span>
                     <i class="fa-solid fa-caret-right text-gray-400 text-[10px] shrink-0"></i>
                     <h2 id="mission-subject-title" class="text-sm md:text-lg font-black text-purple-700 flex items-center gap-1.5 truncate"></h2>
                 </div>
-                <div class="flex items-center gap-1.5 shrink-0">
-                    <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
-                    <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                <div class="flex items-center shrink-0">
+                    <div id="mission-materials-view-selector"></div>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                    </div>
                 </div>
             </div>
             <div class="clay-card bg-white p-2 flex flex-col min-h-[40vh] shadow-sm">
@@ -362,14 +401,17 @@
         <!-- ================= NEW VIEW: YOUTUBE FOLDER ================= -->
         <div id="youtube-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-red-100 flex items-center justify-between shadow-sm">
-                <div class="flex items-center gap-2 w-[70%] overflow-hidden">
+                <div class="flex items-center gap-2 w-[55%] md:w-[65%] overflow-hidden">
                     <span class="text-gray-600 font-bold text-[9px] md:text-xs bg-gray-100 px-2 py-0.5 rounded-md border border-gray-200 shrink-0 whitespace-nowrap">ਮੁੱਖ ਪੰਨਾ</span>
                     <i class="fa-solid fa-caret-right text-gray-400 text-[10px] shrink-0"></i>
                     <h2 class="text-sm md:text-lg font-black text-red-700 flex items-center gap-1.5 truncate"><i class="fa-brands fa-youtube text-xl"></i> ਸਾਰੀਆਂ ਵੀਡੀਓਜ਼</h2>
                 </div>
-                <div class="flex items-center gap-1.5 shrink-0">
-                    <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
-                    <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                <div class="flex items-center shrink-0">
+                    <div id="youtube-view-selector"></div>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                    </div>
                 </div>
             </div>
             <div class="clay-card bg-white p-2 flex flex-col min-h-[40vh] shadow-sm">
@@ -379,19 +421,18 @@
             </div>
         </div>
 
-        <!-- ================= VIEW 6: CONTENT IFRAME (404 Fallback Added) ================= -->
+        <!-- ================= VIEW 6: CONTENT IFRAME ================= -->
         <div id="content-view" class="view-section h-full flex-col">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 flex items-center justify-between shadow-sm shrink-0">
-                <h2 id="content-title" class="text-sm md:text-lg font-black text-blue-700 truncate flex items-center gap-2 w-[70%]">
+                <h2 id="content-title" class="text-sm md:text-lg font-black text-blue-700 truncate flex items-center gap-2 w-[55%] md:w-[65%]">
                     <i class="fa-solid fa-book-open text-orange-500"></i> <span class="truncate">ਪੜ੍ਹੋ</span>
                 </h2>
-                <div class="flex items-center gap-1.5 shrink-0">
-                    <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;">
-                        <i class="fa-solid fa-arrow-left"></i>
-                    </button>
-                    <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;">
-                        <i class="fa-solid fa-house"></i>
-                    </button>
+                <div class="flex items-center shrink-0">
+                    <div id="content-view-selector"></div>
+                    <div class="flex items-center gap-1.5">
+                        <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
+                        <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                    </div>
                 </div>
             </div>
             
@@ -431,7 +472,6 @@
         <button onclick="goBack();" class="flex flex-col items-center justify-center bg-gray-50 text-gray-700 w-[30%] h-12 rounded-full border-b-2 border-gray-200 active:border-b-0 active:translate-y-1 transition-all">
             <i class="fa-solid fa-arrow-left text-lg mb-0.5"></i><span class="text-[9px] font-black">ਪਿੱਛੇ</span>
         </button>
-        <!-- ਹੁਣ ਸਭਾ ਦੀ ਜਗ੍ਹਾ ਵੀਡੀਓਜ਼ -->
         <button onclick="openYouTubeFolder();" class="flex flex-col items-center justify-center bg-red-50 text-red-700 w-[30%] h-12 rounded-full border-b-2 border-red-200 active:border-b-0 active:translate-y-1 transition-all">
             <i class="fa-brands fa-youtube text-lg mb-0.5"></i><span class="text-[9px] font-black">ਵੀਡੀਓਜ਼</span>
         </button>
@@ -458,9 +498,17 @@
             lastTap = t;
         });
 
-        function showHome() { 
-            navigateTo('home-view', true, true); 
+        // Insert Landscape Class Selectors dynamically
+        function setupLandscapeSelectors() {
+            const template = document.getElementById('landscape-selector-template').innerHTML;
+            const targetIds = ['class-view-selector', 'subject-view-selector', 'mission-samarth-view-selector', 'mission-materials-view-selector', 'youtube-view-selector', 'content-view-selector'];
+            targetIds.forEach(id => {
+                const el = document.getElementById(id);
+                if(el) el.innerHTML = template;
+            });
         }
+
+        function showHome() { navigateTo('home-view', true, true); }
 
         function goBack() {
             if (viewHistory.length > 1) {
@@ -484,8 +532,10 @@
                 viewHistory.push(viewId);
             }
             window.scrollTo({top: 0, behavior: 'smooth'});
+            
             if(viewId !== 'content-view') {
-                document.getElementById('app-iframe').src = "";
+                const iframe = document.getElementById('app-iframe');
+                if(iframe && iframe.src) iframe.src = "";
             }
         }
 
@@ -660,7 +710,7 @@
             navigateTo('mission-materials-view');
         }
 
-        // ================= YouTube Auto Feed (Monetization Friendly) =================
+        // ================= YouTube Auto Feed =================
         const YOUTUBE_CHANNEL_ID = 'UCCbLyqJY4n1Gd5T5jnoXPUg'; 
         
         function openYouTubeFolder() {
@@ -696,7 +746,6 @@
             let homeHtml = '';
 
             videos.forEach((video, index) => {
-                // ਤਰੀਕ
                 const pubDate = new Date(video.pubDate.replace(/-/g, "/"));
                 const options = { day: '2-digit', month: 'short', year: 'numeric' };
                 const displayDate = pubDate.toLocaleDateString('pa-IN', options);
@@ -707,10 +756,8 @@
                 const isNewBadge = index === 0 ? `<div class="bg-red-500 text-white text-[8px] font-black px-2 py-0.5 rounded-full animate-bounce shadow-sm ml-2 shrink-0">ਨਵਾਂ</div>` : '';
                 const homeNewBadge = index === 0 ? `<div class="absolute top-0 right-0 bg-red-600 text-white px-2 py-0.5 font-black text-[8px] animate-pulse rounded-bl-lg z-20">ਨਵਾਂ</div>` : '';
 
-                // YouTube Link (Opens in App directly)
                 const videoLink = video.link;
 
-                // ਸਾਰੀਆਂ ਵੀਡੀਓਜ਼ (ਫੋਲਡਰ ਦੇ ਅੰਦਰ)
                 if (container) {
                     allHtml += `
                     <a href="${videoLink}" target="_blank" class="btn-3d-super bg-white text-gray-900 p-2 md:p-3 flex flex-row items-center rounded-xl shadow-[0_4px_0_#cbd5e1] border border-gray-200 w-full mb-2 group" style="--shadow-color: #cbd5e1; flex-direction: row; justify-content: flex-start; text-decoration: none;">
@@ -729,7 +776,6 @@
                     </a>`;
                 }
 
-                // ਹੋਮ ਸਕ੍ਰੀਨ 'ਤੇ ਸਿਰਫ 2
                 if (latestGrid && index < 2) {
                     homeHtml += `
                     <a href="${videoLink}" target="_blank" class="btn-3d-super w-full bg-white p-2 rounded-xl flex flex-row items-center gap-2 shadow-[0_3px_0_#cbd5e1] border border-gray-100 relative overflow-hidden group" style="--shadow-color: #cbd5e1; flex-direction: row; text-decoration: none;">
@@ -751,6 +797,7 @@
         }
 
         window.onload = function() {
+            setupLandscapeSelectors();
             fetchYouTubeVideos(); 
         };
     </script>
