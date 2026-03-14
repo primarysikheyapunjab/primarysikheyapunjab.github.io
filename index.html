@@ -24,7 +24,7 @@
         }
     </script>
     <style>
-        /* ਬੈਕਗਰਾਊਂਡ ਅਤੇ ਬੇਸਿਕ ਸੈਟਿੰਗਜ਼ */
+        /* ਬੈਕਗਰਾਊਂਡ ਅਤੇ ਬੇਸਿਕ ਸੈਟਿੰਗਜ਼ (Clean Yellow-Pink Gradient) */
         body { 
             font-family: 'Mukta Malar', sans-serif; 
             background: linear-gradient(135deg, #fef9c3 0%, #fef08a 40%, #fce7f3 100%);
@@ -116,15 +116,16 @@
         .bottom-scrolling-text { display: inline-block; animation: scroll-text 35s linear infinite; font-size: 1.2rem; font-weight: 900; color: #78350f; text-shadow: 1px 1px 0px rgba(255,255,255,0.6); }
 
         /* ===== ਸੋਸ਼ਲ ਮੀਡੀਆ ਬਟਨਾਂ ਲਈ ਸਪੈਸ਼ਲ ਸਪਾਰਕਲ (Shimmer) ਡਿਜ਼ਾਈਨ ===== */
-        .social-float-btn { position: relative; text-decoration: none; transition: transform 0.2s ease, filter 0.2s ease; }
-        .social-float-btn:active { transform: scale(0.95); }
+        .social-btn-3d { position: relative; text-decoration: none; transition: transform 0.2s ease, filter 0.2s ease; display: flex; align-items: center; }
+        .social-btn-3d:active { transform: scale(0.95); }
         .shimmer-effect { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: inherit; overflow: hidden; pointer-events: none; }
         .shimmer-effect::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
-            background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
             transform: skewX(-20deg); animation: shimmer 3s infinite;
         }
         @keyframes shimmer { 0% { left: -100%; } 15% { left: 200%; } 100% { left: 200%; } }
+        .text-outline-dark { text-shadow: 1px 1px 2px rgba(0,0,0,0.9), -1px -1px 1px rgba(0,0,0,0.6), 0px 2px 4px rgba(0,0,0,0.8); }
 
         /* ===== UNIVERSAL UI FIX ===== */
         .icon-box-3d span{ font-size: clamp(28px,4vw,48px); }
@@ -137,6 +138,7 @@
             .table-grid{ grid-template-columns:40px 1fr 60px 50px 80px !important; font-size:12px; }
             .card-subject{ min-height:100px; }
             .icon-box-3d{ min-width:50px; min-height:50px; }
+            .bottom-scrolling-text { font-size: 1.1rem; }
         }
         @media (min-width:1400px){ #subjects-grid{ grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); } }
         .btn-3d-super{ overflow:hidden; }
@@ -146,19 +148,25 @@
         .header-nav-btn { padding: 0.35rem 0.75rem; font-size: 0.75rem; display: flex; align-items: center; gap: 0.25rem; }
         @media (min-width: 768px) { .header-nav-btn { padding: 0.5rem 1rem; font-size: 0.875rem; } }
 
-        /* ================= ਨਵਾਂ: ਲੈਂਡਸਕੇਪ ਕਲਾਸ ਸਿਲੈਕਟਰ (Quick Class Switcher) ================= */
+        /* ================= ਨਵਾਂ: ਲੈਂਡਸਕੇਪ ਕਲਾਸ ਅਤੇ ਫਲੈਸ਼ ਕਾਰਡ ਸਿਲੈਕਟਰ (Quick Selector) ================= */
         .landscape-class-selector { display: none; }
-        @media (orientation: landscape) {
-            .landscape-class-selector { display: flex; }
-        }
+        @media (orientation: landscape) { .landscape-class-selector { display: flex; } }
         .class-btn-mini {
             width: 22px; height: 22px; border-radius: 6px; color: white; font-weight: 900; font-size: 11px;
             display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
             transition: transform 0.1s; border: 1px solid rgba(255,255,255,0.5);
         }
         .class-btn-mini:active { transform: scale(0.9); }
-        @media (min-width: 768px) {
-            .class-btn-mini { width: 28px; height: 28px; font-size: 14px; border-radius: 8px; }
+        .class-btn-text {
+            border-radius: 6px; color: white; font-weight: 900; font-size: 10px;
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            transition: transform 0.1s; border: 1px solid rgba(255,255,255,0.5); padding: 0 6px; height: 22px; white-space: nowrap;
+        }
+        .class-btn-text:active { transform: scale(0.9); }
+
+        @media (min-width: 768px) { 
+            .class-btn-mini { width: 28px; height: 28px; font-size: 14px; border-radius: 8px; } 
+            .class-btn-text { height: 28px; font-size: 12px; border-radius: 8px; padding: 0 10px;}
         }
     </style>
 </head>
@@ -195,30 +203,30 @@
     </div>
 
     <!-- ================= ਸੋਸ਼ਲ ਮੀਡੀਆ ਫਲੋਟਿੰਗ ਪੌਪ-ਅਪ ਬਟਨ ================= -->
-    <div class="fixed top-[115px] md:top-[135px] left-0 z-[60]">
-        <a href="https://youtube.com/@gurminderjassal?si=8wgllXcc1LnChxvZ" target="_blank" class="social-float-btn bg-gradient-to-r from-red-600 to-red-500 border-r-2 border-y-2 border-white rounded-r-2xl shadow-[0_4px_15px_rgba(220,38,38,0.6)] flex items-center gap-1.5 md:gap-2 pl-1.5 pr-2 md:pr-3 py-1.5 md:py-2">
-            <div class="shimmer-effect"></div>
+    <div class="fixed top-[115px] md:top-[135px] left-2 md:left-4 z-[60]">
+        <a href="https://youtube.com/@gurminderjassal?si=8wgllXcc1LnChxvZ" target="_blank" class="social-btn-3d bg-gradient-to-b from-red-500 to-red-700 border-2 border-white rounded-full shadow-[0_6px_0_#7f1d1d,0_10px_20px_rgba(0,0,0,0.3)] gap-2 px-1.5 py-1.5 md:px-2 md:py-2 group" style="--btn-shadow: #7f1d1d;">
+            <div class="shimmer-effect rounded-full"></div>
             <div class="absolute -top-2 -right-1 bg-yellow-400 text-red-900 text-[8px] md:text-[9px] font-black px-1.5 py-0.5 rounded-full animate-bounce shadow-md border border-white z-10">ਨਵਾਂ</div>
-            <div class="bg-white/20 p-1 md:p-1.5 rounded-full z-10">
-                <i class="fa-brands fa-youtube text-white text-lg md:text-2xl animate-pulse drop-shadow-md"></i>
+            <div class="bg-white w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center z-10 shadow-inner group-hover:scale-110 transition-transform shrink-0">
+                <i class="fa-brands fa-youtube text-red-600 text-sm md:text-xl drop-shadow-sm"></i>
             </div>
-            <div class="flex flex-col z-10">
-                <span class="text-white text-[8px] md:text-[10px] font-bold leading-tight">ਵੀਡੀਓਜ਼ ਦੇਖਣ ਲਈ</span>
-                <span class="text-yellow-200 text-[9px] md:text-xs font-black leading-tight">YouTube ਜੁਆਇਨ ਕਰੋ</span>
+            <div class="flex flex-col z-10 pr-2 md:pr-3">
+                <span class="text-white text-[8px] md:text-[10px] font-black tracking-wide leading-tight text-outline-dark">ਵੀਡੀਓਜ਼ ਦੇਖਣ ਲਈ</span>
+                <span class="text-yellow-300 text-[9px] md:text-sm font-black tracking-wide leading-tight text-outline-dark">YouTube ਜੁਆਇਨ ਕਰੋ</span>
             </div>
         </a>
     </div>
 
-    <div class="fixed top-[115px] md:top-[135px] right-0 z-[60]">
-        <a href="https://chat.whatsapp.com/I4Xkh7R2g1U7O4qxJOZzJq?mode=gi_t" target="_blank" class="social-float-btn bg-gradient-to-l from-green-600 to-green-500 border-l-2 border-y-2 border-white rounded-l-2xl shadow-[0_4px_15px_rgba(34,197,94,0.6)] flex items-center gap-1.5 md:gap-2 pr-1.5 pl-2 md:pl-3 py-1.5 md:py-2">
-            <div class="shimmer-effect"></div>
+    <div class="fixed top-[115px] md:top-[135px] right-2 md:right-4 z-[60]">
+        <a href="https://chat.whatsapp.com/I4Xkh7R2g1U7O4qxJOZzJq?mode=gi_t" target="_blank" class="social-btn-3d bg-gradient-to-b from-green-500 to-green-700 border-2 border-white rounded-full shadow-[0_6px_0_#14532d,0_10px_20px_rgba(0,0,0,0.3)] gap-2 px-1.5 py-1.5 md:px-2 md:py-2 group" style="--btn-shadow: #14532d;">
+            <div class="shimmer-effect rounded-full"></div>
             <div class="absolute -top-2 -left-1 bg-yellow-400 text-green-900 text-[8px] md:text-[9px] font-black px-1.5 py-0.5 rounded-full animate-bounce shadow-md border border-white z-10">ਜੁੜੋ</div>
-            <div class="flex flex-col text-right z-10">
-                <span class="text-white text-[8px] md:text-[10px] font-bold leading-tight">ਗਰੁੱਪ 'ਚ ਐਡ ਹੋਣ ਲਈ</span>
-                <span class="text-yellow-200 text-[9px] md:text-xs font-black leading-tight">WhatsApp ਜੁਆਇਨ ਕਰੋ</span>
+            <div class="flex flex-col text-right z-10 pl-2 md:pl-3">
+                <span class="text-white text-[8px] md:text-[10px] font-black tracking-wide leading-tight text-outline-dark">ਗਰੁੱਪ 'ਚ ਐਡ ਹੋਣ ਲਈ</span>
+                <span class="text-yellow-300 text-[9px] md:text-sm font-black tracking-wide leading-tight text-outline-dark">WhatsApp ਜੁਆਇਨ ਕਰੋ</span>
             </div>
-            <div class="bg-white/20 p-1 md:p-1.5 rounded-full z-10">
-                <i class="fa-brands fa-whatsapp text-white text-lg md:text-2xl animate-pulse drop-shadow-md"></i>
+            <div class="bg-white w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center z-10 shadow-inner group-hover:scale-110 transition-transform shrink-0">
+                <i class="fa-brands fa-whatsapp text-green-600 text-sm md:text-xl drop-shadow-sm"></i>
             </div>
         </a>
     </div>
@@ -259,26 +267,27 @@
                 </button>
             </div>
 
-            <!-- ਮਿਸ਼ਨ ਸਮਰੱਥ (Banner) -->
-            <div class="px-1 mb-6">
-                <button onclick="openMissionSamarth()" class="btn-3d-super w-full bg-gradient-to-r from-purple-600 via-fuchsia-500 to-pink-500 text-white rounded-[1.5rem] p-3 md:p-5 shadow-[0_6px_0_#86198f] flex flex-row items-center justify-between group" style="--shadow-color: #86198f;">
-                    <div class="flex items-center gap-3">
-                        <div class="bg-white/20 rounded-full flex items-center justify-center border border-white/50 group-hover:scale-110 transition-transform float-anim shrink-0 icon-box-3d">
+            <!-- ਮਿਸ਼ਨ ਸਮਰੱਥ (Banner - Single Line Bold Update) -->
+            <div class="px-1 mb-6 mt-4">
+                <button onclick="openMissionSamarth()" class="btn-3d-super w-full bg-gradient-to-r from-purple-600 via-fuchsia-500 to-pink-500 text-white rounded-[1.5rem] p-4 md:p-6 shadow-[0_6px_0_#86198f] flex flex-col md:flex-row items-center justify-between group" style="--shadow-color: #86198f;">
+                    <div class="flex items-center gap-3 w-full md:w-auto">
+                        <div class="bg-white/20 rounded-full flex items-center justify-center border-2 border-white/50 group-hover:scale-110 transition-transform float-anim shrink-0 icon-box-3d">
                             <span class="drop-shadow-md">🚀</span>
                         </div>
-                        <div class="text-left flex flex-col justify-center">
-                            <h3 class="text-lg md:text-2xl font-black text-white text-3d leading-tight">ਮਿਸ਼ਨ ਸਮਰੱਥ</h3>
-                            <p class="text-[10px] md:text-xs font-bold text-fuchsia-100 mt-0.5 bg-black/20 px-2 py-0.5 rounded-md inline-block w-max">ਤੀਸਰੀ ਤੋਂ ਪੰਜਵੀਂ (2026-27)</p>
+                        <div class="text-left flex items-center flex-wrap gap-1 md:gap-2 w-full">
+                            <h3 class="text-base sm:text-xl md:text-3xl font-black text-white text-3d leading-tight">ਮਿਸ਼ਨ ਸਮਰੱਥ</h3>
+                            <h3 class="text-base sm:text-xl md:text-3xl font-black text-fuchsia-200 text-3d leading-tight">- ਤੀਸਰੀ ਤੋਂ ਪੰਜਵੀਂ (2026-27)</h3>
                         </div>
                     </div>
-                    <div class="bg-white/20 px-4 py-1.5 md:py-2 rounded-full text-xs md:text-sm font-black text-white shadow-inner border border-white/30 flex items-center gap-1.5 shrink-0 ml-2">
-                        ਖੋਲ੍ਹੋ <i class="fa-solid fa-folder-open group-hover:scale-110 transition-transform"></i>
+                    <!-- ਵੱਡਾ ਖੋਲ੍ਹੋ ਬਟਨ -->
+                    <div class="mt-4 md:mt-0 bg-white/25 px-6 py-2.5 md:px-8 md:py-3 rounded-full text-base md:text-xl font-black text-white shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] border-2 border-white/50 flex items-center gap-2 shrink-0 group-hover:bg-white group-hover:text-purple-700 transition-all w-full md:w-auto justify-center">
+                        ਖੋਲ੍ਹੋ <i class="fa-solid fa-folder-open group-hover:scale-110 transition-transform text-lg md:text-2xl"></i>
                     </div>
                 </button>
             </div>
 
             <!-- YouTube ਵੀਡੀਓ ਸੈਕਸ਼ਨ -->
-            <div class="clay-card bg-gradient-to-br from-red-50 to-orange-50 p-4 shadow-sm border border-red-200">
+            <div class="clay-card bg-gradient-to-br from-red-50 to-orange-50 p-4 shadow-sm border border-red-200 mt-4">
                 <div class="flex flex-col sm:flex-row items-center justify-between border-b border-red-200 pb-2 mb-3">
                     <h3 class="text-lg md:text-xl font-extrabold text-red-700 flex items-center gap-2">
                         <span class="text-2xl md:text-3xl float-anim"><i class="fa-brands fa-youtube text-red-600"></i></span> ਨਵੀਆਂ ਵੀਡੀਓਜ਼ (YouTube)
@@ -291,15 +300,23 @@
             </div>
         </div>
 
-        <!-- HTML Snippet for Landscape Class Selector (Used in Headers) -->
+        <!-- HTML Snippet for Landscape Class Selector with Flashcard buttons (Used in Headers) -->
         <template id="landscape-selector-template">
-            <div class="landscape-class-selector items-center gap-1.5 bg-gray-100 p-1 md:p-1.5 rounded-xl border border-gray-300 shadow-inner mr-1 md:mr-3">
-                <span class="text-[9px] md:text-xs font-black text-gray-600 px-1 uppercase tracking-wide">ਜਮਾਤ:</span>
-                <button onclick="openClass(1)" class="class-btn-mini bg-gradient-to-b from-red-400 to-red-600">1</button>
-                <button onclick="openClass(2)" class="class-btn-mini bg-gradient-to-b from-blue-400 to-blue-600">2</button>
-                <button onclick="openClass(3)" class="class-btn-mini bg-gradient-to-b from-orange-400 to-orange-600">3</button>
-                <button onclick="openClass(4)" class="class-btn-mini bg-gradient-to-b from-green-400 to-green-600">4</button>
-                <button onclick="openClass(5)" class="class-btn-mini bg-gradient-to-b from-purple-400 to-purple-600">5</button>
+            <div class="landscape-class-selector items-center bg-gray-100 p-1 md:p-1.5 rounded-xl border border-gray-300 shadow-inner mr-1 md:mr-3 overflow-hidden flex-wrap">
+                <!-- ਨਵੇਂ ਫਲੈਸ਼ ਕਾਰਡ (Flashcard) ਬਟਨ -->
+                <div class="flex items-center gap-1.5 mr-2">
+                    <button onclick="openMissionSamarth()" class="class-btn-text bg-gradient-to-r from-purple-500 to-pink-500">🚀 ਸਮਰੱਥ</button>
+                    <button onclick="openYouTubeFolder()" class="class-btn-text bg-gradient-to-r from-red-500 to-red-600">▶️ ਵੀਡੀਓਜ਼</button>
+                </div>
+                <div class="w-px h-5 bg-gray-300 mx-1 hidden sm:block"></div>
+                <span class="text-[9px] md:text-xs font-black text-gray-600 px-1 uppercase tracking-wide hidden sm:inline">ਜਮਾਤ:</span>
+                <div class="flex items-center gap-1.5">
+                    <button onclick="openClass(1)" class="class-btn-mini bg-gradient-to-b from-red-400 to-red-600">1</button>
+                    <button onclick="openClass(2)" class="class-btn-mini bg-gradient-to-b from-blue-400 to-blue-600">2</button>
+                    <button onclick="openClass(3)" class="class-btn-mini bg-gradient-to-b from-orange-400 to-orange-600">3</button>
+                    <button onclick="openClass(4)" class="class-btn-mini bg-gradient-to-b from-green-400 to-green-600">4</button>
+                    <button onclick="openClass(5)" class="class-btn-mini bg-gradient-to-b from-purple-400 to-purple-600">5</button>
+                </div>
             </div>
         </template>
 
@@ -321,7 +338,7 @@
         <!-- ================= VIEW 3: SUBJECT VIEW (ਤਤਕਰਾ) ================= -->
         <div id="subject-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-orange-100 flex items-center justify-between shrink-0 shadow-sm">
-                <div class="flex items-center gap-2 w-[55%] md:w-[65%] overflow-hidden">
+                <div class="flex items-center gap-2 w-[45%] sm:w-[50%] overflow-hidden">
                     <span id="breadcrumb-class" class="text-gray-600 font-bold text-[10px] md:text-sm bg-gray-100 px-2 py-0.5 rounded-md border border-gray-200 shrink-0 whitespace-nowrap"></span>
                     <i class="fa-solid fa-caret-right text-gray-400 text-[10px] shrink-0"></i>
                     <h2 id="subject-title" class="text-sm md:text-lg font-black text-orange-700 flex items-center gap-1.5 truncate"></h2>
@@ -380,7 +397,7 @@
         <!-- ================= VIEW 5: MISSION MATERIALS ================= -->
         <div id="mission-materials-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-fuchsia-100 flex items-center justify-between shadow-sm">
-                <div class="flex items-center gap-2 w-[55%] md:w-[65%] overflow-hidden">
+                <div class="flex items-center gap-2 w-[45%] sm:w-[50%] overflow-hidden">
                     <span class="text-gray-600 font-bold text-[9px] md:text-xs bg-gray-100 px-2 py-0.5 rounded-md border border-gray-200 shrink-0 whitespace-nowrap">ਮਿਸ਼ਨ ਸਮਰੱਥ</span>
                     <i class="fa-solid fa-caret-right text-gray-400 text-[10px] shrink-0"></i>
                     <h2 id="mission-subject-title" class="text-sm md:text-lg font-black text-purple-700 flex items-center gap-1.5 truncate"></h2>
@@ -401,7 +418,7 @@
         <!-- ================= NEW VIEW: YOUTUBE FOLDER ================= -->
         <div id="youtube-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-red-100 flex items-center justify-between shadow-sm">
-                <div class="flex items-center gap-2 w-[55%] md:w-[65%] overflow-hidden">
+                <div class="flex items-center gap-2 w-[45%] sm:w-[50%] overflow-hidden">
                     <span class="text-gray-600 font-bold text-[9px] md:text-xs bg-gray-100 px-2 py-0.5 rounded-md border border-gray-200 shrink-0 whitespace-nowrap">ਮੁੱਖ ਪੰਨਾ</span>
                     <i class="fa-solid fa-caret-right text-gray-400 text-[10px] shrink-0"></i>
                     <h2 class="text-sm md:text-lg font-black text-red-700 flex items-center gap-1.5 truncate"><i class="fa-brands fa-youtube text-xl"></i> ਸਾਰੀਆਂ ਵੀਡੀਓਜ਼</h2>
@@ -424,7 +441,7 @@
         <!-- ================= VIEW 6: CONTENT IFRAME ================= -->
         <div id="content-view" class="view-section h-full flex-col">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 flex items-center justify-between shadow-sm shrink-0">
-                <h2 id="content-title" class="text-sm md:text-lg font-black text-blue-700 truncate flex items-center gap-2 w-[55%] md:w-[65%]">
+                <h2 id="content-title" class="text-sm md:text-lg font-black text-blue-700 truncate flex items-center gap-2 w-[45%] sm:w-[50%]">
                     <i class="fa-solid fa-book-open text-orange-500"></i> <span class="truncate">ਪੜ੍ਹੋ</span>
                 </h2>
                 <div class="flex items-center shrink-0">
@@ -498,7 +515,6 @@
             lastTap = t;
         });
 
-        // Insert Landscape Class Selectors dynamically
         function setupLandscapeSelectors() {
             const template = document.getElementById('landscape-selector-template').innerHTML;
             const targetIds = ['class-view-selector', 'subject-view-selector', 'mission-samarth-view-selector', 'mission-materials-view-selector', 'youtube-view-selector', 'content-view-selector'];
