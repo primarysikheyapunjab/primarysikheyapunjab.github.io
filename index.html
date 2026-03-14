@@ -2,7 +2,7 @@
 <html lang="pa">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ - 3D ਪਲੇਟਫਾਰਮ</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -24,10 +24,10 @@
         }
     </script>
     <style>
-        /* ਬੈਕਗਰਾਊਂਡ ਅਤੇ ਬੇਸਿਕ ਸੈਟਿੰਗਜ਼ (Original Simple Look) */
+        /* ਬੈਕਗਰਾਊਂਡ ਅਤੇ ਬੇਸਿਕ ਸੈਟਿੰਗਜ਼ (Clean Yellow-Pink Gradient) */
         body { 
             font-family: 'Mukta Malar', sans-serif; 
-            background: linear-gradient(135deg, #e0f2fe 0%, #fef08a 50%, #fbcfe8 100%);
+            background: linear-gradient(135deg, #fef9c3 0%, #fef08a 40%, #fce7f3 100%);
             background-attachment: fixed;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
@@ -37,16 +37,12 @@
             min-height: 100vh;
         }
 
-        /* 3D ਬੈਕਗਰਾਊਂਡ ਪੈਟਰਨ */
         .bg-3d-pattern {
             position: fixed; inset: 0; pointer-events: none; z-index: -1;
-            background-image: 
-                radial-gradient(circle at 100% 150%, rgba(255,255,255,0.3) 24%, white 24%, white 28%, rgba(255,255,255,0.3) 28%, rgba(255,255,255,0.3) 36%, white 36%, white 40%, transparent 40%, transparent),
-                radial-gradient(circle at 0    150%, rgba(255,255,255,0.3) 24%, white 24%, white 28%, rgba(255,255,255,0.3) 28%, rgba(255,255,255,0.3) 36%, white 36%, white 40%, transparent 40%, transparent);
-            background-size: 60px 60px;
+            background: transparent; 
         }
 
-        /* --- 3D CLAYMORPHISM (ਸਥੂਲ ਬਲਾਕ) --- */
+        /* --- 3D CLAYMORPHISM --- */
         .clay-card {
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(20px);
@@ -105,27 +101,59 @@
         .bottom-scrolling-container { width: 100%; overflow: hidden; white-space: nowrap; background: #001a33; border-top: 3px solid #FFD700; padding: 10px 0; display: flex; align-items: center; margin-top: auto; }
         .bottom-scrolling-text { display: inline-block; animation: scroll-text 20s linear infinite; font-size: 1.1rem; font-weight: 900; color: #FFD700; }
 
-        /* ਓਵਰਲੈਪਿੰਗ ਬਚਾਉਣ ਲਈ ਛੋਟੇ ਫੌਂਟ ਦੀ ਸੈਟਿੰਗ (ਮੋਬਾਈਲ ਲਈ) */
-        @media (max-width: 640px) {
-            .table-col-sno { width: 2.5rem !important; }
-            .table-col-name { flex: 1; padding-left: 0.5rem !important; padding-right: 0.25rem !important; }
-            .table-col-type { width: 3.5rem !important; font-size: 0.65rem !important; }
-            .table-col-page { width: 2.5rem !important; font-size: 0.75rem !important; }
-            .table-col-btn { width: 4.5rem !important; }
-            .index-btn { padding: 0.25rem 0.5rem !important; font-size: 0.7rem !important; }
+        /* ===== ਸੋਸ਼ਲ ਮੀਡੀਆ ਬਟਨਾਂ ਲਈ ਸਪੈਸ਼ਲ ਸਪਾਰਕਲ (Shimmer) ਡਿਜ਼ਾਈਨ ===== */
+        .social-float-btn {
+            position: relative; text-decoration: none; transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        .social-float-btn:active { transform: scale(0.95); }
+        .shimmer-effect {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: inherit; overflow: hidden; pointer-events: none;
+        }
+        .shimmer-effect::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.8), transparent);
+            transform: skewX(-20deg); animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer { 0% { left: -100%; } 15% { left: 200%; } 100% { left: 200%; } }
+
+        /* ===== UNIVERSAL UI FIX ===== */
+        .icon-box-3d span{ font-size: clamp(28px,4vw,48px); }
+        .icon-box-3d{ min-width:60px; min-height:60px; }
+        .card-subject{ min-height:120px; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+        #subjects-grid{ display: grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap: 1rem; }
+        .table-grid{ display:grid; grid-template-columns:60px 1fr 90px 70px 120px; align-items:center; }
+
+        @media (max-width:768px){
+            .table-grid{ grid-template-columns:40px 1fr 60px 50px 80px !important; font-size:12px; }
+            .card-subject{ min-height:100px; }
+            .icon-box-3d{ min-width:50px; min-height:50px; }
+        }
+        @media (min-width:1400px){
+            #subjects-grid{ grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); }
+        }
+        .btn-3d-super{ overflow:hidden; }
+        #main-content{ scroll-behavior:smooth; }
+        #app-iframe{ background:white; }
+        
+        /* Universal Nav Button Style */
+        .header-nav-btn {
+            padding: 0.35rem 0.75rem; font-size: 0.75rem; display: flex; align-items: center; gap: 0.25rem;
+        }
+        @media (min-width: 768px) {
+            .header-nav-btn { padding: 0.5rem 1rem; font-size: 0.875rem; }
         }
     </style>
 </head>
-<body class="pb-24 md:pb-0">
+<body class="pb-24 md:pb-0 relative">
 
     <div class="bg-3d-pattern"></div>
 
-    <!-- 3D ਹੈਡਰ (Original Style) -->
+    <!-- 3D ਹੈਡਰ -->
     <header class="sticky top-2 md:top-4 z-50 px-2 md:px-4 max-w-7xl mx-auto w-full pt-1">
         <div class="clay-card bg-gradient-to-r from-blue-500 to-indigo-600 p-2 md:p-3 flex justify-between items-center shadow-[0_6px_15px_rgba(37,99,235,0.3)]">
             <div class="flex items-center gap-2 md:gap-3 cursor-pointer group" onclick="showHome()">
-                <!-- 3D ਲੋਗੋ -->
-                <div class="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full border-2 border-white shadow-[0_3px_0_#b45309] flex items-center justify-center shrink-0 z-20 group-hover:scale-105 transition-transform float-anim">
+                <div class="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full border-2 border-white shadow-[0_3px_0_#b45309] flex items-center justify-center shrink-0 z-20 group-hover:scale-105 transition-transform float-anim icon-box-3d">
                     <span class="text-xl sm:text-2xl md:text-3xl drop-shadow-md">🎓</span>
                 </div>
                 <div class="flex flex-col justify-center">
@@ -150,12 +178,40 @@
         </div>
     </div>
 
+    <!-- ================= ਸੋਸ਼ਲ ਮੀਡੀਆ ਫਲੋਟਿੰਗ ਪੌਪ-ਅਪ ਬਟਨ ================= -->
+    <div class="fixed top-[115px] md:top-[135px] left-0 z-[60]">
+        <a href="https://youtube.com/@gurminderjassal?si=8wgllXcc1LnChxvZ" target="_blank" class="social-float-btn bg-gradient-to-r from-red-600 to-red-500 border-r-2 border-y-2 border-white rounded-r-2xl shadow-[0_4px_15px_rgba(220,38,38,0.6)] flex items-center gap-1.5 md:gap-2 pl-1.5 pr-2 md:pr-3 py-1.5 md:py-2">
+            <div class="shimmer-effect"></div>
+            <div class="absolute -top-2 -right-1 bg-yellow-400 text-red-900 text-[8px] md:text-[9px] font-black px-1.5 py-0.5 rounded-full animate-bounce shadow-md border border-white z-10">ਨਵਾਂ</div>
+            <div class="bg-white/20 p-1 md:p-1.5 rounded-full z-10">
+                <i class="fa-brands fa-youtube text-white text-lg md:text-2xl animate-pulse drop-shadow-md"></i>
+            </div>
+            <div class="flex flex-col z-10">
+                <span class="text-white text-[8px] md:text-[10px] font-bold leading-tight">ਵੀਡੀਓਜ਼ ਦੇਖਣ ਲਈ</span>
+                <span class="text-yellow-200 text-[9px] md:text-xs font-black leading-tight">YouTube ਜੁਆਇਨ ਕਰੋ</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="fixed top-[115px] md:top-[135px] right-0 z-[60]">
+        <a href="https://chat.whatsapp.com/I4Xkh7R2g1U7O4qxJOZzJq?mode=gi_t" target="_blank" class="social-float-btn bg-gradient-to-l from-green-600 to-green-500 border-l-2 border-y-2 border-white rounded-l-2xl shadow-[0_4px_15px_rgba(34,197,94,0.6)] flex items-center gap-1.5 md:gap-2 pr-1.5 pl-2 md:pl-3 py-1.5 md:py-2">
+            <div class="shimmer-effect"></div>
+            <div class="absolute -top-2 -left-1 bg-yellow-400 text-green-900 text-[8px] md:text-[9px] font-black px-1.5 py-0.5 rounded-full animate-bounce shadow-md border border-white z-10">ਜੁੜੋ</div>
+            <div class="flex flex-col text-right z-10">
+                <span class="text-white text-[8px] md:text-[10px] font-bold leading-tight">ਗਰੁੱਪ 'ਚ ਐਡ ਹੋਣ ਲਈ</span>
+                <span class="text-yellow-200 text-[9px] md:text-xs font-black leading-tight">WhatsApp ਜੁਆਇਨ ਕਰੋ</span>
+            </div>
+            <div class="bg-white/20 p-1 md:p-1.5 rounded-full z-10">
+                <i class="fa-brands fa-whatsapp text-white text-lg md:text-2xl animate-pulse drop-shadow-md"></i>
+            </div>
+        </a>
+    </div>
+
     <!-- ਮੁੱਖ ਕੰਟੈਂਟ ਏਰੀਆ -->
-    <main class="flex-grow container mx-auto px-2 md:px-4 py-4 relative max-w-6xl z-10">
+    <main id="main-content" class="flex-grow container mx-auto px-2 md:px-4 py-4 relative max-w-6xl z-10 mt-6 md:mt-2">
 
         <!-- ================= VIEW 1: HOME ================= -->
         <div id="home-view" class="view-section active">
-            
             <div class="text-center mb-6">
                 <div class="inline-block clay-card bg-white px-6 py-2 mb-1 shadow-sm">
                     <h3 class="text-lg md:text-2xl font-extrabold text-indigo-800 flex items-center gap-2">
@@ -164,51 +220,35 @@
                 </div>
             </div>
             
-            <!-- ਜਮਾਤਾਂ ਵਾਲੇ ਬਟਨ (Original Normal Size Grid) -->
             <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 md:gap-5 px-1 mb-8">
-                <!-- ਪਹਿਲੀ -->
                 <button onclick="openClass(1)" class="btn-3d-super bg-gradient-to-b from-red-400 to-red-600 text-white p-3 md:p-4 shadow-[0_6px_0_#991b1b] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: #991b1b;">
-                    <div class="bg-white/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform">
-                        <span class="text-3xl md:text-4xl font-black text-white text-3d pt-1">1</span>
-                    </div>
+                    <div class="bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform icon-box-3d"><span class="font-black text-white text-3d pt-1">1</span></div>
                     <span class="text-sm md:text-xl font-extrabold text-3d tracking-wider">ਪਹਿਲੀ</span>
                 </button>
-                <!-- ਦੂਜੀ -->
                 <button onclick="openClass(2)" class="btn-3d-super bg-gradient-to-b from-blue-400 to-blue-600 text-white p-3 md:p-4 shadow-[0_6px_0_#1e3a8a] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: #1e3a8a;">
-                    <div class="bg-white/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform">
-                        <span class="text-3xl md:text-4xl font-black text-white text-3d pt-1">2</span>
-                    </div>
+                    <div class="bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform icon-box-3d"><span class="font-black text-white text-3d pt-1">2</span></div>
                     <span class="text-sm md:text-xl font-extrabold text-3d tracking-wider">ਦੂਜੀ</span>
                 </button>
-                <!-- ਤੀਜੀ -->
                 <button onclick="openClass(3)" class="btn-3d-super bg-gradient-to-b from-amber-400 to-orange-500 text-white p-3 md:p-4 shadow-[0_6px_0_#9a3412] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: #9a3412;">
-                    <div class="bg-white/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform">
-                        <span class="text-3xl md:text-4xl font-black text-white text-3d pt-1">3</span>
-                    </div>
+                    <div class="bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform icon-box-3d"><span class="font-black text-white text-3d pt-1">3</span></div>
                     <span class="text-sm md:text-xl font-extrabold text-3d tracking-wider">ਤੀਜੀ</span>
                 </button>
-                <!-- ਚੌਥੀ -->
                 <button onclick="openClass(4)" class="btn-3d-super bg-gradient-to-b from-emerald-400 to-green-600 text-white p-3 md:p-4 shadow-[0_6px_0_#14532d] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: #14532d;">
-                    <div class="bg-white/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform">
-                        <span class="text-3xl md:text-4xl font-black text-white text-3d pt-1">4</span>
-                    </div>
+                    <div class="bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform icon-box-3d"><span class="font-black text-white text-3d pt-1">4</span></div>
                     <span class="text-sm md:text-xl font-extrabold text-3d tracking-wider">ਚੌਥੀ</span>
                 </button>
-                <!-- ਪੰਜਵੀਂ -->
-                <button onclick="openClass(5)" class="col-span-2 sm:col-span-1 lg:col-span-1 btn-3d-super bg-gradient-to-b from-purple-400 to-fuchsia-600 text-white p-3 md:p-4 shadow-[0_6px_0_#701a75] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: #701a75;">
-                    <div class="bg-white/20 w-12 h-12 md:w-16 md:h-16 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform">
-                        <span class="text-3xl md:text-4xl font-black text-white text-3d pt-1">5</span>
-                    </div>
+                <button onclick="openClass(5)" class="btn-3d-super col-span-2 sm:col-span-1 lg:col-span-1 bg-gradient-to-b from-purple-400 to-fuchsia-600 text-white p-3 md:p-4 shadow-[0_6px_0_#701a75] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: #701a75;">
+                    <div class="bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm shadow-inner border border-white/50 group-hover:scale-110 transition-transform icon-box-3d"><span class="font-black text-white text-3d pt-1">5</span></div>
                     <span class="text-sm md:text-xl font-extrabold text-3d tracking-wider">ਪੰਜਵੀਂ</span>
                 </button>
             </div>
 
-            <!-- ਮਿਸ਼ਨ ਸਮਰੱਥ (Normal Size Banner) -->
+            <!-- ਮਿਸ਼ਨ ਸਮਰੱਥ (Banner) -->
             <div class="px-1 mb-6">
                 <button onclick="openMissionSamarth()" class="btn-3d-super w-full bg-gradient-to-r from-purple-600 via-fuchsia-500 to-pink-500 text-white rounded-[1.5rem] p-3 md:p-5 shadow-[0_6px_0_#86198f] flex flex-row items-center justify-between group" style="--shadow-color: #86198f;">
                     <div class="flex items-center gap-3">
-                        <div class="bg-white/20 w-12 h-12 md:w-14 md:h-14 rounded-full flex items-center justify-center border border-white/50 group-hover:scale-110 transition-transform float-anim shrink-0">
-                            <span class="text-2xl md:text-3xl drop-shadow-md">🚀</span>
+                        <div class="bg-white/20 rounded-full flex items-center justify-center border border-white/50 group-hover:scale-110 transition-transform float-anim shrink-0 icon-box-3d">
+                            <span class="drop-shadow-md">🚀</span>
                         </div>
                         <div class="text-left flex flex-col justify-center">
                             <h3 class="text-lg md:text-2xl font-black text-white text-3d leading-tight">ਮਿਸ਼ਨ ਸਮਰੱਥ</h3>
@@ -221,17 +261,18 @@
                 </button>
             </div>
 
-            <!-- ਸਵੇਰ ਦੀ ਸਭਾ -->
-            <div class="clay-card bg-gradient-to-br from-yellow-50 to-orange-50 p-4 shadow-sm border border-yellow-200">
-                <div class="flex flex-col sm:flex-row items-center justify-between border-b border-yellow-300 pb-2 mb-3">
-                    <h3 class="text-lg md:text-xl font-extrabold text-orange-700 flex items-center gap-2">
-                        <span class="text-2xl md:text-3xl float-anim">🌞</span> ਸਵੇਰ ਦੀ ਸਭਾ
+            <!-- ਨਵਾਂ YouTube ਵੀਡੀਓ ਸੈਕਸ਼ਨ -->
+            <div class="clay-card bg-gradient-to-br from-red-50 to-orange-50 p-4 shadow-sm border border-red-200">
+                <div class="flex flex-col sm:flex-row items-center justify-between border-b border-red-200 pb-2 mb-3">
+                    <h3 class="text-lg md:text-xl font-extrabold text-red-700 flex items-center gap-2">
+                        <span class="text-2xl md:text-3xl float-anim"><i class="fa-brands fa-youtube text-red-600"></i></span> ਨਵੀਆਂ ਵੀਡੀਓਜ਼ (YouTube)
                     </h3>
-                    <button onclick="openAssemblyView()" class="btn-3d-super mt-2 sm:mt-0 bg-gradient-to-b from-orange-400 to-red-500 text-white px-4 py-1.5 font-bold text-xs md:text-sm shadow-[0_4px_0_#991b1b] flex items-center gap-2" style="--shadow-color: #991b1b;">
+                    <button onclick="openYouTubeFolder()" class="btn-3d-super mt-2 sm:mt-0 bg-gradient-to-b from-red-500 to-red-700 text-white px-4 py-1.5 font-bold text-xs md:text-sm shadow-[0_4px_0_#991b1b] flex items-center gap-2" style="--shadow-color: #991b1b;">
                         ਸਾਰੀਆਂ ਦੇਖੋ <i class="fa-solid fa-play"></i>
                     </button>
                 </div>
-                <div id="latest-assembly-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+                <!-- YouTube Video Grid -->
+                <div id="latest-youtube-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
             </div>
         </div>
 
@@ -239,121 +280,150 @@
         <div id="class-view" class="view-section">
             <div class="clay-card bg-white p-3 md:p-4 mb-4 flex items-center justify-between shadow-sm">
                 <h2 id="class-title" class="text-lg md:text-2xl font-black text-blue-700 flex items-center gap-2 text-3d-light"></h2>
-                <button onclick="showHome()" class="btn-3d-super bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 px-3 md:px-4 py-1.5 font-bold shadow-[0_4px_0_#64748b] flex items-center gap-1 text-xs md:text-sm" style="--shadow-color: #64748b;">
-                    <i class="fa-solid fa-arrow-left"></i> <span class="hidden sm:inline">ਮੁੱਖ ਪੰਨਾ</span>
-                </button>
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                </div>
             </div>
-            
-            <div id="subjects-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5 px-1"></div>
+            <div id="subjects-grid" class="gap-4 md:gap-5 px-1 w-full"></div>
         </div>
 
         <!-- ================= VIEW 3: SUBJECT VIEW (ਤਤਕਰਾ) ================= -->
         <div id="subject-view" class="view-section">
-            <!-- ਸਿੰਗਲ ਲਾਈਨ ਹੈਡਰ -->
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-orange-100 flex items-center justify-between shrink-0 shadow-sm">
-                <div class="flex items-center gap-2 w-[85%] overflow-hidden">
+                <div class="flex items-center gap-2 w-[70%] overflow-hidden">
                     <span id="breadcrumb-class" class="text-gray-600 font-bold text-[10px] md:text-sm bg-gray-100 px-2 py-0.5 rounded-md border border-gray-200 shrink-0 whitespace-nowrap"></span>
                     <i class="fa-solid fa-caret-right text-gray-400 text-[10px] shrink-0"></i>
                     <h2 id="subject-title" class="text-sm md:text-lg font-black text-orange-700 flex items-center gap-1.5 truncate"></h2>
                 </div>
-                <button onclick="goBack()" class="btn-3d-super shrink-0 bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 px-2.5 py-1 font-bold shadow-[0_3px_0_#64748b] flex items-center gap-1 text-[10px] md:text-xs" style="--shadow-color: #64748b;">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                </div>
             </div>
 
-            <!-- ਤਤਕਰਾ ਟੇਬਲ (Original Flex Layout) -->
             <div class="clay-card bg-white flex flex-col p-1 shadow-md">
-                <div class="flex bg-sky-100 text-sky-900 font-black text-[10px] md:text-sm border-b-2 border-sky-300 rounded-t-lg mx-1">
-                    <div class="table-col-sno text-center py-2 border-r border-sky-200 w-10 md:w-16">ਨੰ.</div>
-                    <div class="table-col-name flex-1 py-2 px-2 border-r border-sky-200 truncate">ਪਾਠ ਦਾ ਨਾਂ</div>
-                    <div class="table-col-type text-center py-2 border-r border-sky-200 w-12 md:w-20">ਵਿਧਾ</div>
-                    <div class="table-col-page text-center py-2 border-r border-sky-200 w-10 md:w-16">ਪੰਨਾ</div>
-                    <div class="table-col-btn text-center py-2 w-14 md:w-24">ਖੋਲ੍ਹੋ</div>
+                <div class="table-grid bg-sky-100 text-sky-900 font-black text-[10px] md:text-sm border-b-2 border-sky-300 rounded-t-lg mx-1 py-2">
+                    <div class="text-center border-r border-sky-200">ਨੰ.</div>
+                    <div class="truncate px-2 border-r border-sky-200">ਪਾਠ ਦਾ ਨਾਂ</div>
+                    <div class="text-center border-r border-sky-200">ਵਿਧਾ</div>
+                    <div class="text-center border-r border-sky-200">ਪੰਨਾ</div>
+                    <div class="text-center">ਖੋਲ੍ਹੋ</div>
                 </div>
-
-                <!-- ਸਕ੍ਰੋਲ ਏਰੀਆ -->
-                <div id="chapters-list-container" class="flex flex-col text-gray-700 font-bold overflow-y-auto max-h-[60vh] custom-scroll px-1 pb-2">
-                    <!-- JS Data -->
-                </div>
+                <div id="chapters-list-container" class="flex flex-col text-gray-700 font-bold overflow-y-auto max-h-[60vh] custom-scroll px-1 pb-2"></div>
             </div>
         </div>
 
-        <!-- ================= VIEW 4: MISSION SAMARTH (Folders) ================= -->
+        <!-- ================= VIEW 4: MISSION SAMARTH ================= -->
         <div id="mission-samarth-view" class="view-section">
             <div class="clay-card bg-white p-3 mb-4 border border-fuchsia-200 flex items-center justify-between shadow-sm">
                 <h2 class="text-lg md:text-2xl font-black text-purple-700 flex items-center gap-2">
                     <span class="text-xl md:text-2xl">🚀</span> ਮਿਸ਼ਨ ਸਮਰੱਥ
                 </h2>
-                <button onclick="showHome()" class="btn-3d-super bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 px-3 md:px-4 py-1.5 font-bold shadow-[0_4px_0_#64748b] flex items-center gap-1 text-xs md:text-sm" style="--shadow-color: #64748b;">
-                    <i class="fa-solid fa-house"></i> <span class="hidden sm:inline">ਮੁੱਖ ਪੰਨਾ</span>
-                </button>
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                </div>
             </div>
-            
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 px-2">
-                <button onclick="openMissionSubject('ਪੰਜਾਬੀ', 'ੳ')" class="btn-3d-super bg-gradient-to-b from-pink-400 to-rose-600 text-white rounded-[1.5rem] p-5 shadow-[0_6px_0_#be123c] flex flex-col items-center justify-center gap-3 group" style="--shadow-color: #be123c;">
-                    <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform"><span class="text-3xl drop-shadow-md">ੳ</span></div>
+                <button onclick="openMissionSubject('ਪੰਜਾਬੀ', 'ੳ')" class="btn-3d-super bg-gradient-to-b from-pink-400 to-rose-600 text-white rounded-[1.5rem] p-5 shadow-[0_6px_0_#be123c] flex flex-col items-center justify-center gap-3 group card-subject" style="--shadow-color: #be123c;">
+                    <div class="bg-white/20 rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform icon-box-3d"><span class="drop-shadow-md">ੳ</span></div>
                     <span class="text-lg font-black text-3d">ਪੰਜਾਬੀ</span>
                 </button>
-                <button onclick="openMissionSubject('ਗਣਿਤ', '🔢')" class="btn-3d-super bg-gradient-to-b from-cyan-400 to-blue-600 text-white rounded-[1.5rem] p-5 shadow-[0_6px_0_#1d4ed8] flex flex-col items-center justify-center gap-3 group" style="--shadow-color: #1d4ed8;">
-                    <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform"><span class="text-3xl drop-shadow-md">🔢</span></div>
+                <button onclick="openMissionSubject('ਗਣਿਤ', '🔢')" class="btn-3d-super bg-gradient-to-b from-cyan-400 to-blue-600 text-white rounded-[1.5rem] p-5 shadow-[0_6px_0_#1d4ed8] flex flex-col items-center justify-center gap-3 group card-subject" style="--shadow-color: #1d4ed8;">
+                    <div class="bg-white/20 rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform icon-box-3d"><span class="drop-shadow-md">🔢</span></div>
                     <span class="text-lg font-black text-3d">ਗਣਿਤ</span>
                 </button>
-                <button onclick="openMissionSubject('English', '🔠')" class="btn-3d-super bg-gradient-to-b from-orange-400 to-red-500 text-white rounded-[1.5rem] p-5 shadow-[0_6px_0_#b91c1c] flex flex-col items-center justify-center gap-3 group" style="--shadow-color: #b91c1c;">
-                    <div class="bg-white/20 w-16 h-16 rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform"><span class="text-3xl drop-shadow-md">🔠</span></div>
+                <button onclick="openMissionSubject('English', '🔠')" class="btn-3d-super bg-gradient-to-b from-orange-400 to-red-500 text-white rounded-[1.5rem] p-5 shadow-[0_6px_0_#b91c1c] flex flex-col items-center justify-center gap-3 group card-subject" style="--shadow-color: #b91c1c;">
+                    <div class="bg-white/20 rounded-full flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform icon-box-3d"><span class="drop-shadow-md">🔠</span></div>
                     <span class="text-lg font-black text-3d">English</span>
                 </button>
             </div>
         </div>
 
-        <!-- ================= VIEW 5: MISSION MATERIALS (List) ================= -->
+        <!-- ================= VIEW 5: MISSION MATERIALS ================= -->
         <div id="mission-materials-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-fuchsia-100 flex items-center justify-between shadow-sm">
-                <div class="flex items-center gap-2 w-[85%] overflow-hidden">
+                <div class="flex items-center gap-2 w-[70%] overflow-hidden">
                     <span class="text-gray-600 font-bold text-[9px] md:text-xs bg-gray-100 px-2 py-0.5 rounded-md border border-gray-200 shrink-0 whitespace-nowrap">ਮਿਸ਼ਨ ਸਮਰੱਥ</span>
                     <i class="fa-solid fa-caret-right text-gray-400 text-[10px] shrink-0"></i>
                     <h2 id="mission-subject-title" class="text-sm md:text-lg font-black text-purple-700 flex items-center gap-1.5 truncate"></h2>
                 </div>
-                <button onclick="goBack()" class="btn-3d-super shrink-0 bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 px-2.5 py-1 font-bold shadow-[0_3px_0_#64748b] flex items-center gap-1 text-[10px] md:text-xs" style="--shadow-color: #64748b;">
-                    <i class="fa-solid fa-arrow-left"></i>
-                </button>
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                </div>
             </div>
-            
             <div class="clay-card bg-white p-2 flex flex-col min-h-[40vh] shadow-sm">
-                <div id="mission-materials-list" class="flex flex-col gap-2 overflow-y-auto custom-scroll pr-1 max-h-[60vh]">
-                    <!-- Dynamic Items -->
+                <div id="mission-materials-list" class="flex flex-col gap-2 overflow-y-auto custom-scroll pr-1 max-h-[60vh]"></div>
+            </div>
+        </div>
+
+        <!-- ================= NEW VIEW: YOUTUBE FOLDER ================= -->
+        <div id="youtube-view" class="view-section">
+            <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-red-100 flex items-center justify-between shadow-sm">
+                <div class="flex items-center gap-2 w-[70%] overflow-hidden">
+                    <span class="text-gray-600 font-bold text-[9px] md:text-xs bg-gray-100 px-2 py-0.5 rounded-md border border-gray-200 shrink-0 whitespace-nowrap">ਮੁੱਖ ਪੰਨਾ</span>
+                    <i class="fa-solid fa-caret-right text-gray-400 text-[10px] shrink-0"></i>
+                    <h2 class="text-sm md:text-lg font-black text-red-700 flex items-center gap-1.5 truncate"><i class="fa-brands fa-youtube text-xl"></i> ਸਾਰੀਆਂ ਵੀਡੀਓਜ਼</h2>
+                </div>
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+                </div>
+            </div>
+            <div class="clay-card bg-white p-2 flex flex-col min-h-[40vh] shadow-sm">
+                <div id="youtube-list-container" class="flex flex-col gap-2 overflow-y-auto custom-scroll pr-1 max-h-[60vh]">
+                    <!-- YouTube Items -->
                 </div>
             </div>
         </div>
 
-        <!-- ================= VIEW 6: CONTENT IFRAME ================= -->
-        <div id="content-view" class="view-section">
-            <div class="clay-card bg-white p-2 md:p-3 mb-3 flex items-center justify-between shadow-sm">
-                <h2 id="content-title" class="text-sm md:text-lg font-black text-blue-700 truncate flex items-center gap-2 w-[75%]">
+        <!-- ================= VIEW 6: CONTENT IFRAME (404 Fallback Added) ================= -->
+        <div id="content-view" class="view-section h-full flex-col">
+            <div class="clay-card bg-white p-2 md:p-3 mb-3 flex items-center justify-between shadow-sm shrink-0">
+                <h2 id="content-title" class="text-sm md:text-lg font-black text-blue-700 truncate flex items-center gap-2 w-[70%]">
                     <i class="fa-solid fa-book-open text-orange-500"></i> <span class="truncate">ਪੜ੍ਹੋ</span>
                 </h2>
-                <button onclick="closeContent()" class="btn-3d-super shrink-0 bg-gradient-to-b from-red-400 to-red-600 text-white px-3 py-1.5 font-bold shadow-[0_3px_0_#991b1b] flex items-center gap-1 text-[10px] md:text-xs" style="--shadow-color: #991b1b;">
-                    <i class="fa-solid fa-xmark"></i> ਬੰਦ
-                </button>
+                <div class="flex items-center gap-1.5 shrink-0">
+                    <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;">
+                        <i class="fa-solid fa-house"></i>
+                    </button>
+                </div>
             </div>
-            <div class="w-full h-[60vh] md:h-[70vh] rounded-xl overflow-hidden border-4 border-gray-300 shadow-inner relative bg-white">
-                <div id="iframe-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-0">
+            
+            <div class="w-full flex-grow rounded-xl overflow-hidden border-4 border-gray-300 shadow-inner relative bg-white h-[60vh]">
+                <div id="iframe-loader" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-10">
                     <div class="text-4xl animate-spin mb-2">⏳</div>
                     <p class="text-blue-700 font-bold text-sm bg-blue-100 px-3 py-1 rounded-full">ਜਾਦੂ ਹੋ ਰਿਹਾ ਹੈ...</p>
                 </div>
-                <iframe id="app-iframe" src="" class="w-full h-full border-0 relative z-10" onload="document.getElementById('iframe-loader').style.display='none'" allowfullscreen></iframe>
+                
+                <div id="coming-soon-message" class="absolute inset-0 flex flex-col items-center justify-center bg-gray-50 z-20 hidden p-6 text-center">
+                    <div class="text-5xl md:text-6xl mb-4 animate-bounce">🚧</div>
+                    <h2 class="text-xl md:text-3xl font-black text-orange-600 mb-2">ਸਮੱਗਰੀ ਜਲਦ ਆ ਰਹੀ ਹੈ!</h2>
+                    <p class="text-xs md:text-base font-bold text-gray-600 max-w-md">ਵੈੱਬਸਾਈਟ ਲਗਾਤਾਰ ਅੱਪਡੇਟ ਹੋ ਰਹੀ ਹੈ! ਜਲਦ ਹੀ ਇਸ ਵਿਸ਼ੇ ਤੇ ਵੀ ਸਮਗਰੀ ਮੁਹਈਆ ਕਰਵਾਈ ਜਾਵੇਗੀ।</p>
+                    <button onclick="goBack()" class="mt-6 btn-3d-super bg-gradient-to-b from-blue-400 to-blue-600 text-white px-6 py-2 rounded-xl font-bold shadow-[0_4px_0_#1d4ed8]" style="--shadow-color: #1d4ed8;">
+                        <i class="fa-solid fa-arrow-left mr-2"></i> ਵਾਪਸ ਜਾਓ
+                    </button>
+                </div>
+
+                <iframe id="app-iframe" src="" class="w-full h-full border-0 relative z-0" onload="document.getElementById('iframe-loader').style.display='none'" allowfullscreen></iframe>
             </div>
         </div>
 
     </main>
 
-    <!-- ਤਿਆਰ ਕਰਤਾ ਵਾਲੀ ਹੇਠਲੀ ਮੋਟੀ ਲਾਈਨ (Original Request) -->
+    <!-- ਤਿਆਰ ਕਰਤਾ ਵਾਲੀ ਹੇਠਲੀ ਮੋਟੀ ਲਾਈਨ -->
     <div class="bottom-scrolling-container mt-auto shrink-0 z-20 relative">
         <div class="bottom-scrolling-text">
             ਤਿਆਰ ਕਰਤਾ :- ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸ.ਪ.ਸ ਜਵੱਦੀ, ਬਲਾਕ ਲੁਧਿਆਣਾ-1 (ਜ਼ਿਲ੍ਹਾ ਲੁਧਿਆਣਾ) ★ ਤਿਆਰ ਕਰਤਾ :- ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸ.ਪ.ਸ ਜਵੱਦੀ, ਬਲਾਕ ਲੁਧਿਆਣਾ-1 (ਜ਼ਿਲ੍ਹਾ ਲੁਧਿਆਣਾ) ★
         </div>
     </div>
 
-    <!-- ਮੋਬਾਈਲ ਲਈ ਫਲੋਟਿੰਗ 3D ਪੱਟੀ (Original Floating Pill Layout) -->
+    <!-- ਮੋਬਾਈਲ ਲਈ ਫਲੋਟਿੰਗ 3D ਪੱਟੀ -->
     <div class="md:hidden fixed bottom-14 left-1/2 transform -translate-x-1/2 w-[90%] max-w-sm bg-white/95 backdrop-blur-md shadow-[0_10px_25px_rgba(0,0,0,0.3)] z-[100] border-2 border-gray-200 rounded-full flex justify-around items-center py-1.5 px-2">
         <button onclick="showHome();" class="flex flex-col items-center justify-center bg-blue-50 text-blue-700 w-[30%] h-12 rounded-full border-b-2 border-blue-200 active:border-b-0 active:translate-y-1 transition-all">
             <i class="fa-solid fa-house text-lg mb-0.5"></i><span class="text-[9px] font-black">ਹੋਮ</span>
@@ -361,8 +431,9 @@
         <button onclick="goBack();" class="flex flex-col items-center justify-center bg-gray-50 text-gray-700 w-[30%] h-12 rounded-full border-b-2 border-gray-200 active:border-b-0 active:translate-y-1 transition-all">
             <i class="fa-solid fa-arrow-left text-lg mb-0.5"></i><span class="text-[9px] font-black">ਪਿੱਛੇ</span>
         </button>
-        <button onclick="openAssemblyView();" class="flex flex-col items-center justify-center bg-orange-50 text-orange-700 w-[30%] h-12 rounded-full border-b-2 border-orange-200 active:border-b-0 active:translate-y-1 transition-all">
-            <i class="fa-solid fa-sun text-lg mb-0.5"></i><span class="text-[9px] font-black">ਸਭਾ</span>
+        <!-- ਹੁਣ ਸਭਾ ਦੀ ਜਗ੍ਹਾ ਵੀਡੀਓਜ਼ -->
+        <button onclick="openYouTubeFolder();" class="flex flex-col items-center justify-center bg-red-50 text-red-700 w-[30%] h-12 rounded-full border-b-2 border-red-200 active:border-b-0 active:translate-y-1 transition-all">
+            <i class="fa-brands fa-youtube text-lg mb-0.5"></i><span class="text-[9px] font-black">ਵੀਡੀਓਜ਼</span>
         </button>
     </div>
 
@@ -370,7 +441,6 @@
     <script>
         let viewHistory = ['home-view'];
 
-        // --- ਫੁੱਲ ਸਕਰੀਨ ਲੌਜਿਕ ---
         function enterFullScreen() { 
             try { 
                 if (!document.fullscreenElement) { 
@@ -395,7 +465,13 @@
         function goBack() {
             if (viewHistory.length > 1) {
                 viewHistory.pop();
-                navigateTo(viewHistory[viewHistory.length - 1], false);
+                let prevView = viewHistory[viewHistory.length - 1];
+                document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
+                document.getElementById(prevView).classList.add('active');
+                window.scrollTo({top: 0, behavior: 'smooth'});
+                if(prevView !== 'content-view') {
+                    document.getElementById('app-iframe').src = "";
+                }
             }
         }
 
@@ -403,50 +479,17 @@
             if(reset) viewHistory = ['home-view'];
             document.querySelectorAll('.view-section').forEach(v => v.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
-            if (pushToHistory && viewHistory[viewHistory.length-1] !== viewId) viewHistory.push(viewId);
-            window.scrollTo({top: 0, behavior: 'smooth'});
-            if(viewId !== 'content-view') document.getElementById('app-iframe').src = "";
-        }
-
-        function openMissionSamarth() { 
-            navigateTo('mission-samarth-view'); 
-        }
-        
-        function openMissionSubject(name, emoji) {
-            document.getElementById('mission-subject-title').innerHTML = `<span class="bg-purple-100 w-6 h-6 rounded-full flex items-center justify-center text-xs shadow-sm border border-purple-200 mr-1.5 shrink-0 inline-flex">${emoji}</span> <span class="truncate">${name}</span>`;
             
-            const container = document.getElementById('mission-materials-list');
-            container.innerHTML = "";
-            const materials = missionSamarthData[name] || [];
-            
-            if(materials.length === 0) {
-                container.innerHTML = `
-                    <div class="py-10 text-center bg-gray-50 rounded-xl border border-dashed border-gray-300 flex flex-col items-center justify-center">
-                        <div class="text-3xl mb-2 animate-bounce">🚧</div>
-                        <h3 class="text-sm font-black text-gray-500">ਮਟੀਰੀਅਲ ਜਲਦੀ ਆਵੇਗਾ</h3>
-                    </div>`;
-            } else {
-                materials.forEach((mat) => {
-                    container.innerHTML += `
-                    <button onclick="openContent('${mat.url}', '${mat.t}')" class="btn-3d-super bg-gradient-to-r from-sky-400 to-blue-500 text-white p-3 flex flex-row justify-between items-center rounded-xl shadow-[0_3px_0_#1d4ed8] border border-white/50 w-full group" style="--shadow-color: #1d4ed8; flex-direction: row;">
-                        <div class="flex items-center gap-2">
-                            <span class="bg-white/30 w-8 h-8 rounded-full flex items-center justify-center text-sm shadow-inner group-hover:scale-110 transition-transform"><i class="fa-solid fa-file-pdf"></i></span>
-                            <span class="text-sm font-black tracking-wide">${mat.t}</span>
-                        </div>
-                        <div class="bg-blue-800/40 w-7 h-7 rounded-full flex items-center justify-center border border-white/20 shadow-inner group-hover:bg-white group-hover:text-blue-600 transition-colors text-xs">
-                            <i class="fa-solid fa-play"></i>
-                        </div>
-                    </button>`;
-                });
+            if (pushToHistory && viewHistory[viewHistory.length-1] !== viewId) {
+                viewHistory.push(viewId);
             }
-            navigateTo('mission-materials-view');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+            if(viewId !== 'content-view') {
+                document.getElementById('app-iframe').src = "";
+            }
         }
 
-        function openAssemblyView() { 
-            openContent('assembly.html', 'ਸਵੇਰ ਦੀ ਸਭਾ'); 
-        }
-
-        // ================= 100% ਮੁਕੰਮਲ ਡਾਟਾਬੇਸ (Class 1 to 5) =================
+        // ================= 100% ਮੁਕੰਮਲ ਡਾਟਾਬੇਸ =================
         const schoolData = {
             1: { name: "ਪਹਿਲੀ ਜਮਾਤ", subjects: [
                 { id: "p", name: "ਪੰਜਾਬੀ", emoji: "ੳ", grad: "from-pink-400 to-rose-600", shadow: "#be123c", chapters: [{t:"ਪੰਜਾਬੀ ਵਰਣਮਾਲਾ (ੳ ਤੋਂ ੜ)", ty:"ਅੱਖਰ", p:"1"}, {t:"ਮੁਕਤਾ (ਬਿਨਾਂ ਮਾਤਰਾ ਵਾਲੇ ਸ਼ਬਦ)", ty:"ਸ਼ਬਦ", p:"15"}, {t:"ਕੰਨਾ (ਾ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"25"}, {t:"ਸਿਹਾਰੀ (ਿ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"32"}, {t:"ਬਿਹਾਰੀ (ੀ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"38"}, {t:"ਔਂਕੜ (ੁ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"45"}, {t:"ਦੁਲੈਂਕੜ (ੂ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"52"}, {t:"ਲਾਂ (ੇ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"60"}, {t:"ਦੁਲਾਵਾਂ (ੈ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"68"}, {t:"ਹੋੜਾ (ੋ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"75"}, {t:"ਕਨੌੜਾ (ੌ) ਦੀ ਮਾਤਰਾ", ty:"ਮਾਤਰਾ", p:"82"}, {t:"ਬਿੰਦੀ, ਟਿੱਪੀ ਅਤੇ ਅੱਧਕ", ty:"ਲਗਾਖਰ", p:"90"}]},
@@ -485,58 +528,27 @@
             }
         };
 
-        // ================= ਮਿਸ਼ਨ ਸਮਰੱਥ ਦਾ ਨਵਾਂ ਡਾਟਾਬੇਸ (MMW1-18, MEW1-28) =================
         const missionSamarthData = {
             "ਪੰਜਾਬੀ": [],
             "ਗਣਿਤ": [
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 1", url: "MMW1.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 2", url: "MMW2.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 3", url: "MMW3.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 4", url: "MMW4.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 5", url: "MMW5.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 6", url: "MMW6.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 7", url: "MMW7.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 8", url: "MMW8.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 9", url: "MMW9.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 10", url: "MMW10.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 11", url: "MMW11.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 12", url: "MMW12.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 13", url: "MMW13.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 14", url: "MMW14.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 15", url: "MMW15.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 16", url: "MMW16.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 17", url: "MMW17.html" },
-                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ - 18", url: "MMW18.html" }
+                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 1", url: "MMW1.html" }, { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 2", url: "MMW2.html" }, { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 3", url: "MMW3.html" },
+                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 4", url: "MMW4.html" }, { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 5", url: "MMW5.html" }, { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 6", url: "MMW6.html" },
+                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 7", url: "MMW7.html" }, { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 8", url: "MMW8.html" }, { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 9", url: "MMW9.html" },
+                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 10", url: "MMW10.html" }, { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 11", url: "MMW11.html" }, { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 12", url: "MMW12.html" },
+                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 13", url: "MMW13.html" }, { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 14", url: "MMW14.html" }, { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 15", url: "MMW15.html" },
+                { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 16", url: "MMW16.html" }, { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 17", url: "MMW17.html" }, { t: "ਗਣਿਤ ਵਰਕਸ਼ੀਟ 18", url: "MMW18.html" }
             ],
             "English": [
-                { t: "English Worksheet - 1", url: "MEW1.html" },
-                { t: "English Worksheet - 2", url: "MEW2.html" },
-                { t: "English Worksheet - 3", url: "MEW3.html" },
-                { t: "English Worksheet - 4", url: "MEW4.html" },
-                { t: "English Worksheet - 5", url: "MEW5.html" },
-                { t: "English Worksheet - 6", url: "MEW6.html" },
-                { t: "English Worksheet - 7", url: "MEW7.html" },
-                { t: "English Worksheet - 8", url: "MEW8.html" },
-                { t: "English Worksheet - 9", url: "MEW9.html" },
-                { t: "English Worksheet - 10", url: "MEW10.html" },
-                { t: "English Worksheet - 11", url: "MEW11.html" },
-                { t: "English Worksheet - 12", url: "MEW12.html" },
-                { t: "English Worksheet - 13", url: "MEW13.html" },
-                { t: "English Worksheet - 14", url: "MEW14.html" },
-                { t: "English Worksheet - 15", url: "MEW15.html" },
-                { t: "English Worksheet - 16", url: "MEW16.html" },
-                { t: "English Worksheet - 17", url: "MEW17.html" },
-                { t: "English Worksheet - 18", url: "MEW18.html" },
-                { t: "English Worksheet - 19", url: "MEW19.html" },
-                { t: "English Worksheet - 20", url: "MEW20.html" },
-                { t: "English Worksheet - 21", url: "MEW21.html" },
-                { t: "English Worksheet - 22", url: "MEW22.html" },
-                { t: "English Worksheet - 23", url: "MEW23.html" },
-                { t: "English Worksheet - 24", url: "MEW24.html" },
-                { t: "English Worksheet - 25", url: "MEW25.html" },
-                { t: "English Worksheet - 26", url: "MEW26.html" },
-                { t: "English Worksheet - 27", url: "MEW27.html" },
-                { t: "English Worksheet - 28", url: "MEW28.html" }
+                { t: "English Worksheet 1", url: "MEW1.html" }, { t: "English Worksheet 2", url: "MEW2.html" }, { t: "English Worksheet 3", url: "MEW3.html" },
+                { t: "English Worksheet 4", url: "MEW4.html" }, { t: "English Worksheet 5", url: "MEW5.html" }, { t: "English Worksheet 6", url: "MEW6.html" },
+                { t: "English Worksheet 7", url: "MEW7.html" }, { t: "English Worksheet 8", url: "MEW8.html" }, { t: "English Worksheet 9", url: "MEW9.html" },
+                { t: "English Worksheet 10", url: "MEW10.html" }, { t: "English Worksheet 11", url: "MEW11.html" }, { t: "English Worksheet 12", url: "MEW12.html" },
+                { t: "English Worksheet 13", url: "MEW13.html" }, { t: "English Worksheet 14", url: "MEW14.html" }, { t: "English Worksheet 15", url: "MEW15.html" },
+                { t: "English Worksheet 16", url: "MEW16.html" }, { t: "English Worksheet 17", url: "MEW17.html" }, { t: "English Worksheet 18", url: "MEW18.html" },
+                { t: "English Worksheet 19", url: "MEW19.html" }, { t: "English Worksheet 20", url: "MEW20.html" }, { t: "English Worksheet 21", url: "MEW21.html" },
+                { t: "English Worksheet 22", url: "MEW22.html" }, { t: "English Worksheet 23", url: "MEW23.html" }, { t: "English Worksheet 24", url: "MEW24.html" },
+                { t: "English Worksheet 25", url: "MEW25.html" }, { t: "English Worksheet 26", url: "MEW26.html" }, { t: "English Worksheet 27", url: "MEW27.html" },
+                { t: "English Worksheet 28", url: "MEW28.html" }
             ]
         };
 
@@ -548,8 +560,8 @@
             
             data.subjects.forEach(s => {
                 subjectsGrid.innerHTML += `
-                <button onclick="openSubject(${id}, '${s.id}')" class="btn-3d-super bg-gradient-to-b ${s.grad} text-white p-4 shadow-[0_6px_0_${s.shadow}] flex flex-col items-center justify-center gap-2 group" style="--shadow-color: ${s.shadow};">
-                    <div class="w-16 h-16 rounded-full flex items-center justify-center bg-white/20 group-hover:scale-105 transition-transform"><span class="text-4xl drop-shadow-md">${s.emoji}</span></div>
+                <button onclick="openSubject(${id}, '${s.id}')" class="btn-3d-super card-subject bg-gradient-to-b ${s.grad} text-white p-4 shadow-[0_6px_0_${s.shadow}] group" style="--shadow-color: ${s.shadow};">
+                    <div class="icon-box-3d bg-white/20 group-hover:scale-105 transition-transform"><span class="drop-shadow-md">${s.emoji}</span></div>
                     <span class="text-lg font-black text-3d tracking-wide mt-1">${s.name}</span>
                 </button>`;
             });
@@ -561,57 +573,186 @@
             const container = document.getElementById('chapters-list-container');
             
             document.getElementById('subject-title').innerHTML = `
-                <span class="bg-white/50 w-6 h-6 rounded-full flex items-center justify-center text-xs shadow-sm border border-gray-300 mr-1.5 shrink-0 inline-flex">${subject.emoji}</span>
-                <span class="truncate">${subject.name}</span>`;
+                <span class="bg-white/50 w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-sm md:text-lg shadow-sm border border-gray-300 mr-1.5 shrink-0 inline-flex">${subject.emoji}</span>
+                <span class="truncate-safe">${subject.name}</span>`;
             document.getElementById('breadcrumb-class').innerText = schoolData[cId].name;
             
             container.innerHTML = "";
             subject.chapters.forEach((ch, i) => {
                 const fileName = `ਪਾਠ/${cId}-${sId.toUpperCase()}-${i+1}.html`;
                 
-                // ਤਤਕਰੇ ਦੀ ਸਿੰਪਲ ਫਲੈਕਸ ਲੇਆਊਟ (V1 ਵਾਲੀ)
                 container.innerHTML += `
-                <div class="flex items-center bg-white border-b border-gray-200 text-gray-800 hover:bg-sky-50 transition-all rounded-md my-0.5 shadow-sm">
-                    <div class="table-col-sno text-center py-2 font-black text-xs text-sky-700 border-r border-dashed border-sky-200 bg-sky-50/50">${i+1}</div>
-                    <div class="table-col-name py-2 font-bold text-xs truncate text-gray-800">${ch.t}</div>
-                    <div class="table-col-type text-center py-2"><span class="bg-gray-100 px-1.5 py-0.5 rounded text-[9px] font-bold border border-gray-200">${ch.ty}</span></div>
-                    <div class="table-col-page text-center py-2 font-black text-[10px] text-blue-800 bg-sky-50/50">${ch.p}</div>
-                    <div class="table-col-btn flex justify-center py-2">
-                        <button onclick="openContent('${fileName}', '${ch.t}')" class="btn-3d-super index-btn bg-gradient-to-b from-sky-400 to-blue-600 text-white shadow-[0_3px_0_#1d4ed8] flex items-center justify-center gap-1 w-[90%]" style="--shadow-color: #1d4ed8;"><i class="fa-solid fa-play"></i> <span class="hidden sm:inline">ਖੇਡੋ</span></button>
+                <div class="table-grid bg-white border-b border-gray-200 text-gray-800 hover:bg-sky-50 transition-all rounded-md my-0.5 shadow-sm py-2">
+                    <div class="text-center font-black text-xs md:text-lg text-sky-700 border-r border-dashed border-sky-200">${i+1}</div>
+                    <div class="font-bold text-[11px] md:text-base truncate-safe px-2 text-gray-800 border-r border-sky-200">${ch.t}</div>
+                    <div class="text-center border-r border-sky-200"><span class="bg-gray-100 px-1.5 py-0.5 rounded text-[9px] md:text-xs font-bold border border-gray-200">${ch.ty}</span></div>
+                    <div class="text-center font-black text-[10px] md:text-sm text-blue-800 border-r border-sky-200">${ch.p}</div>
+                    <div class="flex justify-center px-1">
+                        <button onclick="openContent('${fileName}', '${ch.t}')" class="btn-3d-super index-btn bg-gradient-to-b from-sky-400 to-blue-600 text-white shadow-[0_3px_0_#1d4ed8] flex items-center justify-center gap-1 w-full" style="--shadow-color: #1d4ed8;"><i class="fa-solid fa-play"></i> <span class="hidden sm:inline">ਖੇਡੋ</span></button>
                     </div>
                 </div>`;
             });
             navigateTo('subject-view');
         }
 
+        // ================= 404 CHECKER (IFRAME) =================
         function openContent(url, title) {
-            document.getElementById('app-iframe').src = url;
-            document.getElementById('content-title').innerHTML = `<i class="fa-solid fa-gamepad text-orange-500 float-anim inline-block mr-1"></i> <span class="truncate">${title}</span>`;
+            document.getElementById('content-title').innerHTML = `<i class="fa-solid fa-gamepad text-orange-500 float-anim inline-block mr-1 md:mr-2"></i> <span class="truncate-safe">${title}</span>`;
+            
+            const iframe = document.getElementById('app-iframe');
+            const loader = document.getElementById('iframe-loader');
+            const comingSoon = document.getElementById('coming-soon-message');
+            
+            iframe.style.display = 'none';
+            comingSoon.style.display = 'none';
+            loader.style.display = 'flex';
+            
             navigateTo('content-view');
+
+            fetch(url, { method: 'HEAD' })
+                .then(response => {
+                    loader.style.display = 'none';
+                    if (response.ok) {
+                        iframe.src = url;
+                        iframe.style.display = 'block';
+                    } else {
+                        comingSoon.style.display = 'flex';
+                    }
+                })
+                .catch(error => {
+                    loader.style.display = 'none';
+                    iframe.src = url;
+                    iframe.style.display = 'block';
+                });
         }
 
-        function closeContent() {
-            goBack();
+        function openMissionSamarth() { 
+            navigateTo('mission-samarth-view'); 
+        }
+        
+        function openMissionSubject(name, emoji) {
+            document.getElementById('mission-subject-title').innerHTML = `<span class="bg-purple-100 w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center text-xs md:text-lg shadow-sm border border-purple-200 mr-1.5 shrink-0 inline-flex">${emoji}</span> <span class="truncate">${name}</span>`;
+            
+            const container = document.getElementById('mission-materials-list');
+            container.innerHTML = "";
+            const materials = missionSamarthData[name] || [];
+            
+            if(materials.length === 0) {
+                container.innerHTML = `
+                    <div class="py-12 text-center bg-gray-50 rounded-2xl border-2 border-dashed border-gray-300 flex flex-col items-center justify-center flex-grow">
+                        <div class="text-4xl mb-3 animate-bounce">🚧</div>
+                        <h3 class="text-lg font-black text-gray-600">ਮਟੀਰੀਅਲ ਜਲਦੀ ਆਵੇਗਾ</h3>
+                    </div>`;
+            } else {
+                materials.forEach((mat, index) => {
+                    container.innerHTML += `
+                    <button onclick="openContent('${mat.url}', '${mat.t}')" class="btn-3d-super bg-gradient-to-r from-sky-400 to-blue-500 text-white p-3 md:p-4 flex flex-row justify-between items-center rounded-xl shadow-[0_4px_0_#1d4ed8] border-2 border-white/50 w-full mb-2 group" style="--shadow-color: #1d4ed8; flex-direction: row;">
+                        <div class="flex items-center gap-3">
+                            <span class="bg-white/30 w-8 h-8 md:w-10 md:h-10 rounded-full flex items-center justify-center text-lg md:text-xl shadow-inner group-hover:scale-110 transition-transform"><span class="font-black text-sm drop-shadow-md">${index + 1}</span></span>
+                            <span class="text-sm md:text-lg font-black tracking-wide">${mat.t}</span>
+                        </div>
+                        <div class="bg-blue-800/40 w-8 h-8 rounded-full flex items-center justify-center border border-white/20 shadow-inner group-hover:bg-white group-hover:text-blue-600 transition-colors">
+                            <i class="fa-solid fa-play text-xs"></i>
+                        </div>
+                    </button>`;
+                });
+            }
+            navigateTo('mission-materials-view');
         }
 
-        function renderAssemblySlides() {
-            const latestGrid = document.getElementById('latest-assembly-grid');
-            latestGrid.innerHTML = `
-                <button onclick="openContent('09-03-2026.html', '09 ਮਾਰਚ')" class="btn-3d-super bg-white p-2 rounded-xl flex flex-row items-center gap-2 shadow-[0_3px_0_#cbd5e1] border border-gray-100 relative overflow-hidden" style="--shadow-color: #cbd5e1;">
-                    <div class="absolute top-0 right-0 bg-red-600 text-white px-2 py-0.5 font-black text-[8px] animate-pulse rounded-bl-lg">ਨਵਾਂ</div>
-                    <div class="text-2xl shrink-0">📅</div>
-                    <div class="text-left leading-tight overflow-hidden"><h4 class="text-[10px] md:text-sm font-black truncate">09 ਮਾਰਚ 2026</h4><span class="text-blue-600 font-bold text-[8px] md:text-[10px]">ਸੋਮਵਾਰ</span></div>
-                </button>
-                <button onclick="openContent('08-03-2026.html', '08 ਮਾਰਚ')" class="btn-3d-super bg-white p-2 rounded-xl flex flex-row items-center gap-2 shadow-[0_3px_0_#cbd5e1] border border-gray-100" style="--shadow-color: #cbd5e1;">
-                    <div class="text-2xl shrink-0">📅</div>
-                    <div class="text-left leading-tight overflow-hidden"><h4 class="text-[10px] md:text-sm font-black truncate">08 ਮਾਰਚ 2026</h4><span class="text-blue-600 font-bold text-[8px] md:text-[10px]">ਐਤਵਾਰ</span></div>
-                </button>
-            `;
+        // ================= YouTube Auto Feed (Monetization Friendly) =================
+        const YOUTUBE_CHANNEL_ID = 'UCCbLyqJY4n1Gd5T5jnoXPUg'; 
+        
+        function openYouTubeFolder() {
+            navigateTo('youtube-view');
         }
 
-        window.onload = renderAssemblySlides;
+        async function fetchYouTubeVideos() {
+            const latestGrid = document.getElementById('latest-youtube-grid');
+            if(latestGrid) latestGrid.innerHTML = `<div class="col-span-2 text-center text-sm font-bold text-gray-500 py-2">ਵੀਡੀਓ ਲੋਡ ਹੋ ਰਹੀਆਂ ਹਨ... ⏳</div>`;
+            
+            const rssUrl = encodeURIComponent(`https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`);
+            const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${rssUrl}`;
+
+            try {
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+                
+                if (data.status === 'ok') {
+                    renderDynamicYouTubeVideos(data.items);
+                } else {
+                    throw new Error("API Error");
+                }
+            } catch (error) {
+                if(latestGrid) latestGrid.innerHTML = `<div class="col-span-2 text-center text-sm font-bold text-red-500">ਵੀਡੀਓ ਲਿਆਉਣ ਵਿੱਚ ਸਮੱਸਿਆ ਆਈ। ਇੰਟਰਨੈੱਟ ਚੈੱਕ ਕਰੋ।</div>`;
+            }
+        }
+
+        function renderDynamicYouTubeVideos(videos) {
+            const container = document.getElementById('youtube-list-container');
+            const latestGrid = document.getElementById('latest-youtube-grid');
+            
+            let allHtml = '';
+            let homeHtml = '';
+
+            videos.forEach((video, index) => {
+                // ਤਰੀਕ
+                const pubDate = new Date(video.pubDate.replace(/-/g, "/"));
+                const options = { day: '2-digit', month: 'short', year: 'numeric' };
+                const displayDate = pubDate.toLocaleDateString('pa-IN', options);
+                
+                let shortTitle = video.title;
+                if(shortTitle.length > 50) shortTitle = shortTitle.substring(0, 50) + '...';
+
+                const isNewBadge = index === 0 ? `<div class="bg-red-500 text-white text-[8px] font-black px-2 py-0.5 rounded-full animate-bounce shadow-sm ml-2 shrink-0">ਨਵਾਂ</div>` : '';
+                const homeNewBadge = index === 0 ? `<div class="absolute top-0 right-0 bg-red-600 text-white px-2 py-0.5 font-black text-[8px] animate-pulse rounded-bl-lg z-20">ਨਵਾਂ</div>` : '';
+
+                // YouTube Link (Opens in App directly)
+                const videoLink = video.link;
+
+                // ਸਾਰੀਆਂ ਵੀਡੀਓਜ਼ (ਫੋਲਡਰ ਦੇ ਅੰਦਰ)
+                if (container) {
+                    allHtml += `
+                    <a href="${videoLink}" target="_blank" class="btn-3d-super bg-white text-gray-900 p-2 md:p-3 flex flex-row items-center rounded-xl shadow-[0_4px_0_#cbd5e1] border border-gray-200 w-full mb-2 group" style="--shadow-color: #cbd5e1; flex-direction: row; justify-content: flex-start; text-decoration: none;">
+                        <div class="flex items-center gap-3 flex-grow overflow-hidden">
+                            <div class="relative shrink-0">
+                                <img src="${video.thumbnail}" class="w-20 md:w-28 h-12 md:h-16 object-cover rounded-lg border border-gray-300">
+                                <div class="absolute inset-0 bg-black/20 rounded-lg flex items-center justify-center group-hover:bg-transparent transition-all">
+                                    <i class="fa-brands fa-youtube text-red-600 text-2xl drop-shadow-md bg-white rounded-full leading-none"></i>
+                                </div>
+                            </div>
+                            <div class="text-left overflow-hidden flex flex-col justify-center w-full">
+                                <span class="text-xs md:text-sm font-black tracking-wide flex items-center text-gray-800 group-hover:text-blue-700 leading-tight">${shortTitle}</span>
+                                <span class="text-[9px] md:text-xs font-bold text-gray-500 flex items-center mt-1"><i class="fa-regular fa-calendar mr-1"></i> ${displayDate} ${isNewBadge}</span>
+                            </div>
+                        </div>
+                    </a>`;
+                }
+
+                // ਹੋਮ ਸਕ੍ਰੀਨ 'ਤੇ ਸਿਰਫ 2
+                if (latestGrid && index < 2) {
+                    homeHtml += `
+                    <a href="${videoLink}" target="_blank" class="btn-3d-super w-full bg-white p-2 rounded-xl flex flex-row items-center gap-2 shadow-[0_3px_0_#cbd5e1] border border-gray-100 relative overflow-hidden group" style="--shadow-color: #cbd5e1; flex-direction: row; text-decoration: none;">
+                        ${homeNewBadge}
+                        <div class="relative shrink-0">
+                            <img src="${video.thumbnail}" class="w-14 h-10 object-cover rounded border border-gray-200">
+                            <i class="fa-brands fa-youtube text-red-600 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 drop-shadow-md bg-white rounded-full leading-none text-sm z-10"></i>
+                        </div>
+                        <div class="text-left leading-tight overflow-hidden flex flex-col justify-center">
+                            <h4 class="text-[9px] md:text-[10px] font-black truncate-safe text-gray-800 group-hover:text-blue-700">${shortTitle}</h4>
+                            <span class="text-blue-600 font-bold text-[8px] mt-0.5 inline-block">${displayDate}</span>
+                        </div>
+                    </a>`;
+                }
+            });
+
+            if (container) container.innerHTML = allHtml;
+            if (latestGrid) latestGrid.innerHTML = homeHtml;
+        }
+
+        window.onload = function() {
+            fetchYouTubeVideos(); 
+        };
     </script>
 </body>
 </html>
-
-
