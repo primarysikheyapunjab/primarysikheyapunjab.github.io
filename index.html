@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ - 3D ਪਲੇਟਫਾਰਮ</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- ਗੁਰਮੁਖੀ ਫੋਂਟ -->
     <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <script>
@@ -103,11 +100,11 @@
             display: inline-block; 
             background: linear-gradient(90deg, #8b4513, #1e3a8a, #d4af37, #1e3a8a, #8b4513);
             background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            font-size: clamp(1.2rem, 3.5vw, 1.4rem); /* ਮੋਟਾ ਅਤੇ ਵੱਡਾ */
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
             font-weight: 900; 
             letter-spacing: 0.5px;
             filter: drop-shadow(1px 1px 0px rgba(255,255,255,0.9));
-            animation: scroll-text 45s linear infinite, text-shine 4s linear infinite; /* ਬਹੁਤ ਹੌਲੀ ਸਪੀਡ (45s) */
+            animation: scroll-text 45s linear infinite, text-shine 4s linear infinite; 
             padding-bottom: 2px;
         }
 
@@ -115,9 +112,19 @@
         .bottom-scrolling-container { width: 100%; overflow: hidden; white-space: nowrap; background: linear-gradient(90deg, #fef4a9, #fde047, #fef4a9); border-top: 3px solid #b45309; padding: 10px 0; display: flex; align-items: center; margin-top: auto; }
         .bottom-scrolling-text { display: inline-block; animation: scroll-text 35s linear infinite; font-size: 1.2rem; font-weight: 900; color: #78350f; text-shadow: 1px 1px 0px rgba(255,255,255,0.6); }
 
-        /* ===== ਸੋਸ਼ਲ ਮੀਡੀਆ ਬਟਨਾਂ ਲਈ ਸਪੈਸ਼ਲ ਸਪਾਰਕਲ (Shimmer) ਡਿਜ਼ਾਈਨ ===== */
-        .social-btn-3d { position: relative; text-decoration: none; transition: transform 0.2s ease, filter 0.2s ease; display: flex; align-items: center; }
-        .social-btn-3d:active { transform: scale(0.95); }
+        /* ===== ਸੋਸ਼ਲ ਮੀਡੀਆ 3D ਬਟਨਾਂ ਲਈ ਨਵਾਂ ਡਿਜ਼ਾਈਨ ===== */
+        .social-btn-3d {
+            position: relative; 
+            text-decoration: none; 
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+            display: flex;
+            align-items: center;
+        }
+        .social-btn-3d:active { 
+            transform: translateY(5px) !important;
+            box-shadow: 0 1px 0 var(--btn-shadow), 0 4px 8px rgba(0,0,0,0.3) !important;
+        }
         .shimmer-effect { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: inherit; overflow: hidden; pointer-events: none; }
         .shimmer-effect::before {
             content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
@@ -148,7 +155,7 @@
         .header-nav-btn { padding: 0.35rem 0.75rem; font-size: 0.75rem; display: flex; align-items: center; gap: 0.25rem; }
         @media (min-width: 768px) { .header-nav-btn { padding: 0.5rem 1rem; font-size: 0.875rem; } }
 
-        /* ================= ਨਵਾਂ: ਲੈਂਡਸਕੇਪ ਕਲਾਸ ਅਤੇ ਫਲੈਸ਼ ਕਾਰਡ ਸਿਲੈਕਟਰ (Quick Selector) ================= */
+        /* ਲੈਂਡਸਕੇਪ ਕਲਾਸ ਸਿਲੈਕਟਰ */
         .landscape-class-selector { display: none; }
         @media (orientation: landscape) { .landscape-class-selector { display: flex; } }
         .class-btn-mini {
@@ -174,7 +181,6 @@
 
     <div class="bg-3d-pattern"></div>
 
-    <!-- 3D ਹੈਡਰ -->
     <header class="sticky top-2 md:top-4 z-50 px-2 md:px-4 max-w-7xl mx-auto w-full pt-1">
         <div class="clay-card bg-gradient-to-r from-blue-500 to-indigo-600 p-2 md:p-3 flex justify-between items-center shadow-[0_6px_15px_rgba(37,99,235,0.3)]">
             <div class="flex items-center gap-2 md:gap-3 cursor-pointer group" onclick="showHome()">
@@ -195,14 +201,12 @@
         </div>
     </header>
 
-    <!-- ਉੱਪਰਲੀ ਟੈਗਲਾਈਨ (ਅੱਪਡੇਟਿਡ ਵਰਡਿੰਗ) -->
     <div class="scrolling-container mt-1 shrink-0 shadow-sm">
         <div class="scrolling-text">
             ✨ ਜੀ ਆਇਆਂ ਨੂੰ! ਨਵੇਂ ਵਿਦਿਅਕ ਸੈਸ਼ਨ 2026-27 ਲਈ ਬੱਚਿਆਂ ਵਾਸਤੇ ਇਹ ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ ਤਿਆਰ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ। 🚀 ਹੋਰ ਵਿਦਿਅਕ ਸਹਾਇਕ ਸਮੱਗਰੀ ਲਈ ਸਾਡੇ ਨਾਲ ਜੁੜੇ ਰਹੋ, ਬਾਕੀ ਸਮੱਗਰੀ ਜਲਦ ਹੀ ਅਪਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ! 📚
         </div>
     </div>
 
-    <!-- ================= ਸੋਸ਼ਲ ਮੀਡੀਆ ਫਲੋਟਿੰਗ ਪੌਪ-ਅਪ ਬਟਨ ================= -->
     <div class="fixed top-[115px] md:top-[135px] left-2 md:left-4 z-[60]">
         <a href="https://youtube.com/@gurminderjassal?si=8wgllXcc1LnChxvZ" target="_blank" class="social-btn-3d bg-gradient-to-b from-red-500 to-red-700 border-2 border-white rounded-full shadow-[0_6px_0_#7f1d1d,0_10px_20px_rgba(0,0,0,0.3)] gap-2 px-1.5 py-1.5 md:px-2 md:py-2 group" style="--btn-shadow: #7f1d1d;">
             <div class="shimmer-effect rounded-full"></div>
@@ -231,10 +235,8 @@
         </a>
     </div>
 
-    <!-- ਮੁੱਖ ਕੰਟੈਂਟ ਏਰੀਆ -->
     <main id="main-content" class="flex-grow container mx-auto px-2 md:px-4 py-4 relative max-w-6xl z-10 mt-6 md:mt-2">
 
-        <!-- ================= VIEW 1: HOME ================= -->
         <div id="home-view" class="view-section active">
             <div class="text-center mb-6">
                 <div class="inline-block clay-card bg-white px-6 py-2 mb-1 shadow-sm">
@@ -267,7 +269,6 @@
                 </button>
             </div>
 
-            <!-- ਮਿਸ਼ਨ ਸਮਰੱਥ (Banner - Single Line Bold Update) -->
             <div class="px-1 mb-6 mt-4">
                 <button onclick="openMissionSamarth()" class="btn-3d-super w-full bg-gradient-to-r from-purple-600 via-fuchsia-500 to-pink-500 text-white rounded-[1.5rem] p-4 md:p-6 shadow-[0_6px_0_#86198f] flex flex-col md:flex-row items-center justify-between group" style="--shadow-color: #86198f;">
                     <div class="flex items-center gap-3 w-full md:w-auto">
@@ -279,14 +280,12 @@
                             <h3 class="text-base sm:text-xl md:text-3xl font-black text-fuchsia-200 text-3d leading-tight">- ਤੀਸਰੀ ਤੋਂ ਪੰਜਵੀਂ (2026-27)</h3>
                         </div>
                     </div>
-                    <!-- ਵੱਡਾ ਖੋਲ੍ਹੋ ਬਟਨ -->
                     <div class="mt-4 md:mt-0 bg-white/25 px-6 py-2.5 md:px-8 md:py-3 rounded-full text-base md:text-xl font-black text-white shadow-[inset_0_2px_4px_rgba(255,255,255,0.6)] border-2 border-white/50 flex items-center gap-2 shrink-0 group-hover:bg-white group-hover:text-purple-700 transition-all w-full md:w-auto justify-center">
                         ਖੋਲ੍ਹੋ <i class="fa-solid fa-folder-open group-hover:scale-110 transition-transform text-lg md:text-2xl"></i>
                     </div>
                 </button>
             </div>
 
-            <!-- YouTube ਵੀਡੀਓ ਸੈਕਸ਼ਨ -->
             <div class="clay-card bg-gradient-to-br from-red-50 to-orange-50 p-4 shadow-sm border border-red-200 mt-4">
                 <div class="flex flex-col sm:flex-row items-center justify-between border-b border-red-200 pb-2 mb-3">
                     <h3 class="text-lg md:text-xl font-extrabold text-red-700 flex items-center gap-2">
@@ -300,10 +299,8 @@
             </div>
         </div>
 
-        <!-- HTML Snippet for Landscape Class Selector with Flashcard buttons (Used in Headers) -->
         <template id="landscape-selector-template">
             <div class="landscape-class-selector items-center bg-gray-100 p-1 md:p-1.5 rounded-xl border border-gray-300 shadow-inner mr-1 md:mr-3 overflow-hidden flex-wrap">
-                <!-- ਨਵੇਂ ਫਲੈਸ਼ ਕਾਰਡ (Flashcard) ਬਟਨ -->
                 <div class="flex items-center gap-1.5 mr-2">
                     <button onclick="openMissionSamarth()" class="class-btn-text bg-gradient-to-r from-purple-500 to-pink-500">🚀 ਸਮਰੱਥ</button>
                     <button onclick="openYouTubeFolder()" class="class-btn-text bg-gradient-to-r from-red-500 to-red-600">▶️ ਵੀਡੀਓਜ਼</button>
@@ -320,7 +317,6 @@
             </div>
         </template>
 
-        <!-- ================= VIEW 2: CLASS VIEW ================= -->
         <div id="class-view" class="view-section">
             <div class="clay-card bg-white p-3 md:p-4 mb-4 flex items-center justify-between shadow-sm">
                 <h2 id="class-title" class="text-lg md:text-2xl font-black text-blue-700 flex items-center gap-2 text-3d-light"></h2>
@@ -335,7 +331,6 @@
             <div id="subjects-grid" class="gap-4 md:gap-5 px-1 w-full"></div>
         </div>
 
-        <!-- ================= VIEW 3: SUBJECT VIEW (ਤਤਕਰਾ) ================= -->
         <div id="subject-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-orange-100 flex items-center justify-between shrink-0 shadow-sm">
                 <div class="flex items-center gap-2 w-[45%] sm:w-[50%] overflow-hidden">
@@ -364,7 +359,6 @@
             </div>
         </div>
 
-        <!-- ================= VIEW 4: MISSION SAMARTH ================= -->
         <div id="mission-samarth-view" class="view-section">
             <div class="clay-card bg-white p-3 mb-4 border border-fuchsia-200 flex items-center justify-between shadow-sm">
                 <h2 class="text-lg md:text-2xl font-black text-purple-700 flex items-center gap-2">
@@ -394,7 +388,6 @@
             </div>
         </div>
 
-        <!-- ================= VIEW 5: MISSION MATERIALS ================= -->
         <div id="mission-materials-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-fuchsia-100 flex items-center justify-between shadow-sm">
                 <div class="flex items-center gap-2 w-[45%] sm:w-[50%] overflow-hidden">
@@ -415,7 +408,6 @@
             </div>
         </div>
 
-        <!-- ================= NEW VIEW: YOUTUBE FOLDER ================= -->
         <div id="youtube-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-red-100 flex items-center justify-between shadow-sm">
                 <div class="flex items-center gap-2 w-[45%] sm:w-[50%] overflow-hidden">
@@ -433,12 +425,10 @@
             </div>
             <div class="clay-card bg-white p-2 flex flex-col min-h-[40vh] shadow-sm">
                 <div id="youtube-list-container" class="flex flex-col gap-2 overflow-y-auto custom-scroll pr-1 max-h-[60vh]">
-                    <!-- YouTube Items -->
-                </div>
+                    </div>
             </div>
         </div>
 
-        <!-- ================= VIEW 6: CONTENT IFRAME ================= -->
         <div id="content-view" class="view-section h-full flex-col">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 flex items-center justify-between shadow-sm shrink-0">
                 <h2 id="content-title" class="text-sm md:text-lg font-black text-blue-700 truncate flex items-center gap-2 w-[45%] sm:w-[50%]">
@@ -474,14 +464,12 @@
 
     </main>
 
-    <!-- ਤਿਆਰ ਕਰਤਾ ਵਾਲੀ ਹੇਠਲੀ ਮੋਟੀ ਲਾਈਨ -->
     <div class="bottom-scrolling-container mt-auto shrink-0 z-20 relative">
         <div class="bottom-scrolling-text">
             ਤਿਆਰ ਕਰਤਾ :- ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸ.ਪ.ਸ ਜਵੱਦੀ, ਬਲਾਕ ਲੁਧਿਆਣਾ-1 (ਜ਼ਿਲ੍ਹਾ ਲੁਧਿਆਣਾ) ★ ਤਿਆਰ ਕਰਤਾ :- ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸ.ਪ.ਸ ਜਵੱਦੀ, ਬਲਾਕ ਲੁਧਿਆਣਾ-1 (ਜ਼ਿਲ੍ਹਾ ਲੁਧਿਆਣਾ) ★
         </div>
     </div>
 
-    <!-- ਮੋਬਾਈਲ ਲਈ ਫਲੋਟਿੰਗ 3D ਪੱਟੀ -->
     <div class="md:hidden fixed bottom-14 left-1/2 transform -translate-x-1/2 w-[90%] max-w-sm bg-white/95 backdrop-blur-md shadow-[0_10px_25px_rgba(0,0,0,0.3)] z-[100] border-2 border-gray-200 rounded-full flex justify-around items-center py-1.5 px-2">
         <button onclick="showHome();" class="flex flex-col items-center justify-center bg-blue-50 text-blue-700 w-[30%] h-12 rounded-full border-b-2 border-blue-200 active:border-b-0 active:translate-y-1 transition-all">
             <i class="fa-solid fa-house text-lg mb-0.5"></i><span class="text-[9px] font-black">ਹੋਮ</span>
@@ -494,7 +482,6 @@
         </button>
     </div>
 
-    <!-- JavaScript Data and Logic -->
     <script>
         let viewHistory = ['home-view'];
 
@@ -645,7 +632,8 @@
             
             container.innerHTML = "";
             subject.chapters.forEach((ch, i) => {
-                const fileName = `ਪਾਠ/${cId}-${sId.toUpperCase()}-${i+1}.html`;
+                // ਨਵਾਂ ਫਾਈਲ ਨਾਮ ਫਾਰਮੈਟ: ਕਲਾਸ + ਵਿਸ਼ਾ + ਪਾਠ ਨੰਬਰ.html (e.g., 5P1.html)
+                const fileName = `ਪਾਠ/${cId}${sId.toUpperCase()}${i+1}.html`;
                 
                 container.innerHTML += `
                 <div class="table-grid bg-white border-b border-gray-200 text-gray-800 hover:bg-sky-50 transition-all rounded-md my-0.5 shadow-sm py-2">
@@ -819,3 +807,5 @@
     </script>
 </body>
 </html>
+
+
