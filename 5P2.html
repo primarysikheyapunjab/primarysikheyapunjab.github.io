@@ -49,7 +49,6 @@
 
     <main class="max-w-4xl mx-auto p-4 md:p-6">
 
-        <!-- STEP 1: Details -->
         <div id="pane-1" class="view-pane active bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
             <h2 class="text-xl font-black mb-6 border-b pb-3 text-slate-800">ਸਕੂਲ ਅਤੇ ਪ੍ਰੀਖਿਆ ਦਾ ਵੇਰਵਾ</h2>
             <div class="space-y-4">
@@ -78,7 +77,6 @@
             </div>
         </div>
 
-        <!-- STEP 2: Subjects -->
         <div id="pane-2" class="view-pane bg-white p-6 rounded-2xl shadow-sm border border-slate-200">
             <div class="flex justify-between items-center mb-6">
                 <h3 id="sel-class-title" class="text-2xl font-black text-blue-900">ਜਮਾਤ</h3>
@@ -87,7 +85,6 @@
             <div id="subject-grid" class="grid grid-cols-1 gap-3"></div>
         </div>
 
-        <!-- STEP 3: Loading -->
         <div id="pane-3" class="view-pane text-center py-24 bg-white rounded-2xl shadow-sm">
             <div class="flex flex-col items-center">
                 <div class="spinner mb-6"></div>
@@ -96,7 +93,6 @@
             </div>
         </div>
 
-        <!-- STEP 4: Paper -->
         <div id="pane-4" class="view-pane">
             <div class="no-print flex gap-3 mb-6">
                 <button onclick="switchView(1)" class="flex-1 bg-white border border-slate-200 p-4 rounded-xl font-bold hover:bg-slate-50">ਨਵਾਂ ਪੇਪਰ</button>
@@ -112,7 +108,9 @@
         const apiKey = "AIzaSyC88YUnXKNdeqdwfugQL8-4FCSjp26X39Y"; 
         let currentSelection = { classIdx: 0, subCode: "", subName: "" };
         const classes = ["ਪਹਿਲੀ", "ਦੂਸਰੀ", "ਤੀਸਰੀ", "ਚੌਥੀ", "ਪੰਜਵੀਂ"];
-        const subjects = { "P": "ਪੰਜਾਬੀ", "M": "ਗਣਿਤ", "E": "ਅੰਗਰੇਜ਼ੀ", "V": "ਵਾਤਾਵਰਨ ਸਿੱਖਿਆ", "H": "ਹਿੰਦੀ" };
+        
+        // Changed "E" to "EN" to match your repo's filenames (e.g., 1EN.pdf)
+        const subjects = { "P": "ਪੰਜਾਬੀ", "M": "ਗਣਿਤ", "EN": "ਅੰਗਰੇਜ਼ੀ", "V": "ਵਾਤਾਵਰਨ ਸਿੱਖਿਆ", "H": "ਹਿੰਦੀ" };
 
         window.onload = () => {
             const container = document.getElementById('class-buttons');
@@ -133,7 +131,8 @@
             currentSelection.classIdx = num;
             document.getElementById('sel-class-title').innerText = "ਜਮਾਤ: " + name;
             
-            let list = ["P", "M", "E"];
+            // Replaced "E" with "EN" here as well
+            let list = ["P", "M", "EN"];
             if(num >= 3) list.push("V");
             if(num >= 4) list.push("H");
             
@@ -159,30 +158,19 @@
             currentSelection.subName = subjects[subKey];
             const targetFileName = `${currentSelection.classIdx}${subKey}.pdf`;
             
-            document.getElementById('loading-file-name').innerText = `ਰੂਟ ਫਾਈਲ ਚੈੱਕ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ: ${targetFileName}`;
+            document.getElementById('loading-file-name').innerText = `ਰੂਟ ਤੋਂ ਫਾਈਲ ਡਾਊਨਲੋਡ ਹੋ ਰਹੀ ਹੈ: ${targetFileName}`;
             switchView(3);
 
             const school = document.getElementById('schoolName').value;
             const marks = document.getElementById('totalMarks').value;
             const exam = document.getElementById('examType').value;
 
-            // Updated prompt focusing on ROOT folder access
-            const prompt = `System: You are a PSEB paper generator.
-            File Location: Same folder as index.html (Root).
-            Current PDF: ${targetFileName}
-            Task: Generate a school exam paper for Class ${currentSelection.classIdx} ${currentSelection.subName} based on the content of ${targetFileName}.
-            Requirement: If info for ${targetFileName} is missing, return "MAINTENANCE_MODE". Otherwise, provide Punjabi content in HTML format.`;
-
             try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
-                });
+                // 1. Fetch the actual PDF file from the root
+                const pdfResponse = await fetch(`./${targetFileName}`);
                 
-                const data = await res.json();
-                let result = data.candidates[0].content.parts[0].text;
-
-                if (result.includes("MAINTENANCE_MODE")) {
+                // 2. Handle missing file locally without hitting the API
+                if (!pdfResponse.ok) {
                     document.getElementById('paper-output').innerHTML = `
                         <div class="bg-white p-12 rounded-3xl shadow-xl text-center">
                             <div class="text-blue-600 text-6xl mb-6"><i class="fa-solid fa-file-circle-exclamation"></i></div>
@@ -194,45 +182,82 @@
                             <button onclick="switchView(1)" class="mt-8 bg-blue-800 text-white px-8 py-3 rounded-xl font-bold">ਵਾਪਸ ਜਾਓ</button>
                         </div>
                     `;
-                } else {
-                    let content = result.replace(/```html|```/g, '');
-                    document.getElementById('paper-output').innerHTML = `
-                        <div class="paper-a4">
-                            <div class="bsm-header-container">
-                                <div class="header-top-row">
-                                    <div class="header-class-info">
-                                        <div>ਜਮਾਤ - ${classes[currentSelection.classIdx-1]}</div>
-                                        <div>ਵਿਸ਼ਾ - ${currentSelection.subName}</div>
-                                    </div>
-                                    <div class="bsm-box">BSM</div>
+                    switchView(4);
+                    return;
+                }
+
+                // 3. Convert the downloaded PDF into Base64 format
+                const pdfBlob = await pdfResponse.blob();
+                const base64Pdf = await new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result.split(',')[1]); 
+                    reader.onerror = reject;
+                    reader.readAsDataURL(pdfBlob);
+                });
+
+                // 4. Update the prompt & send the Base64 file via 'inlineData' to Gemini
+                const prompt = `System: You are a PSEB paper generator.
+                Task: Generate a school exam paper for Class ${currentSelection.classIdx} ${currentSelection.subName} based strictly on the content of the attached PDF.
+                Requirement: Provide Punjabi content in raw HTML format structured for an exam. Do not use markdown blocks (\`\`\`html), just raw HTML elements.`;
+
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        contents: [{ 
+                            parts: [
+                                { text: prompt },
+                                { inlineData: { mimeType: "application/pdf", data: base64Pdf } }
+                            ] 
+                        }] 
+                    })
+                });
+                
+                const data = await res.json();
+                
+                // Handle possible API limits/errors
+                if(data.error) throw new Error(data.error.message);
+
+                let result = data.candidates[0].content.parts[0].text;
+                let content = result.replace(/```html|```/g, '');
+                
+                document.getElementById('paper-output').innerHTML = `
+                    <div class="paper-a4">
+                        <div class="bsm-header-container">
+                            <div class="header-top-row">
+                                <div class="header-class-info">
+                                    <div>ਜਮਾਤ - ${classes[currentSelection.classIdx-1]}</div>
+                                    <div>ਵਿਸ਼ਾ - ${currentSelection.subName}</div>
                                 </div>
-                                <div class="student-fields">
-                                    <div class="field-row">ਸਕੂਲ ਦਾ ਨਾਂ : <div class="dotted-line">${school}</div></div>
-                                    <div class="field-row">ਵਿਦਿਆਰਥੀ ਦਾ ਨਾਂ : <div class="dotted-line"></div></div>
-                                    <div class="field-row">
-                                        <div style="flex:2; display:flex;">ਰੋਲ ਨੰ : <div class="dotted-line"></div></div>
-                                        <div style="flex:3; display:flex; justify-content:flex-end;">ਮਿਤੀ : <div class="dotted-line" style="flex:0; width:220px;"></div></div>
-                                    </div>
-                                </div>
-                                <div class="header-footer">
-                                    <span>ਸਮਾਂ: 3 ਘੰਟੇ</span>
-                                    <span>ਕੁੱਲ ਅੰਕ : ${marks}</span>
-                                    <span style="border-left:2px solid #000; padding-left:15px;">ਪ੍ਰਾਪਤ ਅੰਕ: ...........</span>
+                                <div class="bsm-box">BSM</div>
+                            </div>
+                            <div class="student-fields">
+                                <div class="field-row">ਸਕੂਲ ਦਾ ਨਾਂ : <div class="dotted-line">${school}</div></div>
+                                <div class="field-row">ਵਿਦਿਆਰਥੀ ਦਾ ਨਾਂ : <div class="dotted-line"></div></div>
+                                <div class="field-row">
+                                    <div style="flex:2; display:flex;">ਰੋਲ ਨੰ : <div class="dotted-line"></div></div>
+                                    <div style="flex:3; display:flex; justify-content:flex-end;">ਮਿਤੀ : <div class="dotted-line" style="flex:0; width:220px;"></div></div>
                                 </div>
                             </div>
-                            <div style="text-align:center; font-weight:900; font-size:20px; text-decoration:underline; margin-bottom:20px;">${exam} (ਸੈਸ਼ਨ 2025-26)</div>
-                            <div class="paper-body" style="font-size: 16px; line-height: 1.8;">${content}</div>
-                            <div style="margin-top:40px; text-align:center; font-size:12px; border-top:1px dashed #000; padding-top:10px;">* ਸੁੰਦਰ ਲਿਖਾਈ ਦੇ 5 ਅੰਕ ਵੱਖਰੇ ਦਿੱਤੇ ਜਾਣਗੇ *</div>
+                            <div class="header-footer">
+                                <span>ਸਮਾਂ: 3 ਘੰਟੇ</span>
+                                <span>ਕੁੱਲ ਅੰਕ : ${marks}</span>
+                                <span style="border-left:2px solid #000; padding-left:15px;">ਪ੍ਰਾਪਤ ਅੰਕ: ...........</span>
+                            </div>
                         </div>
-                    `;
-                }
+                        <div style="text-align:center; font-weight:900; font-size:20px; text-decoration:underline; margin-bottom:20px;">${exam} (ਸੈਸ਼ਨ 2025-26)</div>
+                        <div class="paper-body" style="font-size: 16px; line-height: 1.8;">${content}</div>
+                        <div style="margin-top:40px; text-align:center; font-size:12px; border-top:1px dashed #000; padding-top:10px;">* ਸੁੰਦਰ ਲਿਖਾਈ ਦੇ 5 ਅੰਕ ਵੱਖਰੇ ਦਿੱਤੇ ਜਾਣਗੇ *</div>
+                    </div>
+                `;
+                
                 switchView(4);
             } catch (err) {
-                alert("ਕਨੈਕਸ਼ਨ ਫੇਲ ਹੋ ਗਿਆ।");
+                console.error("API Error: ", err);
+                alert("ਕਨੈਕਸ਼ਨ ਫੇਲ ਹੋ ਗਿਆ ਜਾਂ ਫਾਈਲ ਪ੍ਰੋਸੈਸ ਕਰਨ ਵਿੱਚ ਗਲਤੀ ਆਈ ਹੈ।");
                 switchView(1);
             }
         }
     </script>
 </body>
 </html>
-
