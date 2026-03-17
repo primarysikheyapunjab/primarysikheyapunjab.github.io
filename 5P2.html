@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PSEB Paper Engine V3.3</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;700;800&display=swap');
+        body { font-family: 'Mukta Malar', sans-serif; background-color: #f1f5f9; }
+        .view-pane { display: none; }
+        .view-pane.active { display: block; }
+        
+        /* A4 Paper Styling */
+        .paper-a4 {
+            background: white;
+            width: 210mm;
+            min-height: 297mm;
+            padding: 15mm;
+            margin: 20px auto;
+            border: 1px solid #000;
+            color: black;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* BSM Header - Optimized */
+        .bsm-header-box {
+            border: 2px solid black;
+            margin-bottom: 25px;
+        }
+        .header-top {
+            display: flex;
+            border-bottom: 2px solid black;
+        }
+        .class-sub-info {
+            flex: 1;
+            padding: 10px;
+            border-right: 2px solid black;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 800;
+        }
+        .bsm-tag {
+            width: 140px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 36px;
+            font-weight: 900;
+        }
+        .details-area {
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .row-item {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: center;
+        }
+        /* Fixed Dotted Line logic */
+        .line-fill {
+            flex: 1;
+            border-bottom: 2px dotted black;
+            margin-left: 8px;
+            margin-bottom: -4px; /* Move line down to avoid overlapping text */
+            min-height: 20px;
+            line-height: 1.2;
+        }
+        .footer-row {
+            display: flex;
+            border-top: 2px solid black;
+            padding: 8px 15px;
+            justify-content: space-between;
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; margin: 0; }
+            .paper-a4 { 
+                margin: 0; 
+                border: none; 
+                width: 100%; 
+                box-shadow: none;
+                padding: 10mm;
+            }
+        }
+        
+        .error-shake { animation: shake 0.3s ease-in-out; border-color: red !important; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="no-print bg-blue-900 text-white p-5 shadow-xl">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <i class="fa-solid fa-file-invoice text-3xl"></i>
+                <h1 class="font-black text-xl tracking-tight">ਪ੍ਰਾਇਮਰੀ ਪੇਪਰ ਜਨਰੇਟਰ V3.3</h1>
+            </div>
+            <span class="bg-blue-700 px-3 py-1 rounded-full text-xs font-bold uppercase">Safe Mode Active</span>
+        </div>
+    </header>
+
+    <main class="max-w-4xl mx-auto p-4 md:p-10">
+
+        <!-- STEP 1: Required Details -->
+        <div id="pane-1" class="view-pane active bg-white p-8 rounded-3xl shadow-2xl border-b-8 border-blue-900">
+            <h2 class="text-2xl font-black mb-8 text-blue-900 border-b pb-4">ਸਕੂਲ ਅਤੇ ਪ੍ਰੀਖਿਆ ਦਾ ਵੇਰਵਾ</h2>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-sm font-black text-slate-600 mb-2">ਸਕੂਲ ਦਾ ਨਾਮ (ਲੋੜੀਂਦਾ) *</label>
+                    <input type="text" id="schoolName" placeholder="ਸਕੂਲ ਦਾ ਪੂਰਾ ਨਾਮ ਲਿਖੋ..." class="w-full p-5 bg-slate-50 border-2 border-slate-200 rounded-2xl font-bold text-xl focus:border-blue-600 outline-none transition-all">
+                    <p id="name-error" class="hidden text-red-500 text-sm font-bold mt-2">ਕਿਰਪਾ ਕਰਕੇ ਪਹਿਲਾਂ ਸਕੂਲ ਦਾ ਨਾਮ ਦਰਜ ਕਰੋ!</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-sm font-black text-slate-600 mb-2">ਕੁੱਲ ਅੰਕ</label>
+                        <input type="number" id="totalMarks" value="80" class="w-full p-5 bg-slate-50 border-2 border-slate-200 rounded-2xl font-black text-2xl">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-black text-slate-600 mb-2">ਪ੍ਰੀਖਿਆ ਦੀ ਕਿਸਮ</label>
+                        <select id="examType" class="w-full p-5 bg-slate-50 border-2 border-slate-200 rounded-2xl font-bold">
+                            <option>ਸਲਾਨਾ ਪ੍ਰੀਖਿਆ</option>
+                            <option>ਛਿਮਾਹੀ ਪ੍ਰੀਖਿਆ</option>
+                            <option>ਮਾਸਿਕ ਟੈਸਟ</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="pt-6">
+                    <p class="text-center font-black text-slate-400 text-xs mb-6 uppercase tracking-widest">ਜਮਾਤ ਦੀ ਚੋਣ ਕਰੋ</p>
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4" id="class-buttons">
+                        <!-- JS Render -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2: Subjects -->
+        <div id="pane-2" class="view-pane bg-white p-8 rounded-3xl shadow-2xl">
+            <div class="flex justify-between items-center mb-8">
+                <h3 id="sel-class-title" class="text-3xl font-black text-blue-900">ਜਮਾਤ</h3>
+                <button onclick="switchView(1)" class="text-slate-500 font-bold flex items-center gap-2">
+                    <i class="fa-solid fa-circle-arrow-left"></i> ਪਿੱਛੇ ਜਾਓ
+                </button>
+            </div>
+            <div id="subject-grid" class="grid grid-cols-1 gap-4"></div>
+        </div>
+
+        <!-- STEP 3: Progress -->
+        <div id="pane-3" class="view-pane text-center py-24 bg-white rounded-3xl shadow-2xl">
+            <div class="flex flex-col items-center">
+                <div class="w-24 h-24 border-8 border-blue-100 border-t-blue-900 rounded-full animate-spin mb-8"></div>
+                <h3 class="text-2xl font-black text-blue-900">ਡਰਾਈਵ ਤੋਂ ਡਾਟਾ ਪੜ੍ਹਿਆ ਜਾ ਰਿਹਾ ਹੈ...</h3>
+                <p class="text-slate-400 font-bold mt-4">ਕਿਰਪਾ ਕਰਕੇ ਕੁਝ ਪਲ ਇੰਤਜ਼ਾਰ ਕਰੋ, ਪੇਪਰ ਤਿਆਰ ਹੋ ਰਿਹਾ ਹੈ।</p>
+            </div>
+        </div>
+
+        <!-- STEP 4: Output -->
+        <div id="pane-4" class="view-pane">
+            <div class="no-print flex gap-4 mb-8">
+                <button onclick="switchView(1)" class="flex-1 bg-white border-4 border-slate-200 p-5 rounded-2xl font-black hover:bg-slate-50">ਨਵਾਂ ਪੇਪਰ ਬਣਾਓ</button>
+                <button onclick="window.print()" class="flex-1 bg-blue-900 text-white p-5 rounded-2xl font-black shadow-xl flex items-center justify-center gap-3 text-lg">
+                    <i class="fa-solid fa-print"></i> ਪੇਪਰ ਪ੍ਰਿੰਟ ਕਰੋ
+                </button>
+            </div>
+            <div id="paper-output"></div>
+        </div>
+
+    </main>
+
+    <script>
+        const apiKey = "";
+        let selection = { class: "", sub: "" };
+        const classes = ["ਪਹਿਲੀ", "ਦੂਸਰੀ", "ਤੀਸਰੀ", "ਚੌਥੀ", "ਪੰਜਵੀਂ"];
+        const subjects = { "P": "ਪੰਜਾਬੀ", "M": "ਗਣਿਤ", "E": "ਅੰਗਰੇਜ਼ੀ", "V": "ਵਾਤਾਵਰਨ ਸਿੱਖਿਆ", "H": "ਹਿੰਦੀ" };
+
+        window.onload = () => {
+            const container = document.getElementById('class-buttons');
+            classes.forEach((name, i) => {
+                const btn = document.createElement('button');
+                btn.className = "p-6 rounded-2xl border-4 border-slate-100 font-black text-xl bg-white hover:border-blue-900 hover:scale-105 transition-all";
+                btn.innerText = name;
+                btn.onclick = () => validateAndSelectClass(name, i + 1);
+                container.appendChild(btn);
+            });
+        };
+
+        function validateAndSelectClass(name, num) {
+            const schoolInput = document.getElementById('schoolName');
+            const errorMsg = document.getElementById('name-error');
+            
+            if (schoolInput.value.trim().length < 5) {
+                schoolInput.classList.add('error-shake');
+                errorMsg.classList.remove('hidden');
+                setTimeout(() => schoolInput.classList.remove('error-shake'), 400);
+                return;
+            }
+            
+            errorMsg.classList.add('hidden');
+            selectClass(name, num);
+        }
+
+        function switchView(n) {
+            document.querySelectorAll('.view-pane').forEach(p => p.classList.remove('active'));
+            document.getElementById(`pane-${n}`).classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        function selectClass(name, num) {
+            selection.class = name;
+            document.getElementById('sel-class-title').innerText = "ਜਮਾਤ: " + name;
+            let list = ["P", "M", "E"];
+            if(num >= 3) list.push("V");
+            if(num >= 4) list.push("H");
+            const grid = document.getElementById('subject-grid');
+            grid.innerHTML = list.map(k => `
+                <button onclick="generatePaper('${k}')" class="w-full p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl font-black text-left flex justify-between items-center hover:bg-blue-50 hover:border-blue-900">
+                    <span class="text-xl">${subjects[k]}</span>
+                    <i class="fa-solid fa-arrow-right-long text-blue-900"></i>
+                </button>
+            `).join('');
+            switchView(2);
+        }
+
+        async function fetchAI(prompt) {
+            let retries = 5;
+            while(retries > 0) {
+                try {
+                    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                    });
+                    const data = await res.json();
+                    return data.candidates[0].content.parts[0].text;
+                } catch (e) {
+                    retries--;
+                    if(retries === 0) throw e;
+                    await new Promise(r => setTimeout(r, 2000));
+                }
+            }
+        }
+
+        async function generatePaper(subKey) {
+            selection.sub = subjects[subKey];
+            const school = document.getElementById('schoolName').value;
+            const marks = document.getElementById('totalMarks').value;
+            const exam = document.getElementById('examType').value;
+
+            switchView(3);
+
+            const prompt = `Act as an expert PSEB Primary School Teacher. Generate a high-quality Exam Paper for:
+            Class: ${selection.class}, Subject: ${selection.sub}, Session: 2025-26.
+            Follow PSEB Curriculum and "Padho Punjab Padhao Punjab" pattern.
+            Structure:
+            1. Part-A: 10 Objective MCQs.
+            2. Part-B: 5 Fill-ups.
+            3. Part-C: 5 Match the column.
+            4. Part-D: 5 short answers.
+            Language: MUST use Punjabi. Clean HTML format only.`;
+
+            try {
+                let content = await fetchAI(prompt);
+                content = content.replace(/```html|```/g, '');
+
+                document.getElementById('paper-output').innerHTML = `
+                    <div class="paper-a4">
+                        <div class="bsm-header-box">
+                            <div class="header-top">
+                                <div class="class-sub-info">
+                                    <div>ਜਮਾਤ - ${selection.class}</div>
+                                    <div style="margin-top:5px;">ਵਿਸ਼ਾ - ${selection.sub}</div>
+                                </div>
+                                <div class="bsm-tag">BSM</div>
+                            </div>
+                            
+                            <div class="details-area">
+                                <div class="row-item">ਸਕੂਲ ਦਾ ਨਾਂ : <div class="line-fill">${school}</div></div>
+                                <div class="row-item">ਵਿਦਿਆਰਥੀ ਦਾ ਨਾਂ : <div class="line-fill"></div></div>
+                                <div class="row-item">
+                                    <div style="display:flex; flex:2;">ਰੋਲ ਨੰ : <div class="line-fill"></div></div>
+                                    <div style="display:flex; flex:3; justify-content:flex-end;">ਮਿਤੀ : <div class="line-fill" style="flex:0; width:250px;"></div></div>
+                                </div>
+                            </div>
+
+                            <div class="footer-row">
+                                <span>ਸਮਾਂ: 3 ਘੰਟੇ</span>
+                                <span>ਕੁੱਲ ਅੰਕ : ${marks}</span>
+                                <span style="border-left:2px solid black; padding-left:15px;">ਪ੍ਰਾਪਤ ਅੰਕ: ....................</span>
+                            </div>
+                        </div>
+
+                        <div style="text-align:center; font-weight:900; font-size:20px; text-decoration:underline; margin-bottom:20px;">
+                            ${exam} (ਸੈਸ਼ਨ 2025-26)
+                        </div>
+
+                        <div class="paper-content" style="font-size: 16px; line-height: 2;">
+                            ${content}
+                        </div>
+
+                        <div style="margin-top:50px; text-align:center; font-size:13px; border-top:1px dashed #000; padding-top:10px;">
+                            * ਸੁੰਦਰ ਲਿਖਾਈ ਦੇ 5 ਅੰਕ ਵੱਖਰੇ ਦਿੱਤੇ ਜਾਣਗੇ *
+                        </div>
+                    </div>
+                `;
+                switchView(4);
+            } catch (error) {
+                alert("ਕੁਨੈਕਸ਼ਨ ਫੇਲ ਹੋ ਗਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
+                switchView(1);
+            }
+        }
+    </script>
+</body>
+</html>
