@@ -3,317 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PSEB Paper Engine V3.6</title>
+    <title>ਪੰਜਾਬੀ ਪੇਪਰ ਜਨਰੇਟਰ</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;700;800&display=swap');
-        body { font-family: 'Mukta Malar', sans-serif; background-color: #f0f4f8; color: #1e293b; }
-        .view-pane { display: none; }
-        .view-pane.active { display: block; animation: slideUp 0.4s ease-out; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .paper-a4 {
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Gurmukhi:wght@400;700&display=swap');
+        body {
+            font-family: 'Noto Sans Gurmukhi', sans-serif;
+            background-color: #f3f4f6;
+        }
+        .paper-container {
             background: white;
-            width: 210mm;
-            min-height: 297mm;
-            padding: 15mm;
-            margin: 20px auto;
-            border: 2px solid #000;
-            color: black;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
         }
-
-        .bsm-header-container {
-            border: 2px solid black;
-            margin-bottom: 25px;
-        }
-        .header-top-row {
-            display: flex;
-            border-bottom: 2px solid black;
-        }
-        .header-class-info {
-            flex: 1;
-            padding: 10px;
-            border-right: 2px solid black;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            font-size: 22px;
-            font-weight: 800;
-        }
-        .bsm-box {
-            width: 140px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 38px;
-            font-weight: 900;
-        }
-        .student-fields {
-            padding: 15px;
-            font-size: 18px;
-            font-weight: 600;
-        }
-        .field-row {
-            display: flex;
-            margin-bottom: 12px;
-            align-items: flex-end;
-        }
-        .dotted-line {
-            flex: 1;
-            border-bottom: 2px dotted black;
-            margin-left: 10px;
-            margin-bottom: 4px;
-        }
-        .header-footer {
-            display: flex;
-            border-top: 2px solid black;
-            padding: 8px 15px;
-            justify-content: space-between;
-            font-weight: 800;
-            font-size: 17px;
-        }
-
-        @media print {
-            .no-print { display: none !important; }
-            body { background: white; margin: 0; }
-            .paper-a4 { 
-                margin: 0; 
-                border: none; 
-                width: 100%; 
-                padding: 10mm;
-                box-shadow: none;
-            }
-        }
-
-        .spinner {
-            width: 60px;
-            height: 60px;
-            border: 6px solid #e2e8f0;
-            border-top-color: #2563eb;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-8">
 
-    <header class="no-print bg-blue-800 text-white p-5 shadow-lg flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <i class="fa-solid fa-file-pdf text-2xl"></i>
-            <h1 class="font-black text-xl">PSEB ਆਟੋ-ਪੇਪਰ ਕਨੈਕਟ V3.6</h1>
-        </div>
-        <div class="text-xs font-bold bg-blue-700 px-3 py-1 rounded tracking-widest">DRIVE SYNCED</div>
-    </header>
+    <div class="max-w-4xl mx-auto">
+        <header class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-blue-800">ਸਕੂਲ ਪ੍ਰੀਖਿਆ ਪੇਪਰ ਜਨਰੇਟਰ</h1>
+            <p class="text-gray-600 mt-2">ਕਲਾਸ ਅਤੇ ਵਿਸ਼ਾ ਚੁਣੋ</p>
+        </header>
 
-    <main class="max-w-4xl mx-auto p-4 md:p-8">
-
-        <!-- STEP 1: Main Config -->
-        <div id="pane-1" class="view-pane active bg-white p-8 rounded-3xl shadow-xl border-t-8 border-blue-600">
-            <h2 class="text-2xl font-black mb-8 border-b pb-4">ਸਕੂਲ ਅਤੇ ਪ੍ਰੀਖਿਆ ਵੇਰਵਾ</h2>
-            
-            <div class="space-y-6">
-                <div>
-                    <label class="block text-sm font-black text-slate-500 mb-2 uppercase">ਸਕੂਲ ਦਾ ਨਾਮ *</label>
-                    <input type="text" id="schoolName" placeholder="ਸਕੂਲ ਦਾ ਪੂਰਾ ਨਾਮ ਲਿਖਣਾ ਜ਼ਰੂਰੀ ਹੈ..." 
-                           class="w-full p-5 bg-slate-50 border-2 border-slate-200 rounded-2xl font-bold text-xl focus:border-blue-600 outline-none">
-                    <p id="name-error" class="hidden text-red-500 font-bold mt-2">ਕਿਰਪਾ ਕਰਕੇ ਅੱਗੇ ਵਧਣ ਲਈ ਸਕੂਲ ਦਾ ਨਾਮ ਭਰੋ!</p>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-sm font-black text-slate-500 mb-2">ਕੁੱਲ ਅੰਕ</label>
-                        <input type="number" id="totalMarks" value="80" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-black text-2xl">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-black text-slate-500 mb-2">ਪ੍ਰੀਖਿਆ ਦੀ ਕਿਸਮ</label>
-                        <select id="examType" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold">
-                            <option>ਸਲਾਨਾ ਪ੍ਰੀਖਿਆ</option>
-                            <option>ਮਾਸਿਕ ਟੈਸਟ</option>
-                            <option>ਟਰਮ ਪ੍ਰੀਖਿਆ</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="pt-6">
-                    <p class="text-center font-black text-slate-400 text-xs mb-4 uppercase tracking-widest">ਜਮਾਤ ਦੀ ਚੋਣ ਕਰੋ</p>
-                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="class-buttons">
-                        <!-- JS Render -->
-                    </div>
-                </div>
+        <!-- Selection Controls -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-white p-6 rounded-lg shadow-sm">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">ਕਲਾਸ ਚੁਣੋ</label>
+                <select id="classSelect" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">-- ਕਲਾਸ ਚੁਣੋ --</option>
+                    <option value="1">ਪਹਿਲੀ (1st)</option>
+                    <option value="2">ਦੂਜੀ (2nd)</option>
+                    <option value="3">ਤੀਜੀ (3rd)</option>
+                    <option value="4">ਚੌਥੀ (4th)</option>
+                    <option value="5">ਪੰਜਵੀਂ (5th)</option>
+                </select>
             </div>
-        </div>
-
-        <!-- STEP 2: Subjects -->
-        <div id="pane-2" class="view-pane bg-white p-8 rounded-3xl shadow-xl">
-            <div class="flex justify-between items-center mb-8">
-                <h3 id="sel-class-title" class="text-3xl font-black text-blue-900">ਜਮਾਤ</h3>
-                <button onclick="switchView(1)" class="bg-slate-100 p-3 rounded-xl font-bold"><i class="fa-solid fa-arrow-left"></i> ਵਾਪਸ</button>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">ਵਿਸ਼ਾ ਚੁਣੋ</label>
+                <select id="subjectSelect" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm p-2 bg-gray-50 focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">-- ਵਿਸ਼ਾ ਚੁਣੋ --</option>
+                    <option value="P">ਪੰਜਾਬੀ (Punjabi)</option>
+                    <option value="M">ਗਣਿਤ (Maths)</option>
+                    <option value="E">ਅੰਗਰੇਜ਼ੀ (English)</option>
+                    <option value="EV">ਵਾਤਾਵਰਣ (EVS)</option>
+                </select>
             </div>
-            <div id="subject-grid" class="grid grid-cols-1 gap-4"></div>
-        </div>
-
-        <!-- STEP 3: Loading -->
-        <div id="pane-3" class="view-pane text-center py-24 bg-white rounded-3xl shadow-xl">
-            <div class="flex flex-col items-center">
-                <div class="spinner mb-8"></div>
-                <h3 class="text-2xl font-black text-blue-900">ਗੂਗਲ ਡਰਾਈਵ ਤੋਂ ਡਾਟਾ ਪੜ੍ਹਿਆ ਜਾ ਰਿਹਾ ਹੈ...</h3>
-                <p class="text-slate-400 font-bold mt-4">ਪੀਡੀਐਫ ਫਾਈਲਾਂ ਨੂੰ ਸਕੈਨ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ।</p>
-            </div>
-        </div>
-
-        <!-- STEP 4: Output -->
-        <div id="pane-4" class="view-pane">
-            <div class="no-print flex gap-4 mb-8">
-                <button onclick="switchView(1)" class="flex-1 bg-white border-4 border-slate-200 p-5 rounded-2xl font-black">ਨਵਾਂ ਪੇਪਰ</button>
-                <button onclick="window.print()" class="flex-[2] bg-blue-700 text-white p-5 rounded-2xl font-black shadow-lg flex items-center justify-center gap-3 text-xl">
-                    <i class="fa-solid fa-print"></i> ਪੇਪਰ ਪ੍ਰਿੰਟ ਕਰੋ
+            <div class="md:col-span-2 text-center mt-4">
+                <button onclick="generatePaper()" class="bg-blue-600 text-white px-8 py-2 rounded-full font-bold hover:bg-blue-700 transition duration-300 shadow-md">
+                    ਪੇਪਰ ਦੇਖੋ
                 </button>
             </div>
-            <div id="paper-output"></div>
         </div>
 
-    </main>
+        <!-- Paper Display Area -->
+        <div id="paperDisplay" class="hidden paper-container">
+            <div class="flex justify-between items-center mb-4 border-b pb-2">
+                <h2 id="paperTitle" class="text-xl font-bold text-gray-800">ਪੇਪਰ ਪ੍ਰੀਵਿਊ</h2>
+                <button onclick="downloadPDF()" class="bg-green-600 text-white px-4 py-1 rounded text-sm hover:bg-green-700">
+                    ਡਾਊਨਲੋਡ ਕਰੋ
+                </button>
+            </div>
+            
+            <!-- PDF Viewer -->
+            <div id="viewerContainer" class="w-full h-[600px] bg-gray-200 rounded flex items-center justify-center relative">
+                <p id="loadingText" class="absolute text-gray-500">ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...</p>
+                <iframe id="pdfFrame" class="w-full h-full rounded border-0" src=""></iframe>
+            </div>
+
+            <div id="errorMessage" class="hidden mt-4 p-4 bg-red-100 text-red-700 rounded border border-red-200">
+                ਮਾਫ਼ ਕਰਨਾ! ਇਹ ਪੇਪਰ ਫਾਈਲ ਅਜੇ ਸਰਵਰ 'ਤੇ ਮੌਜੂਦ ਨਹੀਂ ਹੈ ਜਾਂ ਅਪਲੋਡ ਹੋ ਰਹੀ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਯਕੀਨੀ ਬਣਾਓ ਕਿ ਫਾਈਲ ਦਾ ਨਾਮ ਸਹੀ ਹੈ।
+            </div>
+        </div>
+    </div>
 
     <script>
-        const apiKey = ""; 
-        let selection = { class: "", sub: "" };
-        const classes = ["ਪਹਿਲੀ", "ਦੂਸਰੀ", "ਤੀਸਰੀ", "ਚੌਥੀ", "ਪੰਜਵੀਂ"];
-        const subjects = { "P": "ਪੰਜਾਬੀ", "M": "ਗਣਿਤ", "E": "ਅੰਗਰੇਜ਼ੀ", "V": "ਵਾਤਾਵਰਨ ਸਿੱਖਿਆ", "H": "ਹਿੰਦੀ" };
+        let currentFileUrl = "";
 
-        window.onload = () => {
-            const container = document.getElementById('class-buttons');
-            classes.forEach((name, i) => {
-                const btn = document.createElement('button');
-                btn.className = "p-5 rounded-2xl border-2 border-slate-100 font-black text-lg bg-white hover:border-blue-600 hover:bg-blue-50 transition-all";
-                btn.innerText = name;
-                btn.onclick = () => validateEntry(name, i + 1);
-                container.appendChild(btn);
-            });
-        };
+        function generatePaper() {
+            const classVal = document.getElementById('classSelect').value;
+            const subjectVal = document.getElementById('subjectSelect').value;
+            const display = document.getElementById('paperDisplay');
+            const pdfFrame = document.getElementById('pdfFrame');
+            const errorMsg = document.getElementById('errorMessage');
+            const loadingText = document.getElementById('loadingText');
 
-        function validateEntry(name, num) {
-            const school = document.getElementById('schoolName').value;
-            const error = document.getElementById('name-error');
-            if (school.trim().length < 3) {
-                error.classList.remove('hidden');
-                document.getElementById('schoolName').scrollIntoView({behavior:'smooth'});
+            if (!classVal || !subjectVal) {
+                alert("ਕਿਰਪਾ ਕਰਕੇ ਕਲਾਸ ਅਤੇ ਵਿਸ਼ਾ ਦੋਵੇਂ ਚੁਣੋ।");
                 return;
             }
-            error.classList.add('hidden');
-            selection.class = name;
-            document.getElementById('sel-class-title').innerText = "ਜਮਾਤ: " + name;
-            
-            let list = ["P", "M", "E"];
-            if(num >= 3) list.push("V");
-            if(num >= 4) list.push("H");
-            
-            const grid = document.getElementById('subject-grid');
-            grid.innerHTML = list.map(k => `
-                <button onclick="generatePaper('${k}')" class="w-full p-6 bg-slate-50 border-2 border-slate-200 rounded-2xl font-black text-left flex justify-between items-center hover:bg-blue-600 hover:text-white transition-all">
-                    <span class="text-xl">${subjects[k]}</span>
-                    <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            `).join('');
-            switchView(2);
-        }
 
-        function switchView(n) {
-            document.querySelectorAll('.view-pane').forEach(p => p.classList.remove('active'));
-            document.getElementById(`pane-${n}`).classList.add('active');
-        }
+            // ਫਾਈਲ ਦਾ ਨਾਮ ਬਣਾਉਣਾ (ਜਿਵੇਂ: 1P.pdf)
+            // ਕਿਉਂਕਿ ਫਾਈਲਾਂ index.html ਦੇ ਨਾਲ ਹੀ ਹਨ, ਅਸੀਂ ਸਿੱਧਾ ਨਾਮ ਲਿਖਾਂਗੇ
+            const fileName = classVal + subjectVal + ".pdf";
+            currentFileUrl = fileName; 
 
-        async function generatePaper(subKey) {
-            selection.sub = subjects[subKey];
-            const school = document.getElementById('schoolName').value;
-            const marks = document.getElementById('totalMarks').value;
-            const exam = document.getElementById('examType').value;
-
-            switchView(3);
-
-            // Using the shared Google Drive folder context for fetching books
-            const driveFolderLink = "https://drive.google.com/drive/folders/17Y8_459n0fUjS9X_tWf12S9p5n9_v123"; // Placeholder for the actual link logic
+            // UI ਅੱਪਡੇਟ ਕਰਨਾ
+            display.classList.remove('hidden');
+            errorMsg.classList.add('hidden');
+            loadingText.style.display = 'block';
             
-            const prompt = `System Mode: Direct Google Drive Access.
-            Folder Source: ${driveFolderLink}
-            Instruction: Extract content from the books in the linked Google Drive folder for PSEB Class ${selection.class} ${selection.sub}.
-            Pattern: Padho Punjab Padhao Punjab.
-            Task: Generate a full school exam paper in Punjabi.
-            
-            Maintenance Check: If specifically for this class/subject, you cannot find reliable content in the drive, 
-            return ONLY this message: "MAINTENANCE_MODE"
-            
-            Otherwise, generate the paper with sections A (MCQs), B (Fill ups), C (Match), D (Questions). 
-            Use clean HTML tags only.`;
+            // iframe ਵਿੱਚ PDF ਲੋਡ ਕਰਨਾ
+            pdfFrame.src = currentFileUrl;
 
-            try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            // ਇਹ ਚੈੱਕ ਕਰਨ ਲਈ ਕਿ ਫਾਈਲ ਮੌਜੂਦ ਹੈ ਜਾਂ ਨਹੀਂ
+            fetch(currentFileUrl, { method: 'HEAD' })
+                .then(res => {
+                    if (!res.ok) {
+                        errorMsg.classList.remove('hidden');
+                        pdfFrame.classList.add('hidden');
+                        loadingText.style.display = 'none';
+                    } else {
+                        pdfFrame.classList.remove('hidden');
+                        loadingText.style.display = 'none';
+                    }
+                })
+                .catch(err => {
+                    console.error("Error fetching PDF:", err);
+                    errorMsg.classList.remove('hidden');
                 });
+            
+            // ਟਾਈਟਲ ਅੱਪਡੇਟ ਕਰਨਾ
+            const subjects = { 'P': 'ਪੰਜਾਬੀ', 'M': 'ਗਣਿਤ', 'E': 'ਅੰਗਰੇਜ਼ੀ', 'EV': 'ਵਾਤਾਵਰਣ' };
+            document.getElementById('paperTitle').innerText = `ਕਲਾਸ ${classVal} - ਵਿਸ਼ਾ: ${subjects[subjectVal]}`;
+        }
 
-                const data = await res.json();
-                let result = data.candidates[0].content.parts[0].text;
-
-                if (result.includes("MAINTENANCE_MODE")) {
-                    document.getElementById('paper-output').innerHTML = `
-                        <div class="bg-white p-12 rounded-3xl shadow-xl text-center">
-                            <div class="text-blue-600 text-6xl mb-6"><i class="fa-solid fa-tools"></i></div>
-                            <h2 class="text-3xl font-black mb-4">ਇਸ ਵਿਸ਼ੇ 'ਤੇ ਕੰਮ ਚੱਲ ਰਿਹਾ ਹੈ</h2>
-                            <p class="text-slate-500 font-bold text-lg">
-                                ਮਾਫ਼ੀ ਚਾਹੁੰਦੇ ਹਾਂ, ਜਮਾਤ ${selection.class} ਦੇ ਵਿਸ਼ੇ ${selection.sub} ਦਾ ਡਾਟਾ ਅਜੇ ਡਰਾਈਵ 'ਤੇ ਅਪਡੇਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ। <br>
-                                ਇਸ ਵਿਸ਼ੇ ਤੇ ਪੇਪਰ ਜਲਦੀ ਹੀ ਤਿਆਰ ਹੋਣ ਲੱਗ ਜਾਣਗੇ।
-                            </p>
-                            <button onclick="switchView(1)" class="mt-8 bg-blue-800 text-white px-8 py-3 rounded-xl font-bold">ਵਾਪਸ ਜਾਓ</button>
-                        </div>
-                    `;
-                } else {
-                    let paperContent = result.replace(/```html|```/g, '');
-                    document.getElementById('paper-output').innerHTML = `
-                        <div class="paper-a4">
-                            <div class="bsm-header-container">
-                                <div class="header-top-row">
-                                    <div class="header-class-info">
-                                        <div>ਜਮਾਤ - ${selection.class}</div>
-                                        <div style="margin-top:5px;">ਵਿਸ਼ਾ - ${selection.sub}</div>
-                                    </div>
-                                    <div class="bsm-box">BSM</div>
-                                </div>
-                                <div class="student-fields">
-                                    <div class="field-row">ਸਕੂਲ ਦਾ ਨਾਂ : <div class="dotted-line">${school}</div></div>
-                                    <div class="field-row">ਵਿਦਿਆਰਥੀ ਦਾ ਨਾਂ : <div class="dotted-line"></div></div>
-                                    <div class="field-row">
-                                        <div style="display:flex; flex:2;">ਰੋਲ ਨੰ : <div class="dotted-line"></div></div>
-                                        <div style="display:flex; flex:3; justify-content:flex-end;">ਮਿਤੀ : <div class="dotted-line" style="flex:0; width:220px;"></div></div>
-                                    </div>
-                                </div>
-                                <div class="header-footer">
-                                    <span>ਸਮਾਂ: 3 ਘੰਟੇ</span>
-                                    <span>ਕੁੱਲ ਅੰਕ : ${marks}</span>
-                                    <span style="border-left:2px solid #000; padding-left:15px;">ਪ੍ਰਾਪਤ ਅੰਕ: .................</span>
-                                </div>
-                            </div>
-                            <div style="text-align:center; font-weight:900; font-size:20px; text-decoration:underline; margin-bottom:20px;">
-                                ${exam} (ਸੈਸ਼ਨ 2025-26)
-                            </div>
-                            <div class="paper-body" style="font-size: 16px; line-height: 2;">
-                                ${paperContent}
-                            </div>
-                            <div style="margin-top:40px; text-align:center; font-size:12px; border-top:1px dashed #000; padding-top:10px;">
-                                * ਸੁੰਦਰ ਲਿਖਾਈ ਦੇ 5 ਅੰਕ ਵੱਖਰੇ ਦਿੱਤੇ ਜਾਣਗੇ *
-                            </div>
-                        </div>
-                    `;
-                }
-                switchView(4);
-            } catch (err) {
-                alert("ਸਰਵਰ ਨਾਲ ਸੰਪਰਕ ਨਹੀਂ ਹੋ ਸਕਿਆ।");
-                switchView(1);
+        function downloadPDF() {
+            if (currentFileUrl) {
+                const link = document.createElement('a');
+                link.href = currentFileUrl;
+                link.download = currentFileUrl;
+                link.click();
             }
         }
     </script>
