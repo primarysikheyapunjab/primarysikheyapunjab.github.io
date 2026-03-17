@@ -286,7 +286,7 @@
             </div>
 
             <!-- YouTube ਵੀਡੀਓ ਸੈਕਸ਼ਨ -->
-            <div class="clay-card bg-gradient-to-br from-red-50 to-orange-50 p-4 shadow-sm border border-red-200 mt-4">
+            <div class="clay-card bg-gradient-to-br from-red-50 to-orange-50 p-4 shadow-sm border border-red-200 mt-4 mb-5">
                 <div class="flex flex-col sm:flex-row items-center justify-between border-b border-red-200 pb-2 mb-3">
                     <h3 class="text-lg md:text-xl font-extrabold text-red-700 flex items-center gap-2">
                         <span class="text-2xl md:text-3xl float-anim"><i class="fa-brands fa-youtube text-red-600"></i></span> ਨਵੀਆਂ ਵੀਡੀਓਜ਼ (YouTube)
@@ -297,6 +297,61 @@
                 </div>
                 <div id="latest-youtube-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
             </div>
+
+            <!-- ================= ਨਵਾਂ: QR ਕੋਡ ਅਤੇ ਸ਼ੇਅਰ ਸੈਕਸ਼ਨ (3 Cards Grid) ================= -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mt-2 px-1">
+                
+                <!-- ਵੈੱਬਸਾਈਟ ਸ਼ੇਅਰ (ਨੀਲਾ) -->
+                <div class="clay-card bg-gradient-to-r from-blue-50 to-indigo-100 p-3 md:p-4 shadow-sm border border-indigo-200 flex flex-row items-center justify-between w-full">
+                    <div class="flex flex-col text-left w-[70%]">
+                        <h3 class="text-sm md:text-lg font-black text-indigo-800 mb-1 flex items-center gap-1.5 md:gap-2">
+                            <i class="fa-solid fa-qrcode text-indigo-600 text-lg md:text-2xl float-anim"></i> ਵੈੱਬਸਾਈਟ
+                        </h3>
+                        <p class="text-[9px] md:text-xs font-bold text-gray-600 leading-tight">ਆਪਣੇ ਫੋਨ ਨਾਲ ਸਕੈਨ ਕਰੋ ਜਾਂ ਲਿੰਕ ਸਾਂਝਾ ਕਰੋ।</p>
+                        <button onclick="shareWebsite(this)" class="btn-3d-super mt-2 bg-gradient-to-r from-indigo-500 to-blue-600 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full font-black text-[10px] md:text-sm shadow-[0_3px_0_#3730a3] flex items-center justify-center gap-1.5 w-max" style="--shadow-color: #3730a3; flex-direction: row;">
+                            <i class="fa-solid fa-share-nodes"></i> ਸ਼ੇਅਰ ਕਰੋ
+                        </button>
+                    </div>
+                    <div class="bg-white p-1.5 md:p-2 rounded-xl shadow-inner border-2 border-indigo-200 shrink-0 ml-2">
+                        <img src="https://quickchart.io/qr?text=https%3A%2F%2Fprimarysikheyapunjab.github.io%2F&size=150&margin=1" alt="Website QR Code" class="w-14 h-14 md:w-20 md:h-20 object-contain rounded-md">
+                    </div>
+                </div>
+
+                <!-- WhatsApp ਗਰੁੱਪ (ਹਰਾ) -->
+                <div class="clay-card bg-gradient-to-r from-green-50 to-emerald-100 p-3 md:p-4 shadow-sm border border-green-200 flex flex-row items-center justify-between w-full">
+                    <div class="flex flex-col text-left w-[70%]">
+                        <h3 class="text-sm md:text-lg font-black text-green-800 mb-1 flex items-center gap-1.5 md:gap-2">
+                            <i class="fa-brands fa-whatsapp text-green-600 text-lg md:text-2xl float-anim"></i> WhatsApp
+                        </h3>
+                        <p class="text-[9px] md:text-xs font-bold text-gray-600 leading-tight">ਸਾਡੇ ਗਰੁੱਪ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਣ ਲਈ ਸਕੈਨ ਕਰੋ।</p>
+                        <a href="https://chat.whatsapp.com/I4Xkh7R2g1U7O4qxJOZzJq?mode=gi_t" target="_blank" class="btn-3d-super mt-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full font-black text-[10px] md:text-sm shadow-[0_3px_0_#166534] flex items-center justify-center gap-1.5 w-max" style="--shadow-color: #166534; flex-direction: row; text-decoration: none;">
+                            <i class="fa-solid fa-user-plus"></i> ਹੁਣੇ ਜੁੜੋ
+                        </a>
+                    </div>
+                    <div class="bg-white p-1.5 md:p-2 rounded-xl shadow-inner border-2 border-green-200 shrink-0 ml-2">
+                        <img src="https://quickchart.io/qr?text=https%3A%2F%2Fchat.whatsapp.com%2FI4Xkh7R2g1U7O4qxJOZzJq%3Fmode%3Dgi_t&size=150&margin=1" alt="WhatsApp QR Code" class="w-14 h-14 md:w-20 md:h-20 object-contain rounded-md">
+                    </div>
+                </div>
+
+                <!-- YouTube ਚੈਨਲ (ਲਾਲ) - ਨਵਾਂ ਸਕੈਨਰ -->
+                <div class="clay-card bg-gradient-to-r from-red-50 to-rose-100 p-3 md:p-4 shadow-sm border border-red-200 flex flex-row items-center justify-between w-full sm:col-span-2 lg:col-span-1">
+                    <div class="flex flex-col text-left w-[70%]">
+                        <h3 class="text-sm md:text-lg font-black text-red-800 mb-1 flex items-center gap-1.5 md:gap-2">
+                            <i class="fa-brands fa-youtube text-red-600 text-lg md:text-2xl float-anim"></i> YouTube
+                        </h3>
+                        <p class="text-[9px] md:text-xs font-bold text-gray-600 leading-tight">ਹੋਰ ਵੀਡੀਓਜ਼ ਲਈ ਸਕੈਨ ਕਰਕੇ ਸਬਸਕ੍ਰਾਈਬ ਕਰੋ।</p>
+                        <a href="https://youtube.com/@primary_education_punjab?si=9v9PvI_2e2YkwOOt" target="_blank" class="btn-3d-super mt-2 bg-gradient-to-r from-red-500 to-rose-600 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full font-black text-[10px] md:text-sm shadow-[0_3px_0_#9f1239] flex items-center justify-center gap-1.5 w-max" style="--shadow-color: #9f1239; flex-direction: row; text-decoration: none;">
+                            <i class="fa-solid fa-bell"></i> ਸਬਸਕ੍ਰਾਈਬ
+                        </a>
+                    </div>
+                    <div class="bg-white p-1.5 md:p-2 rounded-xl shadow-inner border-2 border-red-200 shrink-0 ml-2">
+                        <img src="https://quickchart.io/qr?text=https%3A%2F%2Fyoutube.com%2F%40primary_education_punjab%3Fsi%3D9v9PvI_2e2YkwOOt&size=150&margin=1" alt="YouTube QR Code" class="w-14 h-14 md:w-20 md:h-20 object-contain rounded-md">
+                    </div>
+                </div>
+
+            </div>
+            <!-- ========================================================================= -->
+
         </div>
 
         <!-- HTML Snippet for Landscape Class Selector (Used in Headers) -->
@@ -553,6 +608,31 @@
             }
         }
 
+        // Web Share API Function
+        function shareWebsite(btn) {
+            const url = "https://primarysikheyapunjab.github.io/";
+            const title = "ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ";
+            const text = "ਬੱਚਿਆਂ ਅਤੇ ਅਧਿਆਪਕਾਂ ਲਈ ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ, ਹੁਣੇ ਦੇਖੋ:";
+            
+            if (navigator.share) {
+                navigator.share({ title: title, text: text, url: url }).catch(console.error);
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = url;
+                document.body.appendChild(textArea);
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> ਕਾਪੀ ਹੋ ਗਿਆ!';
+                    setTimeout(() => { btn.innerHTML = originalHTML; }, 2000);
+                } catch (err) {
+                    console.error('Copy failed', err);
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
         // ================= 100% ਮੁਕੰਮਲ ਡਾਟਾਬੇਸ =================
         const schoolData = {
             1: { name: "ਪਹਿਲੀ ਜਮਾਤ", subjects: [
@@ -582,7 +662,7 @@
                 name: "ਪੰਜਵੀਂ ਜਮਾਤ", 
                 subjects: [
                     { id: "p", name: "ਪੰਜਾਬੀ", emoji: "ੳ", grad: "from-pink-400 to-rose-600", shadow: "#be123c", chapters: [
-                        {t: "ਮੇਰਾ ਹਿੰਦੁਸਤਾਨ", ty: "ਕਵਿਤਾ", p: "1"}, {t: "ਗਤਕਾ", ty: "ਲੇਖ", p: "5"}, {t: "ਬਾਰਾਂਮਾਂਹ", ty: "ਕਵਿਤਾ", p: "10"}, {t: "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", ty: "ਜੀਵਨੀ", p: "14"}, {t: "ਸਿਆਣੀ ਗੱਲ", ty: "ਕਹਾਣੀ", p: "20"}, {t: "ਆਸਮਾਨ ਦੀਆਂ ਪਰੀਆਂ", ty: "ਕਵਿਤਾ", p: "26"}, {t: "ਦਾਦੀ ਮਾਂ", ty: "ਲੇਖ", p: "31"}, {t: "ਚਿੜੀਆ ਘਰ", ty: "ਕਵਿਤਾ", p: "37"}, {t: "ਸੁੰਢ ਤੇ ਹਲਦੀ", ty: "ਕਹਾਣੀ", p: "41"}, {t: "ਦੁਸਹਿਰਾ", ty: "ਲੇਖ", p: "47"}, {t: "ਅਨੋਖਾ ਤੋਹਫ਼ਾ", ty: "ਕਹਾਣੀ", p: "53"}, {t: "ਮਿੱਤਰ ਦੀ ਪਛਾਣ", ty: "ਕਹਾਣੀ", p: "59"}, {t: "ਰੁੱਖਾਂ ਦੀ ਮਹੱਤਤਾ", ty: "ਲੇਖ", p: "64"}, {t: "ਕਲਪਨਾ ਚਾਵਲਾ", ty: "ਜੀਵਨੀ", p: "69"}, {t: "ਰਬੜ ਦੀ ਕਹਾਣੀ", ty: "ਲੇਖ", p: "75"}, {t: "ਸ਼ਹੀਦ ਭਗਤ ਸਿੰਘ", ty: "ਜੀਵਨੀ", p: "81"}, {t: "ਸਾਡਾ ਪੰਜਾਬ", ty: "ਲੇਖ", p: "86"}, {t: "ਸ਼ੇਰ ਅਤੇ ਖਰਗੋਸ਼", ty: "ਕਹਾਣੀ", p: "92"}, {t: "ਮੇਲਾ", ty: "ਲੇਖ", p: "98"}, {t: "ਸਿਆਣਾ ਕਾਂ", ty: "ਕਹਾਣੀ", p: "104"}
+                        {t: "ਮੇਰਾ ਹਿੰਦੁਸਤਾਨ", ty: "ਕਵਿਤਾ", p: "1"}, {t: "ਗਤਕਾ", ty: "ਲੇਖ", p: "5"}, {t: "ਬਾਰਾਂਮਾਂਹ", ty: "ਕਵਿਤਾ", p: "10"}, {t: "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", ty: "ਜੀਵਨੀ", p: "14"}, {t: "ਸਿਆਣੀ ਗੱਲ", ty: "ਕਹਾਣੀ", p: "20"}, {t: "ਆਸਮਾਨ ਦੀਆਂ ਪਰੀਆਂ", ty: "ਕਵਿਤਾ", p: "26"}, {t: "ਦਾਦੀ ਮਾਂ", ty: "ਲੇਖ", p: "31"}, {t: "ਚਿੜੀਆ ਘਰ", ty: "ਕਵਿਤਾ", p: "37"}, {t: "ਸੁੰਢ ਤੇ ਹਲਦੀ", ty: "ਕਹਾਣੀ", p: "41"}, {t: "ਦੁਸਹਿਰਾ", ty: "ਲੇਖ", p: "47"}, {t: "ਅਨੋਖਾ ਤੋਹਫ਼ਾ", ty: "ਕਹਾਣੀ", p: "53"}, {t: "ਮਿੱਤਰ ਦੀ ਪਛਾਣ", ty: "ਕਹਾਣੀ", p: "59"}, {t: "ਰੁੱਖਾਂ ਦੀ ਮਹੱਤਤਾ", ty: "ਲੇਖ", p: "64"}, {t: "ਕਲਪਨਾ ਚਾਵਲਾ", ty: "ਜੀਵਨੀ", p: "69"}, {t: "ਰਬੜ ਦੀ ਖ਼ਬਰ", ty: "ਲੇਖ", p: "75"}, {t: "ਸ਼ਹੀਦ ਭਗਤ ਸਿੰਘ", ty: "ਜੀਵਨੀ", p: "81"}, {t: "ਸਾਡਾ ਪੰਜਾਬ", ty: "ਲੇਖ", p: "86"}, {t: "ਸ਼ੇਰ ਅਤੇ ਖਰਗੋਸ਼", ty: "ਕਹਾਣੀ", p: "92"}, {t: "ਮੇਲਾ", ty: "ਲੇਖ", p: "98"}, {t: "ਸਿਆਣਾ ਕਾਂ", ty: "ਕਹਾਣੀ", p: "104"}
                     ]},
                     { id: "m", name: "ਗਣਿਤ", emoji: "🔢", grad: "from-cyan-400 to-blue-600", shadow: "#1d4ed8", chapters: [{t: "ਸੰਖਿਆਵਾਂ", ty: "ਗਣਿਤ", p: "1"}, {t: "ਸੰਖਿਆਵਾਂ 'ਤੇ ਮੂਲ ਕਿਰਿਆਵਾਂ", ty: "ਗਣਿਤ", p: "28"}, {t: "ਮਹੱਤਮ ਸਮਾਪਵਰਤਕ (HCF)", ty: "ਗਣਿਤ", p: "62"}, {t: "ਹਿੱਸੇ ਅਤੇ ਪੂਰਨ (Fractions)", ty: "ਗਣਿਤ", p: "95"}, {t: "ਦਸ਼ਮਲਵ (Decimals)", ty: "ਗਣਿਤ", p: "124"}, {t: "ਮਾਪ (Measurement)", ty: "ਗਣਿਤ", p: "155"}, {t: "ਜਮਾਇਤੀ (Geometry)", ty: "ਗਣਿਤ", p: "182"}, {t: "ਘੇਰਾ ਅਤੇ ਖੇਤਰਫਲ", ty: "ਗਣਿਤ", p: "205"}, {t: "ਆਇਤਨ (Volume)", ty: "ਗਣਿਤ", p: "220"}, {t: "ਅੰਕੜਾ ਵਿਗਿਆਨ", ty: "ਗਣਿਤ", p: "230"}]},
                     { id: "e", name: "English", emoji: "🔠", grad: "from-orange-400 to-red-500", shadow: "#b91c1c", chapters: [{t: "The Elves and the Shoemaker", ty: "Story", p: "1"}, {t: "Two Frogs", ty: "Lesson", p: "18"}, {t: "Child and Grandma", ty: "Poem", p: "35"}, {t: "The Flying Sikh", ty: "Biography", p: "50"}, {t: "Raja Birbal", ty: "Story", p: "68"}, {t: "Bank of Our Village", ty: "Lesson", p: "86"}, {t: "Global Warming", ty: "Lesson", p: "105"}, {t: "A Glimpse from History", ty: "Lesson", p: "122"}, {t: "Safe Circle", ty: "Poem", p: "140"}]},
@@ -643,7 +723,6 @@
             
             container.innerHTML = "";
             subject.chapters.forEach((ch, i) => {
-                // FIXED FORMAT (e.g., 5P1.html, 3EV4.html) without dashes
                 const fileName = `${cId}${sId.toUpperCase()}${i+1}.html`;
                 
                 container.innerHTML += `
@@ -724,7 +803,6 @@
             navigateTo('mission-materials-view');
         }
 
-        // ================= YouTube Auto Feed =================
         const YOUTUBE_CHANNEL_ID = 'UCCbLyqJY4n1Gd5T5jnoXPUg'; 
         
         function openYouTubeFolder() {
