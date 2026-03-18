@@ -3,127 +3,201 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PSEB Paper Engine V6.0 - Fixed Syllabus</title>
+    <title>PSEB Paper Engine - Real-time Upload</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;700;800&display=swap');
-        body { font-family: 'Mukta Malar', sans-serif; background-color: #f8fafc; color: #1e293b; }
-        .view-pane { display: none; }
-        .view-pane.active { display: block; animation: fadeIn 0.3s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        body { font-family: 'Mukta Malar', sans-serif; background-color: #f1f5f9; color: #1e293b; }
         
+        .view-pane { display: none; }
+        .view-pane.active { display: block; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
         .paper-a4 {
             background: white; width: 210mm; min-height: 297mm; padding: 15mm;
             margin: 20px auto; border: 2px solid #000; color: black;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1); position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15); position: relative;
         }
-        .bsm-header-container { border: 2px solid black; margin-bottom: 20px; }
-        .header-top-row { display: flex; border-bottom: 2px solid black; }
-        .header-class-info { flex: 1; padding: 10px; border-right: 2px solid black; text-align: center; font-size: 20px; font-weight: 800; }
-        .bsm-box { width: 120px; display: flex; justify-content: center; align-items: center; font-size: 32px; font-weight: 900; }
-        .student-fields { padding: 12px; font-size: 16px; font-weight: 600; }
-        .field-row { display: flex; margin-bottom: 10px; align-items: flex-end; }
-        .dotted-line { flex: 1; border-bottom: 2px dotted black; margin-left: 8px; margin-bottom: 3px; }
-        .header-footer { display: flex; border-top: 2px solid black; padding: 6px 12px; justify-content: space-between; font-weight: 800; font-size: 15px; }
 
-        .spinner { width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #2563eb; border-radius: 50%; animation: spin 1s linear infinite; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* Real-time Loader Styles */
+        .progress-circle {
+            position: relative; width: 80px; height: 80px; margin: 0 auto;
+        }
+        .progress-circle svg { transform: rotate(-90deg); width: 80px; height: 80px; }
+        .progress-circle circle {
+            fill: none; stroke-width: 6; stroke-linecap: round;
+            cx: 40; cy: 40; r: 34;
+        }
+        .circle-bg { stroke: #e2e8f0; }
+        .circle-bar {
+            stroke: #2563eb; stroke-dasharray: 213.6;
+            stroke-dashoffset: 213.6; transition: stroke-dashoffset 0.1s linear;
+        }
+
+        .upload-card {
+            border: 3px dashed #cbd5e1; transition: all 0.3s ease;
+        }
+        .upload-card.active { border-color: #2563eb; background-color: #eff6ff; }
+        .upload-card.success { border-color: #10b981; background-color: #ecfdf5; border-style: solid; }
 
         @media print { .no-print { display: none !important; } .paper-a4 { margin: 0; border: none; width: 100%; box-shadow: none; } }
     </style>
 </head>
 <body>
 
-    <header class="no-print bg-blue-700 text-white p-4 shadow-md flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <div class="bg-white p-1.5 rounded-lg">
-                <i class="fa-solid fa-graduation-cap text-blue-700 text-xl"></i>
+    <header class="no-print bg-slate-900 text-white p-5 shadow-xl flex justify-between items-center border-b-4 border-blue-600">
+        <div class="flex items-center gap-4">
+            <div class="bg-blue-600 p-2 rounded-xl">
+                <i class="fa-solid fa-file-invoice text-2xl"></i>
             </div>
-            <h1 class="font-black text-lg tracking-tight">ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ <span class="text-blue-200 font-normal ml-2 text-sm">V6.0 ਸਰਕਾਰੀ ਸਿਲੇਬਸ</span></h1>
+            <div>
+                <h1 class="font-black text-xl tracking-tight">ਪੰਜਾਬ ਸਿੱਖਿਆ ਪੇਪਰ ਇੰਜਨ</h1>
+                <p class="text-xs text-slate-400 font-bold uppercase tracking-widest">ਵੈਰੀਫਾਈਡ ਅੱਪਲੋਡ ਸਿਸਟਮ</p>
+            </div>
         </div>
     </header>
 
-    <main class="max-w-3xl mx-auto p-4 md:pt-6">
+    <main class="max-w-3xl mx-auto p-4 md:py-8">
 
-        <!-- STEP 1: Basic Info & Class Selection -->
-        <div id="pane-1" class="view-pane active bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-blue-50">
-            <h2 class="text-2xl font-black mb-8 flex items-center gap-3 text-blue-900">
-                <i class="fa-solid fa-school text-blue-500"></i> ਪੇਪਰ ਦੀ ਜਾਣਕਾਰੀ
+        <!-- ਸਟੈਪ 1: ਸਕੂਲ ਅਤੇ ਜਮਾਤ -->
+        <div id="pane-1" class="view-pane active bg-white p-8 rounded-[2rem] shadow-2xl border border-slate-200">
+            <h2 class="text-3xl font-black mb-8 text-slate-800 flex items-center gap-4">
+                <span class="bg-slate-100 w-12 h-12 rounded-full flex items-center justify-center text-blue-600">1</span>
+                ਮੁੱਢਲੀ ਜਾਣਕਾਰੀ
             </h2>
             
-            <div class="mb-8">
-                <label class="block text-sm font-bold text-slate-400 mb-2 uppercase">ਸਕੂਲ ਦਾ ਨਾਮ</label>
-                <input type="text" id="schoolName" placeholder="ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ..." class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold text-lg focus:border-blue-500 focus:bg-white outline-none transition-all">
+            <div class="mb-10">
+                <label class="block text-xs font-black text-slate-400 mb-2 uppercase tracking-tighter">ਸਕੂਲ ਦਾ ਪੂਰਾ ਨਾਮ</label>
+                <input type="text" id="schoolName" placeholder="ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ..." class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold text-xl focus:border-blue-500 focus:bg-white outline-none transition-all shadow-inner">
             </div>
 
-            <p class="text-center font-black text-slate-300 text-xs mb-4 uppercase tracking-[0.2em]">ਜਮਾਤ ਦੀ ਚੋਣ ਕਰੋ</p>
+            <p class="text-center font-black text-slate-400 text-xs mb-6 uppercase">ਜਮਾਤ ਦੀ ਚੋਣ ਕਰੋ</p>
             <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="class-buttons"></div>
         </div>
 
-        <!-- STEP 2: Subject & Auto Chapter List -->
-        <div id="pane-2" class="view-pane bg-white p-6 md:p-10 rounded-3xl shadow-xl border border-blue-50">
-            <div class="flex justify-between items-center mb-8">
-                <h3 id="class-title-display" class="text-2xl font-black text-blue-900">ਵਿਸ਼ਾ ਚੁਣੋ</h3>
-                <button onclick="switchView(1)" class="text-slate-400 font-bold hover:text-blue-600">ਪਿੱਛੇ</button>
+        <!-- ਸਟੈਪ 2: ਵਿਸ਼ਾ ਅਤੇ ਟੌਪਿਕ ਕਨਫਰਮੇਸ਼ਨ -->
+        <div id="pane-2" class="view-pane bg-white p-8 rounded-[2rem] shadow-2xl border border-slate-200">
+            <div class="flex justify-between items-start mb-8">
+                <div>
+                    <h3 id="class-title-display" class="text-3xl font-black text-slate-800">ਵਿਸ਼ਾ ਚੁਣੋ</h3>
+                    <p class="text-blue-600 font-bold">ਅਗਲੇ ਪੜਾਅ ਲਈ ਪਾਠ ਚੁਣਨਾ ਜ਼ਰੂਰੀ ਹੈ</p>
+                </div>
+                <button onclick="switchView(1)" class="bg-slate-100 p-3 rounded-xl hover:bg-slate-200 transition-all">
+                    <i class="fa-solid fa-arrow-left text-slate-600"></i>
+                </button>
             </div>
 
-            <div class="space-y-6">
+            <div class="space-y-8">
                 <div>
-                    <label class="block text-sm font-bold text-slate-400 mb-2 uppercase">ਵਿਸ਼ਾ ਚੁਣੋ</label>
-                    <select id="subjectSelect" onchange="loadChapters()" class="w-full p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl font-bold text-lg outline-none focus:border-blue-500">
+                    <label class="block text-xs font-black text-slate-400 mb-3 uppercase tracking-tighter">ਵਿਸ਼ਾ</label>
+                    <select id="subjectSelect" onchange="loadChapters()" class="w-full p-5 bg-slate-50 border-2 border-slate-100 rounded-2xl font-black text-xl outline-none focus:border-blue-500 appearance-none">
                         <option value="">-- ਵਿਸ਼ਾ ਚੁਣੋ --</option>
                     </select>
                 </div>
                 
-                <div id="chapter-section" class="hidden">
-                    <label class="block text-sm font-bold text-slate-400 mb-3 uppercase">ਪਾਠ ਚੁਣੋ (ਤਤਕਰਾ)</label>
-                    <div id="chapter-list" class="space-y-2 max-h-60 overflow-y-auto pr-2 mb-6 border-b border-slate-100 pb-4"></div>
+                <!-- ਟੌਪਿਕ ਚੋਣ ਸੈਕਸ਼ਨ -->
+                <div id="chapter-selection-section" class="hidden animate-in fade-in duration-500">
+                    <label class="block text-xs font-black text-slate-400 mb-4 uppercase tracking-tighter">ਪਾਠ ਚੁਣੋ (ਤਤਕਰਾ)</label>
+                    <div id="chapter-list" class="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-64 overflow-y-auto pr-3 mb-6 scrollbar-thin scrollbar-thumb-slate-200"></div>
                     
-                    <label class="block text-sm font-bold text-slate-400 mb-2 uppercase">ਕਿਤਾਬ ਦੀ PDF ਅਪਲੋਡ ਕਰੋ</label>
-                    <div class="border-2 border-dashed border-blue-200 rounded-2xl p-6 text-center hover:bg-blue-50 cursor-pointer transition-all" onclick="document.getElementById('pdfInput').click()">
-                        <input type="file" id="pdfInput" accept="application/pdf" class="hidden" onchange="handleFileUpload(event)">
-                        <i class="fa-solid fa-file-pdf text-3xl text-blue-400 mb-2"></i>
-                        <p id="file-status" class="font-bold text-slate-600">ਕਿਤਾਬ ਚੁਣੋ</p>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-4 mt-6">
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 mb-1">ਕੁੱਲ ਅੰਕ</label>
-                            <input type="number" id="totalMarks" value="80" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl font-black text-center">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 mb-1">ਪ੍ਰੀਖਿਆ</label>
-                            <select id="examType" class="w-full p-3 bg-slate-50 border-2 border-slate-100 rounded-xl font-bold">
-                                <option>ਸਲਾਨਾ ਪ੍ਰੀਖਿਆ</option>
-                                <option>ਮਾਸਿਕ ਟੈਸਟ</option>
-                                <option>ਟਰਮ ਪ੍ਰੀਖਿਆ</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <button onclick="startPaperGeneration()" id="gen-btn" class="hidden w-full mt-8 bg-blue-700 text-white p-5 rounded-2xl font-black text-xl shadow-lg hover:bg-blue-800 transition-all">
-                        ਪ੍ਰਸ਼ਨ ਪੱਤਰ ਤਿਆਰ ਕਰੋ <i class="fa-solid fa-wand-magic-sparkles ml-2"></i>
+                    <button id="btn-confirm-topics" onclick="confirmSelectedTopics()" class="w-full bg-slate-900 text-white p-5 rounded-2xl font-black text-lg hover:bg-black transform active:scale-95 transition-all shadow-lg flex items-center justify-center gap-3">
+                        ਪਾਠਾਂ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ <i class="fa-solid fa-check-circle"></i>
                     </button>
+                </div>
+
+                <!-- ਰੀਅਲ ਅੱਪਲੋਡ ਸੈਕਸ਼ਨ (ਸਿਰਫ਼ ਕਨਫਰਮੇਸ਼ਨ ਤੋਂ ਬਾਅਦ) -->
+                <div id="confirmed-topics-section" class="hidden space-y-6">
+                    <div class="bg-blue-50 p-6 rounded-3xl border-2 border-blue-100">
+                        <h4 class="font-black text-blue-900 mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-bookmark text-blue-500"></i> ਚੁਣੇ ਹੋਏ ਟੌਪਿਕ:
+                        </h4>
+                        <div id="confirmed-list" class="flex flex-wrap gap-2 mb-2"></div>
+                        <button onclick="reSelectTopics()" class="text-xs font-bold text-blue-600 underline">ਪਾਠ ਬਦਲੋ</button>
+                    </div>
+
+                    <div id="upload-card" class="upload-card p-10 rounded-3xl text-center relative overflow-hidden">
+                        <input type="file" id="pdfInput" accept="application/pdf" class="hidden" onchange="handleRealFileUpload(event)">
+                        
+                        <!-- Initial State -->
+                        <div id="upload-prompt">
+                            <div class="w-20 h-20 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fa-solid fa-cloud-arrow-up text-3xl"></i>
+                            </div>
+                            <h4 class="text-xl font-black text-slate-800 mb-1">ਕਿਤਾਬ ਦੀ PDF ਅੱਪਲੋਡ ਕਰੋ</h4>
+                            <p class="text-slate-500 font-bold text-sm mb-6">ਸਿਸਟਮ ਫਾਈਲ ਨੂੰ ਵੈਰੀਫਾਈ ਕਰੇਗਾ</p>
+                            <button onclick="document.getElementById('pdfInput').click()" class="bg-white border-2 border-slate-200 px-8 py-3 rounded-xl font-black hover:bg-slate-50 transition-all shadow-sm">ਫਾਈਲ ਚੁਣੋ</button>
+                        </div>
+
+                        <!-- Real-time Loading State -->
+                        <div id="upload-loading" class="hidden py-4">
+                            <div class="progress-circle mb-4">
+                                <svg>
+                                    <circle class="circle-bg" />
+                                    <circle id="progress-bar-circle" class="circle-bar" />
+                                </svg>
+                                <div id="percentage-text" class="absolute inset-0 flex items-center justify-center font-black text-blue-700 text-lg">0%</div>
+                            </div>
+                            <h4 id="status-text" class="font-black text-slate-700 mb-1">ਫਾਈਲ ਅੱਪਲੋਡ ਹੋ ਰਹੀ ਹੈ...</h4>
+                            <p id="file-name-display" class="text-xs font-bold text-slate-400 italic truncate max-w-xs mx-auto"></p>
+                        </div>
+
+                        <!-- Success State -->
+                        <div id="upload-success" class="hidden py-4">
+                            <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce">
+                                <i class="fa-solid fa-check-double text-2xl"></i>
+                            </div>
+                            <h4 class="text-xl font-black text-emerald-800">ਅੱਪਲੋਡ ਮੁਕੰਮਲ!</h4>
+                            <p class="text-emerald-600 font-bold text-sm">ਫਾਈਲ ਸਫਲਤਾਪੂਰਵਕ ਸਿਸਟਮ ਵਿੱਚ ਲੋਡ ਹੋ ਗਈ ਹੈ</p>
+                        </div>
+                    </div>
+
+                    <!-- Final Confirm (Only visible after upload) -->
+                    <div id="final-confirm-section" class="hidden space-y-4 animate-in slide-in-from-bottom duration-500">
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-slate-50 p-4 rounded-2xl">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">ਕੁੱਲ ਅੰਕ</label>
+                                <input type="number" id="totalMarks" value="80" class="w-full bg-transparent font-black text-2xl outline-none">
+                            </div>
+                            <div class="bg-slate-50 p-4 rounded-2xl">
+                                <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">ਪ੍ਰੀਖਿਆ ਕਿਸਮ</label>
+                                <select id="examType" class="w-full bg-transparent font-black text-lg outline-none appearance-none">
+                                    <option>ਸਲਾਨਾ ਪ੍ਰੀਖਿਆ</option>
+                                    <option>ਮਾਸਿਕ ਟੈਸਟ</option>
+                                    <option>ਟਰਮ ਪ੍ਰੀਖਿਆ</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button onclick="startPaperGeneration()" class="w-full bg-blue-600 text-white p-6 rounded-[1.5rem] font-black text-2xl shadow-xl hover:bg-blue-700 hover:shadow-blue-200 transition-all flex items-center justify-center gap-4 group">
+                            ਪੇਪਰ ਤਿਆਰ ਕਰੋ <i class="fa-solid fa-wand-magic-sparkles group-hover:rotate-12 transition-transform"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- STEP 3: Loader -->
-        <div id="pane-3" class="view-pane text-center py-20 bg-white rounded-3xl shadow-xl">
+        <!-- ਸਟੈਪ 3: AI ਜਨਰੇਸ਼ਨ -->
+        <div id="pane-3" class="view-pane text-center py-24 bg-white rounded-[2rem] shadow-2xl">
             <div class="flex flex-col items-center">
-                <div class="spinner mb-6"></div>
-                <h3 class="text-xl font-black text-slate-800">AI ਪੇਪਰ ਤਿਆਰ ਕਰ ਰਿਹਾ ਹੈ...</h3>
-                <p class="text-slate-400 text-sm mt-2">ਤੁਹਾਡੇ ਚੁਣੇ ਹੋਏ ਪਾਠਾਂ ਮੁਤਾਬਕ ਪ੍ਰਸ਼ਨ ਲਿਖੇ ਜਾ ਰਹੇ ਹਨ</p>
+                <div class="relative w-24 h-24 mb-8">
+                    <div class="absolute inset-0 border-8 border-slate-100 rounded-full"></div>
+                    <div class="absolute inset-0 border-8 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <i class="fa-solid fa-brain text-3xl text-blue-600"></i>
+                    </div>
+                </div>
+                <h3 class="text-2xl font-black text-slate-800">AI ਪੇਪਰ ਡਿਜ਼ਾਈਨ ਕਰ ਰਿਹਾ ਹੈ</h3>
+                <p class="text-slate-400 font-bold mt-2 px-10">ਸਿਰਫ਼ ਚੁਣੇ ਹੋਏ ਪਾਠਾਂ ਵਿੱਚੋਂ ਸਵਾਲ ਚੁਣੇ ਜਾ ਰਹੇ ਹਨ...</p>
             </div>
         </div>
 
-        <!-- STEP 4: Final Preview -->
+        <!-- ਸਟੈਪ 4: ਫਾਈਨਲ ਆਊਟਪੁੱਟ -->
         <div id="pane-4" class="view-pane">
-            <div class="no-print flex gap-3 mb-6">
-                <button onclick="switchView(1)" class="flex-1 bg-white border-2 border-slate-200 p-4 rounded-2xl font-black text-slate-600">ਨਵਾਂ ਪੇਪਰ</button>
-                <button onclick="window.print()" class="flex-[2] bg-blue-700 text-white p-4 rounded-2xl font-black shadow-lg flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-print"></i> ਪ੍ਰਿੰਟ / ਸੇਵ ਕਰੋ
+            <div class="no-print grid grid-cols-2 gap-3 mb-8">
+                <button onclick="location.reload()" class="bg-white border-2 border-slate-200 p-5 rounded-2xl font-black text-slate-600 hover:bg-slate-50">ਨਵਾਂ ਪੇਪਰ</button>
+                <button onclick="window.print()" class="bg-slate-900 text-white p-5 rounded-2xl font-black shadow-xl flex items-center justify-center gap-3 hover:bg-black">
+                    <i class="fa-solid fa-print"></i> ਪ੍ਰਿੰਟ / PDF ਸੇਵ ਕਰੋ
                 </button>
             </div>
             <div id="final-paper-output"></div>
@@ -131,42 +205,32 @@
     </main>
 
     <script>
-        const apiKey = "";
+        const apiKey = ""; 
         let selectedFileBase64 = null;
         let selectedClassId = null;
         let selectedSubject = null;
+        let confirmedTopics = [];
 
-        // ਤੁਹਾਡੇ ਵੱਲੋਂ ਦਿੱਤਾ ਗਿਆ ਮੁਕੰਮਲ ਡਾਟਾਬੇਸ
         const schoolData = {
             1: { name: "ਪਹਿਲੀ ਜਮਾਤ", subjects: [
-                { id: "p", name: "ਪੰਜਾਬੀ", chapters: ["ਪੰਜਾਬੀ ਵਰਣਮਾਲਾ (ੳ-ੜ)", "ਮੁਕਤਾ ਸ਼ਬਦ", "ਕੰਨਾ (ਾ) ਮਾਤਰਾ", "ਸਿਹਾਰੀ (ਿ) ਮਾਤਰਾ", "ਬਿਹਾਰੀ (ੀ) ਮਾਤਰਾ", "ਔਂਕੜ (ੁ) ਮਾਤਰਾ", "ਦੁਲੈਂਕੜ (ੂ) ਮਾਤਰਾ", "ਲਾਂ (ੇ) ਮਾਤਰਾ", "ਦੁਲਾਵਾਂ (ੈ) ਮਾਤਰਾ", "ਹੋੜਾ (ੋ) ਮਾਤਰਾ", "ਕਨੌੜਾ (ੌ) ਮਾਤਰਾ", "ਲਗਾਖਰ (ਬਿੰਦੀ, ਟਿੱਪੀ, ਅੱਧਕ)"] },
-                { id: "m", name: "ਗਣਿਤ", chapters: ["ਆਕਾਰ ਅਤੇ ਸਥਾਨ", "ਸੰਖਿਆਵਾਂ 1 ਤੋਂ 9", "ਜੋੜ (1-9)", "ਘਟਾਓ (1-9)", "ਸੰਖਿਆਵਾਂ 10 ਤੋਂ 20", "ਸਮਾਂ", "ਮਾਪ (ਲੰਬਾਈ/ਭਾਰ)", "ਸੰਖਿਆਵਾਂ 21 ਤੋਂ 99"] },
-                { id: "e", name: "English", chapters: ["Alphabets (A-Z)", "Myself", "Parts of Body", "Colours", "Fruits & Veggies", "Animals"] }
+                { id: "p", name: "ਪੰਜਾਬੀ", chapters: ["ਪੰਜਾਬੀ ਵਰਣਮਾਲਾ", "ਮੁਕਤਾ ਸ਼ਬਦ", "ਕੰਨਾ ਮਾਤਰਾ", "ਸਿਹਾਰੀ ਮਾਤਰਾ", "ਬਿਹਾਰੀ ਮਾਤਰਾ", "ਔਂਕੜ ਮਾਤਰਾ", "ਦੁਲੈਂਕੜ ਮਾਤਰਾ"] },
+                { id: "m", name: "ਗਣਿਤ", chapters: ["ਆਕਾਰ ਅਤੇ ਸਥਾਨ", "ਸੰਖਿਆਵਾਂ 1 ਤੋਂ 9", "ਜੋੜ (1-9)", "ਘਟਾਓ (1-9)", "ਸਮਾਂ", "ਮਾਪ"] }
             ]},
             2: { name: "ਦੂਜੀ ਜਮਾਤ", subjects: [
-                { id: "p", name: "ਪੰਜਾਬੀ", chapters: ["ਸਾਡਾ ਤਿਰੰਗਾ", "ਚਿੜੀਆ ਘਰ", "ਮਾਤਾ ਗੁਜਰੀ ਜੀ", "ਸਿਆਣੀ ਗੱਲ", "ਮੇਰਾ ਪੰਜਾਬ", "ਸ਼ੇਰ ਅਤੇ ਚੂਹੀ", "ਬੁਝਾਰਤਾਂ"] },
-                { id: "m", name: "ਗਣਿਤ", chapters: ["ਸੰਖਿਆਵਾਂ 1-99", "ਜੋੜ-ਘਟਾਓ", "ਗੁਣਾ (ਮੁੱਢਲੀ)", "ਭਾਗ (ਮੁੱਢਲੀ)", "ਪੈਸਾ (ਕਰੰਸੀ)", "ਸਮਾਂ ਅਤੇ ਕੈਲੰਡਰ"] },
-                { id: "e", name: "English", chapters: ["Revision", "My Family", "Days of Week", "Months", "Opposites", "Action Words"] }
+                { id: "p", name: "ਪੰਜਾਬੀ", chapters: ["ਸਾਡਾ ਤਿਰੰਗਾ", "ਚਿੜੀਆ ਘਰ", "ਮਾਤਾ ਗੁਜਰੀ ਜੀ", "ਸਿਆਣੀ ਗੱਲ", "ਮੇਰਾ ਪੰਜਾਬ"] },
+                { id: "m", name: "ਗਣਿਤ", chapters: ["ਸੰਖਿਆਵਾਂ 1-99", "ਜੋੜ-ਘਟਾਓ", "ਗੁਣਾ (ਮੁੱਢਲੀ)", "ਭਾਗ (ਮੁੱਢਲੀ)", "ਸਮਾਂ"] }
             ]},
             3: { name: "ਤੀਜੀ ਜਮਾਤ", subjects: [
-                { id: "p", name: "ਪੰਜਾਬੀ", chapters: ["ਸਾਡਾ ਦੇਸ਼", "ਦਰੱਖਤ ਦੀ ਗਵਾਹੀ", "ਵੱਡਾ ਕੌਣ?", "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", "ਬੱਦਲ", "ਸ੍ਰੀ ਹਰਿਮੰਦਰ ਸਾਹਿਬ"] },
-                { id: "m", name: "ਗਣਿਤ", chapters: ["ਸੰਖਿਆਵਾਂ (1000 ਤੱਕ)", "ਜੋੜ-ਘਟਾਓ", "ਗੁਣਾ", "ਭਾਗ", "ਭਿੰਨਾਂ (Fractions)", "ਅੰਕੜਾ ਵਿਗਿਆਨ"] },
-                { id: "e", name: "English", chapters: ["Me and My Family", "The Clock", "The Magic Box", "Traffic Rules", "Festivals"] },
-                { id: "ev", name: "ਵਾਤਾਵਰਨ", chapters: ["ਮੇਰਾ ਪਰਿਵਾਰ", "ਸਾਡੇ ਪੌਦੇ", "ਸਾਡਾ ਭੋਜਨ", "ਪਾਣੀ", "ਆਵਾਜਾਈ"] }
+                { id: "p", name: "ਪੰਜਾਬੀ", chapters: ["ਸਾਡਾ ਦੇਸ਼", "ਦਰੱਖਤ ਦੀ ਗਵਾਹੀ", "ਵੱਡਾ ਕੌਣ?", "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", "ਬੱਦਲ"] },
+                { id: "m", name: "ਗਣਿਤ", chapters: ["ਸੰਖਿਆਵਾਂ (1000 ਤੱਕ)", "ਜੋੜ-ਘਟਾਓ", "ਗੁਣਾ", "ਭਾਗ", "ਭਿੰਨਾਂ"] }
             ]},
             4: { name: "ਚੌਥੀ ਜਮਾਤ", subjects: [
                 { id: "p", name: "ਪੰਜਾਬੀ", chapters: ["ਪ੍ਰਾਰਥਨਾ", "ਮਹਾਤਮਾ ਗਾਂਧੀ", "ਰੁੱਖਾਂ ਦੀ ਮਹੱਤਤਾ", "ਕੰਪਿਊਟਰ", "ਸਿਆਣਾ ਕਾਂ"] },
-                { id: "m", name: "ਗਣਿਤ", chapters: ["ਸੰਖਿਆਵਾਂ", "ਕਿਰਿਆਵਾਂ", "ਮਾਪ", "ਆਕਾਰ ਅਤੇ ਕੋਣ", "ਭਿੰਨਾਂ"] },
-                { id: "e", name: "English", chapters: ["The King & Sons", "Safety Rules", "Health is Wealth", "Pronouns"] },
-                { id: "ev", name: "ਵਾਤਾਵਰਨ", chapters: ["ਖੇਡਾਂ ਅਤੇ ਸਿਹਤ", "ਆਵਾਸ", "ਪਾਣੀ ਦੀ ਸੰਭਾਲ", "ਧਰਤੀ ਅਤੇ ਆਕਾਸ਼"] },
-                { id: "h", name: "हिंदी", chapters: ["वर्णमाला", "मात्राएँ", "तिरंगा", "अच्छी आदतें"] }
+                { id: "m", name: "ਗਣਿਤ", chapters: ["ਸੰਖਿਆਵਾਂ", "ਕਿਰਿਆਵਾਂ", "ਮਾਪ", "ਆਕਾਰ ਅਤੇ ਕੋਣ"] }
             ]},
             5: { name: "ਪੰਜਵੀਂ ਜਮਾਤ", subjects: [
-                { id: "p", name: "ਪੰਜਾਬੀ", chapters: ["ਮੇਰਾ ਹਿੰਦੁਸਤਾਨ", "ਗਤਕਾ", "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", "ਆਸਮਾਨ ਦੀਆਂ ਪਰੀਆਂ", "ਕਲਪਨਾ ਚਾਵਲਾ", "ਸ਼ਹੀਦ ਭਗਤ ਸਿੰਘ"] },
-                { id: "m", name: "ਗਣਿਤ", chapters: ["ਸੰਖਿਆਵਾਂ", "HCF & LCM", "ਭਿੰਨਾਂ", "ਦਸ਼ਮਲਵ", "ਘੇਰਾ ਅਤੇ ਖੇਤਰਫਲ"] },
-                { id: "e", name: "English", chapters: ["The Elves & Shoemaker", "The Flying Sikh", "Global Warming", "Safe Circle"] },
-                { id: "ev", name: "ਵਾਤਾਵਰਨ", chapters: ["ਬਦਲਦੇ ਪਰਿਵਾਰ", "ਬੀਜ ਦਾ ਸਫ਼ਰ", "ਜੰਗਲ ਅਤੇ ਜੀਵਨ", "ਕੌਮੀ ਚਿੰਨ੍ਹ"] },
-                { id: "h", name: "हिंदी", chapters: ["जय हिन्द", "सच्चा मित्र", "स्वच्छता", "समय का मोल"] }
+                { id: "p", name: "ਪੰਜਾਬੀ", chapters: ["ਮੇਰਾ ਹਿੰਦੁਸਤਾਨ", "ਗਤਕਾ", "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", "ਆਸਮਾਨ ਦੀਆਂ ਪਰੀਆਂ", "ਕਲਪਨਾ ਚਾਵਲਾ"] },
+                { id: "m", name: "ਗਣਿਤ", chapters: ["ਸੰਖਿਆਵਾਂ", "HCF & LCM", "ਭਿੰਨਾਂ", "ਦਸ਼ਮਲਵ", "ਘੇਰਾ ਅਤੇ ਖੇਤਰਫਲ"] }
             ]}
         };
 
@@ -174,7 +238,7 @@
             const grid = document.getElementById('class-buttons');
             Object.keys(schoolData).forEach(id => {
                 const btn = document.createElement('button');
-                btn.className = "p-4 rounded-xl border-2 border-slate-100 font-black text-slate-600 bg-white hover:border-blue-500 hover:text-blue-600 transition-all text-sm";
+                btn.className = "p-5 rounded-2xl border-2 border-slate-100 font-black text-slate-600 bg-white hover:border-blue-500 hover:text-blue-600 transition-all text-sm shadow-sm";
                 btn.innerText = schoolData[id].name;
                 btn.onclick = () => selectClass(id);
                 grid.appendChild(btn);
@@ -182,7 +246,10 @@
         };
 
         function selectClass(id) {
-            if(!document.getElementById('schoolName').value) return alert("ਪਹਿਲਾਂ ਸਕੂਲ ਦਾ ਨਾਮ ਭਰੋ");
+            if(!document.getElementById('schoolName').value) {
+                alert("ਕਿਰਪਾ ਕਰਕੇ ਪਹਿਲਾਂ ਸਕੂਲ ਦਾ ਨਾਮ ਭਰੋ।");
+                return;
+            }
             selectedClassId = id;
             document.getElementById('class-title-display').innerText = schoolData[id].name;
             
@@ -195,40 +262,111 @@
                 select.appendChild(opt);
             });
             
-            document.getElementById('chapter-section').classList.add('hidden');
+            reSelectTopics();
             switchView(2);
         }
 
         function loadChapters() {
             const subId = document.getElementById('subjectSelect').value;
             if(!subId) {
-                document.getElementById('chapter-section').classList.add('hidden');
+                document.getElementById('chapter-selection-section').classList.add('hidden');
                 return;
             }
             
             selectedSubject = schoolData[selectedClassId].subjects.find(s => s.id === subId);
             const list = document.getElementById('chapter-list');
             list.innerHTML = selectedSubject.chapters.map(ch => `
-                <label class="flex items-center gap-3 p-3 bg-slate-50 border border-slate-100 rounded-xl cursor-pointer hover:bg-blue-50">
-                    <input type="checkbox" class="ch-cb w-5 h-5 accent-blue-600" value="${ch}" checked>
-                    <span class="font-bold text-slate-700 text-sm">${ch}</span>
+                <label class="flex items-center gap-4 p-4 bg-slate-50 border-2 border-slate-100 rounded-2xl cursor-pointer hover:bg-white hover:border-blue-200 transition-all">
+                    <input type="checkbox" class="ch-cb w-5 h-5 accent-blue-600" value="${ch}">
+                    <span class="font-bold text-slate-700">${ch}</span>
                 </label>
             `).join('');
             
-            document.getElementById('chapter-section').classList.remove('hidden');
+            document.getElementById('chapter-selection-section').classList.remove('hidden');
+            document.getElementById('confirmed-topics-section').classList.add('hidden');
         }
 
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if(file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    selectedFileBase64 = e.target.result.split(',')[1];
-                    document.getElementById('file-status').innerText = "ਫਾਈਲ ਤਿਆਰ ਹੈ: " + file.name;
-                    document.getElementById('gen-btn').classList.remove('hidden');
-                };
-                reader.readAsDataURL(file);
+        function confirmSelectedTopics() {
+            confirmedTopics = Array.from(document.querySelectorAll('.ch-cb:checked')).map(c => c.value);
+            if(confirmedTopics.length === 0) {
+                alert("ਘੱਟੋ-ਘੱਟ ਇੱਕ ਪਾਠ ਚੁਣਨਾ ਜ਼ਰੂਰੀ ਹੈ।");
+                return;
             }
+
+            document.getElementById('chapter-selection-section').classList.add('hidden');
+            document.getElementById('confirmed-topics-section').classList.remove('hidden');
+            
+            const confirmedList = document.getElementById('confirmed-list');
+            confirmedList.innerHTML = confirmedTopics.map(t => `
+                <span class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-xs font-black shadow-sm">${t}</span>
+            `).join('');
+        }
+
+        function reSelectTopics() {
+            document.getElementById('confirmed-topics-section').classList.add('hidden');
+            document.getElementById('chapter-selection-section').classList.remove('hidden');
+            document.getElementById('final-confirm-section').classList.add('hidden');
+            selectedFileBase64 = null;
+            
+            // Reset Upload Card
+            const card = document.getElementById('upload-card');
+            card.className = "upload-card p-10 rounded-3xl text-center relative overflow-hidden";
+            document.getElementById('upload-prompt').classList.remove('hidden');
+            document.getElementById('upload-loading').classList.add('hidden');
+            document.getElementById('upload-success').classList.add('hidden');
+            document.getElementById('pdfInput').value = "";
+        }
+
+        function handleRealFileUpload(event) {
+            const file = event.target.files[0];
+            if(!file || file.type !== "application/pdf") {
+                alert("ਕਿਰਪਾ ਕਰਕੇ ਸਿਰਫ਼ PDF ਫਾਈਲ ਹੀ ਚੁਣੋ।");
+                return;
+            }
+
+            // UI Transition to Loading
+            document.getElementById('upload-prompt').classList.add('hidden');
+            document.getElementById('upload-loading').classList.remove('hidden');
+            document.getElementById('upload-card').classList.add('active');
+            document.getElementById('file-name-display').innerText = file.name;
+
+            const circle = document.getElementById('progress-bar-circle');
+            const percText = document.getElementById('percentage-text');
+            const totalDash = 213.6;
+
+            const reader = new FileReader();
+
+            // Real-time progress monitoring
+            reader.onprogress = (e) => {
+                if (e.lengthComputable) {
+                    const percent = Math.round((e.loaded / e.total) * 100);
+                    const offset = totalDash - (percent / 100) * totalDash;
+                    circle.style.strokeDashoffset = offset;
+                    percText.innerText = percent + "%";
+                }
+            };
+
+            reader.onload = (e) => {
+                // Buffer for extra verification (simulate system load)
+                setTimeout(() => {
+                    selectedFileBase64 = e.target.result.split(',')[1];
+                    
+                    // Success UI
+                    document.getElementById('upload-loading').classList.add('hidden');
+                    document.getElementById('upload-success').classList.remove('hidden');
+                    document.getElementById('upload-card').className = "upload-card p-10 rounded-3xl text-center relative overflow-hidden success";
+                    
+                    // Reveal Final Confirmation Button
+                    document.getElementById('final-confirm-section').classList.remove('hidden');
+                }, 800);
+            };
+
+            reader.onerror = () => {
+                alert("ਫਾਈਲ ਪੜ੍ਹਨ ਵਿੱਚ ਗਲਤੀ ਆਈ ਹੈ।");
+                reSelectTopics();
+            };
+
+            reader.readAsDataURL(file);
         }
 
         function switchView(n) {
@@ -238,8 +376,7 @@
         }
 
         async function startPaperGeneration() {
-            const chapters = Array.from(document.querySelectorAll('.ch-cb:checked')).map(c => c.value);
-            if(!chapters.length) return alert("ਕਿਰਪਾ ਕਰਕੇ ਘੱਟੋ-ਘੱਟ ਇੱਕ ਪਾਠ ਚੁਣੋ");
+            if(!selectedFileBase64) return alert("ਪਹਿਲਾਂ ਫਾਈਲ ਅੱਪਲੋਡ ਹੋਣੀ ਜ਼ਰੂਰੀ ਹੈ।");
             
             switchView(3);
             
@@ -249,59 +386,69 @@
             const className = schoolData[selectedClassId].name;
             const subName = selectedSubject.name;
 
-            const prompt = `Generate a PSEB Exam Paper for Class: ${className}, Subject: ${subName}. 
-            Include questions from these chapters: ${chapters.join(', ')}.
-            Format: Punjabi language. Sections: MCQs, True/False, Fill in blanks, and Q/A.
-            Return only clean HTML code for the body content.`;
+            const prompt = `System Instruction: Generate a PSEB official-style Exam Paper.
+            Selected Chapters (MANDATORY LIMIT): ${confirmedTopics.join(', ')}.
+            Rules:
+            1. ONLY extract questions related to these chapters from the provided PDF.
+            2. Class: ${className}, Subject: ${subName}.
+            3. Marks: ${marks}. Exam: ${exam}.
+            4. Language: Punjabi (Gurumukhi).
+            5. Sections: Part-A (Objective/MCQs), Part-B (Short), Part-C (Long).
+            6. Output clean HTML (no markdown tags).`;
 
             try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        contents: [{ parts: [{ text: prompt }, { inlineData: { mimeType: "application/pdf", data: selectedFileBase64 } }] }]
+                        contents: [{ 
+                            parts: [
+                                { text: prompt }, 
+                                { inlineData: { mimeType: "application/pdf", data: selectedFileBase64 } }
+                            ] 
+                        }]
                     })
                 });
 
-                const data = await res.json();
-                let htmlContent = data.candidates[0].content.parts[0].text.replace(/```html|```/g, '');
+                const data = await response.json();
+                let htmlBody = data.candidates[0].content.parts[0].text.replace(/```html|```/g, '');
 
                 document.getElementById('final-paper-output').innerHTML = `
                     <div class="paper-a4">
-                        <div class="bsm-header-container">
-                            <div class="header-top-row">
-                                <div class="header-class-info">
+                        <div class="bsm-header-container" style="border: 2px solid black; margin-bottom: 20px;">
+                            <div style="display: flex; border-bottom: 2px solid black;">
+                                <div style="flex: 1; padding: 10px; border-right: 2px solid black; text-align: center; font-size: 18px; font-weight: 800;">
                                     <div>ਜਮਾਤ: ${className}</div>
                                     <div>ਵਿਸ਼ਾ: ${subName}</div>
                                 </div>
-                                <div class="bsm-box">PSP</div>
+                                <div style="width: 100px; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: 900; background: #000; color: #fff;">PSP</div>
                             </div>
-                            <div class="student-fields">
-                                <div class="field-row">ਸਕੂਲ: <div class="dotted-line">${school}</div></div>
-                                <div class="field-row">ਵਿਦਿਆਰਥੀ: <div class="dotted-line"></div></div>
-                                <div class="field-row">
-                                    <div style="flex:1; display:flex;">ਰੋਲ ਨੰ: <div class="dotted-line"></div></div>
-                                    <div style="flex:1; display:flex; justify-content:flex-end;">ਮਿਤੀ: <div class="dotted-line" style="flex:0; width:120px;"></div></div>
+                            <div style="padding: 12px; font-size: 15px; font-weight: 700;">
+                                <div style="display:flex; margin-bottom:8px;">ਸਕੂਲ: <div style="flex:1; border-bottom:1px dotted #000; margin-left:5px;">${school}</div></div>
+                                <div style="display:flex; margin-bottom:8px;">ਵਿਦਿਆਰਥੀ: <div style="flex:1; border-bottom:1px dotted #000; margin-left:5px;"></div></div>
+                                <div style="display:flex;">
+                                    <div style="flex:1; display:flex;">ਰੋਲ ਨੰ: <div style="flex:1; border-bottom:1px dotted #000; margin-left:5px;"></div></div>
+                                    <div style="flex:1; display:flex; justify-content:flex-end;">ਮਿਤੀ: <div style="width:100px; border-bottom:1px dotted #000; margin-left:5px;"></div></div>
                                 </div>
                             </div>
-                            <div class="header-footer">
+                            <div style="display: flex; border-top: 2px solid black; padding: 5px 12px; justify-content: space-between; font-weight: 800; background: #f8f8f8;">
                                 <span>ਸਮਾਂ: 3 ਘੰਟੇ</span>
                                 <span>ਕੁੱਲ ਅੰਕ: ${marks}</span>
-                                <span style="border-left:2px solid #000; padding-left:10px;">ਪ੍ਰਾਪਤ ਅੰਕ: _______</span>
+                                <span style="border-left:2px solid black; padding-left:10px;">ਪ੍ਰਾਪਤ ਅੰਕ: _______</span>
                             </div>
                         </div>
-                        <div style="text-align:center; font-weight:900; font-size:20px; text-decoration:underline; margin-bottom:20px;">${exam} (2025-26)</div>
-                        <div class="paper-body">${htmlContent}</div>
-                        <div style="margin-top:40px; text-align:center; font-weight:bold; font-size:12px; border-top:1px dashed #ccc; padding-top:10px;">* ਸੁੰਦਰ ਲਿਖਾਈ ਦੇ 5 ਅੰਕ ਵੱਖਰੇ ਹਨ *</div>
+                        <div style="text-align:center; font-weight:900; font-size:22px; text-decoration:underline; margin-bottom:5px;">${exam} (2025-26)</div>
+                        <div style="text-align:center; font-size:12px; margin-bottom:20px; color:#666; font-weight:bold;">(ਨਿਰਧਾਰਿਤ ਪਾਠ: ${confirmedTopics.join(', ')})</div>
+                        <div class="paper-body">${htmlBody}</div>
+                        <div style="margin-top:50px; text-align:center; font-weight:bold; font-size:13px; border-top:2px solid #000; padding-top:10px;">* ਸੁੰਦਰ ਲਿਖਾਈ ਦੇ 5 ਅੰਕ ਵੱਖਰੇ ਹਨ *</div>
                     </div>
                 `;
                 switchView(4);
             } catch (e) {
-                alert("ਪੇਪਰ ਬਣਾਉਣ ਵਿੱਚ ਸਮੱਸਿਆ ਆਈ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
+                alert("ਸਰਵਰ ਨਾਲ ਜੁੜਨ ਵਿੱਚ ਸਮੱਸਿਆ ਆਈ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
                 switchView(2);
             }
         }
     </script>
 </body>
 </html>
-
