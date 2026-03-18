@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="pa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ਸਲਾਨਾ ਪੇਪਰ - ਜਮਾਤ ਪਹਿਲੀ (ਗਣਿਤ)</title>
+    <style>
+        /* ਪ੍ਰਿੰਟ ਸੈਟਿੰਗਾਂ: ਮਾਰਜਨ ਘਟਾਉਣ ਲਈ */
+        @page {
+            size: A4;
+            margin: 5mm; /* ਬਹੁਤ ਘੱਟ ਮਾਰਜਨ */
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact;
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 296mm;
+            padding: 10mm; /* ਪੇਜ ਦੇ ਅੰਦਰੂਨੀ ਜਗ੍ਹਾ */
+            margin: 10mm auto;
+            background: white;
+            position: relative;
+            box-sizing: border-box;
+            page-break-after: always;
+            border: 1px solid #eee;
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid #000;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .header h1 { margin: 2px 0; font-size: 22px; text-decoration: underline; }
+        .header h2 { margin: 2px 0; font-size: 18px; }
+
+        .student-info {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+
+        .student-info td {
+            border: 1px solid #000;
+            padding: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .note-box {
+            border: 1px solid #000;
+            padding: 8px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            background: #f9f9f9;
+        }
+
+        .question {
+            margin: 15px 0;
+            line-height: 1.4;
+        }
+
+        .q-text {
+            font-size: 17px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .marks {
+            float: right;
+            font-weight: bold;
+            border: 1px solid #000;
+            padding: 1px 6px;
+            font-size: 14px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-left: 20px;
+            margin-top: 5px;
+        }
+
+        .visual-aid {
+            border: 1px dashed #666;
+            padding: 10px;
+            text-align: center;
+            margin: 8px 20px;
+            font-size: 20px;
+            background: #fff;
+        }
+
+        .abacus-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin: 15px 0;
+        }
+
+        .abacus-rod {
+            width: 4px;
+            height: 100px;
+            background: #333;
+            position: relative;
+            display: flex;
+            flex-direction: column-reverse;
+            align-items: center;
+        }
+
+        .abacus-bead {
+            width: 30px;
+            height: 14px;
+            background: #e74c3c;
+            border: 1px solid #000;
+            border-radius: 8px;
+            margin-bottom: 1px;
+        }
+
+        .input-line {
+            border: none;
+            border-bottom: 1px solid #000;
+            width: 70px;
+            text-align: center;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 12px 24px;
+            background: #d35400;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            z-index: 1000;
+            font-weight: bold;
+        }
+
+        @media print {
+            .print-btn { display: none; }
+            body { background: none; }
+            .page { margin: 0; border: none; box-shadow: none; width: 100%; }
+        }
+
+        .page-num {
+            position: absolute;
+            bottom: 5mm;
+            right: 10mm;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">ਪ੍ਰਿੰਟ / PDF (ਘੱਟ ਮਾਰਜਨ)</button>
+
+<!-- Page 1 -->
+<div class="page">
+    <div class="header">
+        <h1>ਸਲਾਨਾ ਪੇਪਰ ਮਾਰਚ, 2026</h1>
+        <h2>ਜਮਾਤ - ਪਹਿਲੀ | ਵਿਸ਼ਾ - ਗਣਿਤ</h2>
+    </div>
+
+    <table class="student-info">
+        <tr>
+            <td colspan="2">ਸਕੂਲ ਦਾ ਨਾਂ : __________________________________________</td>
+            <td>ਮਿਤੀ : 16-03-2026</td>
+        </tr>
+        <tr>
+            <td>ਵਿਦਿਆਰਥੀ ਦਾ ਨਾਂ : _____________________</td>
+            <td>ਰੋਲ ਨੰਬਰ : ________</td>
+            <td>ਪ੍ਰਾਪਤ ਅੰਕ : ____ / 80</td>
+        </tr>
+    </table>
+
+    <div class="note-box">
+        <b>ਨੋਟ :</b> (i) ਸਾਰੇ ਪ੍ਰਸ਼ਨ ਜ਼ਰੂਰੀ ਹਨ । (ii) ਪ੍ਰਸ਼ਨ 1-10 (2 ਅੰਕ), ਪ੍ਰਸ਼ਨ 11-16 (10 ਅੰਕ) ।
+    </div>
+
+    <div class="question">
+        <span class="marks">2</span>
+        <span class="q-text">1. ਹੇਠਾਂ ਦਿਖਾਈ ਤਸਵੀਰ ਵਿੱਚ ਕਿੰਨੀਆਂ ਟੀ-ਸ਼ਰਟਾਂ ਹਨ ?</span>
+        <div class="visual-aid">👕 👕 👕 👕 👕 👕 👕 👕 👕</div>
+        <div class="options-grid">
+            <div>ੳ) 3</div><div>ਅ) 4</div><div>ੲ) 9</div><div>ਸ) 5</div>
+        </div>
+    </div>
+
+    <div class="question">
+        <span class="marks">2</span>
+        <span class="q-text">2. ਹੇਠਾਂ ਦਿਖਾਏ ਬੰਡਲ ਅਤੇ ਤੀਲੀਆਂ ਅਨੁਸਾਰ ਸੰਖਿਆ ਦੀ ਚੋਣ ਕਰੋ ।</span>
+        <div class="visual-aid" style="font-size:16px;">📦 (10 ਦਾ ਬੰਡਲ) + 🥢🥢🥢🥢🥢🥢</div>
+        <div class="options-grid">
+            <div>ੳ) 1 ਦਹਾਈ 8 ਇਕਾਈਆਂ</div><div>ਅ) 1 ਦਹਾਈ 7 ਇਕਾਈਆਂ</div>
+            <div>ੲ) 1 ਦਹਾਈ 6 ਇਕਾਈਆਂ</div><div>ਸ) 1 ਦਹਾਈ 4 ਇਕਾਈਆਂ</div>
+        </div>
+    </div>
+
+    <div class="question">
+        <span class="marks">2</span>
+        <span class="q-text">3. ਇਹਨਾਂ ਸੰਖਿਆਵਾਂ ਦਾ ਵੱਧਦਾ ਕ੍ਰਮ ਕੀ ਹੋਵੇਗਾ ? (45, 39, 18, 93)</span>
+        <div class="options-grid">
+            <div>ੳ) 18, 39, 45, 93</div><div>ਅ) 93, 45, 39, 18</div>
+            <div>ੲ) 18, 45, 39, 93</div><div>ਸ) 39, 18, 45, 93</div>
+        </div>
+    </div>
+
+    <div class="question">
+        <span class="marks">2</span>
+        <span class="q-text">4. ਹੇਠਾਂ ਦਿੱਤੀਆਂ ਸੰਖਿਆਵਾਂ ਵਿੱਚੋਂ ਸਭ ਤੋਂ ਛੋਟੀ ਸੰਖਿਆ ਕਿਹੜੀ ਹੈ ?</span>
+        <div class="visual-aid">12, 5, 18, 20</div>
+        <div class="options-grid">
+            <div>ੳ) 12</div><div>ਅ) 5</div><div>ੲ) 18</div><div>ਸ) 20</div>
+        </div>
+    </div>
+    <div class="page-num">ਪੰਨਾ - 1</div>
+</div>
+
+<!-- Page 2 -->
+<div class="page">
+    <div class="question">
+        <span class="marks">2</span>
+        <span class="q-text">5. ਨੋਟਾਂ ਅਤੇ ਸਿੱਕਿਆਂ ਦੇ ਅਨੁਸਾਰ ਸਹੀ ਰਾਸ਼ੀ ਚੁਣੋ :</span>
+        <div class="visual-aid" style="font-size:16px;">[₹10] + [₹2] + [₹1]</div>
+        <div class="options-grid">
+            <div>ੳ) ₹ 12</div><div>ਅ) ₹ 13</div><div>ੲ) ₹ 10</div><div>ਸ) ₹ 15</div>
+        </div>
+    </div>
+
+    <div class="question">
+        <span class="marks">2</span>
+        <span class="q-text">6. ਕਿਹੜੀ ਵਸਤੂ ਭਾਰੀ ਹੈ ?</span>
+        <div class="visual-aid">🧱 (ਇੱਟ) --- ✏️ (ਪੈਨਸਿਲ)</div>
+        <div class="options-grid">
+            <div>ੳ) ਇੱਟ</div><div>ਅ) ਪੈਨਸਿਲ</div><div>ੲ) ਦੋਵੇਂ ਬਰਾਬਰ</div><div>ਸ) ਕੋਈ ਨਹੀਂ</div>
+        </div>
+    </div>
+
+    <div class="question">
+        <span class="marks">2</span>
+        <span class="q-text">7. ਐਤਵਾਰ ਤੋਂ ਪਹਿਲਾਂ ਕਿਹੜਾ ਦਿਨ ਆਉਂਦਾ ਹੈ ?</span>
+        <div class="options-grid">
+            <div>ੳ) ਸੋਮਵਾਰ</div><div>ਅ) ਮੰਗਲਵਾਰ</div><div>ੲ) ਸ਼ਨੀਵਾਰ</div><div>ਸ) ਬੁੱਧਵਾਰ</div>
+        </div>
+    </div>
+
+    <div class="question">
+        <span class="marks">2</span>
+        <span class="q-text">8. ਇੱਕ ਹਫ਼ਤੇ ਵਿੱਚ ਕਿੰਨੇ ਦਿਨ ਹੁੰਦੇ ਹਨ ?</span>
+        <div class="options-grid">
+            <div>ੳ) 10</div><div>ਅ) 7</div><div>ੲ) 6</div><div>ਸ) 12</div>
+        </div>
+    </div>
+
+    <div class="question">
+        <span class="marks">2</span>
+        <span class="q-text">9. ਹਫ਼ਤੇ ਦੇ ਕਿਹੜੇ ਦਿਨ ਛੁੱਟੀ ਹੁੰਦੀ ਹੈ ?</span>
+        <div class="options-grid">
+            <div>ੳ) ਸੋਮਵਾਰ</div><div>ਅ) ਮੰਗਲਵਾਰ</div><div>ੲ) ਵੀਰਵਾਰ</div><div>ਸ) ਐਤਵਾਰ</div>
+        </div>
+    </div>
+    <div class="page-num">ਪੰਨਾ - 2</div>
+</div>
+
+<!-- Page 3 -->
+<div class="page">
+    <div class="question">
+        <span class="marks">2</span>
+        <span class="q-text">10. ਇਸ ਤਸਵੀਰ ਵਿੱਚ ਕਿਹੜੀ-ਕਿਹੜੀ ਵਸਤੂਆਂ ਬਰਾਬਰ ਹਨ ?</span>
+        <div class="visual-aid">✈️✈️ | 🐎🐎 | 🪁🪁🪁 | 🚂</div>
+        <div class="options-grid">
+            <div>ੳ) ਜਹਾਜ਼ ਅਤੇ ਘੋੜਾ</div><div>ਅ) ਪਤੰਗ ਅਤੇ ਇੰਜਣ</div>
+            <div>ੲ) ਘੋੜਾ ਅਤੇ ਇੰਜਣ</div><div>ਸ) ਭਾਲੂ ਅਤੇ ਘੋੜਾ</div>
+        </div>
+    </div>
+
+    <div style="border-top: 2px solid #000; margin-top: 20px; padding-top: 5px;">
+        <h3>ਭਾਗ - ਅ (6 × 10 = 60)</h3>
+    </div>
+
+    <div class="question">
+        <span class="marks">10</span>
+        <span class="q-text">11. ਖ਼ਾਲੀ ਥਾਂਵਾਂ ਭਰੋ :</span>
+        <p>ੳ) ਅੰਕ 6 ਤੋਂ ਬਾਅਦ ਅੰਕ <input type="text" class="input-line"> ਆਉਂਦਾ ਹੈ । (7, 6)</p>
+        <p>ਅ) 7 ਅਤੇ 9 ਦੇ ਵਿਚਕਾਰ ਅੰਕ <input type="text" class="input-line"> ਆਉਂਦਾ ਹੈ । (8, 6)</p>
+        <p>ੲ) 30 ਅਤੇ 7 ਨਾਲ ਸੰਖਿਆ <input type="text" class="input-line"> ਬਣੇਗੀ । (73, 37)</p>
+        <p>ਸ) ਸੰਖਿਆ 39, ਸੰਖਿਆ 93 ਤੋਂ <input type="text" class="input-line"> ਹੈ । (ਵੱਡੀ, ਛੋਟੀ)</p>
+        <p>ਹ) 6 - 0 = <input type="text" class="input-line"> (6, 0)</p>
+    </div>
+
+    <div class="question">
+        <span class="marks">10</span>
+        <span class="q-text">12. ਗਿਣਤਾਰੇ ਅਨੁਸਾਰ ਸੰਖਿਆ ਲਿਖੋ :</span>
+        <div class="abacus-container">
+            <div class="abacus-rod">
+                <div class="abacus-bead"></div><div class="abacus-bead"></div><div class="abacus-bead"></div>
+                <span style="position:absolute; bottom:-20px; font-size:12px;">ਦਹਾਈ</span>
+            </div>
+            <div class="abacus-rod">
+                <div class="abacus-bead"></div><div class="abacus-bead"></div><div class="abacus-bead"></div><div class="abacus-bead"></div><div class="abacus-bead"></div>
+                <span style="position:absolute; bottom:-20px; font-size:12px;">ਇਕਾਈ</span>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 30px;">
+            ਸੰਖਿਆ : <input type="text" class="input-line">
+        </div>
+    </div>
+    <div class="page-num">ਪੰਨਾ - 3</div>
+</div>
+
+<!-- Page 4 -->
+<div class="page">
+    <div class="question">
+        <span class="marks">10</span>
+        <span class="q-text">13. ਘਟਦੇ ਕ੍ਰਮ ਵਿੱਚ ਲਿਖੋ : (10, 25, 5, 15)</span>
+        <div style="text-align: center; margin: 15px;">
+            <input type="text" class="input-line">, <input type="text" class="input-line">, 
+            <input type="text" class="input-line">, <input type="text" class="input-line">
+        </div>
+    </div>
+
+    <div class="question">
+        <span class="marks">10</span>
+        <span class="q-text">14. ਜੋੜ ਕਰੋ :</span>
+        <div style="display: flex; justify-content: space-around; font-size: 22px;">
+            <div style="text-align: right;">6<br>+ 2<hr><input type="text" class="input-line" style="width:40px;"></div>
+            <div style="text-align: right;">14<br>+ 3<hr><input type="text" class="input-line" style="width:40px;"></div>
+        </div>
+    </div>
+
+    <div class="question">
+        <span class="marks">10</span>
+        <span class="q-text">15. ਸ਼ਬਦਾਂ ਨੂੰ ਅੰਕਾਂ ਨਾਲ ਮਿਲਾਓ :</span>
+        <div style="display: flex; justify-content: space-around; margin-top:10px;">
+            <div>1. ਛੇ<br>2. ਨੌਂ<br>3. ਚਾਰ</div>
+            <div>ੳ) 9<br>ਅ) 4<br>ੲ) 6</div>
+        </div>
+        <p style="text-align: center;">1 -> <input type="text" class="input-line" style="width:30px;">, 2 -> <input type="text" class="input-line" style="width:30px;">, 3 -> <input type="text" class="input-line" style="width:30px;"></p>
+    </div>
+
+    <div class="question">
+        <span class="marks">10</span>
+        <span class="q-text">16. ਆਕ੍ਰਿਤੀਆਂ ਗਿਣ ਕੇ ਲਿਖੋ :</span>
+        <div class="visual-aid">▲ ▲ ● ● ● ▲ ●</div>
+        <p>ਤਿਕੋਣ : <input type="text" class="input-line"> | ਗੋਲ : <input type="text" class="input-line"></p>
+    </div>
+
+    <div style="margin-top: 30px; display: flex; justify-content: space-between; font-size: 14px;">
+        <span>ਪ੍ਰੀਖਿਅਕ ਦੇ ਹਸਤਾਖਰ</span>
+        <span>ਅਧਿਆਪਕ ਦੇ ਹਸਤਾਖਰ</span>
+    </div>
+    <div class="page-num">ਪੰਨਾ - 4</div>
+</div>
+
+</body>
+</html>
+
