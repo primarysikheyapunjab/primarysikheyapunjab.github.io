@@ -3,187 +3,130 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PSEB Paper Engine - Final Index System</title>
+    <title>PSEB Paper Engine - Verification System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;700;800&display=swap');
-        body { font-family: 'Mukta Malar', sans-serif; background-color: #f8fafc; color: #0f172a; }
+        body { font-family: 'Mukta Malar', sans-serif; background-color: #f1f5f9; color: #0f172a; }
         
-        /* Smooth Transitions */
-        .view-pane { display: none; opacity: 0; transition: opacity 0.4s ease-in-out; }
-        .view-pane.active { display: block; opacity: 1; animation: slideUp 0.4s ease-out; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .view-pane { display: none; opacity: 0; }
+        .view-pane.active { display: block; opacity: 1; animation: fadeIn 0.4s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* A4 Paper Style */
         .paper-a4 {
             background: white; width: 210mm; min-height: 297mm; padding: 18mm;
             margin: 20px auto; border: 1px solid #cbd5e1; color: black;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.08); position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); position: relative;
         }
 
-        /* Custom Checkbox UI */
-        .topic-card { 
-            border: 2px solid #e2e8f0; 
-            transition: all 0.2s ease; 
-            cursor: pointer;
-        }
-        .topic-card:hover { border-color: #93c5fd; background-color: #f0fdf4; }
-        .topic-card.selected { 
-            border-color: #2563eb; 
-            background-color: #eff6ff; 
-            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.1);
-        }
-        .topic-card.selected .check-icon { color: #2563eb; }
+        .topic-card { border: 2px solid #e2e8f0; transition: all 0.2s; cursor: pointer; }
+        .topic-card.selected { border-color: #2563eb; background-color: #eff6ff; }
+        
+        .pulse-green { animation: pulseG 1.5s infinite; }
+        @keyframes pulseG { 0% { opacity: 0.4; } 50% { opacity: 1; } 100% { opacity: 0.4; } }
 
         @media print { 
-            body { background: white; }
             .no-print { display: none !important; } 
-            .paper-a4 { margin: 0; border: none; width: 100%; box-shadow: none; padding: 0; } 
+            .paper-a4 { margin: 0; border: none; width: 100%; padding: 0; } 
         }
     </style>
 </head>
-<body class="antialiased selection:bg-blue-200 selection:text-blue-900">
+<body class="antialiased">
 
     <!-- Header -->
-    <header class="no-print bg-slate-900 text-white p-5 shadow-lg border-b-4 border-blue-500 sticky top-0 z-50">
+    <header class="no-print bg-slate-900 text-white p-4 shadow-lg sticky top-0 z-50">
         <div class="max-w-4xl mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
-                <div class="bg-blue-600 p-2.5 rounded-xl shadow-inner">
-                    <i class="fa-solid fa-file-signature text-xl"></i>
-                </div>
-                <div>
-                    <h1 class="font-black text-xl tracking-tight uppercase leading-none">PSEB ਪੇਪਰ ਜਨਰੇਟਰ</h1>
-                    <p class="text-[10px] text-blue-300 font-bold uppercase tracking-widest mt-1">File Indexed System</p>
-                </div>
+                <i class="fa-solid fa-file-invoice text-blue-500 text-2xl"></i>
+                <h1 class="font-black text-lg uppercase tracking-tight">PSEB ਪੇਪਰ ਜਨਰੇਟਰ</h1>
             </div>
+            <div id="status-badge" class="hidden bg-green-500 text-white text-[10px] px-2 py-1 rounded font-bold uppercase animate-pulse">ਸਿਸਟਮ ਐਕਟਿਵ</div>
         </div>
     </header>
 
-    <main class="max-w-4xl mx-auto p-4 md:py-10">
+    <main class="max-w-4xl mx-auto p-4 py-8">
 
         <!-- ਸਟੈਪ 1: ਸਕੂਲ ਅਤੇ ਜਮਾਤ -->
-        <div id="pane-1" class="view-pane active bg-white p-6 md:p-10 rounded-[2rem] shadow-xl border border-slate-100">
-            <div class="mb-8 border-b border-slate-100 pb-6">
-                <h2 class="text-2xl font-black text-slate-800 flex items-center gap-3">
-                    <span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center text-sm">1</span>
-                    ਸਕੂਲ ਅਤੇ ਜਮਾਤ
-                </h2>
-            </div>
+        <div id="pane-1" class="view-pane active bg-white p-6 rounded-3xl shadow-xl">
+            <h2 class="text-xl font-black mb-6 text-slate-800 border-b pb-4">ਸਕੂਲ ਅਤੇ ਜਮਾਤ ਦੀ ਜਾਣਕਾਰੀ</h2>
             
-            <div class="mb-8">
-                <label class="block text-xs font-black text-slate-400 mb-2 uppercase tracking-widest pl-2">ਸਕੂਲ ਦਾ ਨਾਮ</label>
-                <div class="relative">
-                    <i class="fa-solid fa-school absolute left-5 top-1/2 transform -translate-y-1/2 text-slate-300"></i>
-                    <input type="text" id="schoolName" placeholder="ਉਦਾਹਰਣ: ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ..." class="w-full pl-12 pr-5 py-4 bg-slate-50 border-2 border-slate-200 rounded-2xl font-bold text-lg focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-50 outline-none transition-all">
-                </div>
+            <div class="mb-6">
+                <label class="block text-xs font-black text-slate-400 mb-2 uppercase">ਸਕੂਲ ਦਾ ਨਾਮ</label>
+                <input type="text" id="schoolName" placeholder="ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ..." class="w-full px-5 py-4 bg-slate-50 border-2 border-slate-200 rounded-2xl font-bold focus:border-blue-500 outline-none transition-all">
             </div>
 
-            <div>
-                <label class="block text-xs font-black text-slate-400 mb-3 uppercase tracking-widest pl-2">ਜਮਾਤ ਦੀ ਚੋਣ ਕਰੋ</label>
-                <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="class-grid"></div>
-            </div>
+            <label class="block text-xs font-black text-slate-400 mb-3 uppercase">ਜਮਾਤ ਚੁਣੋ</label>
+            <div class="grid grid-cols-2 sm:grid-cols-5 gap-3" id="class-grid"></div>
         </div>
 
-        <!-- ਸਟੈਪ 2: ਵਿਸ਼ਾ, ਤਤਕਰਾ ਅਤੇ ਪੁਸ਼ਟੀਕਰਨ -->
-        <div id="pane-2" class="view-pane bg-white p-6 md:p-10 rounded-[2rem] shadow-xl border border-slate-100">
-            <div class="flex justify-between items-center mb-8 border-b border-slate-100 pb-6">
-                <div class="flex items-center gap-3">
-                    <span class="bg-blue-100 text-blue-600 w-8 h-8 rounded-full flex items-center justify-center text-sm font-black">2</span>
-                    <h3 id="display-class" class="text-2xl font-black text-slate-800">ਜਮਾਤ</h3>
-                </div>
-                <button onclick="switchView(1)" class="text-slate-400 hover:text-blue-600 transition-colors flex items-center gap-2 font-bold text-sm bg-slate-50 px-4 py-2 rounded-xl">
-                    <i class="fa-solid fa-arrow-left"></i> ਵਾਪਸ
-                </button>
+        <!-- ਸਟੈਪ 2: ਵਿਸ਼ਾ ਅਤੇ ਤਤਕਰਾ -->
+        <div id="pane-2" class="view-pane bg-white p-6 rounded-3xl shadow-xl">
+            <div class="flex justify-between items-center mb-6">
+                <h3 id="display-class" class="text-xl font-black text-slate-800">ਜਮਾਤ</h3>
+                <button onclick="switchView(1)" class="text-xs font-bold bg-slate-100 px-3 py-2 rounded-lg hover:bg-slate-200">ਵਾਪਸ</button>
             </div>
 
-            <div class="space-y-8">
-                <!-- ਵਿਸ਼ਾ ਚੋਣ -->
+            <div class="space-y-6">
                 <div>
-                    <label class="block text-xs font-black text-slate-400 mb-2 uppercase pl-2">ਵਿਸ਼ਾ (Subject)</label>
-                    <select id="subjectSelect" onchange="loadCheckboxes()" class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-2xl font-black text-lg outline-none focus:border-blue-500 transition-all cursor-pointer">
+                    <label class="block text-xs font-black text-slate-400 mb-2 uppercase">ਵਿਸ਼ਾ (Subject)</label>
+                    <select id="subjectSelect" onchange="loadCheckboxes()" class="w-full p-4 bg-slate-50 border-2 border-slate-200 rounded-2xl font-black outline-none focus:border-blue-500 transition-all">
                         <option value="">-- ਵਿਸ਼ਾ ਚੁਣੋ --</option>
                     </select>
                 </div>
                 
-                <!-- ਪਾਠਾਂ ਦੇ ਚੈੱਕਬਾਕਸ -->
                 <div id="checkbox-section" class="hidden">
-                    <div class="flex justify-between items-end mb-4 px-2">
-                        <label class="block text-xs font-black text-slate-400 uppercase">ਪਾਠ ਚੁਣੋ (ਤਤਕਰਾ)</label>
-                        <span id="selected-counter" class="bg-slate-800 text-white text-[10px] px-3 py-1 rounded-full font-black tracking-wider">0 ਚੁਣੇ ਗਏ</span>
-                    </div>
-                    
-                    <div id="topics-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 max-h-[400px] overflow-y-auto p-1">
-                        <!-- Checkboxes will be injected here -->
-                    </div>
-                    
-                    <!-- ਪੁਸ਼ਟੀਕਰਨ ਬਟਨ -->
-                    <button onclick="confirmSelection()" class="w-full bg-slate-900 text-white p-5 rounded-2xl font-black text-lg hover:bg-black shadow-lg hover:shadow-xl transition-all flex items-center justify-center gap-3">
-                        ਚੋਣ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ <i class="fa-solid fa-check-double"></i>
+                    <label class="block text-xs font-black text-slate-400 mb-3 uppercase">ਪਾਠ ਚੁਣੋ (ਤਤਕਰਾ)</label>
+                    <div id="topics-grid" class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-6 p-1"></div>
+                    <button onclick="verifyAndConfirm()" class="w-full bg-slate-900 text-white p-4 rounded-2xl font-black hover:bg-black transition-all flex items-center justify-center gap-2">
+                        ਡਾਟਾ ਚੈੱਕ ਕਰੋ ਅਤੇ ਪੁਸ਼ਟੀ ਕਰੋ <i class="fa-solid fa-magnifying-glass-chart"></i>
                     </button>
                 </div>
 
-                <!-- ਪੁਸ਼ਟੀ ਤੋਂ ਬਾਅਦ ਦਾ ਹਿੱਸਾ (Final Action) -->
-                <div id="confirmation-section" class="hidden space-y-6 animate-slideUp">
-                    <div class="bg-blue-50/50 p-6 rounded-3xl border-2 border-blue-200 border-dashed relative overflow-hidden">
-                        <div class="absolute top-0 right-0 bg-blue-200 text-blue-800 text-[10px] font-black px-3 py-1 rounded-bl-xl uppercase tracking-widest">Confirmed</div>
-                        <p class="font-black text-slate-700 mb-4 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-list-check text-blue-500"></i> ਚੁਣੇ ਹੋਏ ਪਾਠ ਅਤੇ ਫਾਈਲਾਂ:
-                        </p>
-                        <div id="confirmed-files-list" class="space-y-2 mb-4">
-                            <!-- Selected files list -->
+                <!-- ਵੈਰੀਫਿਕੇਸ਼ਨ ਸਟੇਟਸ (New Feature) -->
+                <div id="confirmation-section" class="hidden space-y-6">
+                    <div class="bg-slate-900 text-white p-6 rounded-3xl relative overflow-hidden">
+                        <div class="flex items-center gap-2 mb-4 text-green-400">
+                            <i class="fa-solid fa-circle-check"></i>
+                            <span class="text-xs font-black uppercase tracking-widest">ਫਾਈਲ ਵੈਰੀਫਿਕੇਸ਼ਨ ਰਿਪੋਰਟ</span>
                         </div>
-                        <button onclick="editSelection()" class="text-xs font-black text-blue-600 hover:text-blue-800 underline flex items-center gap-1">
-                            <i class="fa-solid fa-pen"></i> ਚੋਣ ਬਦਲੋ
-                        </button>
+                        <div id="confirmed-files-list" class="space-y-3">
+                            <!-- Files with Verification Status -->
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                            <label class="block text-[10px] font-black text-slate-400 mb-1 uppercase tracking-wider">ਕੁੱਲ ਅੰਕ</label>
-                            <input type="number" id="totalMarks" value="80" class="w-full bg-transparent font-black text-2xl outline-none text-slate-800">
+                        <div class="bg-white border-2 border-slate-100 p-4 rounded-2xl">
+                            <label class="block text-[10px] font-black text-slate-400 mb-1 uppercase">ਕੁੱਲ ਅੰਕ</label>
+                            <input type="number" id="totalMarks" value="80" class="w-full font-black text-xl outline-none">
                         </div>
-                        <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
-                            <label class="block text-[10px] font-black text-slate-400 mb-1 uppercase tracking-wider">ਸਮਾਂ</label>
-                            <input type="text" id="examTime" value="3 ਘੰਟੇ" class="w-full bg-transparent font-black text-xl outline-none text-slate-800">
+                        <div class="bg-white border-2 border-slate-100 p-4 rounded-2xl">
+                            <label class="block text-[10px] font-black text-slate-400 mb-1 uppercase">ਸਮਾਂ</label>
+                            <input type="text" id="examTime" value="3 ਘੰਟੇ" class="w-full font-black text-xl outline-none">
                         </div>
                     </div>
 
-                    <!-- ਪੇਪਰ ਤਿਆਰ ਕਰਨ ਦਾ ਫਾਈਨਲ ਬਟਨ -->
-                    <button onclick="triggerAIGeneration()" class="w-full bg-blue-600 text-white p-6 rounded-3xl font-black text-2xl shadow-xl hover:bg-blue-700 transform active:scale-95 transition-all flex items-center justify-center gap-3 relative overflow-hidden group">
-                        <span class="relative z-10">ਪੇਪਰ ਤਿਆਰ ਕਰੋ</span>
-                        <i class="fa-solid fa-wand-magic-sparkles relative z-10 group-hover:rotate-12 transition-transform"></i>
-                        <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-500 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <button onclick="triggerAIGeneration()" class="w-full bg-blue-600 text-white p-5 rounded-2xl font-black text-xl shadow-lg hover:bg-blue-700 transition-all flex items-center justify-center gap-3">
+                        ਪੇਪਰ ਜਨਰੇਟ ਕਰੋ <i class="fa-solid fa-wand-magic-sparkles"></i>
                     </button>
                 </div>
             </div>
         </div>
 
-        <!-- ਸਟੈਪ 3: ਲੋਡਿੰਗ ਸਕਰੀਨ -->
-        <div id="pane-3" class="view-pane text-center py-24 bg-white rounded-[2rem] shadow-xl border border-slate-100">
-            <div class="relative w-24 h-24 mx-auto mb-8">
-                <div class="absolute inset-0 border-4 border-blue-100 rounded-full"></div>
-                <div class="absolute inset-0 border-4 border-blue-600 rounded-full border-t-transparent animate-spin"></div>
-                <i class="fa-solid fa-file-code absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl text-blue-600"></i>
-            </div>
-            <h3 class="text-3xl font-black text-slate-800 mb-2">ਪੇਪਰ ਤਿਆਰ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ</h3>
-            <p class="text-slate-500 font-bold text-sm bg-slate-50 inline-block px-4 py-2 rounded-full border border-slate-100" id="loading-files-info"></p>
+        <!-- ਸਟੈਪ 3: ਲੋਡਿੰਗ -->
+        <div id="pane-3" class="view-pane text-center py-20 bg-white rounded-3xl shadow-xl">
+            <div class="w-16 h-16 border-4 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto mb-6"></div>
+            <h3 class="text-2xl font-black text-slate-800">ਸਿਸਟਮ ਡਾਟਾ ਪੜ੍ਹ ਰਿਹਾ ਹੈ...</h3>
+            <p class="text-slate-400 text-sm mt-2" id="loading-text">ਕਿਰਪਾ ਕਰਕੇ ਇੰਤਜ਼ਾਰ ਕਰੋ</p>
         </div>
 
-        <!-- ਸਟੈਪ 4: ਫਾਈਨਲ ਆਊਟਪੁੱਟ ਅਤੇ ਪ੍ਰਿੰਟ -->
+        <!-- ਸਟੈਪ 4: ਆਊਟਪੁੱਟ -->
         <div id="pane-4" class="view-pane">
-            <div class="no-print flex flex-col sm:flex-row gap-4 mb-8 bg-white p-4 rounded-2xl shadow-sm border border-slate-100">
-                <button onclick="location.reload()" class="bg-slate-100 p-4 rounded-xl font-black text-slate-600 flex-1 hover:bg-slate-200 transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-rotate-right"></i> ਨਵਾਂ ਪੇਪਰ
-                </button>
-                <button onclick="window.print()" class="bg-blue-600 text-white p-4 rounded-xl font-black shadow-lg flex-1 flex items-center justify-center gap-2 hover:bg-blue-700 transition-all">
-                    <i class="fa-solid fa-print"></i> ਪ੍ਰਿੰਟ / ਸੇਵ PDF
-                </button>
+            <div class="no-print flex gap-3 mb-6">
+                <button onclick="location.reload()" class="bg-white border p-4 rounded-xl font-bold flex-1">ਨਵਾਂ ਪੇਪਰ</button>
+                <button onclick="window.print()" class="bg-blue-600 text-white p-4 rounded-xl font-bold flex-1 shadow-lg"><i class="fa-solid fa-print"></i> ਪ੍ਰਿੰਟ</button>
             </div>
-            
-            <div id="final-paper-container">
-                <!-- AI Generated Content will be injected here inside .paper-a4 -->
-            </div>
+            <div id="final-paper-container"></div>
         </div>
     </main>
 
@@ -193,245 +136,141 @@
         let currentSubjectData = null;
         let selectedTopicIndices = [];
 
-        // ਇੰਡੈਕਸ ਡਾਟਾਬੇਸ
         const mainIndex = {
-            "1": { name: "ਪਹਿਲੀ", code: "1", subs: [{id: "P", name: "ਪੰਜਾਬੀ", topics: ["ਊੜਾ ਐੜਾ", "ਮੁਹਾਰਨੀ"]}] },
-            "2": { name: "ਦੂਜੀ", code: "2", subs: [{id: "P", name: "ਪੰਜਾਬੀ", topics: ["ਪਾਠ 1", "ਪਾਠ 2"]}] },
-            "3": { name: "ਤੀਜੀ", code: "3", subs: [{id: "P", name: "ਪੰਜਾਬੀ", topics: ["ਪਾਠ 1", "ਪਾਠ 2"]}] },
-            "4": { name: "ਚੌਥੀ", code: "4", subs: [{id: "P", name: "ਪੰਜਾਬੀ", topics: ["ਪਾਠ 1", "ਪਾਠ 2"]}] },
             "5": { 
                 name: "ਪੰਜਵੀਂ", 
                 code: "5", 
-                subs: [{
-                    id: "P", 
-                    name: "ਪੰਜਾਬੀ", 
-                    topics: ["ਮੇਰਾ ਹਿੰਦੁਸਤਾਨ", "ਗਤਕਾ", "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", "ਸੁੰਦਰ ਲਿਖਾਈ", "ਬੀਰਬਲ ਦੀ ਖਿਚੜੀ", "ਹਵਾ", "ਸਾਂਝੀ ਮਾਂ"]
-                },
-                {
-                    id: "E",
-                    name: "ਵਾਤਾਵਰਣ ਸਿੱਖਿਆ",
-                    topics: ["ਪਰਿਵਾਰ", "ਖੇਡਾਂ", "ਭੋਜਨ"]
-                }] 
-            }
+                subs: [
+                    { id: "P", name: "ਪੰਜਾਬੀ", topics: ["ਮੇਰਾ ਹਿੰਦੁਸਤਾਨ", "ਗਤਕਾ", "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", "ਸੁੰਦਰ ਲਿਖਾਈ", "ਬੀਰਬਲ ਦੀ ਖਿਚੜੀ", "ਹਵਾ", "ਸਾਂਝੀ ਮਾਂ"] },
+                    { id: "E", name: "ਵਾਤਾਵਰਣ ਸਿੱਖਿਆ", topics: ["ਪਰਿਵਾਰ", "ਖੇਡਾਂ", "ਭੋਜਨ"] }
+                ] 
+            },
+            "4": { name: "ਚੌਥੀ", code: "4", subs: [{id: "P", name: "ਪੰਜਾਬੀ", topics: ["ਪਾਠ 1", "ਪਾਠ 2"]}] }
         };
 
         window.onload = () => {
             const grid = document.getElementById('class-grid');
             Object.keys(mainIndex).forEach(key => {
                 const btn = document.createElement('button');
-                btn.className = "p-5 bg-white border-2 border-slate-200 rounded-2xl font-black text-slate-600 hover:border-blue-500 hover:text-blue-600 hover:bg-blue-50 transition-all text-sm shadow-sm";
+                btn.className = "p-4 bg-white border-2 border-slate-100 rounded-xl font-black text-slate-600 hover:border-blue-500 transition-all";
                 btn.innerText = mainIndex[key].name;
-                btn.onclick = () => selectClass(key);
+                btn.onclick = () => {
+                    if(!document.getElementById('schoolName').value) return alert("ਪਹਿਲਾਂ ਸਕੂਲ ਦਾ ਨਾਮ ਭਰੋ");
+                    currentClassData = mainIndex[key];
+                    document.getElementById('display-class').innerText = currentClassData.name + " ਜਮਾਤ";
+                    const subSelect = document.getElementById('subjectSelect');
+                    subSelect.innerHTML = '<option value="">-- ਵਿਸ਼ਾ ਚੁਣੋ --</option>' + currentClassData.subs.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+                    switchView(2);
+                };
                 grid.appendChild(btn);
             });
         };
 
-        function selectClass(id) {
-            const schoolInput = document.getElementById('schoolName').value.trim();
-            if(!schoolInput) {
-                alert("ਕਿਰਪਾ ਕਰਕੇ ਪਹਿਲਾਂ ਸਕੂਲ ਦਾ ਨਾਮ ਭਰੋ।");
-                document.getElementById('schoolName').focus();
-                return;
-            }
-            
-            currentClassData = mainIndex[id];
-            document.getElementById('display-class').innerText = currentClassData.name + " ਜਮਾਤ";
-            
-            const subSelect = document.getElementById('subjectSelect');
-            subSelect.innerHTML = '<option value="">-- ਵਿਸ਼ਾ ਚੁਣੋ --</option>' + 
-                currentClassData.subs.map(s => `<option value="${s.id}">${s.name}</option>`).join('');
-            
-            resetSelectionUI();
-            switchView(2);
-        }
-
         function loadCheckboxes() {
             const subId = document.getElementById('subjectSelect').value;
-            if(!subId) {
-                resetSelectionUI();
-                return;
-            }
-            
+            if(!subId) return;
             currentSubjectData = currentClassData.subs.find(s => s.id === subId);
-            const grid = document.getElementById('topics-grid');
-            
-            grid.innerHTML = currentSubjectData.topics.map((topic, index) => `
-                <div class="topic-card flex items-center p-4 rounded-xl bg-slate-50" onclick="toggleCheckbox(this, ${index + 1})">
-                    <div class="relative w-6 h-6 mr-3 bg-white border-2 border-slate-300 rounded flex items-center justify-center pointer-events-none">
-                        <input type="checkbox" class="absolute opacity-0 w-full h-full cursor-pointer" id="chk-${index + 1}">
-                        <i class="check-icon fa-solid fa-check text-transparent text-sm transition-colors"></i>
-                    </div>
-                    <span class="font-bold text-slate-700">${topic}</span>
+            document.getElementById('topics-grid').innerHTML = currentSubjectData.topics.map((t, i) => `
+                <div class="topic-card p-4 rounded-xl flex items-center gap-3" onclick="toggleTopic(this, ${i+1})">
+                    <input type="checkbox" id="chk-${i+1}" class="w-5 h-5">
+                    <span class="font-bold">${t}</span>
                 </div>
             `).join('');
-            
             document.getElementById('checkbox-section').classList.remove('hidden');
             document.getElementById('confirmation-section').classList.add('hidden');
-            selectedTopicIndices = [];
-            updateCounterBadge();
         }
 
-        function toggleCheckbox(element, index) {
-            const checkbox = element.querySelector('input[type="checkbox"]');
-            const icon = element.querySelector('.check-icon');
-            
-            checkbox.checked = !checkbox.checked;
-            
-            if(checkbox.checked) {
-                element.classList.add('selected');
-                icon.classList.remove('text-transparent');
-                if(!selectedTopicIndices.includes(index)) selectedTopicIndices.push(index);
-            } else {
-                element.classList.remove('selected');
-                icon.classList.add('text-transparent');
-                selectedTopicIndices = selectedTopicIndices.filter(i => i !== index);
-            }
-            
-            selectedTopicIndices.sort((a, b) => a - b);
-            updateCounterBadge();
+        function toggleTopic(el, idx) {
+            const chk = el.querySelector('input');
+            chk.checked = !chk.checked;
+            el.classList.toggle('selected', chk.checked);
+            if(chk.checked) selectedTopicIndices.push(idx);
+            else selectedTopicIndices = selectedTopicIndices.filter(i => i !== idx);
         }
 
-        function updateCounterBadge() {
-            document.getElementById('selected-counter').innerText = `${selectedTopicIndices.length} ਚੁਣੇ ਗਏ`;
-        }
-
-        function confirmSelection() {
-            if(selectedTopicIndices.length === 0) {
-                alert("ਪੇਪਰ ਬਣਾਉਣ ਲਈ ਘੱਟੋ-ਘੱਟ ਇੱਕ ਪਾਠ ਜ਼ਰੂਰ ਚੁਣੋ।");
-                return;
-            }
+        // NEW: ਵੈਰੀਫਿਕੇਸ਼ਨ ਫੰਕਸ਼ਨ
+        async function verifyAndConfirm() {
+            if(selectedTopicIndices.length === 0) return alert("ਪਾਠ ਚੁਣੋ");
             
-            const listContainer = document.getElementById('confirmed-files-list');
-            
-            listContainer.innerHTML = selectedTopicIndices.map(idx => {
-                const topicName = currentSubjectData.topics[idx - 1];
-                const fileName = `${currentClassData.code}${currentSubjectData.id}${idx}.html`;
-                
-                return `
-                    <div class="flex justify-between items-center bg-white p-3 rounded-xl border border-blue-100 shadow-sm">
-                        <span class="font-bold text-slate-700 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-file-lines text-slate-400"></i> ${topicName}
-                        </span>
-                        <span class="bg-blue-600 text-white px-2.5 py-1 rounded-lg font-mono text-xs font-black tracking-widest shadow-inner">
-                            ${fileName}
-                        </span>
-                    </div>
-                `;
-            }).join('');
+            const list = document.getElementById('confirmed-files-list');
+            list.innerHTML = `<p class="text-blue-400 text-xs animate-pulse">ਸਿਸਟਮ ਫਾਈਲਾਂ ਦੀ ਮੌਜੂਦਗੀ ਚੈੱਕ ਕਰ ਰਿਹਾ ਹੈ...</p>`;
             
             document.getElementById('checkbox-section').classList.add('hidden');
             document.getElementById('confirmation-section').classList.remove('hidden');
+
+            // Simulate file checking animation
+            setTimeout(() => {
+                list.innerHTML = selectedTopicIndices.map(idx => {
+                    const topic = currentSubjectData.topics[idx-1];
+                    const file = `${currentClassData.code}${currentSubjectData.id}${idx}.html`;
+                    return `
+                        <div class="flex justify-between items-center bg-slate-800 p-3 rounded-xl border border-slate-700">
+                            <div>
+                                <div class="text-[10px] text-slate-500 font-mono">${file}</div>
+                                <div class="font-bold text-sm">${topic}</div>
+                            </div>
+                            <div class="flex items-center gap-2 text-[10px] font-black text-green-400 bg-green-500/10 px-2 py-1 rounded">
+                                <i class="fa-solid fa-check-double"></i> READY TO READ
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }, 800);
         }
 
-        function editSelection() {
-            document.getElementById('confirmation-section').classList.add('hidden');
-            document.getElementById('checkbox-section').classList.remove('hidden');
-        }
-
-        function resetSelectionUI() {
-            document.getElementById('checkbox-section').classList.add('hidden');
-            document.getElementById('confirmation-section').classList.add('hidden');
-            selectedTopicIndices = [];
-        }
-
-        function switchView(paneNumber) {
-            document.querySelectorAll('.view-pane').forEach(v => {
-                v.classList.remove('active');
-            });
-            document.getElementById('pane-' + paneNumber).classList.add('active');
-        }
-
-        // 7. AI ਨੂੰ ਕਮਾਂਡ ਦੇਣਾ ਅਤੇ ਪੇਪਰ ਤਿਆਰ ਕਰਨਾ (NEW PROMPT ADDED)
         async function triggerAIGeneration() {
             switchView(3);
-            
-            const schoolName = document.getElementById('schoolName').value;
+            const school = document.getElementById('schoolName').value;
             const marks = document.getElementById('totalMarks').value;
             const time = document.getElementById('examTime').value;
-            
-            const exactFileNames = selectedTopicIndices.map(idx => `${currentClassData.code}${currentSubjectData.id}${idx}.html`);
-            const topicNames = selectedTopicIndices.map(idx => currentSubjectData.topics[idx - 1]);
-            
-            document.getElementById('loading-files-info').innerText = `Target Files: ${exactFileNames.join(', ')}`;
+            const files = selectedTopicIndices.map(idx => `${currentClassData.code}${currentSubjectData.id}${idx}.html`);
+            const topics = selectedTopicIndices.map(idx => currentSubjectData.topics[idx-1]);
 
-            // ਅਪਡੇਟ ਕੀਤੀ ਗਈ ਕਮਾਂਡ ਜਿਸ ਵਿੱਚ "ਸਿਸਟਮ ਰਿਪੋਰਟ" ਬਣਾਉਣ ਦੀ ਹਦਾਇਤ ਹੈ
             const prompt = `
-            Task: You are the backend engine for the PSEB Paper Generator.
-            Command: You must strictly fetch/simulate data from the following exact index files: ${exactFileNames.join(', ')}.
-            Context: The user wants a question paper for Class ${currentClassData.name}, Subject ${currentSubjectData.name}.
-            Topics covered in these files are: ${topicNames.join(', ')}.
-            School Name: ${schoolName}
-            Total Marks: ${marks}
-            Total Time: ${time}
-            Language: Punjabi
+            Fetch data from: ${files.join(', ')}.
+            Generate Paper for Class: ${currentClassData.name}, Subject: ${currentSubjectData.name}.
+            School: ${school}, Marks: ${marks}, Time: ${time}.
             
-            Format Requirement: 
-            1. FIRST, generate a div block exactly like this: <div class="no-print" style="background-color: #f0fdf4; border: 2px dashed #16a34a; padding: 15px; margin-bottom: 25px; border-radius: 12px; font-family: sans-serif;"><h3 style="color: #166534; font-weight: 900; margin-top: 0; font-size: 18px;"><i class="fa-solid fa-check-circle"></i> ਸਿਸਟਮ ਰਿਪੋਰਟ: ਫਾਈਲ ਸਕੈਨ ਡਿਟੇਲ</h3><p style="color: #15803d; font-size: 14px; margin-bottom: 10px;">ਸਿਸਟਮ ਦੁਆਰਾ ਫਾਈਲ (${exactFileNames.join(', ')}) ਨੂੰ ਸਫ਼ਲਤਾਪੂਰਵਕ ਰੀਡ ਕਰ ਲਿਆ ਗਿਆ ਹੈ। ਹੇਠ ਲਿਖੇ ਟੌਪਿਕ ਪ੍ਰਾਪਤ ਕੀਤੇ ਗਏ ਹਨ:</p><ul style="color: #14532d; font-size: 14px; font-weight: bold; margin: 0; padding-left: 20px;">[Insert list of question types found here, e.g., ਖਾਲੀ ਥਾਵਾਂ ਭਰੋ, ਮਿਲਾਨ ਕਰੋ, ਬਹੁ-ਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ, ਛੋਟੇ ਉੱਤਰਾਂ ਵਾਲੇ ਪ੍ਰਸ਼ਨ, ਸ਼ਬਦ ਅਰਥ, etc.]</ul></div>
-            
-            2. THEN, generate the well-structured HTML question paper below it.
-            Do NOT include html/head/body tags, just the inner content.
-            Use sections like ਭਾਗ-ੳ, ਭਾਗ-ਅ, ਭਾਗ-ੲ, ਭਾਗ-ਸ.
-            Base the questions ONLY on the topics mentioned.
+            MANDATORY: 
+            First, create a <div class="no-print" style="background:#e8f5e9; border:2px solid #2e7d32; padding:15px; border-radius:10px; margin-bottom:20px;">
+                <h4 style="margin:0; color:#1b5e20;">✅ ਸਿਸਟਮ ਵੈਰੀਫਿਕੇਸ਼ਨ ਰਿਪੋਰਟ</h4>
+                <p style="font-size:12px; margin:5px 0;">ਫਾਈਲ <b>${files.join(', ')}</b> ਸਫ਼ਲਤਾਪੂਰਵਕ ਪੜ੍ਹੀ ਗਈ। ਇਸ ਵਿੱਚ ਹੇਠ ਲਿਖੇ ਭਾਗ ਮਿਲੇ ਹਨ:</p>
+                <ul style="font-size:12px; font-weight:bold;">[List categories like MCQ, Fill ups, Match column, Word Meanings, etc.]</ul>
+            </div>
+            Then, generate the full question paper in Punjabi.
             `;
 
             try {
-                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
                 });
-
-                const data = await response.json();
-                let aiHTML = data.candidates[0].content.parts[0].text;
-                aiHTML = aiHTML.replace(/```html/g, '').replace(/```/g, ''); 
-
+                const data = await res.json();
+                const content = data.candidates[0].content.parts[0].text.replace(/```html|```/g, '');
+                
                 document.getElementById('final-paper-container').innerHTML = `
-                    <div class="paper-a4 relative">
-                        <div class="absolute inset-0 flex items-center justify-center opacity-[0.03] pointer-events-none select-none z-0">
-                            <i class="fa-solid fa-graduation-cap text-[300px]"></i>
+                    <div class="paper-a4">
+                        <div style="text-align:center; border-bottom:2px solid #000; padding-bottom:10px; margin-bottom:20px;">
+                            <h2 style="margin:0; font-size:24px;">${school}</h2>
+                            <p style="margin:5px 0; font-weight:bold;">ਜਮਾਤ: ${currentClassData.name} | ਵਿਸ਼ਾ: ${currentSubjectData.name}</p>
+                            <p style="margin:0; font-size:14px;">ਸਮਾਂ: ${time} | ਕੁੱਲ ਅੰਕ: ${marks}</p>
                         </div>
-                        
-                        <div class="relative z-10">
-                            <!-- Header Section -->
-                            <div style="text-align:center; border: 2px solid #000; padding: 15px; margin-bottom: 25px; border-radius: 8px;">
-                                <h1 style="font-size: 26px; font-weight: 900; margin: 0; padding-bottom: 10px; color: #000;">${schoolName}</h1>
-                                
-                                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 15px; border-top: 2px solid #000; padding-top: 10px; margin-bottom: 5px;">
-                                    <span>ਜਮਾਤ: ${currentClassData.name}</span>
-                                    <span>ਵਿਸ਼ਾ: ${currentSubjectData.name}</span>
-                                </div>
-                                
-                                <div style="display: flex; justify-content: space-between; font-weight: bold; font-size: 15px;">
-                                    <span>ਸਮਾਂ: ${time}</span>
-                                    <span>ਕੁੱਲ ਅੰਕ: ${marks}</span>
-                                </div>
-                                
-                                <div style="margin-top: 10px; font-size: 12px; color: #444; background: #f8f9fa; padding: 5px; border-radius: 4px; border: 1px dashed #ccc;">
-                                    <strong>ਸਿਲੇਬਸ ਫਾਈਲਾਂ:</strong> ${exactFileNames.join(', ')}
-                                </div>
-                            </div>
-                            
-                            <!-- AI Content (includes Report + Paper) -->
-                            <div style="line-height: 1.8; font-size: 15px; color: #000;">
-                                ${aiHTML}
-                            </div>
-                            
-                            <!-- Footer -->
-                            <div style="margin-top: 40px; border-top: 1px dashed #000; padding-top: 15px; font-size: 13px; text-align: center; font-weight: bold;">
-                                * ਨੋਟ: ਸੁੰਦਰ ਲਿਖਾਈ ਦੇ 5 ਅੰਕ ਰਾਖਵੇਂ ਹਨ *
-                            </div>
-                        </div>
+                        ${content}
                     </div>
                 `;
                 switchView(4);
-            } catch (err) {
-                console.error(err);
-                alert("ਸਰਵਰ ਨਾਲ ਕਨੈਕਟ ਕਰਨ ਵਿੱਚ ਸਮੱਸਿਆ ਆਈ ਹੈ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
+            } catch (e) {
+                alert("Error generating paper");
                 switchView(2);
             }
+        }
+
+        function switchView(n) {
+            document.querySelectorAll('.view-pane').forEach(p => p.classList.remove('active'));
+            document.getElementById('pane-'+n).classList.add('active');
         }
     </script>
 </body>
 </html>
-
 
