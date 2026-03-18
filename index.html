@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ - 3D ਪਲੇਟਫਾਰਮ</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <!-- ਗੁਰਮੁਖੀ ਫੋਂਟ -->
     <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet">
     
     <script>
@@ -168,13 +165,17 @@
             .class-btn-mini { width: 28px; height: 28px; font-size: 14px; border-radius: 8px; } 
             .class-btn-text { height: 28px; font-size: 12px; border-radius: 8px; padding: 0 10px;}
         }
+
+        /* QR Magnify Effect */
+        .qr-container { position: relative; transition: all 0.3s ease; cursor: zoom-in; }
+        .qr-container:hover { transform: scale(1.1); z-index: 50; }
+        .qr-container:hover img { box-shadow: 0 10px 20px rgba(0,0,0,0.2); border-color: #3b82f6; }
     </style>
 </head>
 <body class="pb-24 md:pb-0 relative">
 
     <div class="bg-3d-pattern"></div>
 
-    <!-- 3D ਹੈਡਰ -->
     <header class="sticky top-2 md:top-4 z-50 px-2 md:px-4 max-w-7xl mx-auto w-full pt-1">
         <div class="clay-card bg-gradient-to-r from-blue-500 to-indigo-600 p-2 md:p-3 flex justify-between items-center shadow-[0_6px_15px_rgba(37,99,235,0.3)]">
             <div class="flex items-center gap-2 md:gap-3 cursor-pointer group" onclick="showHome()">
@@ -195,14 +196,12 @@
         </div>
     </header>
 
-    <!-- ਉੱਪਰਲੀ ਟੈਗਲਾਈਨ -->
     <div class="scrolling-container mt-1 shrink-0 shadow-sm">
         <div class="scrolling-text">
             ✨ ਜੀ ਆਇਆਂ ਨੂੰ! ਨਵੇਂ ਵਿਦਿਅਕ ਸੈਸ਼ਨ 2026-27 ਲਈ ਬੱਚਿਆਂ ਵਾਸਤੇ ਇਹ ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ ਤਿਆਰ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ। 🚀 ਹੋਰ ਵਿਦਿਅਕ ਸਹਾਇਕ ਸਮੱਗਰੀ ਲਈ ਸਾਡੇ ਨਾਲ ਜੁੜੇ ਰਹੋ, ਬਾਕੀ ਸਮੱਗਰੀ ਜਲਦ ਹੀ ਅਪਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ! 📚
         </div>
     </div>
 
-    <!-- ================= ਸੋਸ਼ਲ ਮੀਡੀਆ ਫਲੋਟਿੰਗ ਪੌਪ-ਅਪ ਬਟਨ ================= -->
     <div class="fixed top-[115px] md:top-[135px] left-2 md:left-4 z-[60]">
         <a href="https://youtube.com/@gurminderjassal?si=8wgllXcc1LnChxvZ" target="_blank" class="social-btn-3d bg-gradient-to-b from-red-500 to-red-700 border-2 border-white rounded-full shadow-[0_6px_0_#7f1d1d,0_10px_20px_rgba(0,0,0,0.3)] gap-2 px-1.5 py-1.5 md:px-2 md:py-2 group" style="--btn-shadow: #7f1d1d;">
             <div class="shimmer-effect rounded-full"></div>
@@ -231,10 +230,8 @@
         </a>
     </div>
 
-    <!-- ਮੁੱਖ ਕੰਟੈਂਟ ਏਰੀਆ -->
     <main id="main-content" class="flex-grow container mx-auto px-2 md:px-4 py-4 relative max-w-6xl z-10 mt-6 md:mt-2">
 
-        <!-- ================= VIEW 1: HOME ================= -->
         <div id="home-view" class="view-section active">
             <div class="text-center mb-6">
                 <div class="inline-block clay-card bg-white px-6 py-2 mb-1 shadow-sm">
@@ -267,7 +264,6 @@
                 </button>
             </div>
 
-            <!-- ਮਿਸ਼ਨ ਸਮਰੱਥ (Banner) -->
             <div class="px-1 mb-6 mt-4">
                 <button onclick="openMissionSamarth()" class="btn-3d-super w-full bg-gradient-to-r from-purple-600 via-fuchsia-500 to-pink-500 text-white rounded-[1.5rem] p-4 md:p-6 shadow-[0_6px_0_#86198f] flex flex-col md:flex-row items-center justify-between group" style="--shadow-color: #86198f;">
                     <div class="flex items-center gap-3 w-full md:w-auto">
@@ -285,7 +281,6 @@
                 </button>
             </div>
 
-            <!-- YouTube ਵੀਡੀਓ ਸੈਕਸ਼ਨ -->
             <div class="clay-card bg-gradient-to-br from-red-50 to-orange-50 p-4 shadow-sm border border-red-200 mt-4 mb-5">
                 <div class="flex flex-col sm:flex-row items-center justify-between border-b border-red-200 pb-2 mb-3">
                     <h3 class="text-lg md:text-xl font-extrabold text-red-700 flex items-center gap-2">
@@ -298,75 +293,71 @@
                 <div id="latest-youtube-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
             </div>
 
-            <!-- ================= ਨਵਾਂ: QR ਕੋਡ ਅਤੇ ਸ਼ੇਅਰ ਸੈਕਸ਼ਨ (3 Cards Grid) ================= -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 mt-2 px-1">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4 mt-2 px-1">
                 
-                <!-- ਵੈੱਬਸਾਈਟ ਸ਼ੇਅਰ (ਨੀਲਾ) -->
                 <div class="clay-card bg-gradient-to-r from-blue-50 to-indigo-100 p-3 md:p-4 shadow-sm border border-indigo-200 flex flex-row items-center justify-between w-full">
                     <div class="flex flex-col text-left w-[70%]">
                         <h3 class="text-sm md:text-lg font-black text-indigo-800 mb-1 flex items-center gap-1.5 md:gap-2">
                             <i class="fa-solid fa-qrcode text-indigo-600 text-lg md:text-2xl float-anim"></i> ਵੈੱਬਸਾਈਟ
                         </h3>
-                        <p class="text-[9px] md:text-xs font-bold text-gray-600 leading-tight">ਆਪਣੇ ਫੋਨ ਨਾਲ ਸਕੈਨ ਕਰੋ ਜਾਂ ਲਿੰਕ ਸਾਂਝਾ ਕਰੋ।</p>
-                        <button onclick="shareWebsite(this)" class="btn-3d-super mt-2 bg-gradient-to-r from-indigo-500 to-blue-600 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full font-black text-[10px] md:text-sm shadow-[0_3px_0_#3730a3] flex items-center justify-center gap-1.5 w-max" style="--shadow-color: #3730a3; flex-direction: row;">
-                            <i class="fa-solid fa-share-nodes"></i> ਸ਼ੇਅਰ ਕਰੋ
+                        <p class="text-[9px] md:text-xs font-bold text-gray-600 leading-tight">ਸਕੈਨ ਜਾਂ ਲਿੰਕ ਸਾਂਝਾ ਕਰੋ।</p>
+                        <button onclick="shareWebsite(this)" class="btn-3d-super mt-2 bg-gradient-to-r from-indigo-500 to-blue-600 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full font-black text-[10px] md:text-sm shadow-[0_3px_0_#3730a3] flex items-center justify-center gap-1.5 w-max" style="--shadow-color: #3730a3;">
+                            <i class="fa-solid fa-share-nodes"></i> ਸ਼ੇਅਰ
                         </button>
                     </div>
-                    <div class="bg-white p-1.5 md:p-2 rounded-xl shadow-inner border-2 border-indigo-200 shrink-0 ml-2 relative cursor-pointer group hover:shadow-lg transition-shadow" onclick="openQRModal('https://quickchart.io/qr?text=https%3A%2F%2Fprimarysikheyapunjab.github.io%2F&size=500&margin=1', '<i class=\'fa-solid fa-qrcode text-indigo-600\'></i> ਵੈੱਬਸਾਈਟ ਕਿਊ.ਆਰ ਕੋਡ')">
-                        <img src="https://quickchart.io/qr?text=https%3A%2F%2Fprimarysikheyapunjab.github.io%2F&size=150&margin=1" alt="Website QR Code" class="w-14 h-14 md:w-20 md:h-20 object-contain rounded-md">
-                        <!-- Permanent Magnifying Glass Icon -->
-                        <div class="absolute -bottom-2 -right-2 bg-indigo-600 text-white w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center border-2 border-white shadow-md group-active:scale-90 transition-transform">
-                            <i class="fa-solid fa-magnifying-glass-plus text-[10px] md:text-sm"></i>
-                        </div>
+                    <div class="qr-container bg-white p-1.5 rounded-xl shadow-inner border-2 border-indigo-200 shrink-0 ml-2">
+                        <img src="https://quickchart.io/qr?text=https%3A%2F%2Fprimarysikheyapunjab.github.io%2F&size=150&margin=1" alt="QR" class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-md">
                     </div>
                 </div>
 
-                <!-- WhatsApp ਗਰੁੱਪ (ਹਰਾ) -->
+                <div class="clay-card bg-gradient-to-r from-red-50 to-rose-100 p-3 md:p-4 shadow-sm border border-red-200 flex flex-row items-center justify-between w-full">
+                    <div class="flex flex-col text-left w-[70%]">
+                        <h3 class="text-sm md:text-lg font-black text-red-800 mb-1 flex items-center gap-1.5 md:gap-2">
+                            <i class="fa-brands fa-youtube text-red-600 text-lg md:text-2xl float-anim"></i> YouTube
+                        </h3>
+                        <p class="text-[9px] md:text-xs font-bold text-gray-600 leading-tight">ਸਬਸਕ੍ਰਾਈਬ ਕਰਨ ਲਈ ਸਕੈਨ।</p>
+                        <a href="https://youtube.com/@primary_education_punjab?si=9v9PvI_2e2YkwOOt" target="_blank" class="btn-3d-super mt-2 bg-gradient-to-r from-red-500 to-rose-600 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full font-black text-[10px] md:text-sm shadow-[0_3px_0_#9f1239] flex items-center justify-center gap-1.5 w-max no-underline">
+                            <i class="fa-solid fa-bell"></i> ਜੁਆਇਨ
+                        </a>
+                    </div>
+                    <div class="qr-container bg-white p-1.5 rounded-xl shadow-inner border-2 border-red-200 shrink-0 ml-2">
+                        <img src="https://quickchart.io/qr?text=https%3A%2F%2Fyoutube.com%2F%40primary_education_punjab%3Fsi%3D9v9PvI_2e2YkwOOt&size=150&margin=1" alt="QR" class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-md">
+                    </div>
+                </div>
+
                 <div class="clay-card bg-gradient-to-r from-green-50 to-emerald-100 p-3 md:p-4 shadow-sm border border-green-200 flex flex-row items-center justify-between w-full">
                     <div class="flex flex-col text-left w-[70%]">
                         <h3 class="text-sm md:text-lg font-black text-green-800 mb-1 flex items-center gap-1.5 md:gap-2">
                             <i class="fa-brands fa-whatsapp text-green-600 text-lg md:text-2xl float-anim"></i> WhatsApp
                         </h3>
-                        <p class="text-[9px] md:text-xs font-bold text-gray-600 leading-tight">ਸਾਡੇ ਗਰੁੱਪ ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਣ ਲਈ ਸਕੈਨ ਕਰੋ।</p>
-                        <a href="https://chat.whatsapp.com/I4Xkh7R2g1U7O4qxJOZzJq?mode=gi_t" target="_blank" class="btn-3d-super mt-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full font-black text-[10px] md:text-sm shadow-[0_3px_0_#166534] flex items-center justify-center gap-1.5 w-max" style="--shadow-color: #166534; flex-direction: row; text-decoration: none;">
-                            <i class="fa-solid fa-user-plus"></i> ਹੁਣੇ ਜੁੜੋ
+                        <p class="text-[9px] md:text-xs font-bold text-gray-600 leading-tight">ਪੁਰਾਣਾ ਗਰੁੱਪ ਜੁਆਇਨ ਕਰੋ।</p>
+                        <a href="https://chat.whatsapp.com/I4Xkh7R2g1U7O4qxJOZzJq?mode=gi_t" target="_blank" class="btn-3d-super mt-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full font-black text-[10px] md:text-sm shadow-[0_3px_0_#166534] flex items-center justify-center gap-1.5 w-max no-underline">
+                            <i class="fa-solid fa-users"></i> ਗਰੁੱਪ 1
                         </a>
                     </div>
-                    <div class="bg-white p-1.5 md:p-2 rounded-xl shadow-inner border-2 border-green-200 shrink-0 ml-2 relative cursor-pointer group hover:shadow-lg transition-shadow" onclick="openQRModal('https://quickchart.io/qr?text=https%3A%2F%2Fchat.whatsapp.com%2FI4Xkh7R2g1U7O4qxJOZzJq%3Fmode%3Dgi_t&size=500&margin=1', '<i class=\'fa-brands fa-whatsapp text-green-600\'></i> WhatsApp ਗਰੁੱਪ ਕਿਊ.ਆਰ')">
-                        <img src="https://quickchart.io/qr?text=https%3A%2F%2Fchat.whatsapp.com%2FI4Xkh7R2g1U7O4qxJOZzJq%3Fmode%3Dgi_t&size=150&margin=1" alt="WhatsApp QR Code" class="w-14 h-14 md:w-20 md:h-20 object-contain rounded-md">
-                        <!-- Permanent Magnifying Glass Icon -->
-                        <div class="absolute -bottom-2 -right-2 bg-green-600 text-white w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center border-2 border-white shadow-md group-active:scale-90 transition-transform">
-                            <i class="fa-solid fa-magnifying-glass-plus text-[10px] md:text-sm"></i>
-                        </div>
+                    <div class="qr-container bg-white p-1.5 rounded-xl shadow-inner border-2 border-green-200 shrink-0 ml-2">
+                        <img src="https://quickchart.io/qr?text=https%3A%2F%2Fchat.whatsapp.com%2FI4Xkh7R2g1U7O4qxJOZzJq%3Fmode%3Dgi_t&size=150&margin=1" alt="QR" class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-md">
                     </div>
                 </div>
 
-                <!-- YouTube ਚੈਨਲ (ਲਾਲ) -->
-                <div class="clay-card bg-gradient-to-r from-red-50 to-rose-100 p-3 md:p-4 shadow-sm border border-red-200 flex flex-row items-center justify-between w-full sm:col-span-2 lg:col-span-1">
+                <div class="clay-card bg-gradient-to-r from-cyan-50 to-blue-100 p-3 md:p-4 shadow-sm border border-blue-200 flex flex-row items-center justify-between w-full">
                     <div class="flex flex-col text-left w-[70%]">
-                        <h3 class="text-sm md:text-lg font-black text-red-800 mb-1 flex items-center gap-1.5 md:gap-2">
-                            <i class="fa-brands fa-youtube text-red-600 text-lg md:text-2xl float-anim"></i> YouTube
+                        <h3 class="text-sm md:text-lg font-black text-blue-800 mb-1 flex items-center gap-1.5 md:gap-2">
+                            <i class="fa-brands fa-whatsapp text-blue-600 text-lg md:text-2xl float-anim"></i> WhatsApp
                         </h3>
-                        <p class="text-[9px] md:text-xs font-bold text-gray-600 leading-tight">ਹੋਰ ਵੀਡੀਓਜ਼ ਲਈ ਸਕੈਨ ਕਰਕੇ ਸਬਸਕ੍ਰਾਈਬ ਕਰੋ।</p>
-                        <a href="https://youtube.com/@primary_education_punjab?si=9v9PvI_2e2YkwOOt" target="_blank" class="btn-3d-super mt-2 bg-gradient-to-r from-red-500 to-rose-600 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full font-black text-[10px] md:text-sm shadow-[0_3px_0_#9f1239] flex items-center justify-center gap-1.5 w-max" style="--shadow-color: #9f1239; flex-direction: row; text-decoration: none;">
-                            <i class="fa-solid fa-bell"></i> ਸਬਸਕ੍ਰਾਈਬ
+                        <p class="text-[9px] md:text-xs font-bold text-gray-600 leading-tight">ਨਵਾਂ ਗਰੁੱਪ ਜੁਆਇਨ ਕਰੋ।</p>
+                        <a href="https://chat.whatsapp.com/LagJuorxJCS5Nb7hXfFdY8?mode=gi_t" target="_blank" class="btn-3d-super mt-2 bg-gradient-to-r from-blue-500 to-cyan-600 text-white px-3 py-1.5 md:px-4 md:py-2 rounded-full font-black text-[10px] md:text-sm shadow-[0_3px_0_#1e40af] flex items-center justify-center gap-1.5 w-max no-underline" style="--shadow-color: #1e40af;">
+                            <i class="fa-solid fa-user-plus"></i> ਨਵਾਂ ਗਰੁੱਪ
                         </a>
                     </div>
-                    <div class="bg-white p-1.5 md:p-2 rounded-xl shadow-inner border-2 border-red-200 shrink-0 ml-2 relative cursor-pointer group hover:shadow-lg transition-shadow" onclick="openQRModal('https://quickchart.io/qr?text=https%3A%2F%2Fyoutube.com%2F%40primary_education_punjab%3Fsi%3D9v9PvI_2e2YkwOOt&size=500&margin=1', '<i class=\'fa-brands fa-youtube text-red-600\'></i> YouTube ਕਿਊ.ਆਰ')">
-                        <img src="https://quickchart.io/qr?text=https%3A%2F%2Fyoutube.com%2F%40primary_education_punjab%3Fsi%3D9v9PvI_2e2YkwOOt&size=150&margin=1" alt="YouTube QR Code" class="w-14 h-14 md:w-20 md:h-20 object-contain rounded-md">
-                        <!-- Permanent Magnifying Glass Icon -->
-                        <div class="absolute -bottom-2 -right-2 bg-red-600 text-white w-6 h-6 md:w-8 md:h-8 rounded-full flex items-center justify-center border-2 border-white shadow-md group-active:scale-90 transition-transform">
-                            <i class="fa-solid fa-magnifying-glass-plus text-[10px] md:text-sm"></i>
-                        </div>
+                    <div class="qr-container bg-white p-1.5 rounded-xl shadow-inner border-2 border-blue-200 shrink-0 ml-2">
+                        <img src="https://quickchart.io/qr?text=https%3A%2F%2Fchat.whatsapp.com%2FLagJuorxJCS5Nb7hXfFdY8%3Fmode%3Dgi_t&size=150&margin=1" alt="QR" class="w-14 h-14 md:w-16 md:h-16 object-contain rounded-md">
                     </div>
                 </div>
 
             </div>
-            <!-- ========================================================================= -->
+            </div>
 
-        </div>
-
-        <!-- HTML Snippet for Landscape Class Selector (Used in Headers) -->
         <template id="landscape-selector-template">
             <div class="landscape-class-selector items-center bg-gray-100 p-1 md:p-1.5 rounded-xl border border-gray-300 shadow-inner mr-1 md:mr-3 overflow-hidden flex-wrap">
                 <div class="flex items-center gap-1.5 mr-2">
@@ -385,7 +376,6 @@
             </div>
         </template>
 
-        <!-- ================= VIEW 2: CLASS VIEW ================= -->
         <div id="class-view" class="view-section">
             <div class="clay-card bg-white p-3 md:p-4 mb-4 flex items-center justify-between shadow-sm">
                 <h2 id="class-title" class="text-lg md:text-2xl font-black text-blue-700 flex items-center gap-2 text-3d-light"></h2>
@@ -400,7 +390,6 @@
             <div id="subjects-grid" class="gap-4 md:gap-5 px-1 w-full"></div>
         </div>
 
-        <!-- ================= VIEW 3: SUBJECT VIEW (ਤਤਕਰਾ) ================= -->
         <div id="subject-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-orange-100 flex items-center justify-between shrink-0 shadow-sm">
                 <div class="flex items-center gap-2 w-[45%] sm:w-[50%] overflow-hidden">
@@ -429,7 +418,6 @@
             </div>
         </div>
 
-        <!-- ================= VIEW 4: MISSION SAMARTH ================= -->
         <div id="mission-samarth-view" class="view-section">
             <div class="clay-card bg-white p-3 mb-4 border border-fuchsia-200 flex items-center justify-between shadow-sm">
                 <h2 class="text-lg md:text-2xl font-black text-purple-700 flex items-center gap-2">
@@ -459,7 +447,6 @@
             </div>
         </div>
 
-        <!-- ================= VIEW 5: MISSION MATERIALS ================= -->
         <div id="mission-materials-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-fuchsia-100 flex items-center justify-between shadow-sm">
                 <div class="flex items-center gap-2 w-[45%] sm:w-[50%] overflow-hidden">
@@ -480,7 +467,6 @@
             </div>
         </div>
 
-        <!-- ================= NEW VIEW: YOUTUBE FOLDER ================= -->
         <div id="youtube-view" class="view-section">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 border border-red-100 flex items-center justify-between shadow-sm">
                 <div class="flex items-center gap-2 w-[45%] sm:w-[50%] overflow-hidden">
@@ -498,12 +484,10 @@
             </div>
             <div class="clay-card bg-white p-2 flex flex-col min-h-[40vh] shadow-sm">
                 <div id="youtube-list-container" class="flex flex-col gap-2 overflow-y-auto custom-scroll pr-1 max-h-[60vh]">
-                    <!-- YouTube Items -->
-                </div>
+                    </div>
             </div>
         </div>
 
-        <!-- ================= VIEW 6: CONTENT IFRAME ================= -->
         <div id="content-view" class="view-section h-full flex-col">
             <div class="clay-card bg-white p-2 md:p-3 mb-3 flex items-center justify-between shadow-sm shrink-0">
                 <h2 id="content-title" class="text-sm md:text-lg font-black text-blue-700 truncate flex items-center gap-2 w-[45%] sm:w-[50%]">
@@ -539,14 +523,12 @@
 
     </main>
 
-    <!-- ਤਿਆਰ ਕਰਤਾ ਵਾਲੀ ਹੇਠਲੀ ਮੋਟੀ ਲਾਈਨ -->
     <div class="bottom-scrolling-container mt-auto shrink-0 z-20 relative">
         <div class="bottom-scrolling-text">
             ਤਿਆਰ ਕਰਤਾ :- ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸ.ਪ.ਸ ਜਵੱਦੀ, ਬਲਾਕ ਲੁਧਿਆਣਾ-1 (ਜ਼ਿਲ੍ਹਾ ਲੁਧਿਆਣਾ) ★ ਤਿਆਰ ਕਰਤਾ :- ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸ.ਪ.ਸ ਜਵੱਦੀ, ਬਲਾਕ ਲੁਧਿਆਣਾ-1 (ਜ਼ਿਲ੍ਹਾ ਲੁਧਿਆਣਾ) ★
         </div>
     </div>
 
-    <!-- ਮੋਬਾਈਲ ਲਈ ਫਲੋਟਿੰਗ 3D ਪੱਟੀ -->
     <div class="md:hidden fixed bottom-14 left-1/2 transform -translate-x-1/2 w-[90%] max-w-sm bg-white/95 backdrop-blur-md shadow-[0_10px_25px_rgba(0,0,0,0.3)] z-[100] border-2 border-gray-200 rounded-full flex justify-around items-center py-1.5 px-2">
         <button onclick="showHome();" class="flex flex-col items-center justify-center bg-blue-50 text-blue-700 w-[30%] h-12 rounded-full border-b-2 border-blue-200 active:border-b-0 active:translate-y-1 transition-all">
             <i class="fa-solid fa-house text-lg mb-0.5"></i><span class="text-[9px] font-black">ਹੋਮ</span>
@@ -559,32 +541,6 @@
         </button>
     </div>
 
-    <!-- ================= ਨਵਾਂ: QR ਕੋਡ ਫੁੱਲ ਸਕਰੀਨ ਮਾਡਲ (Modal) ================= -->
-    <div id="qr-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300">
-        <div class="bg-white p-5 md:p-8 rounded-3xl shadow-2xl flex flex-col items-center max-w-[90vw] max-h-[90vh] relative border-4 border-gray-200">
-            <!-- Close Button Top Right -->
-            <button onclick="closeQRModal()" class="absolute -top-4 -right-4 bg-red-600 text-white w-10 h-10 rounded-full border-2 border-white shadow-lg text-xl flex items-center justify-center active:scale-90 transition-transform">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-            
-            <h3 id="qr-modal-title" class="text-xl md:text-3xl font-black text-gray-800 mb-4 w-full text-center flex items-center justify-center gap-2"></h3>
-            
-            <div class="bg-gray-100 p-3 rounded-2xl shadow-inner mb-6">
-                <img id="qr-modal-img" src="" alt="Full Screen QR" class="w-64 h-64 md:w-96 md:h-96 object-contain rounded-xl bg-white p-2 shadow-sm cursor-pointer" ondblclick="closeQRModal()">
-            </div>
-            
-            <p class="text-gray-500 text-xs md:text-sm font-bold mb-4 bg-gray-100 px-4 py-2 rounded-full border border-gray-200 text-center flex items-center gap-2">
-                <i class="fa-regular fa-hand-pointer text-indigo-500"></i> ਵਾਪਸ ਜਾਣ ਲਈ ਤਸਵੀਰ 'ਤੇ ਡਬਲ ਟੱਚ ਕਰੋ
-            </p>
-            
-            <button onclick="closeQRModal()" class="btn-3d-super bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 px-8 py-2.5 rounded-full font-black text-sm md:text-lg shadow-[0_4px_0_#94a3b8] flex items-center justify-center gap-2 w-full md:w-auto" style="--shadow-color: #94a3b8;">
-                <i class="fa-solid fa-arrow-left"></i> ਵਾਪਸ ਜਾਓ
-            </button>
-        </div>
-    </div>
-    <!-- ======================================================================= -->
-
-    <!-- JavaScript Data and Logic -->
     <script>
         let viewHistory = ['home-view'];
 
@@ -670,30 +626,6 @@
             }
         }
 
-        // ================= ਨਵਾਂ: QR ਕੋਡ ਫੁੱਲ ਸਕਰੀਨ ਲੌਜਿਕ =================
-        function openQRModal(imgSrc, titleHtml) {
-            const modal = document.getElementById('qr-modal');
-            const modalImg = document.getElementById('qr-modal-img');
-            const modalTitle = document.getElementById('qr-modal-title');
-            
-            modalImg.src = imgSrc;
-            modalTitle.innerHTML = titleHtml;
-            
-            modal.classList.remove('hidden');
-            setTimeout(() => {
-                modal.classList.remove('opacity-0');
-            }, 10);
-        }
-
-        function closeQRModal() {
-            const modal = document.getElementById('qr-modal');
-            modal.classList.add('opacity-0');
-            setTimeout(() => {
-                modal.classList.add('hidden');
-            }, 300);
-        }
-        // ================================================================
-
         // ================= 100% ਮੁਕੰਮਲ ਡਾਟਾਬੇਸ =================
         const schoolData = {
             1: { name: "ਪਹਿਲੀ ਜਮਾਤ", subjects: [
@@ -723,7 +655,7 @@
                 name: "ਪੰਜਵੀਂ ਜਮਾਤ", 
                 subjects: [
                     { id: "p", name: "ਪੰਜਾਬੀ", emoji: "ੳ", grad: "from-pink-400 to-rose-600", shadow: "#be123c", chapters: [
-                        {t: "ਮੇਰਾ ਹਿੰਦੁਸਤਾਨ", ty: "ਕਵਿਤਾ", p: "1"}, {t: "ਗਤਕਾ", ty: "ਲੇਖ", p: "5"}, {t: "ਬਾਰਾਂਮਾਂਹ", ty: "ਕਵਿਤਾ", p: "10"}, {t: "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", ty: "ਜੀਵਨੀ", p: "14"}, {t: "ਸਿਆਣੀ ਗੱਲ", ty: "ਕਹਾਣੀ", p: "20"}, {t: "ਆਸਮਾਨ ਦੀਆਂ ਪਰੀਆਂ", ty: "ਕਵਿਤਾ", p: "26"}, {t: "ਦਾਦੀ ਮਾਂ", ty: "ਲੇਖ", p: "31"}, {t: "ਚਿੜੀਆ ਘਰ", ty: "ਕਵਿਤਾ", p: "37"}, {t: "ਸੁੰਢ ਤੇ ਹਲਦੀ", ty: "ਕਹਾਣੀ", p: "41"}, {t: "ਦੁਸਹਿਰਾ", ty: "ਲੇਖ", p: "47"}, {t: "ਅਨੋਖਾ ਤੋਹਫ਼ਾ", ty: "ਕਹਾਣੀ", p: "53"}, {t: "ਮਿੱਤਰ ਦੀ ਪਛਾਣ", ty: "ਕਹਾਣੀ", p: "59"}, {t: "ਰੁੱਖਾਂ ਦੀ ਮਹੱਤਤਾ", ty: "ਲੇਖ", p: "64"}, {t: "ਕਲਪਨਾ ਚਾਵਲਾ", ty: "ਜੀਵਨੀ", p: "69"}, {t: "ਰਬੜ ਦੀ ਖ਼ਬਰ", ty: "ਲੇਖ", p: "75"}, {t: "ਸ਼ਹੀਦ ਭਗਤ ਸਿੰਘ", ty: "ਜੀਵਨੀ", p: "81"}, {t: "ਸ ਸਾਡਾ ਪੰਜਾਬ", ty: "ਲੇਖ", p: "86"}, {t: "ਸ਼ੇਰ ਅਤੇ ਖਰਗੋਸ਼", ty: "ਕਹਾਣੀ", p: "92"}, {t: "ਮੇਲਾ", ty: "ਲੇਖ", p: "98"}, {t: "ਸਿਆਣਾ ਕਾਂ", ty: "ਕਹਾਣੀ", p: "104"}
+                        {t: "ਮੇਰਾ ਹਿੰਦੁਸਤਾਨ", ty: "ਕਵਿਤਾ", p: "1"}, {t: "ਗਤਕਾ", ty: "ਲੇਖ", p: "5"}, {t: "ਬਾਰਾਂਮਾਂਹ", ty: "ਕਵਿਤਾ", p: "10"}, {t: "ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ", ty: "ਜੀਵਨੀ", p: "14"}, {t: "ਸਿਆਣੀ ਗੱਲ", ty: "ਕਹਾਣੀ", p: "20"}, {t: "ਆਸਮਾਨ ਦੀਆਂ ਪਰੀਆਂ", ty: "ਕਵਿਤਾ", p: "26"}, {t: "ਦਾਦੀ ਮਾਂ", ty: "ਲੇਖ", p: "31"}, {t: "ਚਿੜੀਆ ਘਰ", ty: "ਕਵਿਤਾ", p: "37"}, {t: "ਸੁੰਢ ਤੇ ਹਲਦੀ", ty: "ਕਹਾਣੀ", p: "41"}, {t: "ਦੁਸਹਿਰਾ", ty: "ਲੇਖ", p: "47"}, {t: "ਅਨੋਖਾ ਤੋਹਫ਼ਾ", ty: "ਕਹਾਣੀ", p: "53"}, {t: "ਮਿੱਤਰ ਦੀ ਪਛਾਣ", ty: "ਕਹਾਣੀ", p: "59"}, {t: "ਰੁੱਖਾਂ ਦੀ ਮਹੱਤਤਾ", ty: "ਲੇਖ", p: "64"}, {t: "ਕਲਪਨਾ ਚਾਵਲਾ", ty: "ਜੀਵਨੀ", p: "69"}, {t: "ਰਬੜ ਦੀ ਖ਼ਬਰ", ty: "ਲੇਖ", p: "75"}, {t: "ਸ਼ਹੀਦ ਭਗਤ ਸਿੰਘ", ty: "ਜੀਵਨੀ", p: "81"}, {t: "ਸਾਡਾ ਪੰਜਾਬ", ty: "ਲੇਖ", p: "86"}, {t: "ਸ਼ੇਰ ਅਤੇ ਖਰਗੋਸ਼", ty: "ਕਹਾਣੀ", p: "92"}, {t: "ਮੇਲਾ", ty: "ਲੇਖ", p: "98"}, {t: "ਸਿਆਣਾ ਕਾਂ", ty: "ਕਹਾਣੀ", p: "104"}
                     ]},
                     { id: "m", name: "ਗਣਿਤ", emoji: "🔢", grad: "from-cyan-400 to-blue-600", shadow: "#1d4ed8", chapters: [{t: "ਸੰਖਿਆਵਾਂ", ty: "ਗਣਿਤ", p: "1"}, {t: "ਸੰਖਿਆਵਾਂ 'ਤੇ ਮੂਲ ਕਿਰਿਆਵਾਂ", ty: "ਗਣਿਤ", p: "28"}, {t: "ਮਹੱਤਮ ਸਮਾਪਵਰਤਕ (HCF)", ty: "ਗਣਿਤ", p: "62"}, {t: "ਹਿੱਸੇ ਅਤੇ ਪੂਰਨ (Fractions)", ty: "ਗਣਿਤ", p: "95"}, {t: "ਦਸ਼ਮਲਵ (Decimals)", ty: "ਗਣਿਤ", p: "124"}, {t: "ਮਾਪ (Measurement)", ty: "ਗਣਿਤ", p: "155"}, {t: "ਜਮਾਇਤੀ (Geometry)", ty: "ਗਣਿਤ", p: "182"}, {t: "ਘੇਰਾ ਅਤੇ ਖੇਤਰਫਲ", ty: "ਗਣਿਤ", p: "205"}, {t: "ਆਇਤਨ (Volume)", ty: "ਗਣਿਤ", p: "220"}, {t: "ਅੰਕੜਾ ਵਿਗਿਆਨ", ty: "ਗਣਿਤ", p: "230"}]},
                     { id: "e", name: "English", emoji: "🔠", grad: "from-orange-400 to-red-500", shadow: "#b91c1c", chapters: [{t: "The Elves and the Shoemaker", ty: "Story", p: "1"}, {t: "Two Frogs", ty: "Lesson", p: "18"}, {t: "Child and Grandma", ty: "Poem", p: "35"}, {t: "The Flying Sikh", ty: "Biography", p: "50"}, {t: "Raja Birbal", ty: "Story", p: "68"}, {t: "Bank of Our Village", ty: "Lesson", p: "86"}, {t: "Global Warming", ty: "Lesson", p: "105"}, {t: "A Glimpse from History", ty: "Lesson", p: "122"}, {t: "Safe Circle", ty: "Poem", p: "140"}]},
