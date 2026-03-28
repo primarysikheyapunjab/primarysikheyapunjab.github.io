@@ -156,6 +156,10 @@
         .mcq-btn:active { transform: scale(0.95); }
         .correct { background: #2ecc71 !important; color: #fff !important; border-color: #27ae60 !important; }
         .wrong { background: #e74c3c !important; color: #fff !important; border-color: #c0392b !important; opacity: 0.6; }
+
+        /* ਫੁੱਲ ਸਕ੍ਰੀਨ ਬਟਨ (Full Screen Button) */
+        .fs-btn { position: absolute; top: 8.5cqmin; right: 2cqmin; z-index: 1000001; background: #e74c3c; color: #fff; border: 0.3cqmin solid #fff; border-radius: 1.5cqmin; padding: 1cqmin 2cqmin; font-size: 2.2cqmin; font-weight: 900; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s; }
+        .fs-btn:active { transform: scale(0.95); }
     </style>
 </head>
 <body onload="initDisclaimer()" onclick="handleGlobalClick(event)" ondblclick="toggleFullScreen()">
@@ -163,6 +167,9 @@
     <div id="studio-frame">
         <div id="bg-layer"></div>
         <div id="border-frame"></div>
+        
+        <!-- ਫੁੱਲ ਸਕ੍ਰੀਨ ਬਟਨ -->
+        <button id="fs-btn-id" class="fs-btn" onclick="toggleFullScreen(event)">🔲 ਫੁੱਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ</button>
 
         <div id="top-ticker" class="glitter-ticker">
             <div class="ticker-text">⭐ ਬਿਹਤਰ ਰਿਜਲਟ ਲੈਣ ਲਈ ਇਸ ਨੂੰ ਲੈਂਡਸਕੇਪ ਮੋਡ ਵਿੱਚ ਚਲਾਓ 🔸 ਮੋਬਾਇਲ ਤੇ <span class="hl-red-ticker">ਡਬਲ ਟੈਪ</span> ਅਤੇ ਕੰਪਿਊਟਰ ਤੇ <span class="hl-red-ticker">ਡਬਲ ਕਲਿੱਕ</span> ਕਰਕੇ ਫੁੱਲ ਸਕਰੀਨ ਵਿੱਚ ਚਲਾਓ ⭐</div>
@@ -174,7 +181,7 @@
 
         <div id="viewport">
             
-            <!-- 1. Disclaimer Screen -->
+            <!-- Disclaimer Screen -->
             <div id="disclaimer-screen">
                 <div class="disclaimer-box">
                     <div class="disclaimer-content">
@@ -363,7 +370,38 @@
         ]
     };
 
-    function toggleFullScreen() {
+    // ਫੁੱਲ ਸਕ੍ਰੀਨ ਈਵੈਂਟ ਲਿਸਨਰ (Button Text Update)
+    document.addEventListener("fullscreenchange", updateFsBtn);
+    document.addEventListener("webkitfullscreenchange", updateFsBtn);
+    document.addEventListener("mozfullscreenchange", updateFsBtn);
+    document.addEventListener("MSFullscreenChange", updateFsBtn);
+
+    function updateFsBtn() {
+        const btn = document.getElementById('fs-btn-id');
+        if(!btn) return;
+        if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+            btn.innerHTML = "🔲 ਵਾਪਸ ਆਉਣ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ";
+            btn.style.background = "#3498db"; 
+        } else {
+            btn.innerHTML = "🔲 ਫੁੱਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ";
+            btn.style.background = "#e74c3c"; 
+        }
+    }
+
+    // ਮੋਬਾਈਲ 'ਤੇ ਡਬਲ ਟੈਪ ਨਾਲ ਫੁੱਲ ਸਕ੍ਰੀਨ ਕਰਨ ਲਈ ਕੋਡ
+    let lastTapTime = 0;
+    document.addEventListener('touchend', function(e) {
+        if(e.target.tagName.toLowerCase() === 'button') return;
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTapTime;
+        if (tapLength < 400 && tapLength > 0) {
+            toggleFullScreen();
+        }
+        lastTapTime = currentTime;
+    });
+
+    function toggleFullScreen(e) {
+        if(e) e.stopPropagation();
         if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
             if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); }
             else if (document.documentElement.msRequestFullscreen) { document.documentElement.msRequestFullscreen(); }
@@ -399,7 +437,6 @@
     function handleGlobalClick(e) {
         if(state === 'intro' && !e.target.closest('button')) { showMainMenu(); return; }
         if(state === 'slide' && !e.target.closest('button') && !e.target.closest('.mcq-btn')) {
-            // INVISIBLE PAUSE FOR BOTH MODES
             paused = !paused; 
         }
     }
@@ -424,7 +461,6 @@
 
     function startAutoWithToc(sec) {
         openToc(null, sec, 'auto');
-        // Auto start after 3 seconds if TOC is still open
         setTimeout(() => {
             if (state === 'menu' && document.getElementById('toc-overlay').style.display === 'flex') {
                 jumpTo(sec, 'auto', 0);
@@ -463,7 +499,7 @@
                 await new Promise(r => setTimeout(r, speed)); 
             }
         }
-        if(!typing) el.innerHTML = html; // if interrupted, fill instantly
+        if(!typing) el.innerHTML = html; 
         typing = false;
     }
 
@@ -504,12 +540,11 @@
             hEl.className = 'interactive-list qa-mode';
             d.items.forEach((item, idx) => {
                 const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
-                // Add fade-out to all except the first one initially
                 if(idx !== 0) row.classList.add('fade-out');
                 row.innerHTML = `<div class="q-row"><span class="item-q">${item.q}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਉੱਤਰ ਦੇਖੋ</button></div><div class="item-a" id="ans-${idx}"></div>`;
                 hEl.appendChild(row);
             });
-            subIdx = 0; stepState = 'focus'; // First item is focused
+            subIdx = 0; stepState = 'focus'; 
             document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭️";
         } else if(d.type === 'blanks') {
             hEl.className = 'interactive-list';
@@ -546,7 +581,7 @@
         if(e) e.stopPropagation();
         if(step === 'toc' || lessonData[section][step].type === 'conclude') return;
         
-        typing = false; // Stop typewriter immediately
+        typing = false; 
         const d = lessonData[section][step];
         
         if(d.type === 'list' || d.type === 'blanks' || d.type === 'qa') {
@@ -557,7 +592,7 @@
                 
                 const target = d.type === 'blanks' ? document.getElementById(`blank-${idx}`) : document.getElementById(`ans-${idx}`);
                 target.classList.add('revealed');
-                target.innerHTML = d.type === 'blanks' ? d.items[idx].b : d.items[idx].a; // fill instantly
+                target.innerHTML = d.type === 'blanks' ? d.items[idx].b : d.items[idx].a; 
             });
             subIdx = d.items.length - 1;
             stepState = 'reveal';
@@ -593,9 +628,9 @@
         await typeEffect(target, d.type === 'blanks' ? d.items[idx].b : d.items[idx].a, 60);
         
         if(idx === d.items.length - 1) {
-            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️"; // Next slide
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️"; 
         } else {
-            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ਪ੍ਰਸ਼ਨ ⏭️"; // Next question
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ਪ੍ਰਸ਼ਨ ⏭️"; 
         }
     }
 
@@ -620,10 +655,10 @@
     }
 
     async function nextStep(fromTimer = false) {
-        if(typing) { typing = false; return; } // Allow interrupt
+        if(typing) { typing = false; return; } 
         
         if(mode === 'auto' && !fromTimer && state === 'slide') {
-            startAuto(); // Reset timer if manually clicked during auto
+            startAuto(); 
         }
         
         if (step === 'toc') { step = 0; renderSlide(); return; }
@@ -639,12 +674,10 @@
             }
 
             if (stepState === 'focus') {
-                // Reveal answer for current item
                 await revealAnswer(null, subIdx);
             } 
             else if (stepState === 'reveal') {
                 if (subIdx < items.length - 1) {
-                    // Focus next item, wait for another click to reveal
                     subIdx++;
                     stepState = 'focus';
                     document.querySelectorAll('.interactive-item').forEach((row, i) => {
@@ -653,7 +686,6 @@
                     });
                     document.getElementById('tap-indicator').innerText = d.type === 'blanks' ? "ਭਰੋ ✍️" : "ਉੱਤਰ ਦੇਖੋ ⏭️";
                 } else {
-                    // All revealed -> enter review mode showing all
                     document.querySelectorAll('.interactive-item').forEach(row => row.classList.remove('fade-out'));
                     reviewMode = true;
                     document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
@@ -675,7 +707,7 @@
                 else goHome();
             }
         } else {
-            goHome(); // if conclude
+            goHome(); 
         }
     }
 
