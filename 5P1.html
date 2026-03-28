@@ -113,24 +113,28 @@
         .flash-card.active { display: flex; }
         
         /* Top Bar for Chapter Name */
-        .top-bar { width: 100%; padding: 1cqmin; background: #fffde7; color: #d32f2f; font-weight: 900; font-size: 2.8cqmin; text-align: center; border-radius: 1.5cqmin; margin-bottom: 1.5cqmin; border: 2px dashed #ff9f43; }
+        .top-bar { width: 100%; padding: 0.8cqmin; background: #fffde7; color: #d32f2f; font-weight: 900; font-size: 2.6cqmin; text-align: center; border-radius: 1.5cqmin; margin-bottom: 1cqmin; border: 2px dashed #ff9f43; }
         
         .text-container { width: 100%; overflow: hidden; flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
-        .title-text { font-size: 4.5cqmin; font-weight: 900; color: #d32f2f; margin-bottom: 0.5cqmin; border-bottom: 2px solid #eee; width: 100%; text-align: center; padding-bottom: 0.5cqmin; }
-        .instr-text { font-size: 3cqmin; font-weight: bold; color: #666; margin-bottom: 1cqmin; text-align: center; width: 100%; }
+        .title-text { font-size: 4cqmin; font-weight: 900; color: #d32f2f; margin-bottom: 0.5cqmin; border-bottom: 2px solid #eee; width: 100%; text-align: center; padding-bottom: 0.5cqmin; }
+        .instr-text { font-size: 2.8cqmin; font-weight: bold; color: #666; margin-bottom: 0.8cqmin; text-align: center; width: 100%; }
         
-        /* NEW BOX STYLING FOR LISTS/QA */
-        .interactive-list { width: 100%; display: grid; grid-template-columns: 1fr; gap: 1.5cqmin; overflow-y: auto; padding: 1cqmin 2cqmin; }
-        @media (orientation: landscape) { .interactive-list { grid-template-columns: 1fr 1fr; column-gap: 3cqmin; row-gap: 2cqmin; } }
+        /* NEW BOX STYLING FOR LISTS/QA (COMPACT AND PRE-ALLOCATED) */
+        .interactive-list { width: 100%; display: grid; grid-template-columns: 1fr; gap: 1cqmin; overflow-y: auto; padding: 0.5cqmin 1cqmin; align-content: start; }
+        @media (orientation: landscape) { .interactive-list { grid-template-columns: 1fr 1fr; column-gap: 2cqmin; row-gap: 1.2cqmin; } }
         
-        .interactive-item { display: flex; flex-direction: column; padding: 1.8cqmin 2cqmin; border: 2px solid #dcdcdc; border-radius: 2cqmin; background: #ffffff; width: 100%; transition: opacity 0.5s, box-shadow 0.3s; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.06); }
+        .interactive-item { display: flex; flex-direction: column; padding: 1.2cqmin 1.5cqmin; border: 2px solid #dcdcdc; border-radius: 1.5cqmin; background: #ffffff; width: 100%; transition: opacity 0.5s, box-shadow 0.3s; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.06); }
         .q-row { display: flex; align-items: center; width: 100%; text-align: left; justify-content: space-between; }
         
-        .item-q { font-weight: 900; color: #000; font-size: 3cqmin; flex: 1; line-height: 1.5; text-align: left; } 
+        .item-q { font-weight: 900; color: #000; font-size: 2.7cqmin; flex: 1; line-height: 1.4; text-align: left; } 
         .qa-mode .item-q { color: #d32f2f; }
         
-        .item-reveal-btn { background: #f39c12; color: #fff; border: none; padding: 0.8cqmin 1.5cqmin; border-radius: 1cqmin; cursor: pointer; font-size: 2.5cqmin; font-weight: 900; margin-left: 2cqmin; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-        .item-a { font-weight: 900; color: #1565c0; font-size: 3cqmin; opacity: 0; margin-top: 1cqmin; line-height: 1.5; text-align: left; width: 100%; min-height: 3.5cqmin; display: block; border-top: 1px dashed #ccc; padding-top: 1cqmin; }
+        .item-reveal-btn { background: #f39c12; color: #fff; border: none; padding: 0.8cqmin 1.5cqmin; border-radius: 1cqmin; cursor: pointer; font-size: 2.2cqmin; font-weight: 900; margin-left: 2cqmin; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        
+        /* Pre-allocated Answer Wrapper */
+        .ans-wrapper { position: relative; width: 100%; border-top: 1px dashed #ccc; margin-top: 0.8cqmin; padding-top: 0.8cqmin; }
+        
+        .item-a { font-weight: 900; color: #1565c0; font-size: 2.7cqmin; opacity: 0; line-height: 1.4; text-align: left; width: 100%; display: block; margin: 0; padding: 0; }
         .item-a.revealed { opacity: 1; }
         
         .hl-red { color: #ff0000 !important; font-weight: 900; }
@@ -138,7 +142,7 @@
 
         .conclusion-box { text-align: center; padding: 4cqmin; background: #e3f2fd; border: 0.8cqmin dashed #1565c0; border-radius: 4cqmin; width: 100%; margin: auto; }
         .conc-title { font-size: 6cqmin; color: #1565c0; font-weight: 900; margin-bottom: 3cqmin; }
-        .conc-msg { font-size: 3.8cqmin; color: #333; line-height: 1.6; font-weight: bold; }
+        .conc-msg { font-size: 3.5cqmin; color: #333; line-height: 1.6; font-weight: bold; }
 
         /* Navigation Ribbon */
         .bottom-ribbon { width: 100%; display: flex; justify-content: space-between; align-items: center; padding-top: 1cqmin; border-top: 2px solid #eee; flex-shrink: 0; }
@@ -149,11 +153,11 @@
         #tap-indicator { background: #ffeb3b; padding: 1cqmin 2cqmin; border-radius: 1.5cqmin; font-weight: 900; font-size: 2.5cqmin; animation: pulse 1s infinite alternate; cursor: pointer; border: 2px solid #d32f2f; color: #000; }
 
         /* MCQ Specific Styles (Fixed 2x2 Layout) */
-        .mcq-options-grid { width: 100%; display: grid; gap: 2cqmin; padding: 1cqmin 0; }
+        .mcq-options-grid { width: 100%; display: grid; gap: 1.5cqmin; padding: 0.5cqmin 0; }
         @media (orientation: landscape) { .mcq-options-grid { grid-template-columns: 1fr 1fr; } }
         @media (orientation: portrait) { .mcq-options-grid { grid-template-columns: 1fr; } }
         
-        .mcq-btn { padding: 2cqmin; border-radius: 1.5cqmin; border: 2px solid #ddd; font-size: 3.2cqmin; font-weight: 900; text-align: center; background: #f9f9f9; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); color: #333; }
+        .mcq-btn { padding: 1.5cqmin; border-radius: 1.5cqmin; border: 2px solid #ddd; font-size: 3cqmin; font-weight: 900; text-align: center; background: #f9f9f9; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); color: #333; margin: 0; }
         .mcq-btn:active { transform: scale(0.95); }
         .correct { background: #2ecc71 !important; color: #fff !important; border-color: #27ae60 !important; }
         .wrong { background: #e74c3c !important; color: #fff !important; border-color: #c0392b !important; opacity: 0.6; }
@@ -182,7 +186,7 @@
 
         <div id="viewport">
             
-            <!-- Disclaimer Screen -->
+            <!-- 1. Disclaimer Screen -->
             <div id="disclaimer-screen">
                 <div class="disclaimer-box">
                     <div class="disclaimer-content">
@@ -312,7 +316,7 @@
             },
             {
                 title: "2 . ਸੰਖੇਪ ਵਿੱਚ ਉੱਤਰ ਦਿਓ", 
-                instruction: "ਪ੍ਰਸ਼ਨ ਪੜ੍ਹੋ ਅਤੇ ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੱਚ ਕਰੋ :<br><span style='display:block; margin-top:1cqmin; font-size:2.2cqmin; color:#d35400; background:#fdebd0; padding:1cqmin; border-radius:1cqmin; border:1px dashed #e67e22; line-height:1.4;'>📌 <b>ਅਧਿਆਪਕਾਂ ਲਈ ਨਿਰਦੇਸ਼:</b> ਵਿਦਿਆਰਥੀਆਂ ਨੂੰ ਵੱਧ ਤੋਂ ਵੱਧ ਅਭਿਆਸ ਕਰਵਾਉਣ ਲਈ ਉੱਤਰ ਪੂਰੇ ਵਾਕ ਵਿੱਚ ਦਿੱਤਾ ਗਿਆ ਹੈ। ਇੱਕ-ਦੋ ਸ਼ਬਦਾਂ ਵਿੱਚ ਉੱਤਰ ਦੇਣ ਲਈ ਸਿਰਫ਼ <b>ਲਾਲ ਰੰਗ (ਹਾਈਲਾਈਟ)</b> ਵਾਲੇ ਭਾਗ ਦਾ ਅਭਿਆਸ ਕਰਵਾਇਆ ਜਾਵੇ।</span>", 
+                instruction: "ਪ੍ਰਸ਼ਨ ਪੜ੍ਹੋ ਅਤੇ ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੱਚ ਕਰੋ :<br><span style='display:block; margin-top:0.5cqmin; font-size:2cqmin; color:#d35400; background:#fdebd0; padding:0.8cqmin; border-radius:1cqmin; border:1px dashed #e67e22; line-height:1.4;'>📌 <b>ਅਧਿਆਪਕਾਂ ਲਈ ਨਿਰਦੇਸ਼:</b> ਵਿਦਿਆਰਥੀਆਂ ਨੂੰ ਵੱਧ ਤੋਂ ਵੱਧ ਅਭਿਆਸ ਕਰਵਾਉਣ ਲਈ ਉੱਤਰ ਪੂਰੇ ਵਾਕ ਵਿੱਚ ਦਿੱਤਾ ਗਿਆ ਹੈ। ਇੱਕ-ਦੋ ਸ਼ਬਦਾਂ ਵਿੱਚ ਉੱਤਰ ਦੇਣ ਲਈ ਸਿਰਫ਼ <b>ਲਾਲ ਰੰਗ (ਹਾਈਲਾਈਟ)</b> ਵਾਲੇ ਭਾਗ ਦਾ ਅਭਿਆਸ ਕਰਵਾਇਆ ਜਾਵੇ।</span>", 
                 type: "qa",
                 items: [
                     {q: "ੳ . ਇਸ ਕਵਿਤਾ ਵਿੱਚ ਕਿਸ ਦੇਸ ਨੂੰ ਮਹਾਨ ਕਿਹਾ ਗਿਆ ਹੈ ?", a: "ਉੱਤਰ : ਇਸ ਕਵਿਤਾ ਵਿੱਚ <span class='hl-red'>ਭਾਰਤ ਦੇਸ</span> ਨੂੰ ਮਹਾਨ ਕਿਹਾ ਗਿਆ ਹੈ ।"},
@@ -537,12 +541,21 @@
         titleEl.innerHTML = d.title; instrEl.innerHTML = d.instruction || "";
         hEl.innerHTML = ''; subIdx = -1; reviewMode = false;
 
+        // Render QA or Lists with Pre-allocated wrapper
         if(d.type === 'list' || d.type === 'qa') {
             hEl.className = 'interactive-list qa-mode';
             d.items.forEach((item, idx) => {
                 const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
                 if(idx !== 0) row.classList.add('fade-out');
-                row.innerHTML = `<div class="q-row"><span class="item-q">${item.q}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਉੱਤਰ ਦੇਖੋ</button></div><div class="item-a" id="ans-${idx}"></div>`;
+                row.innerHTML = `
+                    <div class="q-row">
+                        <span class="item-q">${item.q}</span>
+                        <button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਉੱਤਰ ਦੇਖੋ</button>
+                    </div>
+                    <div class="ans-wrapper">
+                        <div class="item-a" style="visibility:hidden; opacity:0; pointer-events:none;">${item.a}</div>
+                        <div class="item-a" id="ans-${idx}" style="position:absolute; top:0.8cqmin; left:0;"></div>
+                    </div>`;
                 hEl.appendChild(row);
             });
             subIdx = 0; stepState = 'focus'; 
@@ -561,7 +574,7 @@
             hEl.className = ''; 
             hEl.style.display = 'flex'; hEl.style.flexDirection = 'column'; hEl.style.width = '100%'; hEl.style.alignItems = 'center';
             
-            const qP = document.createElement('p'); qP.className = 'item-q'; qP.style.color = '#d32f2f'; qP.style.textAlign = 'center'; qP.style.marginBottom = '2cqmin'; qP.style.width = '100%'; qP.innerHTML = d.q; 
+            const qP = document.createElement('p'); qP.className = 'item-q'; qP.style.color = '#d32f2f'; qP.style.textAlign = 'center'; qP.style.marginBottom = '1.5cqmin'; qP.style.width = '100%'; qP.innerHTML = d.q; 
             hEl.appendChild(qP);
             
             const optGrid = document.createElement('div'); optGrid.className = 'mcq-options-grid';
@@ -572,8 +585,18 @@
             });
             hEl.appendChild(optGrid);
             
-            const box = document.createElement('div'); box.id = "final-ans"; box.className = "item-a"; box.style.textAlign = "center"; box.style.width = "100%"; box.style.marginTop = "2cqmin";
-            hEl.appendChild(box);
+            // Pre-allocate space for MCQ Answer
+            const wrapper = document.createElement('div');
+            wrapper.style.position = 'relative'; wrapper.style.width = '100%'; wrapper.style.marginTop = '1cqmin';
+            
+            const placeholder = document.createElement('div'); placeholder.className = 'item-a';
+            placeholder.style.visibility = 'hidden'; placeholder.style.opacity = '0'; placeholder.style.pointerEvents = 'none';
+            placeholder.innerHTML = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.2cqmin;'>" + d.a + "</span>";
+            
+            const box = document.createElement('div'); box.id = "final-ans"; box.className = "item-a"; 
+            box.style.position = 'absolute'; box.style.top = '0'; box.style.left = '0'; box.style.textAlign = 'center';
+            
+            wrapper.appendChild(placeholder); wrapper.appendChild(box); hEl.appendChild(wrapper);
             document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
         }
     }
@@ -646,7 +669,7 @@
             const box = document.getElementById('final-ans');
             box.classList.add('revealed');
             box.style.color = '#2ecc71';
-            await typeEffect(box, "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.5cqmin;'>" + lessonData[section][step].a + "</span>", 60);
+            await typeEffect(box, "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.2cqmin;'>" + lessonData[section][step].a + "</span>", 60);
             document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
         } else {
             btn.classList.add('wrong');
