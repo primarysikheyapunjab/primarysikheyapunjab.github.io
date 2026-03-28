@@ -67,7 +67,7 @@
         /* Intro Screen */
         #intro-screen { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 500; background: #fffdf5; cursor: pointer; }
         .center-circle { background: radial-gradient(circle, #ffffff, #ffeb3b); border: 1.5cqmin solid #ff9f43; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 45cqmin; height: 45cqmin; box-shadow: 0 0 30px rgba(0,0,0,0.2); }
-        .intro-title-center { font-weight: 900; color: #d32f2f; font-size: 4.5cqmin; line-height: 1.3; text-align: center; }
+        .intro-title-center { font-weight: 900; color: #d32f2f; font-size: 4.8cqmin; line-height: 1.3; text-align: center; }
         .balloon { position: absolute; width: 16cqmin; height: 18cqmin; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; color: #fff; font-weight: 900; font-size: 2.5cqmin; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1cqmin; box-shadow: 0 8px 15px rgba(0,0,0,0.3); animation: dropBalloon 1.5s forwards; z-index: 50; }
         @keyframes dropBalloon { 0% { opacity: 0; transform: translateY(-100vh) scale(0.5); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
         .pos-1 { top: 5%; left: 8%; background: #ff4757; animation-delay: 0.1s; }
@@ -141,10 +141,11 @@
 
         /* Navigation Ribbon */
         .bottom-ribbon { width: 100%; display: flex; justify-content: space-between; align-items: center; padding-top: 1cqmin; border-top: 2px solid #eee; flex-shrink: 0; }
-        .nav-btn { padding: 1.2cqmin 2.5cqmin; font-size: 2.8cqmin; font-weight: 900; border-radius: 1.5cqmin; border: none; cursor: pointer; color: #fff; background: #333; }
+        .nav-btn { padding: 1cqmin 1.5cqmin; font-size: 2.2cqmin; font-weight: 900; border-radius: 1cqmin; border: none; cursor: pointer; color: #fff; background: #333; }
         .btn-retry { background: #e67e22; }
         .btn-skip { background: #7f8c8d; }
-        #tap-indicator { background: #ffeb3b; padding: 1.2cqmin 2.5cqmin; border-radius: 2cqmin; font-weight: 900; font-size: 2.8cqmin; animation: pulse 1s infinite alternate; cursor: pointer; border: 2px solid #d32f2f; color: #000; }
+        .btn-showall { background: #8e44ad; }
+        #tap-indicator { background: #ffeb3b; padding: 1cqmin 2cqmin; border-radius: 1.5cqmin; font-weight: 900; font-size: 2.5cqmin; animation: pulse 1s infinite alternate; cursor: pointer; border: 2px solid #d32f2f; color: #000; }
 
         /* MCQ Specific Styles (Fixed 2x2 Layout) */
         .mcq-options-grid { width: 100%; display: grid; gap: 2cqmin; padding: 1cqmin 0; }
@@ -157,7 +158,7 @@
         .wrong { background: #e74c3c !important; color: #fff !important; border-color: #c0392b !important; opacity: 0.6; }
     </style>
 </head>
-<body onclick="handleGlobalClick(event)" ondblclick="toggleFullScreen()">
+<body onload="initDisclaimer()" onclick="handleGlobalClick(event)" ondblclick="toggleFullScreen()">
 
     <div id="studio-frame">
         <div id="bg-layer"></div>
@@ -168,12 +169,12 @@
         </div>
 
         <div id="bottom-ticker" class="glitter-ticker">
-            <div class="ticker-text" id="ticker-text-content">⭐ ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਵਿਕਾਸ ਦੇ ਪੜਾਅ ਵਿੱਚ ਹੈ ਇਸ ਕਾਰਨ ਕੁਝ ਤਕਨੀਕੀ ਮੁਸ਼ਕਲਾਂ ਜਾਂ ਲਿਖਤੀ ਗਲਤੀਆਂ ਹੋਣ ਦੀ ਸੰਭਾਵਨਾ ਹੋ ਸਕਦੀ ਹੈ ਇਹ ਸਮੱਗਰੀ ਅਧਿਆਪਕਾਂ ਦਾ ਬਦਲ ਨਹੀਂ ਹੈ ⭐ 🌟 ਸਾਡੀ ਮਿਹਨਤ ਤੁਹਾਡਾ ਸਾਥ , ਮਿਲ ਕੇ ਰਚੀਏ ਸਿੱਖਿਆ ਦਾ ਨਵਾਂ ਇਤਿਹਾਸ 🌟 ⭐</div>
+            <div class="ticker-text" id="ticker-text-content">⭐ ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਵਿਕਾਸ ਦੇ ਪੜਾਅ ਵਿੱਚ ਹੈ ਇਸ ਕਾਰਨ ਲਿਖਤੀ ਗਲਤੀਆਂ ਹੋ ਸਕਦੀਆਂ ਹਨ ਇਹ ਸਮੱਗਰੀ ਅਧਿਆਪਕਾਂ ਦਾ ਬਦਲ ਨਹੀਂ ਹੈ ⭐ 🌟 ਸਾਡੀ ਮਿਹਨਤ ਤੁਹਾਡਾ ਸਾਥ , ਮਿਲ ਕੇ ਰਚੀਏ ਸਿੱਖਿਆ ਦਾ ਨਵਾਂ ਇਤਿਹਾਸ 🌟 ⭐</div>
         </div>
 
         <div id="viewport">
             
-            <!-- Disclaimer Screen -->
+            <!-- 1. Disclaimer Screen -->
             <div id="disclaimer-screen">
                 <div class="disclaimer-box">
                     <div class="disclaimer-content">
@@ -237,9 +238,9 @@
                     <div class="mode-card auto-card" id="card-auto">
                         <div class="mode-header" onclick="toggleAccordion('auto')">🔴 ਆਟੋ ਮੋਡ <span>▼</span></div>
                         <div class="mode-content" id="content-auto">
-                            <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startSection('exercise','auto')">📘 ਪੂਰਾ ਅਭਿਆਸ</button></div>
-                            <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startSection('mcq', 'auto')">📝 MCQ (ਬਹੁਵਿਕਲਪੀ)</button></div>
-                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startSection('activities', 'auto')">🎨 ਗਤੀਵਿਧੀਆਂ</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startAutoWithToc('exercise')">📘 ਪੂਰਾ ਅਭਿਆਸ</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startAutoWithToc('mcq')">📝 MCQ (ਬਹੁਵਿਕਲਪੀ)</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startAutoWithToc('activities')">🎨 ਗਤੀਵਿਧੀਆਂ</button></div>
                         </div>
                     </div>
                     <div class="mode-card" id="card-live">
@@ -264,6 +265,7 @@
                 <div class="bottom-ribbon">
                     <button class="nav-btn btn-prev" onclick="prevStep()">⏮️ ਪਿੱਛੇ</button>
                     <button class="nav-btn btn-retry" onclick="retrySlide()">🔄 ਦੁਬਾਰਾ</button>
+                    <button class="nav-btn btn-showall" onclick="showAllAnswers(event)">📑 ਸਾਰਾ</button>
                     <button class="nav-btn btn-skip" onclick="skipStep()">⏭️ ਸਕਿਪ</button>
                     <button class="nav-btn" onclick="goHome()">🏠 ਮੇਨੂ</button>
                     <div id="tap-indicator" onclick="nextStep()">ਅੱਗੇ ⏭️</div>
@@ -273,9 +275,9 @@
     </div>
 
 <script>
-    let state = 'disclaimer', mode = 'live', section = '', step = 0, subIdx = -1, paused = false, typing = false, reviewMode = false;
+    let state = 'disclaimer', mode = 'live', section = '', step = 0, subIdx = -1, stepState = 'focus', paused = false, typing = false, reviewMode = false;
     
-    // FULL COMPREHENSIVE DATA
+    // FULL COMPREHENSIVE DATA FOR CHAPTER 1
     const lessonData = {
         exercise: [
             {
@@ -301,7 +303,9 @@
                 ]
             },
             {
-                title: "2 . ਸੰਖੇਪ ਵਿੱਚ ਉੱਤਰ ਦਿਓ", instruction: "ਪ੍ਰਸ਼ਨ ਪੜ੍ਹੋ ਅਤੇ ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੱਚ ਕਰੋ :", type: "qa",
+                title: "2 . ਸੰਖੇਪ ਵਿੱਚ ਉੱਤਰ ਦਿਓ", 
+                instruction: "ਪ੍ਰਸ਼ਨ ਪੜ੍ਹੋ ਅਤੇ ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੱਚ ਕਰੋ :<br><span style='display:block; margin-top:1cqmin; font-size:2.2cqmin; color:#d35400; background:#fdebd0; padding:1cqmin; border-radius:1cqmin; border:1px dashed #e67e22; line-height:1.4;'>📌 <b>ਅਧਿਆਪਕਾਂ ਲਈ ਨਿਰਦੇਸ਼:</b> ਵਿਦਿਆਰਥੀਆਂ ਨੂੰ ਵੱਧ ਤੋਂ ਵੱਧ ਅਭਿਆਸ ਕਰਵਾਉਣ ਲਈ ਉੱਤਰ ਪੂਰੇ ਵਾਕ ਵਿੱਚ ਦਿੱਤਾ ਗਿਆ ਹੈ। ਇੱਕ-ਦੋ ਸ਼ਬਦਾਂ ਵਿੱਚ ਉੱਤਰ ਦੇਣ ਲਈ ਸਿਰਫ਼ <b>ਲਾਲ ਰੰਗ (ਹਾਈਲਾਈਟ)</b> ਵਾਲੇ ਭਾਗ ਦਾ ਅਭਿਆਸ ਕਰਵਾਇਆ ਜਾਵੇ।</span>", 
+                type: "qa",
                 items: [
                     {q: "ੳ . ਇਸ ਕਵਿਤਾ ਵਿੱਚ ਕਿਸ ਦੇਸ ਨੂੰ ਮਹਾਨ ਕਿਹਾ ਗਿਆ ਹੈ ?", a: "ਉੱਤਰ : ਇਸ ਕਵਿਤਾ ਵਿੱਚ <span class='hl-red'>ਭਾਰਤ ਦੇਸ</span> ਨੂੰ ਮਹਾਨ ਕਿਹਾ ਗਿਆ ਹੈ ।"},
                     {q: "ਅ . ਹਰ ਸ਼ਹਿਰੀ ਦੇ ਮੂੰਹ ਤੋਂ ਕਿਹੜੀ ਲਾਲੀ ਟਪਕਦੀ ਹੈ ?", a: "ਉੱਤਰ : ਹਰ ਸ਼ਹਿਰੀ ਦੇ ਮੂੰਹ ਤੋਂ <span class='hl-red'>ਦੇਸ ਪ੍ਰੇਮ ਦੀ ਲਾਲੀ</span> ਟਪਕਦੀ ਹੈ ।"},
@@ -359,6 +363,20 @@
         ]
     };
 
+    function toggleFullScreen() {
+        if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+            if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); }
+            else if (document.documentElement.msRequestFullscreen) { document.documentElement.msRequestFullscreen(); }
+            else if (document.documentElement.mozRequestFullScreen) { document.documentElement.mozRequestFullScreen(); }
+            else if (document.documentElement.webkitRequestFullscreen) { document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT); }
+        } else {
+            if (document.exitFullscreen) { document.exitFullscreen(); }
+            else if (document.msExitFullscreen) { document.msExitFullscreen(); }
+            else if (document.mozCancelFullScreen) { document.mozCancelFullScreen(); }
+            else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
+        }
+    }
+
     function showDiscModal(e) { if(e) e.stopPropagation(); document.getElementById('custom-modal').style.display = 'flex'; }
     function hideDiscModal(e) { if(e) e.stopPropagation(); document.getElementById('custom-modal').style.display = 'none'; }
     function hideWrongModal(e) { if(e) e.stopPropagation(); document.getElementById('wrong-modal').style.display = 'none'; }
@@ -404,17 +422,52 @@
         jumpTo(sec, mod, 'toc'); 
     }
 
-    // Smooth Typewriter (Left Aligned fixed, speed 60ms)
+    function startAutoWithToc(sec) {
+        openToc(null, sec, 'auto');
+        // Auto start after 3 seconds if TOC is still open
+        setTimeout(() => {
+            if (state === 'menu' && document.getElementById('toc-overlay').style.display === 'flex') {
+                jumpTo(sec, 'auto', 0);
+            }
+        }, 3000);
+    }
+
+    function openToc(e, sec, mod) {
+        if (e && e.stopPropagation) e.stopPropagation();
+        const list = document.getElementById('toc-list'); list.innerHTML = '';
+        lessonData[sec].forEach((d, idx) => {
+            if(d.type === 'conclude') return;
+            const row = document.createElement('div'); row.className = 'toc-item';
+            row.innerHTML = `<span class="toc-text">${d.title}</span><button class="toc-go-btn" onclick="jumpTo('${sec}', '${mod}', ${idx})">ਜਾਓ</button>`;
+            list.appendChild(row);
+        });
+        document.getElementById('toc-overlay').style.display = 'flex';
+    }
+
+    // Smooth Typewriter (Interuptable, Left Aligned fixed)
     async function typeEffect(el, html, speed = 60) {
-        typing = true; el.innerHTML = ""; let i = 0;
-        while (i < html.length) {
-            if (html[i] === '<') { let end = html.indexOf('>', i); el.innerHTML += html.substring(i, end + 1); i = end + 1; } 
-            else { el.innerHTML += html[i]; i++; await new Promise(r => setTimeout(r, speed)); }
+        typing = true; 
+        let currentHTML = "";
+        let i = 0;
+        while (i < html.length && typing) {
+            if (html[i] === '<') { 
+                let end = html.indexOf('>', i); 
+                currentHTML += html.substring(i, end + 1); 
+                i = end + 1; 
+                el.innerHTML = currentHTML;
+            } 
+            else { 
+                currentHTML += html[i]; 
+                el.innerHTML = currentHTML;
+                i++; 
+                await new Promise(r => setTimeout(r, speed)); 
+            }
         }
+        if(!typing) el.innerHTML = html; // if interrupted, fill instantly
         typing = false;
     }
 
-    async function renderSlide() {
+    function renderSlide() {
         const d = lessonData[section][step];
         const titleEl = document.getElementById('slide-title'), instrEl = document.getElementById('slide-instr'), hEl = document.getElementById('html-content');
         
@@ -446,22 +499,28 @@
 
         titleEl.innerHTML = d.title; instrEl.innerHTML = d.instruction || "";
         hEl.innerHTML = ''; subIdx = -1; reviewMode = false;
-        document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭️";
 
         if(d.type === 'list' || d.type === 'qa') {
             hEl.className = 'interactive-list qa-mode';
             d.items.forEach((item, idx) => {
                 const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
+                // Add fade-out to all except the first one initially
+                if(idx !== 0) row.classList.add('fade-out');
                 row.innerHTML = `<div class="q-row"><span class="item-q">${item.q}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਉੱਤਰ ਦੇਖੋ</button></div><div class="item-a" id="ans-${idx}"></div>`;
                 hEl.appendChild(row);
             });
+            subIdx = 0; stepState = 'focus'; // First item is focused
+            document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭️";
         } else if(d.type === 'blanks') {
             hEl.className = 'interactive-list';
             d.items.forEach((item, idx) => {
                 const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
+                if(idx !== 0) row.classList.add('fade-out');
                 row.innerHTML = `<div class="q-row"><span class="item-q">${item.q}<span id="blank-${idx}" class="hl-red">.......</span>${item.a}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਭਰੋ</button></div>`;
                 hEl.appendChild(row);
             });
+            subIdx = 0; stepState = 'focus';
+            document.getElementById('tap-indicator').innerText = "ਭਰੋ ✍️";
         } else if(d.type === 'mcq') {
             hEl.className = ''; 
             hEl.style.display = 'flex'; hEl.style.flexDirection = 'column'; hEl.style.width = '100%'; hEl.style.alignItems = 'center';
@@ -479,23 +538,65 @@
             
             const box = document.createElement('div'); box.id = "final-ans"; box.className = "item-a"; box.style.textAlign = "center"; box.style.width = "100%"; box.style.marginTop = "2cqmin";
             hEl.appendChild(box);
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+        }
+    }
+
+    async function showAllAnswers(e) {
+        if(e) e.stopPropagation();
+        if(step === 'toc' || lessonData[section][step].type === 'conclude') return;
+        
+        typing = false; // Stop typewriter immediately
+        const d = lessonData[section][step];
+        
+        if(d.type === 'list' || d.type === 'blanks' || d.type === 'qa') {
+            document.querySelectorAll('.interactive-item').forEach((row, idx) => {
+                row.classList.remove('fade-out');
+                const btn = document.getElementById(`btn-${idx}`);
+                if(btn) btn.style.display = 'none';
+                
+                const target = d.type === 'blanks' ? document.getElementById(`blank-${idx}`) : document.getElementById(`ans-${idx}`);
+                target.classList.add('revealed');
+                target.innerHTML = d.type === 'blanks' ? d.items[idx].b : d.items[idx].a; // fill instantly
+            });
+            subIdx = d.items.length - 1;
+            stepState = 'reveal';
+            reviewMode = true;
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+        } else if (d.type === 'mcq') {
+            const box = document.getElementById('final-ans');
+            box.classList.add('revealed');
+            const btns = document.querySelectorAll('.mcq-btn');
+            if(btns[d.correct]) btns[d.correct].classList.add('correct');
+            box.innerHTML = "ਉੱਤਰ : " + d.a; 
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
         }
     }
 
     async function revealAnswer(e, idx) {
-        if(e) e.stopPropagation(); if(typing) return;
+        if(e) e.stopPropagation(); 
+        if(typing) { typing = false; return; }
+        
         const d = lessonData[section][step];
         const btn = document.getElementById(`btn-${idx}`);
         const target = d.type === 'blanks' ? document.getElementById(`blank-${idx}`) : document.getElementById(`ans-${idx}`);
         
-        document.querySelectorAll('.interactive-item').forEach(row => row.classList.add('fade-out'));
-        document.getElementById(`row-${idx}`).classList.remove('fade-out');
+        document.querySelectorAll('.interactive-item').forEach((row, i) => {
+            if(i === idx) row.classList.remove('fade-out');
+            else row.classList.add('fade-out');
+        });
         if(btn) btn.style.display = 'none';
         
-        target.classList.add('revealed'); subIdx = idx;
+        target.classList.add('revealed'); 
+        subIdx = idx; stepState = 'reveal';
+        
         await typeEffect(target, d.type === 'blanks' ? d.items[idx].b : d.items[idx].a, 60);
         
-        if(idx === (d.items?.length || 0) - 1) document.getElementById('tap-indicator').innerText = "ਸਾਰਾ ਦੇਖੋ 📑";
+        if(idx === d.items.length - 1) {
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️"; // Next slide
+        } else {
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ਪ੍ਰਸ਼ਨ ⏭️"; // Next question
+        }
     }
 
     async function checkMcq(btn, isCorrect) {
@@ -518,19 +619,46 @@
         }
     }
 
-    async function nextStep() {
-        if(typing) return; if(mode === 'auto' && !paused) return;
+    async function nextStep(fromTimer = false) {
+        if(typing) { typing = false; return; } // Allow interrupt
+        
+        if(mode === 'auto' && !fromTimer && state === 'slide') {
+            startAuto(); // Reset timer if manually clicked during auto
+        }
         
         if (step === 'toc') { step = 0; renderSlide(); return; }
 
         const d = lessonData[section][step];
         if(d.type === 'list' || d.type === 'blanks' || d.type === 'qa') {
             const items = d.items || [];
-            if(subIdx === items.length - 1 && !reviewMode) {
-                document.querySelectorAll('.interactive-item').forEach(row => row.classList.remove('fade-out'));
-                reviewMode = true; document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️"; return;
+            
+            if (reviewMode) {
+                if(step < lessonData[section].length - 1) { step++; renderSlide(); }
+                else goHome();
+                return;
             }
-            if(subIdx < items.length - 1) { await revealAnswer(null, subIdx + 1); return; }
+
+            if (stepState === 'focus') {
+                // Reveal answer for current item
+                await revealAnswer(null, subIdx);
+            } 
+            else if (stepState === 'reveal') {
+                if (subIdx < items.length - 1) {
+                    // Focus next item, wait for another click to reveal
+                    subIdx++;
+                    stepState = 'focus';
+                    document.querySelectorAll('.interactive-item').forEach((row, i) => {
+                        if (i === subIdx) row.classList.remove('fade-out');
+                        else row.classList.add('fade-out');
+                    });
+                    document.getElementById('tap-indicator').innerText = d.type === 'blanks' ? "ਭਰੋ ✍️" : "ਉੱਤਰ ਦੇਖੋ ⏭️";
+                } else {
+                    // All revealed -> enter review mode showing all
+                    document.querySelectorAll('.interactive-item').forEach(row => row.classList.remove('fade-out'));
+                    reviewMode = true;
+                    document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+                }
+            }
         } else if(d.type !== 'conclude') {
             const box = document.getElementById('final-ans');
             if(box && !box.classList.contains('revealed')) { 
@@ -542,10 +670,13 @@
                 await typeEffect(box, "ਉੱਤਰ : " + d.a, 60); 
                 document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
                 return; 
+            } else {
+                if(step < lessonData[section].length - 1) { step++; renderSlide(); }
+                else goHome();
             }
+        } else {
+            goHome(); // if conclude
         }
-        if(step < lessonData[section].length - 1) { step++; renderSlide(); }
-        else goHome();
     }
 
     function skipStep() { 
@@ -555,7 +686,7 @@
     }
     
     function prevStep() { 
-        if(typing) return;
+        if(typing) { typing = false; return; }
         if (step === 'toc') { goHome(); return; }
         if (step === 0) { step = 'toc'; renderSlide(); return; }
         step--; renderSlide(); 
@@ -564,20 +695,6 @@
     function retrySlide() { typing = false; renderSlide(); }
     function goHome() { state = 'menu'; document.getElementById('master-card').classList.remove('active'); document.getElementById('main-menu-screen').style.display = 'flex'; }
 
-    function toggleFullScreen() {
-        if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
-            if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); }
-            else if (document.documentElement.msRequestFullscreen) { document.documentElement.msRequestFullscreen(); }
-            else if (document.documentElement.mozRequestFullScreen) { document.documentElement.mozRequestFullScreen(); }
-            else if (document.documentElement.webkitRequestFullscreen) { document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT); }
-        } else {
-            if (document.exitFullscreen) { document.exitFullscreen(); }
-            else if (document.msExitFullscreen) { document.msExitFullscreen(); }
-            else if (document.mozCancelFullScreen) { document.mozCancelFullScreen(); }
-            else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
-        }
-    }
-
     window.autoTimer = null;
     function startAuto() {
         clearInterval(window.autoTimer);
@@ -585,21 +702,21 @@
             if(state !== 'slide' || mode !== 'auto' || paused || typing) return;
             
             if(step === 'toc') {
-                nextStep(); return; 
+                nextStep(true); return; 
             }
 
             const d = lessonData[section][step];
             if(d.type === 'list' || d.type === 'blanks' || d.type === 'qa') {
-                if(!reviewMode) await nextStep();
+                if(!reviewMode) await nextStep(true);
                 else { await new Promise(r => setTimeout(r, 4000)); if(step < lessonData[section].length - 1) { step++; renderSlide(); } else { goHome(); clearInterval(window.autoTimer); } }
             } else if(d.type === 'conclude') { 
                 await new Promise(r => setTimeout(r, 7000)); goHome(); clearInterval(window.autoTimer); 
             } else {
                 const box = document.getElementById('final-ans');
-                if(box && !box.classList.contains('revealed')) await nextStep();
+                if(box && !box.classList.contains('revealed')) await nextStep(true);
                 else { await new Promise(r => setTimeout(r, 4000)); if(step < lessonData[section].length - 1) { step++; renderSlide(); } else { goHome(); clearInterval(window.autoTimer); } }
             }
-        }, 5000);
+        }, 4000);
     }
 </script>
 </body>
