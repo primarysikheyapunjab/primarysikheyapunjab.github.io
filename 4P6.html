@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="pa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ਪੰਜਾਬੀ ਜਮਾਤ ਚੌਥੀ ਪਾਠ 6 - ਗੁਟਰ-ਗੂੰ....ਗੁਟਰ-ਗੂੰ</title>
+    <style>
+        /* --- ਮਾਸਟਰ ਲੇਆਊਟ --- */
+        :root { --unit: 9.5cqmin; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background-color: #000; }
+        
+        #studio-frame { 
+            background: #fffdf5; position: absolute; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); overflow: hidden; 
+            container-type: size; box-shadow: 0 0 50px rgba(0,0,0,1);
+        }
+        
+        @media (orientation: landscape) { #studio-frame { width: 100vw; height: 56.25vw; max-height: 100vh; max-width: 177.78vh; } }
+        @media (orientation: portrait) { #studio-frame { height: 100vh; width: 56.25vh; max-width: 100vw; max-height: 177.78vw; } }
+
+        #bg-layer { position: absolute; inset: 0; z-index: 1; background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb, #84fab0, #8fd3f4); background-size: 400% 400%; animation: moveBG 20s ease infinite; }
+        @keyframes moveBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        #border-frame { position: absolute; inset: 0; z-index: 1000; pointer-events: none; border: 2cqmin solid rgba(255, 255, 255, 0.8); box-shadow: inset 0 0 3cqmin rgba(0,0,0,0.3); }
+        
+        .glitter-ticker {
+            position: absolute; width: 100%; height: 7cqmin;
+            background: linear-gradient(45deg, #4A2511, #D4AF37, #8B4513, #FFDF00, #4A2511);
+            background-size: 300% 300%; animation: glitterFlow 4s ease-in-out infinite alternate;
+            z-index: 10000; display: none; align-items: center; overflow: hidden;
+            border-top: 0.5cqmin solid #FFD700; border-bottom: 0.5cqmin solid #FFD700;
+        }
+        #top-ticker { top: 0; }
+        #bottom-ticker { bottom: 0; }
+        .ticker-text { white-space: nowrap; font-size: 2.8cqmin; font-weight: 900; color: #FFF; text-shadow: 2px 2px 0px #000; padding-left: 100%; animation: scrollTicker 45s linear infinite; }
+        @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .hl-red-ticker { color: #ff3d3d !important; text-shadow: 1px 1px 0px #fff; font-weight: 900; }
+
+        #viewport { position: absolute; top: 7cqmin; bottom: 7cqmin; left: 0; right: 0; z-index: 10; display: flex; padding: 2cqmin; overflow: hidden; justify-content: center; align-items: center; }
+        
+        /* Disclaimer Screen */
+        #disclaimer-screen { position: absolute; inset: 0; z-index: 999999; background: rgba(0,0,0,0.92); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; padding: 3cqmin; }
+        .disclaimer-box { background: #fff; border-radius: 3cqmin; padding: 3cqmin; width: 95%; max-width: 850px; border: 0.8cqmin solid #d32f2f; display: flex; flex-direction: column; max-height: 98%; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .disclaimer-content { overflow-y: auto; flex-grow: 1; margin-bottom: 2cqmin; padding: 2.2cqmin; background: #fffdf5; border-radius: 2cqmin; border: 1px solid #ddd; scroll-behavior: smooth; }
+        .disclaimer-content h2 { text-align: center; color: #d32f2f; font-size: 5cqmin; margin-bottom: 1.5cqmin; }
+        .disclaimer-content li { font-size: 2.8cqmin; line-height: 1.5; margin-bottom: 1cqmin; font-weight: bold; color: #333; list-style: none; }
+        .warning-box-red { background: #ffebee; border-left: 1.2cqmin solid #d32f2f; padding: 1.5cqmin; border-radius: 1cqmin; margin: 1cqmin 0; }
+        .disclaimer-actions { display: flex; gap: 2cqmin; flex-shrink: 0; }
+        .agree-btn { background: #2ecc71; color: #fff; padding: 2cqmin; font-size: 3.5cqmin; font-weight: 900; border-radius: 2cqmin; border: none; cursor: pointer; flex: 1; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .disagree-btn { background: #e74c3c; color: #fff; padding: 2cqmin; font-size: 3.5cqmin; font-weight: 900; border-radius: 2cqmin; border: none; cursor: pointer; flex: 1; }
+
+        /* Custom Modal for Disagreement */
+        #custom-modal { position: absolute; inset: 0; z-index: 1000000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 4cqmin; }
+        .modal-box { background: #fff; border-radius: 3cqmin; border: 1cqmin solid #e74c3c; width: 90%; max-width: 500px; padding: 4cqmin; text-align: center; }
+        .modal-box h3 { color: #e74c3c; font-size: 5cqmin; margin-bottom: 2cqmin; }
+        .modal-box p { font-size: 3.5cqmin; font-weight: bold; margin-bottom: 3cqmin; line-height: 1.5; color: #333; }
+        .modal-close-btn { background: #333; color: #fff; padding: 1.5cqmin 4cqmin; border-radius: 2cqmin; border: none; cursor: pointer; font-size: 3cqmin; font-weight: 900; }
+
+        /* Wrong Answer Modal */
+        #wrong-modal { position: absolute; inset: 0; z-index: 1000000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 4cqmin; }
+        .wrong-modal-box { background: #fff; border-radius: 3cqmin; border: 1cqmin solid #e74c3c; width: 90%; max-width: 400px; padding: 4cqmin; text-align: center; animation: popIn 0.3s ease-out forwards; }
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        .wrong-modal-box h3 { color: #e74c3c; font-size: 6cqmin; margin-bottom: 2cqmin; }
+        .wrong-modal-box p { font-size: 3.5cqmin; font-weight: bold; margin-bottom: 3cqmin; line-height: 1.5; color: #333; }
+        .wrong-close-btn { background: #f39c12; color: #fff; padding: 1.5cqmin 4cqmin; border-radius: 2cqmin; border: none; cursor: pointer; font-size: 3.2cqmin; font-weight: 900; }
+
+        /* Intro Screen */
+        #intro-screen { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 500; background: #fffdf5; cursor: pointer; }
+        .center-circle { background: radial-gradient(circle, #ffffff, #ffeb3b); border: 1.5cqmin solid #ff9f43; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 45cqmin; height: 45cqmin; box-shadow: 0 0 30px rgba(0,0,0,0.2); }
+        .intro-title-center { font-weight: 900; color: #d32f2f; font-size: 4.8cqmin; line-height: 1.3; text-align: center; }
+        .balloon { position: absolute; width: 16cqmin; height: 18cqmin; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; color: #fff; font-weight: 900; font-size: 2.5cqmin; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1cqmin; box-shadow: 0 8px 15px rgba(0,0,0,0.3); animation: dropBalloon 1.5s forwards; z-index: 50; }
+        @keyframes dropBalloon { 0% { opacity: 0; transform: translateY(-100vh) scale(0.5); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        .pos-1 { top: 5%; left: 8%; background: #ff4757; animation-delay: 0.1s; }
+        .pos-2 { top: 5%; right: 8%; background: #ffa502; animation-delay: 0.2s; }
+        .pos-3 { top: 38%; left: 2%; background: #1e90ff; animation-delay: 0.3s; }
+        .pos-4 { top: 38%; right: 2%; background: #2ed573; animation-delay: 0.4s; }
+        .pos-5 { bottom: 18%; left: 5%; background: #9b59b6; animation-delay: 0.5s; }
+        .pos-6 { bottom: 18%; right: 5%; background: #e84393; animation-delay: 0.6s; }
+        .pos-7 { top: 20%; left: 18%; background: #00cec9; animation-delay: 0.7s; }
+        .pos-8 { top: 20%; right: 18%; background: #e1b12c; animation-delay: 0.8s; }
+
+        /* Menu Screen */
+        #main-menu-screen { position: absolute; inset: 0; z-index: 400; display: none; flex-direction: column; align-items: center; background: #fffdf5; padding: 4cqmin; overflow-y: auto; }
+        .menu-heading { font-size: 5cqmin; font-weight: 900; color: #d32f2f; margin-bottom: 4cqmin; border-bottom: 0.5cqmin dashed #ff9f43; width: 90%; text-align: center; }
+        .mode-container { display: flex; width: 100%; gap: 4cqmin; justify-content: center; align-items: flex-start; }
+        @media (orientation: portrait) { .mode-container { flex-direction: column; align-items: center; } }
+        
+        .mode-card { border-radius: 2.5cqmin; border: 0.5cqmin solid #d32f2f; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); background: #fff; height: var(--unit); flex-shrink: 0; width: 100%; max-width: 480px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .mode-card.expanded { height: calc(5.5 * var(--unit)); } 
+        .mode-header { background: #d32f2f; color: #fff; padding: 2cqmin; font-size: 4.5cqmin; font-weight: 900; cursor: pointer; display: flex; justify-content: space-between; align-items: center; height: var(--unit); }
+        .auto-card { border-color: #2980b9; }
+        .auto-card .mode-header { background: #2980b9; }
+
+        .mode-content { display: none; padding: 2cqmin; flex-direction: column; gap: 1.2cqmin; background: #fffdf5; border-top: 1px solid #ddd; height: calc(4.5 * var(--unit)); justify-content: center; }
+        .mode-card.expanded .mode-content { display: flex; }
+        
+        .btn-wrap { display: flex; width: 100%; gap: 1cqmin; }
+        .menu-btn { flex: 1; padding: 1.8cqmin; font-size: 3.2cqmin; font-weight: 900; border-radius: 1.2cqmin; border: none; color: #fff; cursor: pointer; text-align: center; }
+        .btn-ex { background: #e74c3c; }
+        .btn-mcq { background: #3498db; }
+        .btn-act { background: #9b59b6; }
+
+        /* ToC Modal */
+        #toc-overlay { position: absolute; inset: 0; z-index: 100000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 4cqmin; }
+        .toc-box { background: #fff; border-radius: 3cqmin; width: 95%; max-width: 700px; max-height: 85%; display: flex; flex-direction: column; border: 1cqmin solid #d32f2f; padding: 3cqmin; box-shadow: 0 0 50px rgba(0,0,0,1); }
+        .toc-list { overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; gap: 1cqmin; margin-top: 1.5cqmin; }
+        .toc-item { display: flex; justify-content: space-between; align-items: center; padding: 1cqmin 1.5cqmin; background: #f9f9f9; border-radius: 1.5cqmin; border-left: 0.8cqmin solid #d32f2f; }
+        .toc-text { font-weight: 900; font-size: 2.8cqmin; color: #333; flex: 1; text-align: left; }
+        .toc-go-btn { background: #2ecc71; color: #fff; border: none; padding: 1cqmin 2cqmin; border-radius: 1cqmin; font-weight: 900; font-size: 2.2cqmin; cursor: pointer; }
+
+        /* Flash Card Slide Display */
+        .flash-card { flex-grow: 1; position: relative; height: 100%; background: #fff; border-radius: 4cqmin; padding: 2cqmin; border: 0.5cqmin solid #ddd; display: none; flex-direction: column; align-items: center; }
+        .flash-card.active { display: flex; }
+        
+        /* Top Bar for Chapter Name */
+        .top-bar { width: 100%; padding: 0.8cqmin; background: #fffde7; color: #d32f2f; font-weight: 900; font-size: 2.6cqmin; text-align: center; border-radius: 1.5cqmin; margin-bottom: 1cqmin; border: 2px dashed #ff9f43; }
+        
+        .text-container { width: 100%; overflow: hidden; flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
+        .title-text { font-size: 4cqmin; font-weight: 900; color: #d32f2f; margin-bottom: 0.5cqmin; border-bottom: 2px solid #eee; width: 100%; text-align: center; padding-bottom: 0.5cqmin; }
+        .instr-text { font-size: 2.8cqmin; font-weight: bold; color: #666; margin-bottom: 0.8cqmin; text-align: center; width: 100%; }
+        
+        /* NEW BOX STYLING FOR LISTS/QA (COMPACT AND PRE-ALLOCATED) */
+        .interactive-list { width: 100%; display: grid; grid-template-columns: 1fr; gap: 1cqmin; overflow-y: auto; padding: 0.5cqmin 1cqmin; align-content: start; }
+        @media (orientation: landscape) { .interactive-list { grid-template-columns: 1fr 1fr; column-gap: 2cqmin; row-gap: 1.2cqmin; } }
+        
+        .interactive-item { display: flex; flex-direction: column; padding: 1.2cqmin 1.5cqmin; border: 2px solid #dcdcdc; border-radius: 1.5cqmin; background: #ffffff; width: 100%; transition: opacity 0.5s, box-shadow 0.3s; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.06); }
+        .q-row { display: flex; align-items: center; width: 100%; text-align: left; justify-content: space-between; }
+        
+        .item-q { font-weight: 900; color: #000; font-size: 2.7cqmin; flex: 1; line-height: 1.4; text-align: left; } 
+        .qa-mode .item-q { color: #d32f2f; }
+        
+        .item-reveal-btn { background: #f39c12; color: #fff; border: none; padding: 0.8cqmin 1.5cqmin; border-radius: 1cqmin; cursor: pointer; font-size: 2.2cqmin; font-weight: 900; margin-left: 2cqmin; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        
+        /* Pre-allocated Answer Wrapper */
+        .ans-wrapper { position: relative; width: 100%; border-top: 1px dashed #ccc; margin-top: 0.8cqmin; padding-top: 0.8cqmin; }
+        
+        .item-a { font-weight: 900; color: #1565c0; font-size: 2.7cqmin; opacity: 0; line-height: 1.4; text-align: left; width: 100%; display: block; margin: 0; padding: 0; }
+        .item-a.revealed { opacity: 1; }
+        
+        .hl-red { color: #ff0000 !important; font-weight: 900; }
+        .fade-out { opacity: 0.4; }
+
+        .conclusion-box { text-align: center; padding: 4cqmin; background: #e3f2fd; border: 0.8cqmin dashed #1565c0; border-radius: 4cqmin; width: 100%; margin: auto; }
+        .conc-title { font-size: 6cqmin; color: #1565c0; font-weight: 900; margin-bottom: 3cqmin; }
+        .conc-msg { font-size: 3.5cqmin; color: #333; line-height: 1.6; font-weight: bold; }
+
+        /* Navigation Ribbon */
+        .bottom-ribbon { width: 100%; display: flex; justify-content: space-between; align-items: center; padding-top: 1cqmin; border-top: 2px solid #eee; flex-shrink: 0; }
+        .nav-btn { padding: 1cqmin 1.5cqmin; font-size: 2.2cqmin; font-weight: 900; border-radius: 1cqmin; border: none; cursor: pointer; color: #fff; background: #333; }
+        .btn-retry { background: #e67e22; }
+        .btn-skip { background: #7f8c8d; }
+        .btn-showall { background: #8e44ad; }
+        #tap-indicator { background: #ffeb3b; padding: 1cqmin 2cqmin; border-radius: 1.5cqmin; font-weight: 900; font-size: 2.5cqmin; animation: pulse 1s infinite alternate; cursor: pointer; border: 2px solid #d32f2f; color: #000; }
+
+        /* MCQ Specific Styles (Fixed 2x2 Layout) */
+        .mcq-options-grid { width: 100%; display: grid; gap: 1.5cqmin; padding: 0.5cqmin 0; }
+        @media (orientation: landscape) { .mcq-options-grid { grid-template-columns: 1fr 1fr; } }
+        @media (orientation: portrait) { .mcq-options-grid { grid-template-columns: 1fr; } }
+        
+        .mcq-btn { padding: 1.5cqmin; border-radius: 1.5cqmin; border: 2px solid #ddd; font-size: 3cqmin; font-weight: 900; text-align: center; background: #f9f9f9; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); color: #333; margin: 0; }
+        .mcq-btn:active { transform: scale(0.95); }
+        .correct { background: #2ecc71 !important; color: #fff !important; border-color: #27ae60 !important; }
+        .wrong { background: #e74c3c !important; color: #fff !important; border-color: #c0392b !important; opacity: 0.6; }
+
+        /* ਫੁੱਲ ਸਕ੍ਰੀਨ ਬਟਨ (Full Screen Button) */
+        .fs-btn { position: absolute; top: 8.5cqmin; right: 2cqmin; z-index: 1000001; background: #e74c3c; color: #fff; border: 0.3cqmin solid #fff; border-radius: 1.5cqmin; padding: 1cqmin 2cqmin; font-size: 2.2cqmin; font-weight: 900; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s; }
+        .fs-btn:active { transform: scale(0.95); }
+    </style>
+</head>
+<body onload="initDisclaimer()" onclick="handleGlobalClick(event)" ondblclick="toggleFullScreen()">
+
+    <div id="studio-frame">
+        <div id="bg-layer"></div>
+        <div id="border-frame"></div>
+        
+        <!-- ਫੁੱਲ ਸਕ੍ਰੀਨ ਬਟਨ -->
+        <button id="fs-btn-id" class="fs-btn" onclick="toggleFullScreen(event)">🔲 ਫੁੱਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ</button>
+
+        <div id="top-ticker" class="glitter-ticker">
+            <div class="ticker-text">⭐ ਬਿਹਤਰ ਰਿਜਲਟ ਲੈਣ ਲਈ ਇਸ ਨੂੰ ਲੈਂਡਸਕੇਪ ਮੋਡ ਵਿੱਚ ਚਲਾਓ 🔸 ਮੋਬਾਇਲ ਤੇ <span class="hl-red-ticker">ਡਬਲ ਟੈਪ</span> ਅਤੇ ਕੰਪਿਊਟਰ ਤੇ <span class="hl-red-ticker">ਡਬਲ ਕਲਿੱਕ</span> ਕਰਕੇ ਫੁੱਲ ਸਕਰੀਨ ਵਿੱਚ ਚਲਾਓ ⭐</div>
+        </div>
+
+        <div id="bottom-ticker" class="glitter-ticker">
+            <div class="ticker-text" id="ticker-text-content">⭐ ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਵਿਕਾਸ ਦੇ ਪੜਾਅ ਵਿੱਚ ਹੈ ਇਸ ਕਾਰਨ ਲਿਖਤੀ ਗਲਤੀਆਂ ਹੋ ਸਕਦੀਆਂ ਹਨ ਇਹ ਸਮੱਗਰੀ ਅਧਿਆਪਕਾਂ ਦਾ ਬਦਲ ਨਹੀਂ ਹੈ ⭐ 🌟 ਸਾਡੀ ਮਿਹਨਤ ਤੁਹਾਡਾ ਸਾਥ , ਮਿਲ ਕੇ ਰਚੀਏ ਸਿੱਖਿਆ ਦਾ ਨਵਾਂ ਇਤਿਹਾਸ 🌟 ⭐</div>
+        </div>
+
+        <div id="viewport">
+            
+            <!-- 1. Disclaimer Screen -->
+            <div id="disclaimer-screen">
+                <div class="disclaimer-box">
+                    <div class="disclaimer-content">
+                        <h2>⚠️ ਨਿਯਮ ਅਤੇ ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ</h2>
+                        <ul>
+                            <li><strong>1 . ਸੰਸਥਾ ਦਾ ਉਦੇਸ਼ :</strong> ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ ਟੀਮ ਵੱਲੋਂ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਇੱਕ ਡਿਜੀਟਲ ਪਲੇਟਫਾਰਮ ਹੈ । ਸਾਡਾ ਮੁੱਖ ਮਕਸਦ ਪੰਜਾਬ ਦੇ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲਾਂ ਦੇ ਬੱਚਿਆਂ ਨੂੰ ਮਿਆਰੀ ਸਿੱਖਿਆ ਸਮੱਗਰੀ ਮੁਫ਼ਤ ਮੁਹੱਈਆ ਕਰਵਾਉਣਾ ਹੈ ।</li>
+                            <li><strong>2 . ਵਰਤੋਂਕਾਰ :</strong> ਇਹ ਸਿਰਫ਼ ਵਿੱਦਿਅਕ ਵਰਤੋਂ ਲਈ ਹੈ । ਕਿਸੇ ਵੀ ਵਿਅਕਤੀ ਜਾਂ ਸੰਸਥਾ ਨੂੰ ਇਸ ਦੀ ਵਰਤੋਂ ਆਪਣੇ ਨਿੱਜੀ ਫਾਇਦੇ ਲਈ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ ।</li>
+                            <li><strong>3 . ਪਾਠਕ੍ਰਮ :</strong> ਵੈੱਬਸਾਈਟ ਦੀ ਸਮੱਗਰੀ PSEB ਪਾਠਕ੍ਰਮ 'ਤੇ ਆਧਾਰਿਤ ਹੈ ।</li>
+                            <div class="warning-box-red"><li><strong>4 . ਡਿਵੈਲਪਮੈਂਟ ਮੋਡ :</strong> ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਵਿਕਾਸ ਦੇ ਪੜਾਅ ਵਿੱਚ ਹੈ । ਅਧਿਆਪਕ ਸਾਹਿਬਾਨ ਇਸ ਨੂੰ ਆਪਣੇ ਪੱਧਰ ਤੇ ਵੀ ਘੋਖਦੇ ਰਹਿਣ ।</li></div>
+                            <li><strong>5 . ਸੋਧ :</strong> ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ ਕੋਲ ਕਿਸੇ ਵੀ ਸਮੇਂ ਨਿਯਮਾਂ ਵਿੱਚ ਬਦਲਾਅ ਕਰਨ ਦਾ ਅਧਿਕਾਰ ਰਾਖਵਾਂ ਹੈ ।</li>
+                            <li><strong>6 . ਸੁਝਾਅ :</strong> ਜੇਕਰ ਤੁਹਾਨੂੰ ਇਸ ਵਿੱਚ ਕੋਈ ਸੁਧਾਰ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਤਾਂ ਸਾਡੀ ਟੀਮ ਨਾਲ ਸੰਪਰਕ ਕਰੋ ।</li>
+                            <li><strong>7 . ਸਹਿਮਤੀ :</strong> ਹੇਠਾਂ ਦਿੱਤੇ 'ਮੈਂ ਸਹਿਮਤ ਹਾਂ' ਬਟਨ ਨੂੰ ਦਬਾ ਕੇ ਤੁਸੀਂ ਤਸਦੀਕ ਕਰਦੇ ਹੋ ਕਿ ਤੁਸੀਂ ਨਿਯਮ ਪੜ੍ਹ ਲਏ ਹਨ ।</li>
+                        </ul>
+                        <div style="text-align:center; padding:1cqmin; background:#fffde7; border:2px dashed orange; border-radius:1cqmin; margin-top:1cqmin;">
+                            <span style="font-weight:900; color:red; font-size:3cqmin;">🌟 ਸਾਡੀ ਮਿਹਨਤ ਤੁਹਾਡਾ ਸਾਥ 🌟<br>🌟 ਮਿਲ ਕੇ ਰਚੀਏ ਸਿੱਖਿਆ ਦਾ ਨਵਾਂ ਇਤਿਹਾਸ 🌟</span>
+                        </div>
+                    </div>
+                    <div class="disclaimer-actions">
+                        <button class="disagree-btn" onclick="showDiscModal(event)">ਅਸਹਿਮਤ ਹਾਂ</button>
+                        <button class="agree-btn" onclick="agreeAndIntro(event)">ਮੈਂ ਸਹਿਮਤ ਹਾਂ</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Disagree Modal -->
+            <div id="custom-modal">
+                <div class="modal-box">
+                    <h3>⚠️ ਸੂਚਨਾ</h3>
+                    <p>ਐਪ ਦੀ ਵਰਤੋਂ ਕਰਨ ਲਈ ਨਿਯਮਾਂ ਅਤੇ ਸ਼ਰਤਾਂ ਨਾਲ ਸਹਿਮਤੀ ਹੋਣੀ ਜ਼ਰੂਰੀ ਹੈ। ਜੇਕਰ ਤੁਸੀਂ ਸਹਿਮਤ ਨਹੀਂ ਹੋ, ਤਾਂ ਤੁਸੀਂ ਇਸ ਪਲੇਟਫਾਰਮ ਦੀ ਵਰਤੋਂ ਨਹੀਂ ਕਰ ਸਕਦੇ।</p>
+                    <button class="modal-close-btn" onclick="hideDiscModal(event)">ਵਾਪਸ ਜਾਓ</button>
+                </div>
+            </div>
+
+            <!-- Wrong Answer Modal -->
+            <div id="wrong-modal" onclick="hideWrongModal(event)">
+                <div class="wrong-modal-box" onclick="event.stopPropagation()">
+                    <h3>❌ ਗਲਤ ਉੱਤਰ</h3>
+                    <p>ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</p>
+                    <button class="wrong-close-btn" onclick="hideWrongModal(event)">ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</button>
+                </div>
+            </div>
+
+            <!-- Intro Screen -->
+            <div id="intro-screen" style="display:none;">
+                <div class="center-circle" onclick="showMainMenu()">
+                    <div class="intro-title-center">ਪੰਜਾਬੀ ਜਮਾਤ ਚੌਥੀ<br>ਪਾਠ 6 - ਗੁਟਰ-ਗੂੰ....ਗੁਟਰ-ਗੂੰ</div>
+                </div>
+                <div class="intro-bottom-area" style="position:absolute; bottom:2cqmin; width:100%; display:flex; justify-content:center; z-index:100;">
+                    <button class="big-start-btn" onclick="showMainMenu()">ਸ਼ੁਰੂ ਕਰੋ ⏭️</button>
+                </div>
+                <div class="balloon pos-1">ਸ਼ਬਦ ਅਰਥ</div><div class="balloon pos-2">ਖ਼ਾਲੀ ਥਾਵਾਂ</div>
+                <div class="balloon pos-3">ਪ੍ਰਸ਼ਨ ਉੱਤਰ</div><div class="balloon pos-4">MCQ</div>
+                <div class="balloon pos-5">ਗਤੀਵਿਧੀਆਂ</div><div class="balloon pos-6">ਲਿੰਗ ਬਦਲੋ</div>
+                <div class="balloon pos-7">ਵਚਨ ਬਦਲੋ</div><div class="balloon pos-8">ਵਿਰੋਧੀ ਸ਼ਬਦ</div>
+            </div>
+
+            <!-- Menu Screen -->
+            <div id="main-menu-screen">
+                <h1 class="menu-heading">ਪੰਜਾਬੀ ਜਮਾਤ ਚੌਥੀ ਪਾਠ 6 - ਗੁਟਰ-ਗੂੰ....ਗੁਟਰ-ਗੂੰ</h1>
+                <div class="mode-container" id="mode-container">
+                    <div class="mode-card auto-card" id="card-auto">
+                        <div class="mode-header" onclick="toggleAccordion('auto')">🔴 ਆਟੋ ਮੋਡ <span>▼</span></div>
+                        <div class="mode-content" id="content-auto">
+                            <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startAutoWithToc('exercise')">📘 ਪੂਰਾ ਅਭਿਆਸ</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startAutoWithToc('mcq')">📝 MCQ (ਬਹੁਵਿਕਲਪੀ)</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startAutoWithToc('activities')">🎨 ਗਤੀਵਿਧੀਆਂ</button></div>
+                        </div>
+                    </div>
+                    <div class="mode-card" id="card-live">
+                        <div class="mode-header" onclick="toggleAccordion('live')">📺 ਲਾਈਵ ਮੋਡ <span>▼</span></div>
+                        <div class="mode-content" id="content-live">
+                            <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startSection('exercise', 'live')">📘 ਪੂਰਾ ਅਭਿਆਸ</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startSection('mcq', 'live')">📝 MCQ (ਬਹੁਵਿਕਲਪੀ)</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startSection('activities', 'live')">🎨 ਗਤੀਵਿਧੀਆਂ</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flash Card Display -->
+            <div class="flash-card" id="master-card">
+                <div class="top-bar">ਪੰਜਾਬੀ ਜਮਾਤ ਚੌਥੀ ਪਾਠ 6 - ਗੁਟਰ-ਗੂੰ....ਗੁਟਰ-ਗੂੰ</div>
+                <div class="text-container">
+                    <h2 id="slide-title" class="title-text"></h2>
+                    <p id="slide-instr" class="instr-text"></p>
+                    <div id="html-content" class="interactive-list"></div>
+                </div>
+                <div class="bottom-ribbon">
+                    <button class="nav-btn btn-prev" onclick="prevStep()">⏮️ ਪਿੱਛੇ</button>
+                    <button class="nav-btn btn-retry" onclick="retrySlide()">🔄 ਦੁਬਾਰਾ</button>
+                    <button class="nav-btn btn-showall" onclick="showAllAnswers(event)">📑 ਸਾਰਾ</button>
+                    <button class="nav-btn btn-skip" onclick="skipStep()">⏭️ ਸਕਿਪ</button>
+                    <button class="nav-btn" onclick="goHome()">🏠 ਮੇਨੂ</button>
+                    <div id="tap-indicator" onclick="nextStep()">ਅੱਗੇ ⏭️</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let state = 'disclaimer', mode = 'live', section = '', step = 0, subIdx = -1, stepState = 'focus', paused = false, typing = false, reviewMode = false;
+    
+    // FULL COMPREHENSIVE DATA FOR CHAPTER
+    const lessonData = {
+        exercise: [
+            {
+                title: "1. ਸ਼ਬਦ-ਅਰਥ ਪੜ੍ਹੋ ਅਤੇ ਸਮਝੋ",
+                instruction: "ਸ਼ਬਦ ਦੇ ਸਾਹਮਣੇ ਵਾਲੇ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
+                type: "list",
+                items: [
+                    {q: "ਚੀਨਾ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਇੱਕ ਕਿਸਮ ਦਾ ਕਬੂਤਰ ਜਿਸਦੇ ਖੰਭਾਂ 'ਤੇ ਦਾਗ਼ ਹੁੰਦੇ ਹਨ</span>"},
+                    {q: "ਨਿਆਣੇ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਬੱਚੇ</span>"},
+                    {q: "ਅੰਬਰੀਂ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਅਸਮਾਨ ਵਿੱਚ / ਆਕਾਸ਼ ਵਿੱਚ</span>"},
+                    {q: "ਆਥਣ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਸ਼ਾਮ ਦਾ ਸਮਾਂ / ਸੰਝ</span>"},
+                    {q: "ਮਰਗ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਮੌਤ</span>"},
+                    {q: "ਅਮਨ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਸ਼ਾਂਤੀ</span>"},
+                    {q: "ਲੋੜਦਾ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਚਾਹੁੰਦਾ</span>"}
+                ]
+            },
+            {
+                title: "2. ਹੇਠ ਲਿਖੀਆਂ ਸਤਰਾਂ ਪੂਰੀਆਂ ਕਰੋ",
+                instruction: "ਖ਼ਾਲੀ ਥਾਂ ਭਰਨ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
+                type: "blanks",
+                items: [
+                    {q: "ੳ. ਅੰਬਰੀਂ ਜਦੋਂ ਉਡਾਰੀ ਲਾਵਾਂ, ", b: "ਬੱਦਲਾਂ ਤੋਂ ਉੱਚਾ ਉੱਡ ਜਾਵਾਂ।", a: ""},
+                    {q: "ਅ. ਖ਼ਬਰਾਂ ਮੈਂ ਹੀ ਪਹੁੰਚਾਉਂਦਾ ਸੀ, ", b: "ਕਦੇ ਨਾ ਕਰਦਾ ਚੂੰ-ਚਾਂ-ਚੂੰ.....।", a: ""},
+                    {q: "ੲ. ਰਲ ਕੇ ਰਹਿਣਾ ਮੈਥੋਂ ਸਿੱਖੋ, ", b: "ਮਨ 'ਚੋਂ ਕੱਢੋ ਨਫ਼ਰਤ ਨੂੰ... ।", a: ""}
+                ]
+            },
+            {
+                title: "3. ਹੇਠ ਲਿਖੇ ਪ੍ਰਸ਼ਨਾਂ ਦੇ ਉੱਤਰ ਲਿਖੋ",
+                instruction: "ਪ੍ਰਸ਼ਨ ਪੜ੍ਹੋ ਅਤੇ ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੱਚ ਕਰੋ :",
+                type: "qa",
+                items: [
+                    {q: "(ੳ) 'ਗੁਟਰ-ਗੂੰ ਗੁਟਰ-ਗੂੰ...', ਕਿਹੜਾ ਪੰਛੀ ਬੋਲਦਾ ਹੈ?", a: "ਉੱਤਰ : 'ਗੁਟਰ-ਗੂੰ ਗੁਟਰ-ਗੂੰ...' <span class='hl-red'>ਕਬੂਤਰ</span> ਬੋਲਦਾ ਹੈ।"},
+                    {q: "(ਅ) ਕਬੂਤਰ ਦੇ ਕਿਹੜੇ-ਕਿਹੜੇ ਨਾਂ ਹਨ?", a: "ਉੱਤਰ : ਕਬੂਤਰ ਦੇ ਨਾਂ <span class='hl-red'>ਚੀਨਾ, ਗੋਲਾ, ਲਾਲ, ਬਿੰਦਾ ਤੇ ਲੋਟਣ</span> ਹਨ।"},
+                    {q: "(ੲ) ਕਬੂਤਰ ਦੇ ਖੰਭ ਕਿਹੋ-ਜਿਹੇ ਹੁੰਦੇ ਹਨ?", a: "ਉੱਤਰ : ਕਬੂਤਰ ਦੇ ਖੰਭ <span class='hl-red'>ਰੰਗ-ਬਰੰਗੇ, ਚਿੱਟੇ ਅਤੇ ਕਾਲ਼ੇ</span> ਹੁੰਦੇ ਹਨ।"},
+                    {q: "(ਸ) ਪੁਰਾਣੇ ਸਮਿਆਂ ਵਿੱਚ ਕਬੂਤਰ ਕੀ ਕੰਮ ਕਰਦਾ ਸੀ?", a: "ਉੱਤਰ : ਪੁਰਾਣੇ ਸਮਿਆਂ ਵਿੱਚ ਕਬੂਤਰ <span class='hl-red'>ਖ਼ਬਰਾਂ ਅਤੇ ਚਿੱਠੀਆਂ ਪਹੁੰਚਾਉਣ</span> ਦਾ ਕੰਮ ਕਰਦਾ ਸੀ।"},
+                    {q: "(ਹ) ਕਬੂਤਰ ਸਾਨੂੰ ਕੀ ਸਿੱਖਿਆ ਦਿੰਦਾ ਹੈ?", a: "ਉੱਤਰ : ਕਬੂਤਰ ਸਾਨੂੰ <span class='hl-red'>ਰਲ-ਮਿਲ ਕੇ ਰਹਿਣ ਅਤੇ ਨਫ਼ਰਤ ਛੱਡਣ</span> ਦੀ ਸਿੱਖਿਆ ਦਿੰਦਾ ਹੈ।"}
+                ]
+            },
+            { type: "conclude" }
+        ],
+        mcq: [
+            {
+                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 1", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                q: "ਕਵਿਤਾ ਵਿੱਚ ਕਿਸ ਪੰਛੀ ਦੀ ਗੱਲ ਕੀਤੀ ਗਈ ਹੈ?", type: "mcq",
+                opts: ["ਕਾਂ", "ਤੋਤਾ", "ਕਬੂਤਰ", "ਚਿੜੀ"], correct: 2,
+                a: "ਕਵਿਤਾ ਵਿੱਚ <span class='hl-red'>ਕਬੂਤਰ</span> ਦੀ ਗੱਲ ਕੀਤੀ ਗਈ ਹੈ।"
+            },
+            {
+                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 2", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                q: "ਬੱਚੇ (ਨਿਆਣੇ) ਕਬੂਤਰ ਨੂੰ ਕੀ ਪਾਉਂਦੇ ਹਨ?", type: "mcq",
+                opts: ["ਪਾਣੀ", "ਚੋਗਾ (ਦਾਣੇ)", "ਰੋਟੀ", "ਫਲ"], correct: 1,
+                a: "ਬੱਚੇ ਕਬੂਤਰ ਨੂੰ <span class='hl-red'>ਚੋਗਾ (ਦਾਣੇ)</span> ਪਾਉਂਦੇ ਹਨ।"
+            },
+            {
+                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 3", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                q: "ਕਬੂਤਰ ਅੰਬਰੀਂ ਉਡਾਰੀ ਲਾ ਕੇ ਕਿਸ ਤੋਂ ਉੱਚਾ ਉੱਡ ਜਾਂਦਾ ਹੈ?", type: "mcq",
+                opts: ["ਦਰਖ਼ਤਾਂ ਤੋਂ", "ਪਹਾੜਾਂ ਤੋਂ", "ਬੱਦਲਾਂ ਤੋਂ", "ਘਰਾਂ ਤੋਂ"], correct: 2,
+                a: "ਕਬੂਤਰ <span class='hl-red'>ਬੱਦਲਾਂ ਤੋਂ</span> ਉੱਚਾ ਉੱਡ ਜਾਂਦਾ ਹੈ।"
+            },
+            {
+                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 4", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                q: "ਪੁਰਾਣੇ ਸਮੇਂ ਵਿੱਚ ਕਬੂਤਰ ਕਿਸ ਦੀਆਂ ਚਿੱਠੀਆਂ ਲੈ ਕੇ ਜਾਂਦਾ ਸੀ?", type: "mcq",
+                opts: ["ਮਰਗ ਅਤੇ ਵਿਆਹ ਦੀਆਂ", "ਸਕੂਲ ਦੀਆਂ", "ਦਫ਼ਤਰ ਦੀਆਂ", "ਦੁਕਾਨ ਦੀਆਂ"], correct: 0,
+                a: "ਕਬੂਤਰ <span class='hl-red'>ਮਰਗ ਅਤੇ ਵਿਆਹ ਦੀਆਂ</span> ਚਿੱਠੀਆਂ ਲੈ ਕੇ ਜਾਂਦਾ ਸੀ।"
+            },
+            {
+                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 5", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                q: "ਕਬੂਤਰ ਕਿਹੜਾ ਗੀਤ ਗਾਉਂਦਾ ਹੈ?", type: "mcq",
+                opts: ["ਜੰਗ ਦਾ", "ਅਮਨ (ਸ਼ਾਂਤੀ) ਦਾ", "ਨਫ਼ਰਤ ਦਾ", "ਖੁਸ਼ੀ ਦਾ"], correct: 1,
+                a: "ਕਬੂਤਰ <span class='hl-red'>ਅਮਨ (ਸ਼ਾਂਤੀ) ਦਾ</span> ਗੀਤ ਗਾਉਂਦਾ ਹੈ।"
+            },
+            {
+                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 6", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                q: "'ਆਥਣ' ਸ਼ਬਦ ਦਾ ਕੀ ਅਰਥ ਹੈ?", type: "mcq",
+                opts: ["ਸਵੇਰ", "ਦੁਪਹਿਰ", "ਸ਼ਾਮ", "ਰਾਤ"], correct: 2,
+                a: "ਆਥਣ ਦਾ ਅਰਥ <span class='hl-red'>ਸ਼ਾਮ</span> ਹੁੰਦਾ ਹੈ।"
+            },
+            {
+                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 7", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                q: "ਕਬੂਤਰ ਦੇ ਖੰਭ ਕਿਹੜੇ ਰੰਗ ਦੇ ਨਹੀਂ ਦੱਸੇ ਗਏ?", type: "mcq",
+                opts: ["ਚਿੱਟੇ", "ਕਾਲ਼ੇ", "ਰੰਗ-ਬਰੰਗੇ", "ਹਰੇ"], correct: 3,
+                a: "ਕਵਿਤਾ ਵਿੱਚ ਕਬੂਤਰ ਦੇ ਖੰਭ <span class='hl-red'>ਹਰੇ</span> ਰੰਗ ਦੇ ਨਹੀਂ ਦੱਸੇ ਗਏ।"
+            },
+            {
+                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 8", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                q: "ਕਬੂਤਰ ਕਦੇ ਵੀ ਕੀ ਨਹੀਂ ਭੁੱਲਦਾ?", type: "mcq",
+                opts: ["ਰੰਗ", "ਆਪਣੇ ਘਰ ਦਾ ਰਾਹ", "ਉੱਡਣਾ", "ਪਾਣੀ ਪੀਣਾ"], correct: 1,
+                a: "ਕਬੂਤਰ ਕਦੇ ਵੀ <span class='hl-red'>ਆਪਣੇ ਘਰ ਦਾ ਰਾਹ</span> ਨਹੀਂ ਭੁੱਲਦਾ।"
+            },
+            {
+                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 9", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                q: "ਕਵਿਤਾ ਅਨੁਸਾਰ ਸਾਨੂੰ ਮਨ ਵਿੱਚੋਂ ਕੀ ਕੱਢਣਾ ਚਾਹੀਦਾ ਹੈ?", type: "mcq",
+                opts: ["ਪਿਆਰ", "ਨਫ਼ਰਤ", "ਗੁੱਸਾ", "ਹਮਦਰਦੀ"], correct: 1,
+                a: "ਸਾਨੂੰ ਮਨ ਵਿੱਚੋਂ <span class='hl-red'>ਨਫ਼ਰਤ</span> ਕੱਢਣੀ ਚਾਹੀਦੀ ਹੈ।"
+            },
+            {
+                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 10", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                q: "ਕਬੂਤਰ ਚੋਗਾ ਖਾਣ ਵੇਲੇ ਕਿਸ ਨਾਲ ਗੱਲਾਂ ਕਰਦਾ ਹੈ?", type: "mcq",
+                opts: ["ਜਾਨਵਰਾਂ ਨਾਲ", "ਹਵਾ ਨਾਲ", "ਤੋਤਲੇ ਬੱਚਿਆਂ ਨਾਲ", "ਕਿਸੇ ਨਾਲ ਨਹੀਂ"], correct: 2,
+                a: "ਕਬੂਤਰ <span class='hl-red'>ਤੋਤਲੇ ਬੱਚਿਆਂ ਨਾਲ</span> ਗੱਲਾਂ ਕਰਦਾ ਹੈ।"
+            },
+            { type: "conclude" }
+        ],
+        activities: [
+            {
+                title: "ਗਤੀਵਿਧੀ 1: ਪੈਰਾ ਪੜ੍ਹ ਕੇ ਪ੍ਰਸ਼ਨਾਂ ਦੇ ਉੱਤਰ ਦਿਓ",
+                instruction: "ਹੇਠ ਲਿਖਿਆ ਪੈਰਾ ਪੜ੍ਹੋ ਅਤੇ ਉੱਤਰ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ:\n<br><br><span style='color:#333; font-size:2.5cqmin; background:#fff; padding:1cqmin; border-radius:1cqmin; border:1px solid #ccc; display:block; margin-bottom:1cqmin;'>ਕਦੇ ਕਿਸੇ ਢੋਲ ਦੀ ਚਿੱਠੀ,<br>ਮਰਗ, ਵਿਆਹ ਦੀ ਕੌੜੀ-ਮਿੱਠੀ।<br>ਖ਼ਬਰਾਂ ਮੈਂ ਹੀ ਪਹੁੰਚਾਉਂਦਾ ਸੀ,<br>ਕਦੇ ਨਾ ਕਰਦਾ ਚੂੰ-ਚਾਂ-ਚੂੰ.....।</span>",
+                type: "qa",
+                items: [
+                    {q: "(ੳ) ਕਬੂਤਰ ਕਿਸ-ਕਿਸ ਮੌਕੇ ਦੀਆਂ ਖ਼ਬਰਾਂ ਪਹੁੰਚਾਉਂਦਾ ਸੀ?", a: "ਉੱਤਰ : ਕਬੂਤਰ <span class='hl-red'>ਮਰਗ ਅਤੇ ਵਿਆਹ</span> ਦੀਆਂ ਖ਼ਬਰਾਂ ਪਹੁੰਚਾਉਂਦਾ ਸੀ।"},
+                    {q: "(ਅ) ਖ਼ਬਰਾਂ ਪਹੁੰਚਾਉਣ ਵੇਲੇ ਕਬੂਤਰ ਕੀ ਨਹੀਂ ਕਰਦਾ ਸੀ?", a: "ਉੱਤਰ : ਕਬੂਤਰ ਕਦੇ ਵੀ <span class='hl-red'>ਚੂੰ-ਚਾਂ-ਚੂੰ ਨਹੀਂ</span> ਕਰਦਾ ਸੀ।" }
+                ]
+            },
+            {
+                title: "ਗਤੀਵਿਧੀ 2: ਵਿਰੋਧੀ ਸ਼ਬਦ",
+                instruction: "ਸ਼ਬਦ ਦਾ ਵਿਰੋਧੀ ਸ਼ਬਦ ਦੇਖਣ ਲਈ ਟੱਚ ਕਰੋ :",
+                type: "list",
+                items: [
+                    {q: "ਸਿਆਣੇ", a: "ਵਿਰੋਧੀ ਸ਼ਬਦ : <span class='hl-red'>ਨਿਆਣੇ</span>"},
+                    {q: "ਮਿੱਠੀ", a: "ਵਿਰੋਧੀ ਸ਼ਬਦ : <span class='hl-red'>ਕੌੜੀ</span>"},
+                    {q: "ਸਵੇਰ", a: "ਵਿਰੋਧੀ ਸ਼ਬਦ : <span class='hl-red'>ਆਥਣ (ਸ਼ਾਮ)</span>"},
+                    {q: "ਨੀਵਾਂ", a: "ਵਿਰੋਧੀ ਸ਼ਬਦ : <span class='hl-red'>ਉੱਚਾ</span>"},
+                    {q: "ਪਿਆਰ", a: "ਵਿਰੋਧੀ ਸ਼ਬਦ : <span class='hl-red'>ਨਫ਼ਰਤ</span>"},
+                    {q: "ਕਾਲ਼ਾ", a: "ਵਿਰੋਧੀ ਸ਼ਬਦ : <span class='hl-red'>ਚਿੱਟਾ</span>"}
+                ]
+            },
+            {
+                title: "ਗਤੀਵਿਧੀ 3: ਲਿੰਗ ਬਦਲੋ",
+                instruction: "ਸਹੀ ਲਿੰਗ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
+                type: "list",
+                items: [
+                    {q: "ਕਬੂਤਰ", a: "ਲਿੰਗ ਬਦਲੋ : <span class='hl-red'>ਕਬੂਤਰੀ</span>"},
+                    {q: "ਬੱਚਾ", a: "ਲਿੰਗ ਬਦਲੋ : <span class='hl-red'>ਬੱਚੀ</span>"},
+                    {q: "ਚਿੜਾ", a: "ਲਿੰਗ ਬਦਲੋ : <span class='hl-red'>ਚਿੜੀ</span>"},
+                    {q: "ਤੋਤਾ", a: "ਲਿੰਗ ਬਦਲੋ : <span class='hl-red'>ਤੋਤੀ</span>"}
+                ]
+            },
+            {
+                title: "ਗਤੀਵਿਧੀ 4: ਵਚਨ ਬਦਲੋ (ਇੱਕ ਤੋਂ ਜ਼ਿਆਦਾ ਬਣਾਓ)",
+                instruction: "ਵਚਨ ਬਦਲੋ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
+                type: "list",
+                items: [
+                    {q: "ਦਾਣਾ", a: "ਵਚਨ ਬਦਲੋ : <span class='hl-red'>ਦਾਣੇ</span>"},
+                    {q: "ਖੰਭ", a: "ਵਚਨ ਬਦਲੋ : <span class='hl-red'>ਖੰਭਾਂ</span>"},
+                    {q: "ਬੱਦਲ", a: "ਵਚਨ ਬਦਲੋ : <span class='hl-red'>ਬੱਦਲਾਂ</span>"},
+                    {q: "ਚਿੱਠੀ", a: "ਵਚਨ ਬਦਲੋ : <span class='hl-red'>ਚਿੱਠੀਆਂ</span>"}
+                ]
+            },
+            {
+                title: "ਗਤੀਵਿਧੀ 5: ਸਹੀ (✓) ਜਾਂ ਗਲਤ (✗) ਦੱਸੋ",
+                instruction: "ਸਹੀ ਜਵਾਬ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
+                type: "list",
+                items: [
+                    {q: "(ੳ) ਕਬੂਤਰ ਬੱਦਲਾਂ ਤੋਂ ਉੱਚਾ ਉੱਡ ਸਕਦਾ ਹੈ।", a: "ਜਵਾਬ : <span class='hl-red'>ਸਹੀ (✓)</span>"},
+                    {q: "(ਅ) ਕਬੂਤਰ ਅਕਸਰ ਆਪਣੇ ਘਰ ਦਾ ਰਾਹ ਭੁੱਲ ਜਾਂਦਾ ਹੈ।", a: "ਜਵਾਬ : <span class='hl-red'>ਗਲਤ (✗)</span>"},
+                    {q: "(ੲ) ਸਾਨੂੰ ਸਾਰਿਆਂ ਨੂੰ ਰਲ-ਮਿਲ ਕੇ ਰਹਿਣਾ ਚਾਹੀਦਾ ਹੈ।", a: "ਜਵਾਬ : <span class='hl-red'>ਸਹੀ (✓)</span>"}
+                ]
+            },
+            { type: "conclude" }
+        ]
+    };
+
+    // ਫੁੱਲ ਸਕ੍ਰੀਨ ਈਵੈਂਟ ਲਿਸਨਰ (Button Text Update)
+    document.addEventListener("fullscreenchange", updateFsBtn);
+    document.addEventListener("webkitfullscreenchange", updateFsBtn);
+    document.addEventListener("mozfullscreenchange", updateFsBtn);
+    document.addEventListener("MSFullscreenChange", updateFsBtn);
+
+    function updateFsBtn() {
+        const btn = document.getElementById('fs-btn-id');
+        if(!btn) return;
+        if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+            btn.innerHTML = "🔲 ਵਾਪਸ ਆਉਣ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ";
+            btn.style.background = "#3498db"; 
+        } else {
+            btn.innerHTML = "🔲 ਫੁੱਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ";
+            btn.style.background = "#e74c3c"; 
+        }
+    }
+
+    // ਮੋਬਾਈਲ 'ਤੇ ਡਬਲ ਟੈਪ ਨਾਲ ਫੁੱਲ ਸਕ੍ਰੀਨ ਕਰਨ ਲਈ ਕੋਡ
+    let lastTapTime = 0;
+    document.addEventListener('touchend', function(e) {
+        if(e.target.tagName.toLowerCase() === 'button') return;
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTapTime;
+        if (tapLength < 400 && tapLength > 0) {
+            toggleFullScreen();
+        }
+        lastTapTime = currentTime;
+    });
+
+    function toggleFullScreen(e) {
+        if(e) e.stopPropagation();
+        if (!document.fullscreenElement && !document.mozFullScreenElement && !document.webkitFullscreenElement && !document.msFullscreenElement) {
+            if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); }
+            else if (document.documentElement.msRequestFullscreen) { document.documentElement.msRequestFullscreen(); }
+            else if (document.documentElement.mozRequestFullScreen) { document.documentElement.mozRequestFullScreen(); }
+            else if (document.documentElement.webkitRequestFullscreen) { document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT); }
+        } else {
+            if (document.exitFullscreen) { document.exitFullscreen(); }
+            else if (document.msExitFullscreen) { document.msExitFullscreen(); }
+            else if (document.mozCancelFullScreen) { document.mozCancelFullScreen(); }
+            else if (document.webkitExitFullscreen) { document.webkitExitFullscreen(); }
+        }
+    }
+
+    function showDiscModal(e) { if(e) e.stopPropagation(); document.getElementById('custom-modal').style.display = 'flex'; }
+    function hideDiscModal(e) { if(e) e.stopPropagation(); document.getElementById('custom-modal').style.display = 'none'; }
+    function hideWrongModal(e) { if(e) e.stopPropagation(); document.getElementById('wrong-modal').style.display = 'none'; }
+
+    function agreeAndIntro(e) {
+        if(e) e.stopPropagation();
+        document.getElementById('disclaimer-screen').style.display = 'none';
+        document.getElementById('top-ticker').style.display = 'flex';
+        document.getElementById('bottom-ticker').style.display = 'flex';
+        document.getElementById('intro-screen').style.display = 'flex';
+        state = 'intro';
+    }
+
+    function showMainMenu() {
+        document.getElementById('intro-screen').style.display = 'none';
+        document.getElementById('main-menu-screen').style.display = 'flex';
+        state = 'menu';
+    }
+
+    function handleGlobalClick(e) {
+        if(state === 'intro' && !e.target.closest('button')) { showMainMenu(); return; }
+        if(state === 'slide' && !e.target.closest('button') && !e.target.closest('.mcq-btn')) {
+            paused = !paused; 
+        }
+    }
+
+    function toggleAccordion(m) {
+        const auto = document.getElementById('card-auto'), live = document.getElementById('card-live');
+        if(m === 'auto') { auto.classList.toggle('expanded'); live.classList.remove('expanded'); }
+        else { live.classList.toggle('expanded'); auto.classList.remove('expanded'); }
+    }
+
+    function jumpTo(sec, mod, idx) {
+        section = sec; mode = mod; step = idx; subIdx = -1; paused = false; reviewMode = false;
+        document.getElementById('main-menu-screen').style.display = 'none';
+        document.getElementById('master-card').classList.add('active');
+        state = 'slide'; renderSlide();
+        if(mode === 'auto') startAuto();
+    }
+
+    function startSection(sec, mod) { 
+        jumpTo(sec, mod, 'toc'); 
+    }
+
+    function startAutoWithToc(sec) {
+        openToc(null, sec, 'auto');
+        setTimeout(() => {
+            if (state === 'menu' && document.getElementById('toc-overlay').style.display === 'flex') {
+                jumpTo(sec, 'auto', 0);
+            }
+        }, 3000);
+    }
+
+    function openToc(e, sec, mod) {
+        if (e && e.stopPropagation) e.stopPropagation();
+        const list = document.getElementById('toc-list'); list.innerHTML = '';
+        lessonData[sec].forEach((d, idx) => {
+            if(d.type === 'conclude') return;
+            const row = document.createElement('div'); row.className = 'toc-item';
+            row.innerHTML = `<span class="toc-text">${d.title}</span><button class="toc-go-btn" onclick="jumpTo('${sec}', '${mod}', ${idx})">ਜਾਓ</button>`;
+            list.appendChild(row);
+        });
+        document.getElementById('toc-overlay').style.display = 'flex';
+    }
+
+    // Smooth Typewriter (Interuptable, Left Aligned fixed)
+    async function typeEffect(el, html, speed = 60) {
+        typing = true; 
+        let currentHTML = "";
+        let i = 0;
+        while (i < html.length && typing) {
+            if (html[i] === '<') { 
+                let end = html.indexOf('>', i); 
+                currentHTML += html.substring(i, end + 1); 
+                i = end + 1; 
+                el.innerHTML = currentHTML;
+            } 
+            else { 
+                currentHTML += html[i]; 
+                el.innerHTML = currentHTML;
+                i++; 
+                await new Promise(r => setTimeout(r, speed)); 
+            }
+        }
+        if(!typing) el.innerHTML = html; 
+        typing = false;
+    }
+
+    function renderSlide() {
+        const d = lessonData[section][step];
+        const titleEl = document.getElementById('slide-title'), instrEl = document.getElementById('slide-instr'), hEl = document.getElementById('html-content');
+        
+        if(step === 'toc') {
+            titleEl.innerHTML = "📑 ਪਾਠ ਤਤਕਰਾ (Index)";
+            instrEl.innerHTML = "ਸਿੱਧਾ ਕਿਸੇ ਵੀ ਭਾਗ 'ਤੇ ਜਾਣ ਲਈ ਕਲਿੱਕ ਕਰੋ :";
+            hEl.className = 'interactive-list';
+            hEl.innerHTML = '';
+            
+            lessonData[section].forEach((data, idx) => {
+                if(data.type === 'conclude') return;
+                const row = document.createElement('div');
+                row.className = 'interactive-item';
+                row.style.flexDirection = 'row';
+                row.style.justifyContent = 'space-between';
+                row.innerHTML = `<span class="item-q" style="color:#000;">${data.title}</span><button class="item-reveal-btn" style="background:#2ecc71;" onclick="jumpTo('${section}', '${mode}', ${idx})">ਜਾਓ</button>`;
+                hEl.appendChild(row);
+            });
+            document.getElementById('tap-indicator').innerText = "ਸ਼ੁਰੂ ਕਰੋ ⏭️";
+            return;
+        }
+
+        if(d.type === "conclude") {
+            titleEl.innerHTML = "ਧੰਨਵਾਦ !"; instrEl.innerHTML = "";
+            hEl.className = '';
+            hEl.innerHTML = `<div class="conclusion-box"><h2 class="conc-title">ਸ਼ਾਬਾਸ਼ !</h2><p class="conc-msg">ਵਿਸ਼ਵਾਸ ਰੱਖੋ ਬੱਚਿਓ , ਤੁਸੀਂ ਅੱਜ <b>ਪਾਠ 6 - ਗੁਟਰ-ਗੂੰ....ਗੁਟਰ-ਗੂੰ</b> ਦਾ ਅਭਿਆਸ ਪੂਰਾ ਕਰ ਲਿਆ ਹੈ । ਹੁਣ ਤੁਸੀਂ ਇਸ ਨੂੰ ਆਪਣੀਆਂ ਕਾਪੀਆਂ ਤੇ ਤਿਆਰ ਕਰਨਾ ਹੈ ਅਤੇ ਸਕੂਲ ਲੈ ਕੇ ਆਉਣਾ ਹੈ । ਆਪਾਂ ਅਗਲਾ ਟੋਪਿਕ ਅਗਲੇ ਦਿਨਾਂ ਵਿੱਚ ਕਰਾਂਗੇ ।</p></div>`;
+            document.getElementById('tap-indicator').innerText = "ਮੁਕੰਮਲ 🏁"; return;
+        }
+
+        titleEl.innerHTML = d.title; instrEl.innerHTML = d.instruction || "";
+        hEl.innerHTML = ''; subIdx = -1; reviewMode = false;
+
+        // Render QA or Lists with Pre-allocated wrapper
+        if(d.type === 'list' || d.type === 'qa') {
+            hEl.className = 'interactive-list qa-mode';
+            d.items.forEach((item, idx) => {
+                const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
+                if(idx !== 0) row.classList.add('fade-out');
+                row.innerHTML = `
+                    <div class="q-row">
+                        <span class="item-q">${item.q}</span>
+                        <button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਉੱਤਰ ਦੇਖੋ</button>
+                    </div>
+                    <div class="ans-wrapper">
+                        <div class="item-a" style="visibility:hidden; opacity:0; pointer-events:none;">${item.a}</div>
+                        <div class="item-a" id="ans-${idx}" style="position:absolute; top:0.8cqmin; left:0;"></div>
+                    </div>`;
+                hEl.appendChild(row);
+            });
+            subIdx = 0; stepState = 'focus'; 
+            document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭️";
+        } else if(d.type === 'blanks') {
+            hEl.className = 'interactive-list';
+            d.items.forEach((item, idx) => {
+                const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
+                if(idx !== 0) row.classList.add('fade-out');
+                row.innerHTML = `<div class="q-row"><span class="item-q">${item.q}<span id="blank-${idx}" class="hl-red">.......</span>${item.a}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਭਰੋ</button></div>`;
+                hEl.appendChild(row);
+            });
+            subIdx = 0; stepState = 'focus';
+            document.getElementById('tap-indicator').innerText = "ਭਰੋ ✍️";
+        } else if(d.type === 'mcq') {
+            hEl.className = ''; 
+            hEl.style.display = 'flex'; hEl.style.flexDirection = 'column'; hEl.style.width = '100%'; hEl.style.alignItems = 'center';
+            
+            const qP = document.createElement('p'); qP.className = 'item-q'; qP.style.color = '#d32f2f'; qP.style.textAlign = 'center'; qP.style.marginBottom = '1.5cqmin'; qP.style.width = '100%'; qP.innerHTML = d.q; 
+            hEl.appendChild(qP);
+            
+            const optGrid = document.createElement('div'); optGrid.className = 'mcq-options-grid';
+            d.opts.forEach((o, i) => {
+                const btn = document.createElement('button'); btn.className = 'mcq-btn'; btn.innerText = o;
+                btn.onclick = (e) => { e.stopPropagation(); if(mode === 'auto' || typing) return; checkMcq(btn, i === d.correct); };
+                optGrid.appendChild(btn);
+            });
+            hEl.appendChild(optGrid);
+            
+            // Pre-allocate space for MCQ Answer
+            const wrapper = document.createElement('div');
+            wrapper.style.position = 'relative'; wrapper.style.width = '100%'; wrapper.style.marginTop = '1cqmin';
+            
+            const placeholder = document.createElement('div'); placeholder.className = 'item-a';
+            placeholder.style.visibility = 'hidden'; placeholder.style.opacity = '0'; placeholder.style.pointerEvents = 'none';
+            placeholder.innerHTML = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.2cqmin;'>" + d.a + "</span>";
+            
+            const box = document.createElement('div'); box.id = "final-ans"; box.className = "item-a"; 
+            box.style.position = 'absolute'; box.style.top = '0'; box.style.left = '0'; box.style.textAlign = 'center';
+            
+            wrapper.appendChild(placeholder); wrapper.appendChild(box); hEl.appendChild(wrapper);
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+        }
+    }
+
+    async function showAllAnswers(e) {
+        if(e) e.stopPropagation();
+        if(step === 'toc' || lessonData[section][step].type === 'conclude') return;
+        
+        typing = false; 
+        const d = lessonData[section][step];
+        
+        if(d.type === 'list' || d.type === 'blanks' || d.type === 'qa') {
+            document.querySelectorAll('.interactive-item').forEach((row, idx) => {
+                row.classList.remove('fade-out');
+                const btn = document.getElementById(`btn-${idx}`);
+                if(btn) btn.style.display = 'none';
+                
+                const target = d.type === 'blanks' ? document.getElementById(`blank-${idx}`) : document.getElementById(`ans-${idx}`);
+                target.classList.add('revealed');
+                target.innerHTML = d.type === 'blanks' ? d.items[idx].b : d.items[idx].a; 
+            });
+            subIdx = d.items.length - 1;
+            stepState = 'reveal';
+            reviewMode = true;
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+        } else if (d.type === 'mcq') {
+            const box = document.getElementById('final-ans');
+            box.classList.add('revealed');
+            const btns = document.querySelectorAll('.mcq-btn');
+            if(btns[d.correct]) btns[d.correct].classList.add('correct');
+            box.innerHTML = "ਉੱਤਰ : " + d.a; 
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+        }
+    }
+
+    async function revealAnswer(e, idx) {
+        if(e) e.stopPropagation(); 
+        if(typing) { typing = false; return; }
+        
+        const d = lessonData[section][step];
+        const btn = document.getElementById(`btn-${idx}`);
+        const target = d.type === 'blanks' ? document.getElementById(`blank-${idx}`) : document.getElementById(`ans-${idx}`);
+        
+        document.querySelectorAll('.interactive-item').forEach((row, i) => {
+            if(i === idx) row.classList.remove('fade-out');
+            else row.classList.add('fade-out');
+        });
+        if(btn) btn.style.display = 'none';
+        
+        target.classList.add('revealed'); 
+        subIdx = idx; stepState = 'reveal';
+        
+        await typeEffect(target, d.type === 'blanks' ? d.items[idx].b : d.items[idx].a, 60);
+        
+        if(idx === d.items.length - 1) {
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️"; 
+        } else {
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ਪ੍ਰਸ਼ਨ ⏭️"; 
+        }
+    }
+
+    async function checkMcq(btn, isCorrect) {
+        if(typing) return; 
+        
+        if(isCorrect) {
+            const allBtns = document.querySelectorAll('.mcq-btn');
+            allBtns.forEach(b => b.style.pointerEvents = 'none');
+            
+            btn.classList.add('correct');
+            const box = document.getElementById('final-ans');
+            box.classList.add('revealed');
+            box.style.color = '#2ecc71';
+            await typeEffect(box, "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.2cqmin;'>" + lessonData[section][step].a + "</span>", 60);
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+        } else {
+            btn.classList.add('wrong');
+            document.getElementById('wrong-modal').style.display = 'flex';
+            btn.style.pointerEvents = 'none';
+        }
+    }
+
+    async function nextStep(fromTimer = false) {
+        if(typing) { typing = false; return; } 
+        
+        if(mode === 'auto' && !fromTimer && state === 'slide') {
+            startAuto(); 
+        }
+        
+        if (step === 'toc') { step = 0; renderSlide(); return; }
+
+        const d = lessonData[section][step];
+        if(d.type === 'list' || d.type === 'blanks' || d.type === 'qa') {
+            const items = d.items || [];
+            
+            if (reviewMode) {
+                if(step < lessonData[section].length - 1) { step++; renderSlide(); }
+                else goHome();
+                return;
+            }
+
+            if (stepState === 'focus') {
+                await revealAnswer(null, subIdx);
+            } 
+            else if (stepState === 'reveal') {
+                if (subIdx < items.length - 1) {
+                    subIdx++;
+                    stepState = 'focus';
+                    document.querySelectorAll('.interactive-item').forEach((row, i) => {
+                        if (i === subIdx) row.classList.remove('fade-out');
+                        else row.classList.add('fade-out');
+                    });
+                    document.getElementById('tap-indicator').innerText = d.type === 'blanks' ? "ਭਰੋ ✍️" : "ਉੱਤਰ ਦੇਖੋ ⏭️";
+                } else {
+                    document.querySelectorAll('.interactive-item').forEach(row => row.classList.remove('fade-out'));
+                    reviewMode = true;
+                    document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+                }
+            }
+        } else if(d.type !== 'conclude') {
+            const box = document.getElementById('final-ans');
+            if(box && !box.classList.contains('revealed')) { 
+                box.classList.add('revealed'); 
+                if(d.type === 'mcq') {
+                    const btns = document.querySelectorAll('.mcq-btn');
+                    if(btns[d.correct]) btns[d.correct].classList.add('correct');
+                }
+                await typeEffect(box, "ਉੱਤਰ : " + d.a, 60); 
+                document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+                return; 
+            } else {
+                if(step < lessonData[section].length - 1) { step++; renderSlide(); }
+                else goHome();
+            }
+        } else {
+            goHome(); 
+        }
+    }
+
+    function skipStep() { 
+        typing = false; 
+        if (step === 'toc') { step = 0; renderSlide(); return; }
+        if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); 
+    }
+    
+    function prevStep() { 
+        if(typing) { typing = false; return; }
+        if (step === 'toc') { goHome(); return; }
+        if (step === 0) { step = 'toc'; renderSlide(); return; }
+        step--; renderSlide(); 
+    }
+    
+    function retrySlide() { typing = false; renderSlide(); }
+    function goHome() { state = 'menu'; document.getElementById('master-card').classList.remove('active'); document.getElementById('main-menu-screen').style.display = 'flex'; }
+
+    window.autoTimer = null;
+    function startAuto() {
+        clearInterval(window.autoTimer);
+        window.autoTimer = setInterval(async () => {
+            if(state !== 'slide' || mode !== 'auto' || paused || typing) return;
+            
+            if(step === 'toc') {
+                nextStep(true); return; 
+            }
+
+            const d = lessonData[section][step];
+            if(d.type === 'list' || d.type === 'blanks' || d.type === 'qa') {
+                if(!reviewMode) await nextStep(true);
+                else { await new Promise(r => setTimeout(r, 4000)); if(step < lessonData[section].length - 1) { step++; renderSlide(); } else { goHome(); clearInterval(window.autoTimer); } }
+            } else if(d.type === 'conclude') { 
+                await new Promise(r => setTimeout(r, 7000)); goHome(); clearInterval(window.autoTimer); 
+            } else {
+                const box = document.getElementById('final-ans');
+                if(box && !box.classList.contains('revealed')) await nextStep(true);
+                else { await new Promise(r => setTimeout(r, 4000)); if(step < lessonData[section].length - 1) { step++; renderSlide(); } else { goHome(); clearInterval(window.autoTimer); } }
+            }
+        }, 4000);
+    }
+</script>
+</body>
+</html>
