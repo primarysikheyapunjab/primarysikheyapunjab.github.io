@@ -111,7 +111,7 @@
         .title-text { font-size: 4cqmin; font-weight: 900; color: #d32f2f; margin-bottom: 0.5cqmin; border-bottom: 2px solid #eee; width: 100%; text-align: center; padding-bottom: 0.5cqmin; }
         .instr-text { font-size: 2.8cqmin; font-weight: bold; color: #666; margin-bottom: 0.8cqmin; text-align: center; width: 100%; }
         
-        /* List Styling */
+        /* List Styling - Pre-allocated spaces prevent scrolling */
         .interactive-list { width: 100%; display: grid; grid-template-columns: 1fr; gap: 1cqmin; overflow-y: auto; padding: 0.5cqmin 1cqmin; align-content: start; }
         @media (orientation: landscape) { .interactive-list { grid-template-columns: 1fr 1fr; column-gap: 2cqmin; row-gap: 1.2cqmin; } }
         
@@ -121,6 +121,7 @@
         .qa-mode .item-q { color: #d32f2f; }
         .item-reveal-btn { background: #f39c12; color: #fff; border: none; padding: 0.8cqmin 1.5cqmin; border-radius: 1cqmin; cursor: pointer; font-size: 2.2cqmin; font-weight: 900; margin-left: 2cqmin; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
         
+        /* THE SECRET TO NO SCROLLING: Hidden layout answers taking up space */
         .ans-wrapper { position: relative; width: 100%; border-top: 1px dashed #ccc; margin-top: 0.8cqmin; padding-top: 0.8cqmin; }
         .item-a { font-weight: 900; color: #1565c0; font-size: 2.7cqmin; opacity: 0; line-height: 1.4; text-align: left; width: 100%; display: block; margin: 0; padding: 0; }
         .item-a.revealed { opacity: 1; }
@@ -149,26 +150,24 @@
         .correct { background: #2ecc71 !important; color: #fff !important; border-color: #27ae60 !important; }
 
         /* --- AUTO MODE CSS (Clean Screen & Bubble Placement) --- */
-        body.auto-mode .nav-btn:not(.btn-home) { display: none !important; } /* Hide all nav buttons except home */
-        body.auto-mode #tap-indicator { display: none !important; } /* Hide the 'next' indicator completely */
-        body.auto-mode .bottom-ribbon { justify-content: center; border-top: none; padding-top: 0; } /* Center Home button, remove borders */
-        body.auto-mode .item-reveal-btn { display: none !important; } /* Hide reveal buttons */
-        body.auto-mode .mcq-btn { pointer-events: none !important; } /* Disable MCQ clicks */
+        body.auto-mode .nav-btn:not(.btn-home) { display: none !important; } 
+        body.auto-mode #tap-indicator { display: none !important; } 
+        body.auto-mode .bottom-ribbon { justify-content: center; border-top: none; padding-top: 0; } 
+        body.auto-mode .item-reveal-btn { display: none !important; } 
+        body.auto-mode .mcq-btn { pointer-events: none !important; } 
 
         /* Full Screen Button */
         .fs-btn { position: absolute; top: 8.5cqmin; right: 2cqmin; z-index: 1000001; background: #e74c3c; color: #fff; border: 0.3cqmin solid #fff; border-radius: 1.5cqmin; padding: 1cqmin 2cqmin; font-size: 2.2cqmin; font-weight: 900; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s; }
         .fs-btn:active { transform: scale(0.95); }
-        
-        /* Hide Fullscreen button in auto mode to keep screen completely clean */
         body.auto-mode .fs-btn { display: none !important; }
 
         /* --- AUTO MODE STATUS BUBBLE --- */
         #auto-status-container {
-            display: none; /* hidden by default */
+            display: none; 
             align-items: center;
             gap: 1cqmin;
             position: absolute;
-            right: 0.5cqmin; /* Aligned to the right edge of ribbon */
+            right: 0.5cqmin; 
             top: 50%;
             transform: translateY(-50%);
             background: #fff;
@@ -176,24 +175,21 @@
             border-radius: 2cqmin;
             border: 2px solid #ddd;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            pointer-events: none; /* So it doesn't block clicks */
+            pointer-events: none; 
         }
         body.auto-mode #auto-status-container {
-            display: flex; /* visible in auto mode */
+            display: flex; 
         }
-        
         #auto-status-text {
             font-size: 2.2cqmin;
             font-weight: 900;
         }
-
         .status-bubble {
             width: 2.5cqmin;
             height: 2.5cqmin;
             border-radius: 50%;
             animation: pulseBubble 0.8s infinite alternate;
         }
-        
         .status-running { background: #2ecc71; box-shadow: 0 0 8px #2ecc71; }
         .status-paused { background: #e74c3c; box-shadow: 0 0 8px #e74c3c; }
 
@@ -220,7 +216,7 @@
 
         <div id="viewport">
             
-            <!-- Disclaimer Screen (WITH FULL RESTORED TEXT) -->
+            <!-- Disclaimer Screen -->
             <div id="disclaimer-screen">
                 <div class="disclaimer-box">
                     <div class="disclaimer-content">
@@ -279,7 +275,7 @@
                             <p style="text-align:center; font-size:2.2cqmin; font-weight:bold; color:#d35400;">ਆਟੋ ਮੋਡ ਬਿਲਕੁਲ ਸਾਫ਼ ਚੱਲੇਗਾ। ਰੋਕਣ ਜਾਂ ਚਲਾਉਣ ਲਈ ਸਕਰੀਨ ਤੇ ਕਿਤੇ ਵੀ ਇੱਕ ਵਾਰ ਟੱਚ ਕਰੋ।</p>
                             <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startAutoWithToc('exercise')">📘 ਪੂਰਾ ਅਭਿਆਸ</button></div>
                             <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startAutoWithToc('mcq')">📝 MCQ (ਬਹੁਵਿਕਲਪੀ)</button></div>
-                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startAutoWithToc('activities')">🎨 ਗਤੀਵਿਧੀਆਂ</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startAutoWithToc('activities')">🎨 ਕਵਿਤਾ ਪੜ੍ਹੋ</button></div>
                         </div>
                     </div>
                     <!-- Live Mode Card -->
@@ -289,7 +285,7 @@
                             <p style="text-align:center; font-size:2.2cqmin; font-weight:bold; color:#27ae60;">ਲਾਈਵ ਮੋਡ ਵਿੱਚ ਅਧਿਆਪਕ ਜਾਂ ਬੱਚਾ ਬਟਨ ਦਬਾ ਕੇ ਆਪ ਕੰਟਰੋਲ ਕਰੇਗਾ।</p>
                             <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startSection('exercise', 'live')">📘 ਪੂਰਾ ਅਭਿਆਸ</button></div>
                             <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startSection('mcq', 'live')">📝 MCQ (ਬਹੁਵਿਕਲਪੀ)</button></div>
-                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startSection('activities', 'live')">🎨 ਗਤੀਵਿਧੀਆਂ</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startSection('activities', 'live')">🎨 ਕਵਿਤਾ ਪੜ੍ਹੋ</button></div>
                         </div>
                     </div>
                 </div>
@@ -338,35 +334,98 @@
     let state = 'disclaimer', mode = 'live', section = '', step = 0, subIdx = -1, stepState = 'focus', paused = false, typing = false, reviewMode = false;
     let autoLoopRunning = false;
     
-    // TYPE SPEED CONTROL (Higher = slower)
-    const TYPE_SPEED = 100; // ਸਪੀਡ ਲਗਭਗ 60% ਕਰ ਦਿੱਤੀ ਗਈ ਹੈ
+    // TYPE SPEED CONTROL
+    const TYPE_SPEED = 100; // ਸਪੀਡ 60% ਘਟਾਈ ਗਈ ਹੈ
 
-    // DATA FOR CHAPTER 1
+    // COMPLETE TEXTBOOK DATA FOR CHAPTER 1
     const lessonData = {
         exercise: [
             {
-                title: "1. ਸ਼ਬਦ-ਅਰਥ ਪੜ੍ਹੋ ਅਤੇ ਸਮਝੋ",
+                title: "1. ਸ਼ਬਦ-ਅਰਥ (ਭਾਗ 1)",
                 instruction: "ਸ਼ਬਦ ਦੇ ਸਾਹਮਣੇ ਵਾਲੇ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
                 type: "list",
                 items: [
                     {q: "ਸਿਰਜਣਹਾਰੇ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਸੰਸਾਰ ਨੂੰ ਬਣਾਉਣ ਵਾਲਾ, ਕਰਤਾਰ</span>"},
                     {q: "ਮਾਨਵਤਾ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਮਨੁੱਖਤਾ</span>"},
                     {q: "ਨਿਸ਼ਕਾਮ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਉਹ ਕੰਮ ਜੋ ਫਲ ਦੀ ਇੱਛਾ ਤੋਂ ਬਿਨਾਂ ਕੀਤਾ ਜਾਵੇ</span>"},
-                    {q: "ਭਰੋਸਾ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਵਿਸ਼ਵਾਸ</span>"},
+                    {q: "ਭਰੋਸਾ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਵਿਸ਼ਵਾਸ</span>"}
+                ]
+            },
+            {
+                title: "1. ਸ਼ਬਦ-ਅਰਥ (ਭਾਗ 2)",
+                instruction: "ਸ਼ਬਦ ਦੇ ਸਾਹਮਣੇ ਵਾਲੇ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
+                type: "list",
+                items: [
                     {q: "ਦੂਣ-ਸਵਾਇਆ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਬਹੁਤ ਜ਼ਿਆਦਾ</span>"},
+                    {q: "ਰੁੱਖਾ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਕੌੜਾ, ਜੋ ਮਿੱਠਾ ਨਾ ਹੋਵੇ</span>"},
                     {q: "ਹਉਂਮੈਂ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਹੰਕਾਰ</span>"},
-                    {q: "ਮੇਰ-ਤੇਰ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਪੱਖ-ਪਾਤ, ਵਿਤਕਰਾ</span>"},
+                    {q: "ਮੇਰ-ਤੇਰ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਪੱਖ-ਪਾਤ, ਵਿਤਕਰਾ</span>"}
+                ]
+            },
+            {
+                title: "1. ਸ਼ਬਦ-ਅਰਥ (ਭਾਗ 3)",
+                instruction: "ਸ਼ਬਦ ਦੇ ਸਾਹਮਣੇ ਵਾਲੇ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
+                type: "list",
+                items: [
                     {q: "ਖ਼ੁਸ਼ਬੋਈ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਸੁਗੰਧੀ</span>"},
+                    {q: "ਲੇਖੇ ਲਾਈਏ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਸਫ਼ਲ ਕਰੀਏ, ਕੰਮ ਵਿੱਚ ਲਿਆਈਏ</span>"},
                     {q: "ਕਦਰ", a: "ਅਰਥ ਹੈ - <span class='hl-red'>ਮਹੱਤਤਾ, ਕੀਮਤ</span>"}
                 ]
             },
             {
-                title: "2. ਹੇਠ ਲਿਖੀਆਂ ਸਤਰਾਂ ਨੂੰ ਪੂਰਾ ਕਰੋ",
+                title: "2. ਹੇਠ ਲਿਖੀਆਂ ਸਤਰਾਂ ਪੂਰੀਆਂ ਕਰੋ",
                 instruction: "ਖ਼ਾਲੀ ਥਾਂ ਭਰਨ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
                 type: "blanks",
                 items: [
                     {q: "(ੳ) ਸਿਰਜਣਹਾਰੇ, ਸਭ ਦੇ ਪਿਆਰੇ, ਦੇ ਸਾਨੂੰ ਇਹ ਦਾਨ।<br>", b: "ਪੜ੍ਹੀਏ, ਲਿਖੀਏ, ਅੱਗੇ ਵਧੀਏ, ਕਰੀਏ ਕੰਮ ਮਹਾਨ।", a: ""},
                     {q: "(ਅ) ਤੂੰ ਦਾਤਾ ਹੈਂ, ਸਭ ਦਾ ਮਾਲਕ, ਸਭ ਨੂੰ ਦੇਈਂ ਭਰੋਸਾ।<br>", b: "ਸਭ ਹੀ ਪਿਆਰਨ ਇੱਕ-ਦੂਜੇ ਨੂੰ, ਮਨ ਵਿੱਚ ਰਹੇ ਨਾ ਰੋਸਾ।", a: ""}
+                ]
+            },
+            {
+                title: "3. ਇੱਕੋ-ਜਿਹੇ ਤੁਕਾਂਤ ਵਾਲੇ ਸ਼ਬਦ ਲਿਖੋ",
+                instruction: "ਮਿਲਦੇ-ਜੁਲਦੇ ਸ਼ਬਦ (ਤੁਕਾਂਤ) ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
+                type: "list",
+                items: [
+                    {q: "ਦਾਨ", a: "ਤੁਕਾਂਤ ਮੇਲ : <span class='hl-red'>ਮਹਾਨ</span>"},
+                    {q: "ਨਿਸ਼ਕਾਮ", a: "ਤੁਕਾਂਤ ਮੇਲ : <span class='hl-red'>ਹਰਾਮ</span>"},
+                    {q: "ਆਈਏ", a: "ਤੁਕਾਂਤ ਮੇਲ : <span class='hl-red'>ਪਾਈਏ / ਲਾਈਏ</span>"},
+                    {q: "ਕੋਈ", a: "ਤੁਕਾਂਤ ਮੇਲ : <span class='hl-red'>ਖ਼ੁਸ਼ਬੋਈ</span>"}
+                ]
+            },
+            {
+                title: "4. ਹੇਠ ਲਿਖੇ ਸ਼ਬਦਾਂ ਨੂੰ ਵਾਕਾਂ ਵਿੱਚ ਵਰਤੋ (ਭਾਗ 1)",
+                instruction: "ਵਾਕ ਦੇਖਣ ਲਈ ਸ਼ਬਦ ਦੇ ਸਾਹਮਣੇ ਟੱਚ ਕਰੋ :",
+                type: "qa",
+                items: [
+                    {q: "ਦਾਨ", a: "ਵਾਕ : ਸਾਨੂੰ ਗਰੀਬਾਂ ਨੂੰ <span class='hl-red'>ਦਾਨ</span> ਦੇਣਾ ਚਾਹੀਦਾ ਹੈ।"},
+                    {q: "ਮਹਾਨ", a: "ਵਾਕ : ਸਾਡਾ ਭਾਰਤ ਦੇਸ਼ <span class='hl-red'>ਮਹਾਨ</span> ਹੈ।"},
+                    {q: "ਸੇਵਾ", a: "ਵਾਕ : ਸਾਨੂੰ ਬਜ਼ੁਰਗਾਂ ਦੀ <span class='hl-red'>ਸੇਵਾ</span> ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ।"}
+                ]
+            },
+            {
+                title: "4. ਹੇਠ ਲਿਖੇ ਸ਼ਬਦਾਂ ਨੂੰ ਵਾਕਾਂ ਵਿੱਚ ਵਰਤੋ (ਭਾਗ 2)",
+                instruction: "ਵਾਕ ਦੇਖਣ ਲਈ ਸ਼ਬਦ ਦੇ ਸਾਹਮਣੇ ਟੱਚ ਕਰੋ :",
+                type: "qa",
+                items: [
+                    {q: "ਅਰਾਮ", a: "ਵਾਕ : ਥਕਾਵਟ ਹੋਣ ਤੇ ਸਾਨੂੰ <span class='hl-red'>ਅਰਾਮ</span> ਕਰਨਾ ਚਾਹੀਦਾ ਹੈ।"},
+                    {q: "ਕਦਰ", a: "ਵਾਕ : ਸਾਨੂੰ ਸਮੇਂ ਦੀ <span class='hl-red'>ਕਦਰ</span> ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ।"},
+                    {q: "ਅੰਨ", a: "ਵਾਕ : ਸਾਨੂੰ <span class='hl-red'>ਅੰਨ</span> ਬਰਬਾਦ ਨਹੀਂ ਕਰਨਾ ਚਾਹੀਦਾ।"}
+                ]
+            },
+            {
+                title: "5. ਸੁੰਦਰ ਕਰਕੇ ਲਿਖੋ",
+                instruction: "ਹੇਠ ਲਿਖੀਆਂ ਸਤਰਾਂ ਨੂੰ ਸੁੰਦਰ ਲਿਖਾਈ ਵਿੱਚ ਲਿਖੋ :",
+                type: "qa",
+                items: [
+                    {q: "ਤੂੰ ਦਾਤਾ ਹੈਂ, ਸਭ ਦਾ ਮਾਲਕ,<br>ਸਭ ਨੂੰ ਦੇਈਂ ਭਰੋਸਾ।<br>ਸਭ ਹੀ ਪਿਆਰਨ ਇੱਕ-ਦੂਜੇ ਨੂੰ,<br>ਮਨ ਵਿੱਚ ਰਹੇ ਨਾ ਰੋਸਾ।", a: "ਉੱਤਰ : ਇਹਨਾਂ ਸਤਰਾਂ ਨੂੰ ਆਪਣੀ ਕਾਪੀ ਉੱਪਰ <span class='hl-red'>ਬਹੁਤ ਹੀ ਸੋਹਣਾ ਅਤੇ ਸਾਫ਼ ਕਰਕੇ</span> ਲਿਖੋ।"}
+                ]
+            },
+            {
+                title: "ਜ਼ਰੂਰੀ ਨਿਰਦੇਸ਼ (ਕਵਿਤਾ ਗਾਇਨ)",
+                instruction: "ਅਧਿਆਪਕਾਂ ਅਤੇ ਵਿਦਿਆਰਥੀਆਂ ਲਈ ਧਿਆਨ ਦੇਣ ਯੋਗ ਗੱਲ :",
+                type: "qa",
+                items: [
+                    {q: "ਕਵਿਤਾ ਦਾ ਅਭਿਆਸ ਕਿਵੇਂ ਕਰਨਾ ਹੈ?", a: "<span class='hl-red'>ਅਧਿਆਪਕ ਖੁਦ ਗਾ ਕੇ ਕਵਿਤਾ ਸੁਣਾਵੇ ਅਤੇ ਬੱਚਿਆਂ ਨੂੰ ਗਾ ਕੇ ਕਵਿਤਾ ਪੜਨ ਲਈ ਬਾਰ-ਬਾਰ ਮੌਕਾ ਦੇਵੇ। ਕਵਿਤਾ ਨੂੰ ਵਿਦਿਆਰਥੀ ਸਮੂਹਕ ਰੂਪ ਵਿੱਚ ਵੀ ਗਾਉਣ।</span>"}
                 ]
             },
             { type: "conclude" }
@@ -406,35 +465,11 @@
         ],
         activities: [
             {
-                title: "ਗਤੀਵਿਧੀ 1: ਇੱਕੋ-ਜਿਹੇ ਤੁਕਾਂਤ ਵਾਲੇ ਸ਼ਬਦ",
-                instruction: "ਮਿਲਦੇ-ਜੁਲਦੇ ਸ਼ਬਦ (ਤੁਕਾਂਤ) ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "list",
-                items: [
-                    {q: "ਦਾਨ", a: "ਤੁਕਾਂਤ ਮੇਲ : <span class='hl-red'>ਮਹਾਨ</span>"},
-                    {q: "ਨਿਸ਼ਕਾਮ", a: "ਤੁਕਾਂਤ ਮੇਲ : <span class='hl-red'>ਹਰਾਮ / ਕੰਮ</span>"},
-                    {q: "ਆਈਏ", a: "ਤੁਕਾਂਤ ਮੇਲ : <span class='hl-red'>ਪਾਈਏ / ਲਾਈਏ</span>"},
-                    {q: "ਕੋਈ", a: "ਤੁਕਾਂਤ ਮੇਲ : <span class='hl-red'>ਖ਼ੁਸ਼ਬੋਈ / ਹੋਈ</span>"}
-                ]
-            },
-            {
-                title: "ਗਤੀਵਿਧੀ 2: ਹੇਠ ਲਿਖੇ ਸ਼ਬਦਾਂ ਨੂੰ ਵਾਕਾਂ ਵਿੱਚ ਵਰਤੋ",
-                instruction: "ਵਾਕ ਦੇਖਣ ਲਈ ਸ਼ਬਦ ਦੇ ਸਾਹਮਣੇ ਟੱਚ ਕਰੋ :",
+                title: "ਕਵਿਤਾ ਪੜ੍ਹਨ ਦਾ ਅਭਿਆਸ",
+                instruction: "ਇਸ ਕਵਿਤਾ ਨੂੰ ਉੱਚੀ ਆਵਾਜ਼ ਵਿੱਚ ਪੜ੍ਹੋ:",
                 type: "qa",
                 items: [
-                    {q: "ਦਾਨ", a: "ਵਾਕ : ਸਾਨੂੰ ਗਰੀਬਾਂ ਨੂੰ <span class='hl-red'>ਦਾਨ</span> ਦੇਣਾ ਚਾਹੀਦਾ ਹੈ।"},
-                    {q: "ਮਹਾਨ", a: "ਵਾਕ : ਸਾਡਾ ਭਾਰਤ ਦੇਸ਼ <span class='hl-red'>ਮਹਾਨ</span> ਹੈ।"},
-                    {q: "ਸੇਵਾ", a: "ਵਾਕ : ਸਾਨੂੰ ਬਜ਼ੁਰਗਾਂ ਦੀ <span class='hl-red'>ਸੇਵਾ</span> ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ।"},
-                    {q: "ਅਰਾਮ", a: "ਵਾਕ : ਥਕਾਵਟ ਹੋਣ ਤੇ ਸਾਨੂੰ <span class='hl-red'>ਅਰਾਮ</span> ਕਰਨਾ ਚਾਹੀਦਾ ਹੈ।"},
-                    {q: "ਕਦਰ", a: "ਵਾਕ : ਸਾਨੂੰ ਸਮੇਂ ਦੀ <span class='hl-red'>ਕਦਰ</span> ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ।"},
-                    {q: "ਅੰਨ", a: "ਵਾਕ : ਸਾਨੂੰ <span class='hl-red'>ਅੰਨ</span> ਬਰਬਾਦ ਨਹੀਂ ਕਰਨਾ ਚਾਹੀਦਾ।"}
-                ]
-            },
-            {
-                title: "ਗਤੀਵਿਧੀ 3: ਸੁੰਦਰ ਕਰਕੇ ਲਿਖੋ",
-                instruction: "ਹੇਠ ਲਿਖੀਆਂ ਸਤਰਾਂ ਨੂੰ ਸੁੰਦਰ ਲਿਖਾਈ ਵਿੱਚ ਲਿਖੋ :",
-                type: "qa",
-                items: [
-                    {q: "ਤੂੰ ਦਾਤਾ ਹੈਂ, ਸਭ ਦਾ ਮਾਲਕ,<br>ਸਭ ਨੂੰ ਦੇਈਂ ਭਰੋਸਾ।<br>ਸਭ ਹੀ ਪਿਆਰਨ ਇੱਕ-ਦੂਜੇ ਨੂੰ,<br>ਮਨ ਵਿੱਚ ਰਹੇ ਨਾ ਰੋਸਾ।", a: "ਉੱਤਰ : ਇਹਨਾਂ ਸਤਰਾਂ ਨੂੰ ਆਪਣੀ ਕਾਪੀ ਉੱਪਰ <span class='hl-red'>ਬਹੁਤ ਹੀ ਸੋਹਣਾ ਅਤੇ ਸਾਫ਼ ਕਰਕੇ</span> ਲਿਖੋ।"}
+                    {q: "ਕਵਿਤਾ ਦੀਆਂ ਲਾਈਨਾਂ", a: "ਸਿਰਜਣਹਾਰੇ, ਸਭ ਦੇ ਪਿਆਰੇ,<br>ਦੇ ਸਾਨੂੰ ਇਹ ਦਾਨ।<br>ਪੜ੍ਹੀਏ, ਲਿਖੀਏ, ਅੱਗੇ ਵਧੀਏ,<br>ਕਰੀਏ ਕੰਮ ਮਹਾਨ।<br>ਮਾਨਵਤਾ ਦੀ ਸੇਵਾ ਕਰੀਏ,<br>ਸੇਵਾ ਜੋ ਨਿਸ਼ਕਾਮ ।<br>ਤੁਰਦੇ ਜਾਈਏ, ਮੰਜ਼ਲ ਪਾਈਏ,<br>ਹੋਏ ਅਰਾਮ ਹਰਾਮ।"}
                 ]
             },
             { type: "conclude" }
@@ -842,7 +877,7 @@
         document.getElementById('main-menu-screen').style.display = 'flex'; 
     }
 
-    // --- ਨਵਾਂ ਆਟੋਮੈਟਿਕ ਲੂਪ (Slowed down to ~60%) ---
+    // --- ਨਵਾਂ ਆਟੋਮੈਟਿਕ ਲੂਪ (Slowed down) ---
     async function runAutoLoop() {
         if(autoLoopRunning) return;
         autoLoopRunning = true;
@@ -854,7 +889,7 @@
                 continue;
             }
 
-            // ਵੱਖ-ਵੱਖ ਭਾਗਾਂ ਲਈ ਸਮਾਂ (Delays Increased for 60% slower speed)
+            // ਵੱਖ-ਵੱਖ ਭਾਗਾਂ ਲਈ ਸਮਾਂ (Delays)
             let waitTime = 3500; 
             const d = lessonData[section][step];
             
