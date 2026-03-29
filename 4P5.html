@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="pa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>ਸਮਾਰਟ ਪੰਜਾਬੀ ਐਜੂਕੇਸ਼ਨ ਐਪ</title>
+    <style>
+        /* --- ਮਾਸਟਰ ਲੇਆਊਟ --- */
+        :root { --unit: 9.5cqmin; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }
+        html, body { width: 100%; height: 100%; overflow: hidden; background-color: #000; }
+        
+        #studio-frame { 
+            background: #fffdf5; position: absolute; top: 50%; left: 50%; 
+            transform: translate(-50%, -50%); overflow: hidden; 
+            container-type: size; box-shadow: 0 0 50px rgba(0,0,0,1);
+        }
+        
+        @media (orientation: landscape) { #studio-frame { width: 100vw; height: 56.25vw; max-height: 100vh; max-width: 177.78vh; } }
+        @media (orientation: portrait) { #studio-frame { height: 100vh; width: 56.25vh; max-width: 100vw; max-height: 177.78vw; } }
+
+        #bg-layer { position: absolute; inset: 0; z-index: 1; background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb, #84fab0, #8fd3f4); background-size: 400% 400%; animation: moveBG 20s ease infinite; }
+        @keyframes moveBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        #border-frame { position: absolute; inset: 0; z-index: 1000; pointer-events: none; border: 2cqmin solid rgba(255, 255, 255, 0.8); box-shadow: inset 0 0 3cqmin rgba(0,0,0,0.3); }
+        
+        .glitter-ticker {
+            position: absolute; width: 100%; height: 7cqmin;
+            background: linear-gradient(45deg, #4A2511, #D4AF37, #8B4513, #FFDF00, #4A2511);
+            background-size: 300% 300%; animation: glitterFlow 4s ease-in-out infinite alternate;
+            z-index: 10000; display: none; align-items: center; overflow: hidden;
+            border-top: 0.5cqmin solid #FFD700; border-bottom: 0.5cqmin solid #FFD700;
+        }
+        #top-ticker { top: 0; }
+        #bottom-ticker { bottom: 0; }
+        .ticker-text { white-space: nowrap; font-size: 2.8cqmin; font-weight: 900; color: #FFF; text-shadow: 2px 2px 0px #000; padding-left: 100%; animation: scrollTicker 45s linear infinite; }
+        @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        .hl-red-ticker { color: #ff3d3d !important; text-shadow: 1px 1px 0px #fff; font-weight: 900; }
+
+        #viewport { position: absolute; top: 7cqmin; bottom: 7cqmin; left: 0; right: 0; z-index: 10; display: flex; padding: 2cqmin; overflow: hidden; justify-content: center; align-items: center; }
+        
+        /* --- 0. Setup Screen --- */
+        #setup-screen { position: absolute; inset: 0; z-index: 99999999; background: #fffdf5; display: flex; align-items: center; justify-content: center; padding: 3cqmin; flex-direction: column; overflow-y: auto; }
+        .setup-box { background: #fff; border-radius: 3cqmin; padding: 4cqmin; width: 95%; max-width: 850px; border: 0.8cqmin solid #3498db; box-shadow: 0 20px 50px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; }
+        .setup-title { color: #2980b9; font-size: 5cqmin; font-weight: 900; margin-bottom: 1cqmin; text-align: center; }
+        .setup-desc { color: #666; font-size: 2.5cqmin; margin-bottom: 3cqmin; font-weight: bold; line-height: 1.4; text-align: center; }
+        
+        .setup-input-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5cqmin; width: 100%; margin-bottom: 2cqmin; }
+        @media (orientation: portrait) { .setup-input-group { grid-template-columns: 1fr; } }
+        .setup-input { padding: 1.5cqmin; border: 2px solid #ccc; border-radius: 1cqmin; font-size: 2.5cqmin; font-weight: bold; width: 100%; background: #f9f9f9; outline: none; transition: border-color 0.3s; color: #333; }
+        .setup-input:focus { border-color: #3498db; background: #fff; }
+        .setup-input:disabled { background: #eee; cursor: not-allowed; }
+        
+        .action-btn { background: #e74c3c; color: #fff; padding: 2cqmin 4cqmin; font-size: 3.5cqmin; font-weight: 900; border-radius: 1.5cqmin; border: none; cursor: pointer; box-shadow: 0 6px 10px rgba(0,0,0,0.2); width: 100%; max-width: 500px; transition: transform 0.2s; }
+        .action-btn:active { transform: scale(0.95); }
+        .btn-green { background: #2ecc71; }
+        .btn-blue { background: #3498db; }
+        .btn-gray { background: #7f8c8d; }
+
+        /* Manual Upload Area */
+        #manual-upload-area { display: none; flex-direction: column; align-items: center; width: 100%; margin-top: 3cqmin; border-top: 2px dashed #ccc; padding-top: 3cqmin; animation: popIn 0.4s ease-out; }
+        .manual-text { color: #e74c3c; font-weight: bold; font-size: 2.8cqmin; margin-bottom: 2cqmin; text-align: center; }
+
+        /* --- 1. Found Screen --- */
+        #found-screen { position: absolute; inset: 0; z-index: 9999999; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; padding: 3cqmin; }
+        .found-box { background: #fff; border-radius: 3cqmin; padding: 4cqmin; width: 95%; max-width: 600px; border: 0.8cqmin solid #3498db; text-align: center; box-shadow: 0 20px 50px rgba(0,0,0,0.7); animation: popIn 0.3s ease-out; }
+        .found-icon { font-size: 8cqmin; margin-bottom: 1cqmin; }
+        .found-title { color: #2980b9; font-size: 4cqmin; font-weight: 900; margin-bottom: 2cqmin; }
+        .found-filename { color: #e74c3c; font-size: 4.5cqmin; font-weight: 900; background: #ffebee; padding: 1cqmin 2cqmin; border-radius: 1cqmin; display: inline-block; margin-bottom: 3cqmin; border: 2px dashed #e74c3c; }
+        .found-desc { font-size: 3cqmin; font-weight: bold; color: #333; margin-bottom: 3cqmin; line-height: 1.5; }
+        .flex-btns { display: flex; gap: 2cqmin; width: 100%; }
+
+        /* --- 2. Summary/Validation Screen --- */
+        #summary-screen { position: absolute; inset: 0; z-index: 9999998; background: rgba(21, 101, 192, 0.95); backdrop-filter: blur(15px); display: none; align-items: center; justify-content: center; padding: 3cqmin; }
+        .summary-box { background: #fff; border-radius: 3cqmin; padding: 4cqmin; width: 95%; max-width: 850px; border: 0.8cqmin solid #ffeb3b; display: flex; flex-direction: column; max-height: 98%; box-shadow: 0 20px 50px rgba(0,0,0,0.7); animation: popIn 0.3s ease-out; }
+        .summary-header { text-align: center; color: #1565c0; font-size: 5cqmin; margin-bottom: 2cqmin; font-weight: 900; border-bottom: 0.5cqmin dashed #ccc; padding-bottom: 2cqmin; }
+        .summary-content { overflow-y: auto; flex-grow: 1; margin-bottom: 3cqmin; padding: 3cqmin; background: #f0f8ff; border-radius: 2cqmin; font-size: 3cqmin; line-height: 1.6; color: #333; font-weight: bold; border: 1px solid #bbdefb; }
+        .summary-item { display: flex; justify-content: space-between; border-bottom: 1px solid #ccc; padding: 1cqmin 0; }
+        .summary-item:last-child { border-bottom: none; }
+        .summary-val { color: #d32f2f; font-weight: 900; text-align: right; }
+
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        /* Disclaimer Screen */
+        #disclaimer-screen { position: absolute; inset: 0; z-index: 999999; background: rgba(0,0,0,0.92); backdrop-filter: blur(10px); display: none; align-items: center; justify-content: center; padding: 3cqmin; }
+        .disclaimer-box { background: #fff; border-radius: 3cqmin; padding: 3cqmin; width: 95%; max-width: 850px; border: 0.8cqmin solid #d32f2f; display: flex; flex-direction: column; max-height: 98%; }
+        .disclaimer-content { overflow-y: auto; flex-grow: 1; margin-bottom: 2cqmin; padding: 2.2cqmin; background: #fffdf5; border-radius: 2cqmin; border: 1px solid #ddd; }
+        .disclaimer-content h2 { text-align: center; color: #d32f2f; font-size: 5cqmin; margin-bottom: 1.5cqmin; }
+        .disclaimer-content li { font-size: 2.8cqmin; line-height: 1.5; margin-bottom: 1cqmin; font-weight: bold; color: #333; list-style: none; }
+        .warning-box-red { background: #ffebee; border-left: 1.2cqmin solid #d32f2f; padding: 1.5cqmin; border-radius: 1cqmin; margin: 1cqmin 0; }
+        .disclaimer-actions { display: flex; gap: 2cqmin; flex-shrink: 0; }
+        .agree-btn { background: #2ecc71; color: #fff; padding: 2cqmin; font-size: 3.5cqmin; font-weight: 900; border-radius: 2cqmin; border: none; cursor: pointer; flex: 1; }
+        .disagree-btn { background: #e74c3c; color: #fff; padding: 2cqmin; font-size: 3.5cqmin; font-weight: 900; border-radius: 2cqmin; border: none; cursor: pointer; flex: 1; }
+
+        /* Custom Disagree Modal */
+        #custom-modal { position: absolute; inset: 0; z-index: 1000000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 4cqmin; }
+        .modal-box { background: #fff; border-radius: 3cqmin; border: 1cqmin solid #e74c3c; width: 90%; max-width: 500px; padding: 4cqmin; text-align: center; }
+        .modal-box h3 { color: #e74c3c; font-size: 5cqmin; margin-bottom: 2cqmin; }
+        .modal-box p { font-size: 3.5cqmin; font-weight: bold; margin-bottom: 3cqmin; line-height: 1.5; color: #333; }
+        .modal-close-btn { background: #333; color: #fff; padding: 1.5cqmin 4cqmin; border-radius: 2cqmin; border: none; cursor: pointer; font-size: 3cqmin; font-weight: 900; }
+
+        /* Wrong Answer Modal */
+        #wrong-modal { position: absolute; inset: 0; z-index: 1000000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 4cqmin; }
+        .wrong-modal-box { background: #fff; border-radius: 3cqmin; border: 1cqmin solid #e74c3c; width: 90%; max-width: 400px; padding: 4cqmin; text-align: center; animation: popIn 0.3s ease-out forwards; }
+        .wrong-modal-box h3 { color: #e74c3c; font-size: 6cqmin; margin-bottom: 2cqmin; }
+        .wrong-close-btn { background: #f39c12; color: #fff; padding: 1.5cqmin 4cqmin; border-radius: 2cqmin; border: none; cursor: pointer; font-size: 3.2cqmin; font-weight: 900; }
+
+        /* Intro Screen */
+        #intro-screen { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 500; background: #fffdf5; display: none; }
+        .center-circle { background: radial-gradient(circle, #ffffff, #ffeb3b); border: 1.5cqmin solid #ff9f43; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 45cqmin; height: 45cqmin; box-shadow: 0 0 30px rgba(0,0,0,0.2); }
+        .intro-title-center { font-weight: 900; color: #d32f2f; font-size: 4.8cqmin; line-height: 1.3; text-align: center; padding: 2cqmin; }
+        .balloon { position: absolute; width: 16cqmin; height: 18cqmin; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; color: #fff; font-weight: 900; font-size: 2.5cqmin; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1cqmin; box-shadow: 0 8px 15px rgba(0,0,0,0.3); animation: dropBalloon 1.5s forwards; z-index: 50; }
+        @keyframes dropBalloon { 0% { opacity: 0; transform: translateY(-100vh) scale(0.5); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        .pos-1 { top: 5%; left: 8%; background: #ff4757; } .pos-2 { top: 5%; right: 8%; background: #ffa502; }
+        .pos-3 { top: 38%; left: 2%; background: #1e90ff; } .pos-4 { top: 38%; right: 2%; background: #2ed573; }
+        .pos-5 { bottom: 18%; left: 5%; background: #9b59b6; } .pos-6 { bottom: 18%; right: 5%; background: #e84393; }
+        .pos-7 { top: 20%; left: 18%; background: #00cec9; } .pos-8 { top: 20%; right: 18%; background: #e1b12c; }
+
+        /* Menu Screen */
+        #main-menu-screen { position: absolute; inset: 0; z-index: 400; display: none; flex-direction: column; align-items: center; background: #fffdf5; padding: 4cqmin; overflow-y: auto; }
+        .menu-heading { font-size: 5cqmin; font-weight: 900; color: #d32f2f; margin-bottom: 4cqmin; border-bottom: 0.5cqmin dashed #ff9f43; width: 90%; text-align: center; }
+        .mode-container { display: flex; width: 100%; gap: 4cqmin; justify-content: center; align-items: flex-start; }
+        @media (orientation: portrait) { .mode-container { flex-direction: column; align-items: center; } }
+        .mode-card { border-radius: 2.5cqmin; border: 0.5cqmin solid #d32f2f; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); background: #fff; height: var(--unit); flex-shrink: 0; width: 100%; max-width: 480px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .mode-card.expanded { height: calc(5.5 * var(--unit)); } 
+        .mode-header { background: #d32f2f; color: #fff; padding: 2cqmin; font-size: 4.5cqmin; font-weight: 900; cursor: pointer; display: flex; justify-content: space-between; align-items: center; height: var(--unit); }
+        .auto-card { border-color: #2980b9; } .auto-card .mode-header { background: #2980b9; }
+        .mode-content { display: none; padding: 2cqmin; flex-direction: column; gap: 1.2cqmin; background: #fffdf5; border-top: 1px solid #ddd; height: calc(4.5 * var(--unit)); justify-content: center; }
+        .mode-card.expanded .mode-content { display: flex; }
+        .btn-wrap { display: flex; width: 100%; gap: 1cqmin; }
+        .menu-btn { flex: 1; padding: 1.8cqmin; font-size: 3.2cqmin; font-weight: 900; border-radius: 1.2cqmin; border: none; color: #fff; cursor: pointer; text-align: center; }
+        .btn-ex { background: #e74c3c; } .btn-mcq { background: #3498db; } .btn-act { background: #9b59b6; }
+
+        /* Flash Card Slide Display */
+        .flash-card { flex-grow: 1; position: relative; height: 100%; background: #fff; border-radius: 4cqmin; padding: 2cqmin; border: 0.5cqmin solid #ddd; display: none; flex-direction: column; align-items: center; }
+        .flash-card.active { display: flex; }
+        .top-bar { width: 100%; padding: 0.8cqmin; background: #fffde7; color: #d32f2f; font-weight: 900; font-size: 2.6cqmin; text-align: center; border-radius: 1.5cqmin; margin-bottom: 1cqmin; border: 2px dashed #ff9f43; }
+        .text-container { width: 100%; overflow: hidden; flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
+        .title-text { font-size: 4cqmin; font-weight: 900; color: #d32f2f; margin-bottom: 0.5cqmin; border-bottom: 2px solid #eee; width: 100%; text-align: center; padding-bottom: 0.5cqmin; }
+        .instr-text { font-size: 2.8cqmin; font-weight: bold; color: #666; margin-bottom: 0.8cqmin; text-align: center; width: 100%; }
+        
+        .interactive-list { width: 100%; display: grid; grid-template-columns: 1fr; gap: 1cqmin; overflow-y: auto; padding: 0.5cqmin 1cqmin; align-content: start; }
+        @media (orientation: landscape) { .interactive-list { grid-template-columns: 1fr 1fr; column-gap: 2cqmin; row-gap: 1.2cqmin; } }
+        
+        .interactive-item { display: flex; flex-direction: column; padding: 1.2cqmin 1.5cqmin; border: 2px solid #dcdcdc; border-radius: 1.5cqmin; background: #ffffff; width: 100%; transition: opacity 0.5s; position: relative; }
+        .q-row { display: flex; align-items: center; width: 100%; text-align: left; justify-content: space-between; }
+        .item-q { font-weight: 900; color: #000; font-size: 2.7cqmin; flex: 1; line-height: 1.4; text-align: left; } 
+        .qa-mode .item-q { color: #d32f2f; }
+        .item-reveal-btn { background: #f39c12; color: #fff; border: none; padding: 0.8cqmin 1.5cqmin; border-radius: 1cqmin; cursor: pointer; font-size: 2.2cqmin; font-weight: 900; margin-left: 2cqmin; }
+        
+        .ans-wrapper { position: relative; width: 100%; border-top: 1px dashed #ccc; margin-top: 0.8cqmin; padding-top: 0.8cqmin; }
+        .item-a { font-weight: 900; color: #1565c0; font-size: 2.7cqmin; opacity: 0; line-height: 1.4; text-align: left; width: 100%; display: block; margin: 0; padding: 0; }
+        .item-a.revealed { opacity: 1; }
+        .hl-red { color: #ff0000 !important; font-weight: 900; }
+        .fade-out { opacity: 0.4; }
+
+        .conclusion-box { text-align: center; padding: 4cqmin; background: #e3f2fd; border: 0.8cqmin dashed #1565c0; border-radius: 4cqmin; width: 100%; margin: auto; }
+        .conc-title { font-size: 6cqmin; color: #1565c0; font-weight: 900; margin-bottom: 3cqmin; }
+        .conc-msg { font-size: 3.5cqmin; color: #333; line-height: 1.6; font-weight: bold; }
+
+        .bottom-ribbon { width: 100%; display: flex; justify-content: space-between; align-items: center; padding-top: 1cqmin; border-top: 2px solid #eee; flex-shrink: 0; }
+        .nav-btn { padding: 1cqmin 1.5cqmin; font-size: 2.2cqmin; font-weight: 900; border-radius: 1cqmin; border: none; cursor: pointer; color: #fff; background: #333; }
+        .btn-retry { background: #e67e22; } .btn-skip { background: #7f8c8d; } .btn-showall { background: #8e44ad; }
+        #tap-indicator { background: #ffeb3b; padding: 1cqmin 2cqmin; border-radius: 1.5cqmin; font-weight: 900; font-size: 2.5cqmin; animation: pulse 1s infinite alternate; cursor: pointer; border: 2px solid #d32f2f; color: #000; }
+
+        .mcq-options-grid { width: 100%; display: grid; gap: 1.5cqmin; padding: 0.5cqmin 0; }
+        @media (orientation: landscape) { .mcq-options-grid { grid-template-columns: 1fr 1fr; } }
+        @media (orientation: portrait) { .mcq-options-grid { grid-template-columns: 1fr; } }
+        .mcq-btn { padding: 1.5cqmin; border-radius: 1.5cqmin; border: 2px solid #ddd; font-size: 3cqmin; font-weight: 900; text-align: center; background: #f9f9f9; cursor: pointer; }
+        .correct { background: #2ecc71 !important; color: #fff !important; border-color: #27ae60 !important; }
+        .wrong { background: #e74c3c !important; color: #fff !important; border-color: #c0392b !important; opacity: 0.6; }
+
+        .fs-btn { position: absolute; top: 8.5cqmin; right: 2cqmin; z-index: 1000001; background: #e74c3c; color: #fff; border: 0.3cqmin solid #fff; border-radius: 1.5cqmin; padding: 1cqmin 2cqmin; font-size: 2.2cqmin; font-weight: 900; cursor: pointer; }
+    </style>
+</head>
+<body ondblclick="toggleFullScreen()">
+
+    <div id="studio-frame">
+        <div id="bg-layer"></div>
+        <div id="border-frame"></div>
+        
+        <button id="fs-btn-id" class="fs-btn" onclick="toggleFullScreen(event)">🔲 ਫੁੱਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ</button>
+
+        <div id="top-ticker" class="glitter-ticker">
+            <div class="ticker-text">⭐ ਬਿਹਤਰ ਰਿਜਲਟ ਲੈਣ ਲਈ ਇਸ ਨੂੰ ਲੈਂਡਸਕੇਪ ਮੋਡ ਵਿੱਚ ਚਲਾਓ 🔸 ਮੋਬਾਇਲ ਤੇ <span class="hl-red-ticker">ਡਬਲ ਟੈਪ</span> ਕਰਕੇ ਫੁੱਲ ਸਕਰੀਨ ਵਿੱਚ ਚਲਾਓ ⭐</div>
+        </div>
+
+        <div id="bottom-ticker" class="glitter-ticker">
+            <div class="ticker-text" id="ticker-text-content">⭐ ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਵਿਕਾਸ ਦੇ ਪੜਾਅ ਵਿੱਚ ਹੈ, ਅਧਿਆਪਕਾਂ ਦਾ ਬਦਲ ਨਹੀਂ ਹੈ ⭐</div>
+        </div>
+
+        <div id="viewport">
+
+            <!-- 0. SETUP SCREEN -->
+            <div id="setup-screen">
+                <div class="setup-box">
+                    <h2 class="setup-title">⚙️ ਸਿਸਟਮ ਸੈੱਟਅੱਪ</h2>
+                    <p class="setup-desc">ਕਿਰਪਾ ਕਰਕੇ ਹੇਠਾਂ ਜਮਾਤ, ਵਿਸ਼ਾ ਅਤੇ ਪਾਠ ਨੰਬਰ ਚੁਣੋ।<br>ਸਿਸਟਮ ਖੁਦ-ਬ-ਖੁਦ ਫਾਈਲ ਲੱਭੇਗਾ।</p>
+                    
+                    <div class="setup-input-group">
+                        <select id="class-select" class="setup-input" onchange="updateSubjects()">
+                            <option value="">-- ਜਮਾਤ ਚੁਣੋ --</option>
+                            <option value="1">ਪਹਿਲੀ</option>
+                            <option value="2">ਦੂਜੀ</option>
+                            <option value="3">ਤੀਜੀ</option>
+                            <option value="4">ਚੌਥੀ</option>
+                            <option value="5">ਪੰਜਵੀਂ</option>
+                        </select>
+
+                        <select id="subj-select" class="setup-input" disabled>
+                            <option value="">-- ਵਿਸ਼ਾ ਚੁਣੋ --</option>
+                        </select>
+
+                        <select id="chap-no" class="setup-input">
+                            <option value="">-- ਪਾਠ ਨੰਬਰ --</option>
+                            <!-- Options 1 to 25 will be generated via JS -->
+                        </select>
+                    </div>
+                    
+                    <button class="action-btn" onclick="findFile()">🔍 ਫਾਈਲ ਲੱਭੋ</button>
+
+                    <!-- Manual Upload Area (Hidden by default, shows if file not found) -->
+                    <div id="manual-upload-area">
+                        <p class="manual-text">⚠️ ਆਟੋਮੈਟਿਕ ਫਾਈਲ ਨਹੀਂ ਲੱਭੀ!<br>ਕਿਰਪਾ ਕਰਕੇ PDF ਖੁਦ ਅਪਲੋਡ ਕਰੋ:</p>
+                        <label class="action-btn btn-blue" style="text-align: center; cursor: pointer;">
+                            📁 PDF ਫਾਈਲ ਅਪਲੋਡ ਕਰੋ
+                            <input type="file" accept=".pdf" style="display: none;" onchange="handlePDFUpload(event)">
+                        </label>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- 1. FOUND SCREEN -->
+            <div id="found-screen">
+                <div class="found-box">
+                    <div class="found-icon">✅</div>
+                    <h2 class="found-title">ਫਾਈਲ ਲੱਭ ਗਈ ਹੈ!</h2>
+                    <p class="found-desc">ਮੈਨੂੰ ਹੇਠ ਲਿਖੀ ਫਾਈਲ ਮਿਲ ਗਈ ਹੈ:</p>
+                    <div class="found-filename" id="target-filename">5P1.pdf</div>
+                    <p class="found-desc" style="font-size: 2.5cqmin; color:#666;">ਕੀ ਮੈਂ ਇਸ ਫਾਈਲ ਨੂੰ ਸਕੈਨ ਕਰਕੇ ਇਸਦਾ ਡਾਟਾ ਤੁਹਾਨੂੰ ਦਿਖਾਵਾਂ?</p>
+                    
+                    <div class="flex-btns">
+                        <button class="action-btn btn-gray" onclick="cancelFind()">❌ ਨਹੀਂ</button>
+                        <button class="action-btn btn-blue" onclick="scanData()">🔍 ਹਾਂ, ਸਕੈਨ ਕਰੋ</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. SUMMARY / VALIDATION SCREEN -->
+            <div id="summary-screen">
+                <div class="summary-box">
+                    <h2 class="summary-header">📊 ਸਕੈਨ ਰਿਪੋਰਟ (Summary)</h2>
+                    <div class="summary-content" id="summary-details">
+                        <!-- Data will be injected here -->
+                    </div>
+                    <p style="text-align:center; font-size:2.5cqmin; font-weight:bold; color:#e67e22; margin-bottom: 2cqmin;">ਕੀ ਅਸੀਂ ਅੱਗੇ ਪਾਠ ਸ਼ੁਰੂ ਕਰੀਏ?</p>
+                    <div class="summary-actions">
+                        <button class="action-btn btn-gray" onclick="cancelSummary()">❌ ਗਲਤ ਹੈ</button>
+                        <button class="action-btn btn-green" onclick="acceptSummary()">✅ ਹਾਂ, ਸ਼ੁਰੂ ਕਰੋ</button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 3. Disclaimer Screen -->
+            <div id="disclaimer-screen">
+                <div class="disclaimer-box">
+                    <div class="disclaimer-content">
+                        <h2>⚠️ ਨਿਯਮ ਅਤੇ ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ</h2>
+                        <ul>
+                            <li><strong>1 . ਸੰਸਥਾ ਦਾ ਉਦੇਸ਼ :</strong> ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ ਟੀਮ ਵੱਲੋਂ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਇੱਕ ਡਿਜੀਟਲ ਪਲੇਟਫਾਰਮ ਹੈ ।</li>
+                            <li><strong>2 . ਵਰਤੋਂਕਾਰ :</strong> ਇਹ ਸਿਰਫ਼ ਵਿੱਦਿਅਕ ਵਰਤੋਂ ਲਈ ਹੈ ।</li>
+                            <li><strong>3 . ਪਾਠਕ੍ਰਮ :</strong> ਵੈੱਬਸਾਈਟ ਦੀ ਸਮੱਗਰੀ PSEB ਪਾਠਕ੍ਰਮ 'ਤੇ ਆਧਾਰਿਤ ਹੈ ।</li>
+                        </ul>
+                    </div>
+                    <div class="disclaimer-actions">
+                        <button class="disagree-btn" onclick="document.getElementById('custom-modal').style.display='flex'">ਅਸਹਿਮਤ ਹਾਂ</button>
+                        <button class="agree-btn" onclick="startApp()">ਮੈਂ ਸਹਿਮਤ ਹਾਂ</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Custom Disagree Modal -->
+            <div id="custom-modal">
+                <div class="modal-box">
+                    <h3>⚠️ ਸੂਚਨਾ</h3>
+                    <p>ਐਪ ਦੀ ਵਰਤੋਂ ਕਰਨ ਲਈ ਸਹਿਮਤੀ ਜ਼ਰੂਰੀ ਹੈ।</p>
+                    <button class="modal-close-btn" onclick="document.getElementById('custom-modal').style.display='none'">ਵਾਪਸ ਜਾਓ</button>
+                </div>
+            </div>
+
+            <!-- Wrong Answer Modal -->
+            <div id="wrong-modal" onclick="this.style.display='none'">
+                <div class="wrong-modal-box" onclick="event.stopPropagation()">
+                    <h3>❌ ਗਲਤ ਉੱਤਰ</h3>
+                    <button class="wrong-close-btn" onclick="document.getElementById('wrong-modal').style.display='none'">ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</button>
+                </div>
+            </div>
+
+            <!-- Intro Screen -->
+            <div id="intro-screen">
+                <div class="center-circle" onclick="showMainMenu()">
+                    <div class="intro-title-center" id="dynamic-main-title">ਜਮਾਤ ਅਤੇ ਪਾਠ</div>
+                </div>
+                <div class="intro-bottom-area" style="position:absolute; bottom:2cqmin; width:100%; display:flex; justify-content:center; z-index:100;">
+                    <button class="action-btn btn-green" style="width:auto;" onclick="showMainMenu()">ਸ਼ੁਰੂ ਕਰੋ ⏭️</button>
+                </div>
+                <div class="balloon pos-1">ਸ਼ਬਦ ਅਰਥ</div><div class="balloon pos-2">ਖ਼ਾਲੀ ਥਾਵਾਂ</div>
+                <div class="balloon pos-3">ਪ੍ਰਸ਼ਨ ਉੱਤਰ</div><div class="balloon pos-4">MCQ</div>
+            </div>
+
+            <!-- Menu Screen -->
+            <div id="main-menu-screen">
+                <h1 class="menu-heading" id="dynamic-menu-title">ਜਮਾਤ ਅਤੇ ਪਾਠ ਦਾ ਨਾਂ ਇੱਥੇ ਆਵੇਗਾ</h1>
+                <div class="mode-container" id="mode-container">
+                    <div class="mode-card auto-card" id="card-auto">
+                        <div class="mode-header" onclick="toggleAccordion('auto')">🔴 ਆਟੋ ਮੋਡ <span>▼</span></div>
+                        <div class="mode-content" id="content-auto">
+                            <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startSection('exercise', 'auto')">📘 ਪੂਰਾ ਅਭਿਆਸ</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startSection('mcq', 'auto')">📝 MCQ (ਬਹੁਵਿਕਲਪੀ)</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startSection('activities', 'auto')">🎨 ਗਤੀਵਿਧੀਆਂ</button></div>
+                        </div>
+                    </div>
+                    <div class="mode-card" id="card-live">
+                        <div class="mode-header" onclick="toggleAccordion('live')">📺 ਲਾਈਵ ਮੋਡ <span>▼</span></div>
+                        <div class="mode-content" id="content-live">
+                            <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startSection('exercise', 'live')">📘 ਪੂਰਾ ਅਭਿਆਸ</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startSection('mcq', 'live')">📝 MCQ (ਬਹੁਵਿਕਲਪੀ)</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startSection('activities', 'live')">🎨 ਗਤੀਵਿਧੀਆਂ</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Flash Card Display -->
+            <div class="flash-card" id="master-card">
+                <div class="top-bar" id="dynamic-top-bar">ਜਮਾਤ ਅਤੇ ਪਾਠ</div>
+                <div class="text-container">
+                    <h2 id="slide-title" class="title-text"></h2>
+                    <p id="slide-instr" class="instr-text"></p>
+                    <div id="html-content" class="interactive-list"></div>
+                </div>
+                <div class="bottom-ribbon">
+                    <button class="nav-btn btn-prev" onclick="prevStep()">⏮️ ਪਿੱਛੇ</button>
+                    <button class="nav-btn btn-retry" onclick="retrySlide()">🔄 ਦੁਬਾਰਾ</button>
+                    <button class="nav-btn btn-showall" onclick="showAllAnswers(event)">📑 ਸਾਰਾ</button>
+                    <button class="nav-btn btn-skip" onclick="skipStep()">⏭️ ਸਕਿਪ</button>
+                    <button class="nav-btn" onclick="goHome()">🏠 ਮੇਨੂ</button>
+                    <div id="tap-indicator" onclick="nextStep()">ਅੱਗੇ ⏭️</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+    let state = 'setup', mode = 'live', section = '', step = 0, subIdx = -1, stepState = 'focus', paused = false, typing = false, reviewMode = false;
+    let lessonData = null;
+    let lessonTitleMain = "";
+    let lessonTitleFull = "";
+    let targetFileName = "";
+
+    // -------------------------------------------------------------
+    // AI INTERNAL DATABASE (ਆਟੋਮੈਟਿਕ ਡਾਟਾ)
+    // -------------------------------------------------------------
+    const DATABASE = {
+        "4P1": {
+            "exercise": [
+                {
+                    "title": "1. ਪੜ੍ਹੋ ਅਤੇ ਸਮਝੋ (ਸ਼ਬਦ-ਅਰਥ)",
+                    "instruction": "ਸ਼ਬਦ ਦੇ ਸਾਹਮਣੇ ਵਾਲੇ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
+                    "type": "list",
+                    "items": [
+                        {"q": "ਸਿਰਜਣਹਾਰੇ", "a": "ਅਰਥ ਹੈ - <span class='hl-red'>ਸੰਸਾਰ ਨੂੰ ਬਣਾਉਣ ਵਾਲਾ, ਕਰਤਾਰ</span>"},
+                        {"q": "ਮਾਨਵਤਾ", "a": "ਅਰਥ ਹੈ - <span class='hl-red'>ਮਨੁੱਖਤਾ</span>"},
+                        {"q": "ਨਿਸ਼ਕਾਮ", "a": "ਅਰਥ ਹੈ - <span class='hl-red'>ਉਹ ਕੰਮ ਜੋ ਫਲ ਦੀ ਇੱਛਾ ਤੋਂ ਬਿਨਾਂ ਕੀਤਾ ਜਾਵੇ</span>"},
+                        {"q": "ਭਰੋਸਾ", "a": "ਅਰਥ ਹੈ - <span class='hl-red'>ਵਿਸ਼ਵਾਸ</span>"},
+                        {"q": "ਦੂਣ ਸਵਾਇਆ", "a": "ਅਰਥ ਹੈ - <span class='hl-red'>ਬਹੁਤ ਜ਼ਿਆਦਾ</span>"},
+                        {"q": "ਹਉਂਮੈਂ", "a": "ਅਰਥ ਹੈ - <span class='hl-red'>ਹੰਕਾਰ</span>"},
+                        {"q": "ਮੇਰ-ਤੇਰ", "a": "ਅਰਥ ਹੈ - <span class='hl-red'>ਪੱਖ-ਪਾਤ, ਵਿਤਕਰਾ</span>"},
+                        {"q": "ਖ਼ੁਸ਼ਬੋਈ", "a": "ਅਰਥ ਹੈ - <span class='hl-red'>ਸੁਗੰਧੀ</span>"},
+                        {"q": "ਕਦਰ", "a": "ਅਰਥ ਹੈ - <span class='hl-red'>ਮਹੱਤਤਾ, ਕੀਮਤ</span>"}
+                    ]
+                },
+                {
+                    "title": "2. ਹੇਠ ਲਿਖੀਆਂ ਸਤਰਾਂ ਨੂੰ ਪੂਰਾ ਕਰੋ",
+                    "instruction": "ਖ਼ਾਲੀ ਥਾਂ ਭਰਨ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
+                    "type": "blanks",
+                    "items": [
+                        {"q": "ੳ . ਸਿਰਜਣਹਾਰੇ, ਸਭ ਦੇ ਪਿਆਰੇ, ", "b": "ਦੇ ਸਾਨੂੰ ਇਹ ਦਾਨ।", "a": ""},
+                        {"q": "ਅ . ਤੂੰ ਦਾਤਾ ਹੈਂ, ਸਭ ਦਾ ਮਾਲਕ, ", "b": "ਸਭ ਨੂੰ ਦੇਈਂ ਭਰੋਸਾ।", "a": ""}
+                    ]
+                },
+                {
+                    "title": "3. ਇੱਕੋ - ਜਿਹੇ ਤੁਕਾਂਤ ਵਾਲੇ ਸ਼ਬਦ ਲਿਖੋ",
+                    "instruction": "ਤੁਕਾਂਤ ਮੇਲ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
+                    "type": "qa",
+                    "items": [
+                        {"q": "1. ਦਾਨ", "a": "ਤੁਕਾਂਤ ਮੇਲ : <span class='hl-red'>ਮਹਾਨ, ਗਿਆਨ</span>"},
+                        {"q": "2. ਨਿਸ਼ਕਾਮ", "a": "ਤੁਕਾਂਤ ਮੇਲ : <span class='hl-red'>ਹਰਾਮ, ਅਰਾਮ</span>"},
+                        {"q": "3. ਆਈਏ", "a": "ਤੁਕਾਂਤ ਮੇਲ : <span class='hl-red'>ਪਾਈਏ, ਜਾਈਏ</span>"},
+                        {"q": "4. ਕੋਈ", "a": "ਤੁਕਾਂਤ ਮੇਲ : <span class='hl-red'>ਖ਼ੁਸ਼ਬੋਈ, ਹੋਈ</span>"}
+                    ]
+                },
+                { "type": "conclude" }
+            ],
+            "mcq": [
+                {
+                    "title": "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 1", "instruction": "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                    "q": "ਕਵਿਤਾ ਵਿੱਚ ਕਿਸ ਨੂੰ ਦਾਨ ਦੇਣ ਲਈ ਕਿਹਾ ਗਿਆ ਹੈ ?", "type": "mcq",
+                    "opts": ["ਮਨੁੱਖ ਨੂੰ", "ਸਿਰਜਣਹਾਰੇ ਨੂੰ", "ਨੇਤਾ ਨੂੰ", "ਅਧਿਆਪਕ ਨੂੰ"], "correct": 1,
+                    "a": "ਕਵਿਤਾ ਵਿੱਚ <span class='hl-red'>ਸਿਰਜਣਹਾਰੇ ਨੂੰ</span> ਦਾਨ ਦੇਣ ਲਈ ਕਿਹਾ ਗਿਆ ਹੈ ।"
+                },
+                {
+                    "title": "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 2", "instruction": "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                    "q": "ਸਾਨੂੰ ਕਿਸ ਦੀ ਸੇਵਾ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ ?", "type": "mcq",
+                    "opts": ["ਪਸ਼ੂਆਂ ਦੀ", "ਮਾਨਵਤਾ ਦੀ", "ਆਪਣੇ ਆਪ ਦੀ", "ਦੁਸ਼ਮਣਾਂ ਦੀ"], "correct": 1,
+                    "a": "ਸਾਨੂੰ <span class='hl-red'>ਮਾਨਵਤਾ ਦੀ</span> ਸੇਵਾ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ ।"
+                },
+                {
+                    "title": "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 3", "instruction": "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                    "q": "ਮਨੁੱਖੀ ਸੇਵਾ ਕਿਹੋ-ਜਿਹੀ ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ ?", "type": "mcq",
+                    "opts": ["ਪੈਸੇ ਲਈ", "ਮਸ਼ਹੂਰੀ ਲਈ", "ਨਿਸ਼ਕਾਮ", "ਸੁਆਰਥੀ"], "correct": 2,
+                    "a": "ਸੇਵਾ ਹਮੇਸ਼ਾ <span class='hl-red'>ਨਿਸ਼ਕਾਮ</span> ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ ।"
+                },
+                {
+                    "title": "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 4", "instruction": "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                    "q": "ਮਨ ਵਿੱਚ ਕੀ ਨਹੀਂ ਰਹਿਣਾ ਚਾਹੀਦਾ ?", "type": "mcq",
+                    "opts": ["ਪਿਆਰ", "ਰੋਸਾ (ਗਿਲਾ)", "ਦਇਆ", "ਭਰੋਸਾ"], "correct": 1,
+                    "a": "ਮਨ ਵਿੱਚ ਕਦੇ <span class='hl-red'>ਰੋਸਾ</span> ਨਹੀਂ ਰਹਿਣਾ ਚਾਹੀਦਾ ।"
+                },
+                {
+                    "title": "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 5", "instruction": "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                    "q": "ਸਾਨੂੰ ਕਿਹੋ-ਜਿਹੇ ਬੋਲ ਬੋਲਣੇ ਚਾਹੀਦੇ ਹਨ ?", "type": "mcq",
+                    "opts": ["ਮਿੱਠੇ", "ਰੁੱਖੇ", "ਕੌੜੇ", "ਉੱਚੇ"], "correct": 0,
+                    "a": "ਸਾਨੂੰ ਹਮੇਸ਼ਾ <span class='hl-red'>ਮਿੱਠੇ</span> ਬੋਲ ਬੋਲਣੇ ਚਾਹੀਦੇ ਹਨ ।"
+                },
+                {
+                    "title": "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 6", "instruction": "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                    "q": "ਦੁਨੀਆਂ ਵਿੱਚੋਂ ਕਿਹੜੀਆਂ ਗੱਲਾਂ ਮੁੱਕ ਜਾਣੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ ?", "type": "mcq",
+                    "opts": ["ਪਿਆਰ ਦੀਆਂ", "ਭਾਈਚਾਰੇ ਦੀਆਂ", "ਮੇਰ-ਤੇਰ ਦੀਆਂ", "ਖੁਸ਼ੀ ਦੀਆਂ"], "correct": 2,
+                    "a": "<span class='hl-red'>ਮੇਰ-ਤੇਰ ਦੀਆਂ</span> ਗੱਲਾਂ ਮੁੱਕ ਜਾਣੀਆਂ ਚਾਹੀਦੀਆਂ ਹਨ ।"
+                },
+                {
+                    "title": "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 7", "instruction": "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                    "q": "ਚਾਰ ਦਿਸ਼ਾਵਾਂ ਵਿੱਚੋਂ ਕਿਸ ਦੀ ਖ਼ੁਸ਼ਬੋਈ ਆਉਣੀ ਚਾਹੀਦੀ ਹੈ ?", "type": "mcq",
+                    "opts": ["ਮਿੱਟੀ ਦੀ", "ਫੁੱਲਾਂ ਦੀ", "ਇਤਰ ਦੀ", "ਧੂੰਏਂ ਦੀ"], "correct": 1,
+                    "a": "ਚਾਰੇ ਦਿਸ਼ਾਵਾਂ ਵਿੱਚੋਂ <span class='hl-red'>ਫੁੱਲਾਂ ਦੀ</span> ਖ਼ੁਸ਼ਬੋਈ ਆਉਣੀ ਚਾਹੀਦੀ ਹੈ ।"
+                },
+                {
+                    "title": "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 8", "instruction": "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                    "q": "ਸਾਨੂੰ ਕਿਸ ਚੀਜ਼ ਦੀ ਕਦਰ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ ?", "type": "mcq",
+                    "opts": ["ਪੈਸੇ ਦੀ", "ਕੱਪੜਿਆਂ ਦੀ", "ਸਮੇਂ ਦੀ", "ਖਿਡੌਣਿਆਂ ਦੀ"], "correct": 2,
+                    "a": "ਸਾਨੂੰ ਹਮੇਸ਼ਾ <span class='hl-red'>ਸਮੇਂ ਦੀ</span> ਕਦਰ ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ ।"
+                },
+                {
+                    "title": "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 9", "instruction": "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                    "q": "ਸ਼ਬਦ 'ਹਉਂਮੈਂ' ਦਾ ਕੀ ਅਰਥ ਹੈ ?", "type": "mcq",
+                    "opts": ["ਪਿਆਰ", "ਹੰਕਾਰ", "ਸੇਵਾ", "ਦਇਆ"], "correct": 1,
+                    "a": "'ਹਉਂਮੈਂ' ਦਾ ਅਰਥ <span class='hl-red'>ਹੰਕਾਰ</span> ਹੈ ।"
+                },
+                {
+                    "title": "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 10", "instruction": "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
+                    "q": "ਕਵਿਤਾ ਅਨੁਸਾਰ ਸਭ ਦਾ ਮਾਲਕ ਕੌਣ ਹੈ ?", "type": "mcq",
+                    "opts": ["ਇਨਸਾਨ", "ਦਾਤਾ (ਰੱਬ)", "ਰਾਜਾ", "ਅਮੀਰ ਆਦਮੀ"], "correct": 1,
+                    "a": "ਸਭ ਦਾ ਮਾਲਕ <span class='hl-red'>ਦਾਤਾ (ਰੱਬ)</span> ਹੈ ।"
+                },
+                { "type": "conclude" }
+            ],
+            "activities": [
+                {
+                    "title": "4. ਹੇਠ ਲਿਖੇ ਸ਼ਬਦਾਂ ਨੂੰ ਵਾਕਾਂ ਵਿੱਚ ਵਰਤੋਂ",
+                    "instruction": "ਵਾਕ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
+                    "type": "qa",
+                    "items": [
+                        {"q": "(ੳ) ਦਾਨ", "a": "ਵਾਕ : ਹੇ ਪ੍ਰਭੂ! ਸਾਨੂੰ ਵਿੱਦਿਆ ਦਾ <span class='hl-red'>ਦਾਨ</span> ਬਖਸ਼ੋ।"},
+                        {"q": "(ਅ) ਮਹਾਨ", "a": "ਵਾਕ : ਸਾਨੂੰ ਵੱਡੇ ਹੋ ਕੇ <span class='hl-red'>ਮਹਾਨ</span> ਕੰਮ ਕਰਨੇ ਚਾਹੀਦੇ ਹਨ।"},
+                        {"q": "(ੲ) ਸੇਵਾ", "a": "ਵਾਕ : ਸਾਨੂੰ ਮਾਨਵਤਾ ਦੀ <span class='hl-red'>ਸੇਵਾ</span> ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ।"},
+                        {"q": "(ਸ) ਅਰਾਮ", "a": "ਵਾਕ : ਮਿਹਨਤੀ ਲੋਕਾਂ ਲਈ <span class='hl-red'>ਅਰਾਮ</span> ਹਰਾਮ ਹੈ।"},
+                        {"q": "(ਹ) ਕਦਰ", "a": "ਵਾਕ : ਸਾਨੂੰ ਸਮੇਂ ਦੀ <span class='hl-red'>ਕਦਰ</span> ਕਰਨੀ ਚਾਹੀਦੀ ਹੈ।"},
+                        {"q": "(ਕ) ਅੰਨ", "a": "ਵਾਕ : ਰੱਬ ਕਰੇ ਸਭ ਦਾ <span class='hl-red'>ਅੰਨ</span>-ਧਨ ਦੂਣ-ਸਵਾਇਆ ਹੋਵੇ।"}
+                    ]
+                },
+                { "type": "conclude" }
+            ]
+        }
+    };
+    // -------------------------------------------------------------
+
+    // Subject Mapping strictly for Classes 1 to 5
+    const subjMap = {
+        "1": [{val: "P", text: "ਪੰਜਾਬੀ"}, {val: "M", text: "ਗਣਿਤ"}, {val: "EN", text: "ਅੰਗਰੇਜ਼ੀ"}],
+        "2": [{val: "P", text: "ਪੰਜਾਬੀ"}, {val: "M", text: "ਗਣਿਤ"}, {val: "EN", text: "ਅੰਗਰੇਜ਼ੀ"}],
+        "3": [{val: "P", text: "ਪੰਜਾਬੀ"}, {val: "M", text: "ਗਣਿਤ"}, {val: "EN", text: "ਅੰਗਰੇਜ਼ੀ"}, {val: "EV", text: "ਵਾਤਾਵਰਣ ਸਿੱਖਿਆ"}],
+        "4": [{val: "P", text: "ਪੰਜਾਬੀ"}, {val: "M", text: "ਗਣਿਤ"}, {val: "EN", text: "ਅੰਗਰੇਜ਼ੀ"}, {val: "EV", text: "ਵਾਤਾਵਰਣ ਸਿੱਖਿਆ"}, {val: "H", text: "ਹਿੰਦੀ"}],
+        "5": [{val: "P", text: "ਪੰਜਾਬੀ"}, {val: "M", text: "ਗਣਿਤ"}, {val: "EN", text: "ਅੰਗਰੇਜ਼ੀ"}, {val: "EV", text: "ਵਾਤਾਵਰਣ ਸਿੱਖਿਆ"}, {val: "H", text: "ਹਿੰਦੀ"}]
+    };
+    const classNames = {"1": "ਪਹਿਲੀ", "2": "ਦੂਜੀ", "3": "ਤੀਜੀ", "4": "ਚੌਥੀ", "5": "ਪੰਜਵੀਂ"};
+
+    // Populate Chapter Dropdown (1 to 25)
+    window.onload = function() {
+        const chapSelect = document.getElementById('chap-no');
+        for(let i=1; i<=25; i++) {
+            const opt = document.createElement('option');
+            opt.value = i; opt.textContent = "ਪਾਠ - " + i;
+            chapSelect.appendChild(opt);
+        }
+    };
+
+    function updateSubjects() {
+        const cls = document.getElementById('class-select').value;
+        const subjSelect = document.getElementById('subj-select');
+        
+        subjSelect.innerHTML = '<option value="">-- ਵਿਸ਼ਾ ਚੁਣੋ --</option>';
+        if (cls && subjMap[cls]) {
+            subjSelect.disabled = false;
+            subjMap[cls].forEach(s => {
+                const opt = document.createElement('option');
+                opt.value = s.val; opt.textContent = s.text;
+                subjSelect.appendChild(opt);
+            });
+        } else {
+            subjSelect.disabled = true;
+        }
+        document.getElementById('manual-upload-area').style.display = 'none';
+    }
+
+    // Handle Manual PDF Upload (Just acknowledging it for now)
+    function handlePDFUpload(event) {
+        const file = event.target.files[0];
+        if(!file) return;
+        alert("ਤੁਸੀਂ ਫਾਈਲ '" + file.name + "' ਅਪਲੋਡ ਕਰ ਦਿੱਤੀ ਹੈ। (ਤੁਹਾਡੀ ਹਦਾਇਤ ਅਨੁਸਾਰ ਹਾਲੇ ਅੱਗੇ ਕੁਝ ਨਹੀਂ ਕੀਤਾ ਗਿਆ ਹੈ)");
+    }
+
+    // Step 1: User clicks "Find File"
+    function findFile() {
+        const cls = document.getElementById('class-select').value;
+        const subj = document.getElementById('subj-select').value;
+        const chapNo = document.getElementById('chap-no').value;
+
+        if(!cls || !subj || !chapNo) {
+            alert("ਕਿਰਪਾ ਕਰਕੇ ਪਹਿਲਾਂ ਜਮਾਤ, ਵਿਸ਼ਾ ਅਤੇ ਪਾਠ ਨੰਬਰ ਚੁਣੋ!");
+            return;
+        }
+        
+        // Create the exact filename rule e.g. "4P1"
+        const dbKey = cls + subj + chapNo;
+        targetFileName = dbKey + ".pdf";
+
+        if(DATABASE[dbKey]) {
+            // File Found Automatically
+            document.getElementById('manual-upload-area').style.display = 'none';
+            document.getElementById('target-filename').innerText = targetFileName;
+            document.getElementById('setup-screen').style.display = 'none';
+            document.getElementById('found-screen').style.display = 'flex';
+            state = 'found';
+        } else {
+            // File NOT Found Automatically -> Show Manual Upload Option
+            document.getElementById('manual-upload-area').style.display = 'flex';
+        }
+    }
+
+    function cancelFind() {
+        document.getElementById('found-screen').style.display = 'none';
+        document.getElementById('setup-screen').style.display = 'flex';
+        state = 'setup';
+    }
+
+    // Step 2: User clicks "Yes, Scan Data"
+    function scanData() {
+        const cls = document.getElementById('class-select').value;
+        const subj = document.getElementById('subj-select').value;
+        const chapNo = document.getElementById('chap-no').value;
+        const subjText = document.getElementById('subj-select').options[document.getElementById('subj-select').selectedIndex].text;
+        const classNameText = classNames[cls];
+
+        const dbKey = cls + subj + chapNo; 
+
+        if(DATABASE[dbKey]) {
+            lessonData = DATABASE[dbKey];
+            
+            lessonTitleMain = `${subjText} ਜਮਾਤ ${classNameText}<br>ਪਾਠ ${chapNo}`;
+            lessonTitleFull = `${subjText} ਜਮਾਤ ${classNameText} ਪਾਠ ${chapNo}`;
+
+            document.getElementById('dynamic-main-title').innerHTML = lessonTitleMain;
+            document.getElementById('dynamic-menu-title').innerHTML = lessonTitleFull;
+            document.getElementById('dynamic-top-bar').innerHTML = lessonTitleFull;
+            document.title = lessonTitleFull;
+
+            let exCount = lessonData.exercise.filter(i => i.type !== 'conclude').length;
+            let mcqCount = lessonData.mcq.filter(i => i.type !== 'conclude').length;
+            let actCount = lessonData.activities ? lessonData.activities.filter(i => i.type !== 'conclude').length : 0;
+            let totalQ = 0; lessonData.exercise.forEach(e => { if(e.items) totalQ += e.items.length; });
+
+            document.getElementById('summary-details').innerHTML = `
+                <div class="summary-item"><span>📖 ਫਾਈਲ ਦਾ ਨਾਂ:</span> <span class="summary-val">${targetFileName}</span></div>
+                <div class="summary-item"><span>🏫 ਜਮਾਤ:</span> <span class="summary-val">${classNameText}</span></div>
+                <div class="summary-item"><span>📚 ਵਿਸ਼ਾ:</span> <span class="summary-val">${subjText}</span></div>
+                <div class="summary-item"><span>📖 ਪਾਠ ਨੰਬਰ:</span> <span class="summary-val">ਪਾਠ ${chapNo}</span></div>
+                <hr style="margin: 1.5cqmin 0; border: 0.5px dashed #ccc;">
+                <div class="summary-item"><span>📝 ਅਭਿਆਸ ਦੇ ਭਾਗ (Sections):</span> <span class="summary-val">${exCount}</span></div>
+                <div class="summary-item"><span>❓ ਕੁੱਲ ਪ੍ਰਸ਼ਨ/ਖਾਲੀ ਥਾਵਾਂ:</span> <span class="summary-val">${totalQ}</span></div>
+                <div class="summary-item"><span>🎯 MCQ (ਬਹੁਵਿਕਲਪੀ):</span> <span class="summary-val">${mcqCount}</span></div>
+                <div class="summary-item"><span>🎨 ਗਤੀਵਿਧੀਆਂ (Activities):</span> <span class="summary-val">${actCount}</span></div>
+            `;
+
+            document.getElementById('found-screen').style.display = 'none';
+            document.getElementById('summary-screen').style.display = 'flex';
+            state = 'summary';
+
+        }
+    }
+
+    // Step 3: User says NO to summary
+    function cancelSummary() {
+        document.getElementById('summary-screen').style.display = 'none';
+        document.getElementById('setup-screen').style.display = 'flex';
+        state = 'setup';
+    }
+
+    // Step 4: User says YES to summary -> Goes to Disclaimer
+    function acceptSummary() {
+        document.getElementById('summary-screen').style.display = 'none';
+        document.getElementById('disclaimer-screen').style.display = 'flex';
+        state = 'disclaimer';
+    }
+
+    function startApp() {
+        document.getElementById('disclaimer-screen').style.display = 'none';
+        document.getElementById('top-ticker').style.display = 'flex';
+        document.getElementById('bottom-ticker').style.display = 'flex';
+        document.getElementById('intro-screen').style.display = 'flex';
+        state = 'intro';
+    }
+
+    function showMainMenu() {
+        document.getElementById('intro-screen').style.display = 'none';
+        document.getElementById('main-menu-screen').style.display = 'flex';
+        state = 'menu';
+    }
+
+    // Fullscreen logic
+    document.addEventListener("fullscreenchange", updateFsBtn);
+    function updateFsBtn() {
+        const btn = document.getElementById('fs-btn-id');
+        if(!btn) return;
+        if (document.fullscreenElement) { btn.innerHTML = "🔲 ਵਾਪਸ ਆਉਣ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ"; btn.style.background = "#3498db"; } 
+        else { btn.innerHTML = "🔲 ਫੁੱਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ"; btn.style.background = "#e74c3c"; }
+    }
+    function toggleFullScreen(e) {
+        if(e) e.stopPropagation();
+        if (!document.fullscreenElement) { document.documentElement.requestFullscreen(); } 
+        else { document.exitFullscreen(); }
+    }
+
+    function toggleAccordion(m) {
+        const auto = document.getElementById('card-auto'), live = document.getElementById('card-live');
+        if(m === 'auto') { auto.classList.toggle('expanded'); live.classList.remove('expanded'); }
+        else { live.classList.toggle('expanded'); auto.classList.remove('expanded'); }
+    }
+
+    function jumpTo(sec, mod, idx) {
+        section = sec; mode = mod; step = idx; subIdx = -1; paused = false; reviewMode = false;
+        document.getElementById('main-menu-screen').style.display = 'none';
+        document.getElementById('master-card').classList.add('active');
+        state = 'slide'; renderSlide();
+        if(mode === 'auto') startAuto();
+    }
+
+    function startSection(sec, mod) { jumpTo(sec, mod, 0); }
+
+    async function typeEffect(el, html, speed = 60) {
+        typing = true; let currentHTML = ""; let i = 0;
+        while (i < html.length && typing) {
+            if (html[i] === '<') { let end = html.indexOf('>', i); currentHTML += html.substring(i, end + 1); i = end + 1; el.innerHTML = currentHTML; } 
+            else { currentHTML += html[i]; el.innerHTML = currentHTML; i++; await new Promise(r => setTimeout(r, speed)); }
+        }
+        if(!typing) el.innerHTML = html; typing = false;
+    }
+
+    function renderSlide() {
+        const d = lessonData[section][step];
+        const titleEl = document.getElementById('slide-title'), instrEl = document.getElementById('slide-instr'), hEl = document.getElementById('html-content');
+
+        if(d.type === "conclude") {
+            titleEl.innerHTML = "ਧੰਨਵਾਦ !"; instrEl.innerHTML = ""; hEl.className = '';
+            hEl.innerHTML = `<div class="conclusion-box"><h2 class="conc-title">ਸ਼ਾਬਾਸ਼ !</h2><p class="conc-msg">ਤੁਸੀਂ ਅੱਜ <b>` + lessonTitleFull + `</b> ਦਾ ਅਭਿਆਸ ਪੂਰਾ ਕਰ ਲਿਆ ਹੈ ।</p></div>`;
+            document.getElementById('tap-indicator').innerText = "ਮੁਕੰਮਲ 🏁"; return;
+        }
+
+        titleEl.innerHTML = d.title; instrEl.innerHTML = d.instruction || "";
+        hEl.innerHTML = ''; subIdx = -1; reviewMode = false;
+
+        if(d.type === 'list' || d.type === 'qa') {
+            hEl.className = 'interactive-list qa-mode';
+            d.items.forEach((item, idx) => {
+                const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
+                if(idx !== 0) row.classList.add('fade-out');
+                row.innerHTML = `<div class="q-row"><span class="item-q">${item.q}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਉੱਤਰ ਦੇਖੋ</button></div><div class="ans-wrapper"><div class="item-a" style="visibility:hidden; opacity:0; pointer-events:none;">${item.a}</div><div class="item-a" id="ans-${idx}" style="position:absolute; top:0.8cqmin; left:0;"></div></div>`;
+                hEl.appendChild(row);
+            });
+            subIdx = 0; stepState = 'focus'; document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭️";
+        } else if(d.type === 'blanks') {
+            hEl.className = 'interactive-list';
+            d.items.forEach((item, idx) => {
+                const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
+                if(idx !== 0) row.classList.add('fade-out');
+                row.innerHTML = `<div class="q-row"><span class="item-q">${item.q}<span id="blank-${idx}" class="hl-red">.......</span>${item.a}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਭਰੋ</button></div>`;
+                hEl.appendChild(row);
+            });
+            subIdx = 0; stepState = 'focus'; document.getElementById('tap-indicator').innerText = "ਭਰੋ ✍️";
+        } else if(d.type === 'mcq') {
+            hEl.className = ''; hEl.style.display = 'flex'; hEl.style.flexDirection = 'column'; hEl.style.width = '100%'; hEl.style.alignItems = 'center';
+            const qP = document.createElement('p'); qP.className = 'item-q'; qP.style.color = '#d32f2f'; qP.style.textAlign = 'center'; qP.style.marginBottom = '1.5cqmin'; qP.style.width = '100%'; qP.innerHTML = d.q; hEl.appendChild(qP);
+            const optGrid = document.createElement('div'); optGrid.className = 'mcq-options-grid';
+            d.opts.forEach((o, i) => {
+                const btn = document.createElement('button'); btn.className = 'mcq-btn'; btn.innerText = o;
+                btn.onclick = (e) => { e.stopPropagation(); if(mode === 'auto' || typing) return; checkMcq(btn, i === d.correct); }; optGrid.appendChild(btn);
+            });
+            hEl.appendChild(optGrid);
+            const wrapper = document.createElement('div'); wrapper.style.position = 'relative'; wrapper.style.width = '100%'; wrapper.style.marginTop = '1cqmin';
+            const placeholder = document.createElement('div'); placeholder.className = 'item-a'; placeholder.style.visibility = 'hidden'; placeholder.style.opacity = '0'; placeholder.innerHTML = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.2cqmin;'>" + d.a + "</span>";
+            const box = document.createElement('div'); box.id = "final-ans"; box.className = "item-a"; box.style.position = 'absolute'; box.style.top = '0'; box.style.left = '0'; box.style.textAlign = 'center';
+            wrapper.appendChild(placeholder); wrapper.appendChild(box); hEl.appendChild(wrapper); document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+        }
+    }
+
+    async function showAllAnswers(e) {
+        if(e) e.stopPropagation(); if(lessonData[section][step].type === 'conclude') return; typing = false; const d = lessonData[section][step];
+        if(d.type === 'list' || d.type === 'blanks' || d.type === 'qa') {
+            document.querySelectorAll('.interactive-item').forEach((row, idx) => {
+                row.classList.remove('fade-out'); const btn = document.getElementById(`btn-${idx}`); if(btn) btn.style.display = 'none';
+                const target = d.type === 'blanks' ? document.getElementById(`blank-${idx}`) : document.getElementById(`ans-${idx}`);
+                target.classList.add('revealed'); target.innerHTML = d.type === 'blanks' ? d.items[idx].b : d.items[idx].a; 
+            });
+            subIdx = d.items.length - 1; stepState = 'reveal'; reviewMode = true; document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+        } else if (d.type === 'mcq') {
+            const box = document.getElementById('final-ans'); box.classList.add('revealed');
+            const btns = document.querySelectorAll('.mcq-btn'); if(btns[d.correct]) btns[d.correct].classList.add('correct');
+            box.innerHTML = "ਉੱਤਰ : " + d.a; document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+        }
+    }
+
+    async function revealAnswer(e, idx) {
+        if(e) e.stopPropagation(); if(typing) { typing = false; return; }
+        const d = lessonData[section][step]; const btn = document.getElementById(`btn-${idx}`);
+        const target = d.type === 'blanks' ? document.getElementById(`blank-${idx}`) : document.getElementById(`ans-${idx}`);
+        document.querySelectorAll('.interactive-item').forEach((row, i) => { if(i === idx) row.classList.remove('fade-out'); else row.classList.add('fade-out'); });
+        if(btn) btn.style.display = 'none'; target.classList.add('revealed'); subIdx = idx; stepState = 'reveal';
+        await typeEffect(target, d.type === 'blanks' ? d.items[idx].b : d.items[idx].a, 60);
+        document.getElementById('tap-indicator').innerText = (idx === d.items.length - 1) ? "ਅਗਲਾ ⏭️" : "ਅਗਲਾ ਪ੍ਰਸ਼ਨ ⏭️"; 
+    }
+
+    async function checkMcq(btn, isCorrect) {
+        if(typing) return; 
+        if(isCorrect) {
+            document.querySelectorAll('.mcq-btn').forEach(b => b.style.pointerEvents = 'none'); btn.classList.add('correct');
+            const box = document.getElementById('final-ans'); box.classList.add('revealed'); box.style.color = '#2ecc71';
+            await typeEffect(box, "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.2cqmin;'>" + lessonData[section][step].a + "</span>", 60);
+            document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+        } else {
+            btn.classList.add('wrong'); document.getElementById('wrong-modal').style.display = 'flex'; btn.style.pointerEvents = 'none';
+        }
+    }
+
+    async function nextStep(fromTimer = false) {
+        if(typing) { typing = false; return; } if(mode === 'auto' && !fromTimer && state === 'slide') startAuto(); 
+        const d = lessonData[section][step];
+        if(d.type === 'list' || d.type === 'blanks' || d.type === 'qa') {
+            if (reviewMode) { if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); return; }
+            if (stepState === 'focus') await revealAnswer(null, subIdx);
+            else if (stepState === 'reveal') {
+                if (subIdx < d.items.length - 1) {
+                    subIdx++; stepState = 'focus';
+                    document.querySelectorAll('.interactive-item').forEach((row, i) => { if (i === subIdx) row.classList.remove('fade-out'); else row.classList.add('fade-out'); });
+                    document.getElementById('tap-indicator').innerText = d.type === 'blanks' ? "ਭਰੋ ✍️" : "ਉੱਤਰ ਦੇਖੋ ⏭️";
+                } else { document.querySelectorAll('.interactive-item').forEach(row => row.classList.remove('fade-out')); reviewMode = true; document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️"; }
+            }
+        } else if(d.type !== 'conclude') {
+            const box = document.getElementById('final-ans');
+            if(box && !box.classList.contains('revealed')) { 
+                box.classList.add('revealed'); if(d.type === 'mcq') { const btns = document.querySelectorAll('.mcq-btn'); if(btns[d.correct]) btns[d.correct].classList.add('correct'); }
+                await typeEffect(box, "ਉੱਤਰ : " + d.a, 60); document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️"; return; 
+            } else { if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); }
+        } else goHome(); 
+    }
+
+    function skipStep() { typing = false; if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); }
+    function prevStep() { if(typing) { typing = false; return; } if (step === 0) { goHome(); return; } step--; renderSlide(); }
+    function retrySlide() { typing = false; renderSlide(); }
+    function goHome() { state = 'menu'; document.getElementById('master-card').classList.remove('active'); document.getElementById('main-menu-screen').style.display = 'flex'; clearInterval(window.autoTimer); }
+
+    window.autoTimer = null;
+    function startAuto() {
+        clearInterval(window.autoTimer);
+        window.autoTimer = setInterval(async () => {
+            if(state !== 'slide' || mode !== 'auto' || paused || typing) return;
+            const d = lessonData[section][step];
+            if(d.type === 'list' || d.type === 'blanks' || d.type === 'qa') {
+                if(!reviewMode) await nextStep(true); else { await new Promise(r => setTimeout(r, 4000)); if(step < lessonData[section].length - 1) { step++; renderSlide(); } else { goHome(); } }
+            } else if(d.type === 'conclude') { await new Promise(r => setTimeout(r, 7000)); goHome(); } 
+            else {
+                const box = document.getElementById('final-ans');
+                if(box && !box.classList.contains('revealed')) await nextStep(true); else { await new Promise(r => setTimeout(r, 4000)); if(step < lessonData[section].length - 1) { step++; renderSlide(); } else { goHome(); } }
+            }
+        }, 4000);
+    }
+</script>
+</body>
+</html>
