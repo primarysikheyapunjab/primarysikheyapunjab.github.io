@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="pa">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ਪਾਠ-3: ਬਾਲ ਸੁਖਦੇਵ - ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { 'punjabi': ['"Mukta Malar"', 'sans-serif'] },
+                    colors: {
+                        'punjab-blue': '#0f4c81', 'punjab-gold': '#f59e0b', 'punjab-orange': '#ea580c'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { 
+            font-family: 'Mukta Malar', sans-serif; 
+            background: linear-gradient(135deg, #fef9c3 0%, #fef08a 40%, #fce7f3 100%);
+            background-attachment: fixed;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .bg-3d-pattern {
+            position: fixed; inset: 0; pointer-events: none; z-index: -1;
+            background: transparent; 
+        }
+
+        .clay-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 8px 12px 25px rgba(0, 0, 0, 0.1), inset 0 8px 15px rgba(255, 255, 255, 1);
+        }
+
+        .btn-3d-super {
+            position: relative;
+            border-radius: 1.25rem;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(0);
+        }
+        
+        .btn-3d-super::before {
+            content: ""; position: absolute; inset: 0; border-radius: inherit;
+            box-shadow: inset 0 8px 20px rgba(255,255,255,0.6), inset 0 -6px 15px rgba(0,0,0,0.15);
+            pointer-events: none;
+        }
+
+        .btn-3d-super:active {
+            transform: translateY(4px) !important;
+            box-shadow: 0 2px 0 var(--shadow-color), 0 3px 6px rgba(0,0,0,0.2) !important;
+        }
+
+        .text-3d { text-shadow: 0 2px 3px rgba(0,0,0,0.2); }
+        .text-3d-light { text-shadow: 0 2px 2px rgba(255,255,255,0.8); }
+
+        .float-anim { animation: float 4s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-6px); } }
+
+        .bounce-anim { animation: bounceIcon 2s ease-in-out infinite; }
+        @keyframes bounceIcon { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15) rotate(5deg); } }
+
+        .custom-scroll::-webkit-scrollbar { width: 6px; height: 6px; } 
+        .custom-scroll::-webkit-scrollbar-track { background: #e2e8f0; border-radius: 10px; } 
+        .custom-scroll::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #38bdf8, #2563eb); border-radius: 10px; }
+
+        @keyframes scroll-text { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
+        @keyframes text-shine { to { background-position: 200% center; } }
+        
+        .scrolling-container { 
+            width: 100%; overflow: hidden; white-space: nowrap; 
+            background: linear-gradient(90deg, #fef9c3, #fce7f3, #fef9c3); 
+            padding: 8px 0; display: flex; align-items: center; border-bottom: 2px solid #fbcfe8; 
+        }
+        .scrolling-text { 
+            display: inline-block; 
+            background: linear-gradient(90deg, #8b4513, #1e3a8a, #d4af37, #1e3a8a, #8b4513);
+            background-size: 200% auto; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            font-size: clamp(1.2rem, 3.5vw, 1.4rem);
+            font-weight: 900; 
+            letter-spacing: 0.5px;
+            filter: drop-shadow(1px 1px 0px rgba(255,255,255,0.9));
+            animation: scroll-text 45s linear infinite, text-shine 4s linear infinite; 
+            padding-bottom: 2px;
+        }
+
+        .bottom-scrolling-container { width: 100%; overflow: hidden; white-space: nowrap; background: linear-gradient(90deg, #fef4a9, #fde047, #fef4a9); border-top: 3px solid #b45309; padding: 10px 0; display: flex; align-items: center; margin-top: auto; }
+        .bottom-scrolling-text { display: inline-block; animation: scroll-text 35s linear infinite; font-size: 1.2rem; font-weight: 900; color: #78350f; text-shadow: 1px 1px 0px rgba(255,255,255,0.6); }
+
+        .social-btn-3d { position: relative; text-decoration: none; transition: transform 0.2s ease, filter 0.2s ease; display: flex; align-items: center; }
+        .social-btn-3d:active { transform: scale(0.95); }
+        .shimmer-effect { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border-radius: inherit; overflow: hidden; pointer-events: none; }
+        .shimmer-effect::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.6), transparent);
+            transform: skewX(-20deg); animation: shimmer 3s infinite;
+        }
+        @keyframes shimmer { 0% { left: -100%; } 15% { left: 200%; } 100% { left: 200%; } }
+        .text-outline-dark { text-shadow: 1px 1px 2px rgba(0,0,0,0.9), -1px -1px 1px rgba(0,0,0,0.6), 0px 2px 4px rgba(0,0,0,0.8); }
+
+        .header-nav-btn { padding: 0.35rem 0.75rem; font-size: 0.75rem; display: flex; align-items: center; gap: 0.25rem; }
+        @media (min-width: 768px) { .header-nav-btn { padding: 0.5rem 1rem; font-size: 0.875rem; } }
+
+        /* === ਪਾਠ ਲਈ ਨਵੀਆਂ ਸੈਟਿੰਗਾਂ === */
+        .tab-btn.active {
+            background: linear-gradient(to bottom, #3b82f6, #1d4ed8);
+            color: white;
+            box-shadow: 0 4px 0 #1e3a8a;
+            --shadow-color: #1e3a8a;
+            transform: translateY(2px);
+        }
+        .mcq-option { transition: all 0.2s ease; cursor: pointer; }
+        .mcq-option:hover { background-color: #e0f2fe; border-color: #3b82f6; }
+        .mcq-option.correct { background-color: #dcfce7; border-color: #22c55e; color: #166534; }
+        .mcq-option.wrong { background-color: #fee2e2; border-color: #ef4444; color: #991b1b; }
+        
+        .content-section { display: none; animation: fadeIn 0.3s ease-in; }
+        .content-section.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Typewriter Cursor */
+        .typing-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #ea580c; font-weight: bold; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* Mind Map Styling */
+        .mind-map-container { position: relative; width: 100%; max-width: 400px; aspect-ratio: 1/1; margin: 0 auto; }
+        .mind-node {
+            position: absolute; transform: translate(-50%, -50%);
+            display: flex; align-items: center; justify-content: center; text-align: center;
+            border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;
+            font-weight: 900; user-select: none;
+        }
+        .mind-node-center {
+            width: 35%; height: 35%; top: 50%; left: 50%;
+            background: linear-gradient(135deg, #f97316, #dc2626); color: white;
+            z-index: 20; border: 4px solid white; font-size: clamp(1rem, 4vw, 1.5rem);
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4), inset 0 -4px 8px rgba(0,0,0,0.2);
+        }
+        .mind-node-outer {
+            width: 25%; height: 25%; background: white; border: 3px solid #f97316;
+            color: #dc2626; z-index: 10; font-size: clamp(0.7rem, 2vw, 1rem);
+            line-height: 1.1;
+        }
+        .mind-node-outer:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 6px 15px rgba(249, 115, 22, 0.3); }
+
+        @media (max-width:768px){
+            .bottom-scrolling-text { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body class="pb-24 md:pb-0 relative">
+
+    <div class="bg-3d-pattern"></div>
+
+    <header class="sticky top-2 md:top-4 z-50 px-2 md:px-4 max-w-7xl mx-auto w-full pt-1">
+        <div class="clay-card bg-gradient-to-r from-blue-500 to-indigo-600 p-2 md:p-3 flex justify-between items-center shadow-[0_6px_15px_rgba(37,99,235,0.3)]">
+            <div class="flex items-center gap-2 md:gap-3 cursor-pointer group" onclick="showHome()">
+                <div class="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full border-2 border-white shadow-[0_3px_0_#b45309] flex items-center justify-center shrink-0 z-20 group-hover:scale-105 transition-transform float-anim icon-box-3d">
+                    <span class="text-xl sm:text-2xl md:text-3xl drop-shadow-md">🎓</span>
+                </div>
+                <div class="flex flex-col justify-center">
+                    <h1 class="text-base sm:text-lg md:text-2xl font-extrabold text-white text-3d tracking-wide leading-tight">ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ</h1>
+                    <p class="text-[0.6rem] sm:text-[0.7rem] md:text-xs font-bold text-yellow-200 bg-black/20 px-2 py-0.5 rounded-full inline-block mt-0.5 shadow-inner border border-white/10 w-max">3D ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ</p>
+                </div>
+            </div>
+            
+            <nav class="hidden md:flex">
+                <button onclick="showHome()" class="btn-3d-super bg-gradient-to-b from-white to-gray-100 text-blue-800 px-4 py-1.5 font-extrabold text-sm shadow-[0_4px_0_#94a3b8] flex items-center gap-2" style="--shadow-color: #94a3b8;">
+                    <i class="fa-solid fa-house"></i> ਮੁੱਖ ਪੰਨਾ
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="scrolling-container mt-1 shrink-0 shadow-sm">
+        <div class="scrolling-text">
+            ✨ ਜੀ ਆਇਆਂ ਨੂੰ! ਨਵੇਂ ਵਿਦਿਅਕ ਸੈਸ਼ਨ 2026-27 ਲਈ ਬੱਚਿਆਂ ਵਾਸਤੇ ਇਹ ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ ਤਿਆਰ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ। 🚀 ਹੋਰ ਵਿਦਿਅਕ ਸਹਾਇਕ ਸਮੱਗਰੀ ਲਈ ਸਾਡੇ ਨਾਲ ਜੁੜੇ ਰਹੋ, ਬਾਕੀ ਸਮੱਗਰੀ ਜਲਦ ਹੀ ਅਪਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ! 📚
+        </div>
+    </div>
+
+    <div class="fixed top-[115px] md:top-[135px] left-2 md:left-4 z-[60]">
+        <a href="https://youtube.com/@gurminderjassal?si=8wgllXcc1LnChxvZ" target="_blank" class="social-btn-3d bg-gradient-to-b from-red-500 to-red-700 border-2 border-white rounded-full shadow-[0_6px_0_#7f1d1d,0_10px_20px_rgba(0,0,0,0.3)] gap-2 px-1.5 py-1.5 md:px-2 md:py-2 group" style="--btn-shadow: #7f1d1d;">
+            <div class="shimmer-effect rounded-full"></div>
+            <div class="absolute -top-2 -right-1 bg-yellow-400 text-red-900 text-[8px] md:text-[9px] font-black px-1.5 py-0.5 rounded-full animate-bounce shadow-md border border-white z-10">ਨਵਾਂ</div>
+            <div class="bg-white w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center z-10 shadow-inner group-hover:scale-110 transition-transform shrink-0">
+                <i class="fa-brands fa-youtube text-red-600 text-sm md:text-xl drop-shadow-sm"></i>
+            </div>
+            <div class="flex flex-col z-10 pr-2 md:pr-3">
+                <span class="text-white text-[8px] md:text-[10px] font-black tracking-wide leading-tight text-outline-dark">ਵੀਡੀਓਜ਼ ਦੇਖਣ ਲਈ</span>
+                <span class="text-yellow-300 text-[9px] md:text-sm font-black tracking-wide leading-tight text-outline-dark">YouTube ਜੁਆਇਨ ਕਰੋ</span>
+            </div>
+        </a>
+    </div>
+
+    <div class="fixed top-[115px] md:top-[135px] right-2 md:right-4 z-[60]">
+        <a href="https://chat.whatsapp.com/I4Xkh7R2g1U7O4qxJOZzJq?mode=gi_t" target="_blank" class="social-btn-3d bg-gradient-to-b from-green-500 to-green-700 border-2 border-white rounded-full shadow-[0_6px_0_#14532d,0_10px_20px_rgba(0,0,0,0.3)] gap-2 px-1.5 py-1.5 md:px-2 md:py-2 group" style="--btn-shadow: #14532d;">
+            <div class="shimmer-effect rounded-full"></div>
+            <div class="absolute -top-2 -left-1 bg-yellow-400 text-green-900 text-[8px] md:text-[9px] font-black px-1.5 py-0.5 rounded-full animate-bounce shadow-md border border-white z-10">ਜੁੜੋ</div>
+            <div class="flex flex-col text-right z-10 pl-2 md:pl-3">
+                <span class="text-white text-[8px] md:text-[10px] font-black tracking-wide leading-tight text-outline-dark">ਗਰੁੱਪ 'ਚ ਐਡ ਹੋਣ ਲਈ</span>
+                <span class="text-yellow-300 text-[9px] md:text-sm font-black tracking-wide leading-tight text-outline-dark">WhatsApp ਜੁਆਇਨ ਕਰੋ</span>
+            </div>
+            <div class="bg-white w-7 h-7 md:w-10 md:h-10 rounded-full flex items-center justify-center z-10 shadow-inner group-hover:scale-110 transition-transform shrink-0">
+                <i class="fa-brands fa-whatsapp text-green-600 text-sm md:text-xl drop-shadow-sm"></i>
+            </div>
+        </a>
+    </div>
+
+    <!-- ਮੇਨ ਕੰਟੈਂਟ ਏਰੀਆ ਜਿਸ ਵਿੱਚ ਪਾਠ ਫਿੱਟ ਕੀਤਾ ਗਿਆ ਹੈ -->
+    <main id="main-content" class="flex-grow container mx-auto px-2 md:px-4 py-4 relative max-w-6xl z-10 mt-6 md:mt-2">
+        
+        <div class="clay-card bg-white p-3 md:p-4 mb-4 flex items-center justify-between shadow-sm">
+            <h2 id="lesson-title" class="text-lg md:text-2xl font-black text-blue-700 flex items-center gap-2 text-3d-light">
+                <i class="fa-solid fa-book-open text-orange-500 float-anim"></i> ਪਾਠ-3: ਬਾਲ ਸੁਖਦੇਵ (ਚੌਥੀ ਜਮਾਤ)
+            </h2>
+            <div class="flex items-center gap-1.5 shrink-0">
+                <button onclick="goBack()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-gray-200 to-gray-300 text-gray-800 font-bold shadow-[0_3px_0_#64748b]" style="--shadow-color: #64748b;"><i class="fa-solid fa-arrow-left"></i></button>
+                <button onclick="showHome()" class="btn-3d-super header-nav-btn bg-gradient-to-b from-blue-100 to-blue-200 text-blue-800 font-bold shadow-[0_3px_0_#93c5fd]" style="--shadow-color: #93c5fd;"><i class="fa-solid fa-house"></i></button>
+            </div>
+        </div>
+
+        <!-- 3 Buttons / Tabs -->
+        <div class="grid grid-cols-3 gap-2 md:gap-4 mb-6">
+            <button onclick="switchTab('abhyas')" id="tab-abhyas" class="tab-btn active btn-3d-super bg-gradient-to-b from-white to-gray-100 text-gray-800 p-3 md:p-4 shadow-[0_4px_0_#94a3b8] flex flex-col items-center gap-2" style="--shadow-color: #94a3b8;">
+                <span class="text-xl md:text-2xl drop-shadow-md">✍️</span>
+                <span class="font-black text-sm md:text-base">ਪਾਠ ਅਭਿਆਸ</span>
+            </button>
+            <button onclick="switchTab('mcq')" id="tab-mcq" class="tab-btn btn-3d-super bg-gradient-to-b from-white to-gray-100 text-gray-800 p-3 md:p-4 shadow-[0_4px_0_#94a3b8] flex flex-col items-center gap-2" style="--shadow-color: #94a3b8;">
+                <span class="text-xl md:text-2xl drop-shadow-md">✅</span>
+                <span class="font-black text-sm md:text-base">MCQ ਟੈਸਟ</span>
+            </button>
+            <button onclick="switchTab('gatividhia')" id="tab-gatividhia" class="tab-btn btn-3d-super bg-gradient-to-b from-white to-gray-100 text-gray-800 p-3 md:p-4 shadow-[0_4px_0_#94a3b8] flex flex-col items-center gap-2" style="--shadow-color: #94a3b8;">
+                <span class="text-xl md:text-2xl drop-shadow-md">🎯</span>
+                <span class="font-black text-sm md:text-base">ਗਤੀਵਿਧੀਆਂ</span>
+            </button>
+        </div>
+
+        <!-- Content Areas -->
+        <div id="content-abhyas" class="content-section active clay-card bg-white p-4 md:p-6 mb-8 border-t-4 border-blue-500"></div>
+        <div id="content-mcq" class="content-section clay-card bg-white p-4 md:p-6 mb-8 border-t-4 border-green-500"></div>
+        <div id="content-gatividhia" class="content-section clay-card bg-white p-4 md:p-6 mb-8 border-t-4 border-purple-500"></div>
+
+    </main>
+
+    <div class="bottom-scrolling-container mt-auto shrink-0 z-20 relative">
+        <div class="bottom-scrolling-text">
+            ਤਿਆਰ ਕਰਤਾ :- ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸ.ਪ.ਸ ਜਵੱਦੀ, ਬਲਾਕ ਲੁਧਿਆਣਾ-1 (ਜ਼ਿਲ੍ਹਾ ਲੁਧਿਆਣਾ) ★ ਤਿਆਰ ਕਰਤਾ :- ਗੁਰਮਿੰਦਰ ਸਿੰਘ, ਸ.ਪ.ਸ ਜਵੱਦੀ, ਬਲਾਕ ਲੁਧਿਆਣਾ-1 (ਜ਼ਿਲ੍ਹਾ ਲੁਧਿਆਣਾ) ★
+        </div>
+    </div>
+
+    <div class="md:hidden fixed bottom-14 left-1/2 transform -translate-x-1/2 w-[90%] max-w-sm bg-white/95 backdrop-blur-md shadow-[0_10px_25px_rgba(0,0,0,0.3)] z-[100] border-2 border-gray-200 rounded-full flex justify-around items-center py-1.5 px-2">
+        <button onclick="showHome();" class="flex flex-col items-center justify-center bg-blue-50 text-blue-700 w-[30%] h-12 rounded-full border-b-2 border-blue-200 active:border-b-0 active:translate-y-1 transition-all">
+            <i class="fa-solid fa-house text-lg mb-0.5"></i><span class="text-[9px] font-black">ਹੋਮ</span>
+        </button>
+        <button onclick="goBack();" class="flex flex-col items-center justify-center bg-gray-50 text-gray-700 w-[30%] h-12 rounded-full border-b-2 border-gray-200 active:border-b-0 active:translate-y-1 transition-all">
+            <i class="fa-solid fa-arrow-left text-lg mb-0.5"></i><span class="text-[9px] font-black">ਪਿੱਛੇ</span>
+        </button>
+        <button onclick="window.open('https://youtube.com/@gurminderjassal?si=8wgllXcc1LnChxvZ', '_blank');" class="flex flex-col items-center justify-center bg-red-50 text-red-700 w-[30%] h-12 rounded-full border-b-2 border-red-200 active:border-b-0 active:translate-y-1 transition-all">
+            <i class="fa-brands fa-youtube text-lg mb-0.5"></i><span class="text-[9px] font-black">ਵੀਡੀਓਜ਼</span>
+        </button>
+    </div>
+
+    <script>
+        function showHome() { window.location.href = 'index.html'; }
+        function goBack() { window.history.back(); }
+
+        function enterFullScreen() { 
+            try { 
+                if (!document.fullscreenElement) { 
+                    if (document.documentElement.requestFullscreen) { document.documentElement.requestFullscreen(); }
+                    else if (document.documentElement.webkitRequestFullscreen) { document.documentElement.webkitRequestFullscreen(); } 
+                }
+            } catch (e) {} 
+        }
+        document.addEventListener('dblclick', enterFullScreen);
+        let lastTap = 0;
+        document.addEventListener('touchend', function(e) {
+            if (e.changedTouches.length > 1) return;
+            const t = new Date().getTime();
+            if (t - lastTap < 400 && t - lastTap > 0) enterFullScreen();
+            lastTap = t;
+        });
+
+        // =========================================================================
+        // ਪਾਠ 3 ਦਾ ਸਾਰਾ ਡਾਟਾ (ਬਿਲਕੁਲ ਨਵੇਂ ਨਿਯਮਾਂ ਅਨੁਸਾਰ)
+        // =========================================================================
+        const lessonData = {
+          "abhyas": [
+            {
+              "type": "remember_points",
+              "title": "1. ਯਾਦ ਰੱਖਣਯੋਗ ਗੱਲਾਂ:",
+              "content": [
+                "ਸ਼ਹੀਦ ਸੁਖਦੇਵ ਦਾ ਜਨਮ ਲੁਧਿਆਣਾ ਵਿੱਚ ਹੋਇਆ।",
+                "ਜੱਲ੍ਹਿਆਂਵਾਲੇ ਬਾਗ਼ ਦਾ ਸਾਕਾ 13 ਅਪਰੈਲ, 1919 ਨੂੰ ਵਾਪਰਿਆ।",
+                "23 ਮਾਰਚ, 1931 ਨੂੰ ਸੁਖਦੇਵ ਨੂੰ ਭਗਤ ਸਿੰਘ ਅਤੇ ਰਾਜਗੁਰੂ ਦੇ ਨਾਲ ਫਾਂਸੀ ਦਿੱਤੀ ਗਈ।"
+              ]
+            },
+            {
+              "type": "word_meanings",
+              "title": "2. ਪੜ੍ਹੋ ਅਤੇ ਸਮਝੋ:",
+              "content": [
+                { "word1": "ਅਜ਼ਾਦੀ", "word2": "ਸੁਤੰਤਰਤਾ, ਆਪਣੀ ਮਰਜ਼ੀ ਨਾਲ ਚੱਲਣ ਦਾ ਭਾਵ" },
+                { "word1": "ਝੁਰਮਟ", "word2": "ਇਕੱਠ" },
+                { "word1": "ਚਿੜਚਿੜਾ", "word2": "ਖਿਝਣ ਵਾਲਾ, ਖਿਝੂ ਸੁਭਾਅ" },
+                { "word1": "ਹੁਸ਼ਿਆਰੀ", "word2": "ਚੁਸਤੀ, ਚਲਾਕੀ" },
+                { "word1": "ਤਾਇਨਾਤ", "word2": "ਨਿਯੁਕਤ ਕਰਨਾ" },
+                { "word1": "ਛਿੱਥਾ", "word2": "ਸ਼ਰਮਿੰਦਾ" },
+                { "word1": "ਪੈੜਾਂ", "word2": "ਪੈਰਾਂ ਦੇ ਨਿਸ਼ਾਨ" }
+              ]
+            },
+            {
+              "type": "fill_blanks",
+              "title": "3. ਠੀਕ ਸ਼ਬਦ ਚੁਣ ਕੇ ਖ਼ਾਲੀ ਥਾਂਵਾਂ ਭਰੋ:",
+              "content": [
+                "(ੳ) ਸੁਖਦੇਵ ਦੇ ਮਾਤਾ ਜੀ ਦਾ ਨਾਂ ________ ਸੀ। (ਰਲ਼ੀ ਦੇਈ)",
+                "(ਅ) ਸੁਖਦੇਵ ਲਾਇਲਪੁਰ ਦੇ ________ ਸਕੂਲ 'ਚ ਪੜ੍ਹਦਾ ਸੀ। (ਸਨਾਤਨ ਧਰਮ)",
+                "(ੲ) ਅੰਗਰੇਜ਼ ਅਫ਼ਸਰ ________ ਹੋ ਗਿਆ। (ਅੱਗ-ਬਗੋਲਾ)",
+                "(ਸ) ਅੰਗਰੇਜ਼ ਹਕੂਮਤ ਨਾਲ ਸੁਖਦੇਵ ਦੀ ਇਹ ________ ਟੱਕਰ ਸੀ। (ਪਹਿਲੀ)",
+                "(ਹ) ਸੁਖਦੇਵ ਦਾ ਪਰਿਵਾਰ ________ ਵਿਖੇ ਰਹਿੰਦਾ ਸੀ। (ਲਾਇਲਪੁਰ)"
+              ]
+            },
+            {
+              "type": "qa",
+              "title": "4. ਹੇਠ ਲਿਖੇ ਪ੍ਰਸ਼ਨਾਂ ਦੇ ਉੱਤਰ ਲਿਖੋ:",
+              "content": [
+                { "q": "(ੳ) ਸੁਖਦੇਵ ਦਾ ਜਨਮ ਕਦੋਂ ਹੋਇਆ?", "a": "ਸੁਖਦੇਵ ਦਾ ਜਨਮ 15 ਮਈ, 1907 ਈ. ਨੂੰ ਪਿਤਾ ਰਾਮ ਲਾਲ ਥਾਪਰ ਅਤੇ ਮਾਤਾ ਰਲ਼ੀ ਦੇਈ ਦੇ ਘਰ ਲੁਧਿਆਣਾ ਵਿੱਚ ਹੋਇਆ।" },
+                { "q": "(ਅ) ਸੁਖਦੇਵ ਦੀ ਚਚੇਰੀ ਭੈਣ ਦਾ ਕੀ ਨਾਂ ਸੀ ਅਤੇ ਉਹ ਸੁਖਦੇਵ ਨਾਲ ਕਿਸ ਤਰ੍ਹਾਂ ਦਾ ਵਰਤਾਅ ਕਰਦੀ ਸੀ?", "a": "ਸੁਖਦੇਵ ਦੀ ਚਚੇਰੀ ਭੈਣ ਦਾ ਨਾਂ ਗੌਰਾਂ ਸੀ। ਉਹ ਸੁਖਦੇਵ ਨੂੰ ਬਹੁਤ ਪਿਆਰ ਕਰਦੀ ਸੀ ਅਤੇ ਜਦੋਂ ਘਰ ਵਿੱਚ ਸੁਖਦੇਵ ਕੋਈ ਸ਼ਰਾਰਤ ਜਾਂ ਗ਼ਲਤੀ ਕਰਦਾ ਤਾਂ ਗੌਰਾਂ ਸੁਖਦੇਵ ਦਾ ਹੀ ਪੱਖ ਪੂਰਦੀ ਸੀ।" },
+                { "q": "(ੲ) ਜਦੋਂ ਬੱਚਾ ਖੂਹ ਵਿੱਚ ਡਿਗ ਪਿਆ ਤਾਂ ਸੁਖਦੇਵ ਨੇ ਉਸ ਨੂੰ ਬਚਾਉਣ ਲਈ ਕੀ ਕੀਤਾ?", "a": "ਸੁਖਦੇਵ ਕਾਹਲੀ ਨਾਲ ਭੱਜਾ-ਭੱਜਾ ਆਪਣੇ ਘਰ ਗਿਆ ਅਤੇ ਨੌਕਰ ਸ਼ਿਵ ਰਾਮ ਨੂੰ ਰੱਸੇ ਸਮੇਤ ਖੂਹ 'ਤੇ ਲੈ ਆਇਆ ਅਤੇ ਬੱਚੇ ਨੂੰ ਬਚਾ ਲਿਆ।" },
+                { "q": "(ਸ) ਜੱਲ੍ਹਿਆਂਵਾਲੇ ਬਾਗ ਦੇ ਸਾਕੇ ਤੋਂ ਬਾਅਦ ਅੰਗਰੇਜ਼ ਸਰਕਾਰ ਨੇ ਸਾਰੇ ਪੰਜਾਬ ਵਿੱਚ ਸਥਿਤੀ ਨੂੰ ਕਾਬੂ ਵਿੱਚ ਰੱਖਣ ਲਈ ਕੀ ਕੀਤਾ?", "a": "ਅੰਗਰੇਜ਼ਾਂ ਨੇ ਜੱਲ੍ਹਿਆਂਵਾਲਾ ਬਾਗ਼ ਦੇ ਸਾਕੇ ਤੋਂ ਤੀਜੇ ਦਿਨ ਸਾਰੇ ਪੰਜਾਬ ਵਿੱਚ ਫ਼ੌਜ ਅਤੇ ਪੁਲਿਸ ਤਾਇਨਾਤ ਕਰ ਦਿੱਤੀ।" },
+                { "q": "(ਹ) ਸੁਖਦੇਵ ਦੇ ਭਗਤ ਸਿੰਘ ਨਾਲ ਸੰਬੰਧ ਕਿਵੇਂ ਬਣੇ?", "a": "ਸੁਖਦੇਵ ਦੇ ਤਾਇਆ ਜੀ ਲਾਲਾ ਚਿੰਤ ਰਾਮ ਅਤੇ ਭਗਤ ਸਿੰਘ ਦੇ ਪਿਤਾ ਸ. ਕਿਸ਼ਨ ਸਿੰਘ ਦਾ ਇੱਕ-ਦੂਜੇ ਦੇ ਘਰ ਆਉਣ-ਜਾਣ ਸੀ, ਜਿਸ ਕਾਰਨ ਬਚਪਨ ਵਿੱਚ ਹੀ ਸੁਖਦੇਵ ਅਤੇ ਭਗਤ ਸਿੰਘ ਦੀ ਆਪਸ ਵਿੱਚ ਆੜੀ (ਦੋਸਤੀ) ਪੈ ਚੁੱਕੀ ਸੀ।" }
+              ]
+            },
+            {
+              "type": "qa",
+              "title": "5. ਹੇਠ ਲਿਖੇ ਕੌਣ ਸਨ?",
+              "content": [
+                { "q": "(ੳ) ਸੁਖਦੇਵ", "a": "ਸ਼ਹੀਦ ਸੁਖਦੇਵ ਭਾਰਤ ਦੀ ਆਜ਼ਾਦੀ ਦੀ ਲੜਾਈ ਵਿੱਚ ਹਿੱਸਾ ਲੈਣ ਵਾਲਾ ਮਹਾਨ ਦੇਸ਼ ਭਗਤ ਅਤੇ ਭਗਤ ਸਿੰਘ ਦਾ ਨੇੜਲਾ ਸਾਥੀ ਸੀ।" },
+                { "q": "(ਅ) ਗੋਰਾਂ", "a": "ਗੌਰਾਂ ਸੁਖਦੇਵ ਦੀ ਚਚੇਰੀ ਭੈਣ ਸੀ ਜੋ ਉਸ ਤੋਂ ਸੱਤ ਸਾਲ ਵੱਡੀ ਸੀ ਅਤੇ ਉਸ ਨੂੰ ਬਹੁਤ ਪਿਆਰ ਕਰਦੀ ਸੀ।" },
+                { "q": "(ੲ) ਰਹੀਮਣ", "a": "ਰਹੀਮਣ ਸੁਖਦੇਵ ਦੇ ਘਰ ਕੰਮ ਕਰਨ ਵਾਲੀ ਇੱਕ ਔਰਤ ਸੀ ਜੋ ਸੁਖਦੇਵ ਨੂੰ ਤਿਆਰ ਕਰਕੇ ਸਕੂਲ ਭੇਜਦੀ ਸੀ।" },
+                { "q": "(ਸ) ਕਿਸ਼ਨ ਸਿੰਘ", "a": "ਸਰਦਾਰ ਕਿਸ਼ਨ ਸਿੰਘ ਸ਼ਹੀਦ ਭਗਤ ਸਿੰਘ ਦੇ ਪਿਤਾ ਜੀ ਸਨ।" }
+              ]
+            },
+            {
+              "type": "dictation",
+              "title": "6. ਅਧਿਆਪਕ ਆਪ ਬੋਲ ਕੇ ਵਿਦਿਆਰਥੀਆਂ ਨੂੰ ਲਿਖਣ ਲਈ ਕਹੇ:",
+              "content": [
+                "ਉਹ ਭਗਤ ਸਿੰਘ ਦਾ ਨੇੜੇ ਦਾ ਸਾਥੀ ਸੀ।",
+                "ਗੌਰਾਂ ਸੁਖਦੇਵ ਤੋਂ ਸੱਤ ਸਾਲ ਵੱਡੀ ਸੀ।",
+                "ਉਸ ਦਾ ਸੁਭਾਅ ਚਿੜਚਿੜਾ ਸੀ।",
+                "ਸੁਖਦੇਵ ਅਤੇ ਭਗਤ ਸਿੰਘ ਖੇਡਣ ਲੱਗ ਜਾਂਦੇ।",
+                "ਇਹ ਘਟਨਾ ਨਿੱਕੀ ਨਹੀਂ ਸੀ।"
+              ]
+            },
+            {
+              "type": "mind_map",
+              "title": "7. ਪਾਠ ਦੇ ਆਧਾਰ 'ਤੇ ਗੋਲ ਚੱਕਰਾਂ ਵਿੱਚ ਬਾਲ ਸੁਖਦੇਵ ਦੇ ਸੁਭਾਅ ਬਾਰੇ ਜਾਣਕਾਰੀ ਲਿਖੋ:",
+              "content": [
+                "ਜ਼ਿੱਦੀ ਬਾਲਕ",
+                "ਚਿੜਚਿੜਾ ਸੁਭਾਅ",
+                "ਇਕੱਲਿਆਂ ਘੁੰਮਣ ਦਾ ਸ਼ੌਕ",
+                "ਹੁਸ਼ਿਆਰ ਅਤੇ ਚੁਸਤ",
+                "ਬਚਪਨ ਤੋਂ ਹੀ ਨਿਡਰ",
+                "ਮਹਾਨ ਦੇਸ਼ ਭਗਤ"
+              ]
+            },
+            {
+              "type": "teacher_note",
+              "title": "ਅਧਿਆਪਕਾਂ ਲਈ ਵਿਸ਼ੇਸ਼ ਨੋਟ (ਦੇਸ਼ ਭਗਤੀ):",
+              "content": "ਅਧਿਆਪਕ ਵਿਦਿਆਰਥੀਆਂ ਨੂੰ ਭਾਰਤ ਦੀ ਅਜ਼ਾਦੀ ਦੀ ਲੜਾਈ ਵਿੱਚ ਹਿੱਸਾ ਪਾਉਣ ਵਾਲੇ ਹੋਰਨਾਂ ਦੇਸ-ਭਗਤਾਂ ਬਾਰੇ ਵਿਸਤਾਰ ਨਾਲ ਜਾਣਕਾਰੀ ਦੇਣ। ਬੱਚਿਆਂ ਨੂੰ ਦੱਸਿਆ ਜਾਵੇ ਕਿ ਕਿਵੇਂ ਸ਼ਹੀਦ ਭਗਤ ਸਿੰਘ, ਰਾਜਗੁਰੂ ਅਤੇ ਸੁਖਦੇਵ ਨੇ ਛੋਟੀ ਉਮਰੇ ਹੀ ਦੇਸ਼ ਲਈ ਹੱਸਦੇ-ਹੱਸਦੇ ਫਾਂਸੀ ਦਾ ਰੱਸਾ ਚੁੰਮ ਲਿਆ ਸੀ। ਕਰਤਾਰ ਸਿੰਘ ਸਰਾਭਾ ਜਿਹੇ ਸੂਰਬੀਰਾਂ ਨੇ ਗ਼ਦਰ ਪਾਰਟੀ ਰਾਹੀਂ ਵਿਦੇਸ਼ਾਂ ਵਿੱਚ ਬੈਠ ਕੇ ਵੀ ਭਾਰਤ ਦੀ ਆਜ਼ਾਦੀ ਦਾ ਸੁਪਨਾ ਵੇਖਿਆ। ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ ਨੇ ਜੱਲ੍ਹਿਆਂਵਾਲੇ ਬਾਗ ਦੇ ਸਾਕੇ ਦਾ ਬਦਲਾ ਲੰਡਨ ਜਾ ਕੇ ਲਿਆ ਸੀ। ਇਹਨਾਂ ਮਹਾਨ ਯੋਧਿਆਂ ਦੀਆਂ ਕੁਰਬਾਨੀਆਂ ਸਦਕਾ ਹੀ ਅੱਜ ਅਸੀਂ ਆਜ਼ਾਦ ਫਿਜ਼ਾ ਵਿੱਚ ਸਾਹ ਲੈ ਰਹੇ ਹਾਂ। ਅਧਿਆਪਕ ਬੱਚਿਆਂ ਨੂੰ ਇਹਨਾਂ ਸ਼ਹੀਦਾਂ ਦੀਆਂ ਜੀਵਨੀਆਂ ਪੜ੍ਹਨ ਲਈ ਪ੍ਰੇਰਿਤ ਕਰਨ ਤਾਂ ਜੋ ਬੱਚਿਆਂ ਦੇ ਮਨਾਂ ਵਿੱਚ ਆਪਣੇ ਦੇਸ਼, ਕੌਮ ਅਤੇ ਮਾਤ-ਭੂਮੀ ਲਈ ਸੱਚੇ ਪਿਆਰ ਅਤੇ ਦੇਸ਼ ਭਗਤੀ ਦੀ ਭਾਵਨਾ ਪੈਦਾ ਹੋ ਸਕੇ। ਸਾਨੂੰ ਆਪਣੇ ਦੇਸ਼ ਦੀ ਤਰੱਕੀ ਲਈ ਹਮੇਸ਼ਾ ਇਮਾਨਦਾਰੀ ਅਤੇ ਮਿਹਨਤ ਨਾਲ ਕੰਮ ਕਰਨਾ ਚਾਹੀਦਾ ਹੈ।"
+            }
+          ],
+          "mcq": [
+            { "question": "ਸ਼ਹੀਦ ਸੁਖਦੇਵ ਦਾ ਜਨਮ ਕਦੋਂ ਹੋਇਆ?", "options": ["15 ਮਈ 1907", "13 ਅਪ੍ਰੈਲ 1919", "23 ਮਾਰਚ 1931", "15 ਅਗਸਤ 1947"], "correct_index": 0 },
+            { "question": "ਸੁਖਦੇਵ ਦੇ ਪਿਤਾ ਜੀ ਦਾ ਕੀ ਨਾਂ ਸੀ?", "options": ["ਸਰਦਾਰ ਕਿਸ਼ਨ ਸਿੰਘ", "ਲਾਲਾ ਚਿੰਤ ਰਾਮ", "ਸ਼ਿਵ ਰਾਮ", "ਰਾਮ ਲਾਲ ਥਾਪਰ"], "correct_index": 3 },
+            { "question": "ਸੁਖਦੇਵ, ਭਗਤ ਸਿੰਘ ਦੇ ਨਾਲ ਤੀਜਾ ਕਿਹੜਾ ਸਾਥੀ ਫਾਂਸੀ ਚੜ੍ਹਿਆ ਸੀ?", "options": ["ਚੰਦਰ ਸ਼ੇਖਰ ਆਜ਼ਾਦ", "ਰਾਜਗੁਰੂ", "ਊਧਮ ਸਿੰਘ", "ਕਰਤਾਰ ਸਿੰਘ ਸਰਾਭਾ"], "correct_index": 1 },
+            { "question": "ਸੁਖਦੇਵ ਦੀ ਚਚੇਰੀ ਭੈਣ ਦਾ ਕੀ ਨਾਂ ਸੀ?", "options": ["ਰਲ਼ੀ ਦੇਈ", "ਗੌਰਾਂ", "ਰਹੀਮਣ", "ਪਾਰਵਤੀ"], "correct_index": 1 },
+            { "question": "ਗੌਰਾਂ ਸੁਖਦੇਵ ਤੋਂ ਕਿੰਨੇ ਸਾਲ ਵੱਡੀ ਸੀ?", "options": ["ਪੰਜ ਸਾਲ", "ਸੱਤ ਸਾਲ", "ਦਸ ਸਾਲ", "ਦੋ ਸਾਲ"], "correct_index": 1 },
+            { "question": "ਸੁਖਦੇਵ ਨੂੰ ਬਚਪਨ ਵਿੱਚ ਸਕੂਲ ਕੌਣ ਤਿਆਰ ਕਰਕੇ ਭੇਜਦਾ ਸੀ?", "options": ["ਗੌਰਾਂ", "ਮਾਤਾ ਰਲ਼ੀ ਦੇਈ", "ਰਹੀਮਣ ਚਾਚੀ", "ਤਾਇਆ ਚਿੰਤ ਰਾਮ"], "correct_index": 2 },
+            { "question": "ਜੱਲ੍ਹਿਆਂਵਾਲਾ ਬਾਗ਼ ਦਾ ਸਾਕਾ ਕਦੋਂ ਵਾਪਰਿਆ ਸੀ?", "options": ["15 ਮਈ 1907", "13 ਅਪ੍ਰੈਲ 1919", "23 ਮਾਰਚ 1931", "26 ਜਨਵਰੀ 1950"], "correct_index": 1 },
+            { "question": "ਬਾਲ ਸੁਖਦੇਵ ਨੇ ਸਕੂਲ ਵਿੱਚ ਕਿਸਨੂੰ ਸਲਾਮੀ ਦੇਣ ਤੋਂ ਇਨਕਾਰ ਕਰ ਦਿੱਤਾ ਸੀ?", "options": ["ਮੁੱਖ ਅਧਿਆਪਕ ਨੂੰ", "ਆਪਣੇ ਪਿਤਾ ਨੂੰ", "ਅੰਗਰੇਜ਼ ਅਫ਼ਸਰ ਨੂੰ", "ਪੁਲਿਸ ਵਾਲੇ ਨੂੰ"], "correct_index": 2 },
+            { "question": "ਸਲਾਮੀ ਦੇਣ ਤੋਂ ਇਨਕਾਰ ਕਰਨ ਸਮੇਂ ਸੁਖਦੇਵ ਦੀ ਉਮਰ ਕਿੰਨੀ ਸੀ?", "options": ["10 ਸਾਲ", "12 ਸਾਲ", "15 ਸਾਲ", "18 ਸਾਲ"], "correct_index": 1 },
+            { "question": "ਬਚਪਨ ਵਿੱਚ ਸੁਖਦੇਵ ਅਤੇ ਭਗਤ ਸਿੰਘ ਮਿੱਟੀ ਦੇ ਕੀ ਬਣਾ ਕੇ ਖੇਡਦੇ ਸਨ?", "options": ["ਖਿਡੌਣੇ", "ਭਾਂਡੇ", "ਘਰ", "ਜਹਾਜ਼"], "correct_index": 2 }
+          ],
+          "gatividhia": [
+            {
+              "type": "opposites",
+              "title": "ਵਿਰੋਧੀ ਸ਼ਬਦ:",
+              "content": [
+                { "word1": "ਵੱਡੀ", "word2": "ਛੋਟੀ" },
+                { "word1": "ਪਿਆਰ", "word2": "ਨਫ਼ਰਤ" },
+                { "word1": "ਅਜ਼ਾਦੀ", "word2": "ਗੁਲਾਮੀ" },
+                { "word1": "ਰੋਣਾ", "word2": "ਹੱਸਣਾ" },
+                { "word1": "ਬਚਪਨ", "word2": "ਬੁਢਾਪਾ" }
+              ]
+            },
+            {
+              "type": "singular_plural",
+              "title": "ਇਕਵਚਨ - ਬਹੁਵਚਨ:",
+              "content": [
+                { "word1": "ਬੱਚਾ", "word2": "ਬੱਚੇ" },
+                { "word1": "ਕਤਾਰ", "word2": "ਕਤਾਰਾਂ" },
+                { "word1": "ਰੱਸਾ", "word2": "ਰੱਸੇ" },
+                { "word1": "ਅਫ਼ਸਰ", "word2": "ਅਫ਼ਸਰਾਂ" },
+                { "word1": "ਪੈੜ", "word2": "ਪੈੜਾਂ" }
+              ]
+            },
+            {
+              "type": "gender",
+              "title": "ਲਿੰਗ ਬਦਲੋ (ਪੁਲਿੰਗ - ਇਸਤਰੀ ਲਿੰਗ):",
+              "content": [
+                { "word1": "ਪਿਤਾ", "word2": "ਮਾਤਾ" },
+                { "word1": "ਭਰਾ", "word2": "ਭੈਣ" },
+                { "word1": "ਚਾਚਾ", "word2": "ਚਾਚੀ" },
+                { "word1": "ਨੌਕਰ", "word2": "ਨੌਕਰਾਣੀ" },
+                { "word1": "ਬੱਚਾ", "word2": "ਬੱਚੀ" }
+              ]
+            },
+            {
+              "type": "synonyms",
+              "title": "ਸਮਾਨਾਰਥਕ ਸ਼ਬਦ (ਇੱਕੋ ਜਿਹੇ ਅਰਥਾਂ ਵਾਲੇ):",
+              "content": [
+                { "word1": "ਅਜ਼ਾਦੀ", "word2": "ਸੁਤੰਤਰਤਾ" },
+                { "word1": "ਪਿਆਰ", "word2": "ਸਨੇਹ" },
+                { "word1": "ਝੁਰਮਟ", "word2": "ਇਕੱਠ" },
+                { "word1": "ਛਿੱਥਾ", "word2": "ਸ਼ਰਮਿੰਦਾ" },
+                { "word1": "ਹੁਸ਼ਿਆਰੀ", "word2": "ਚਲਾਕੀ / ਚੁਸਤੀ" }
+              ]
+            },
+            {
+              "type": "one_word",
+              "title": "ਬਹੁਤੇ ਸ਼ਬਦਾਂ ਦੀ ਥਾਂ ਇੱਕ ਸ਼ਬਦ:",
+              "content": [
+                { "word1": "ਦੇਸ਼ ਲਈ ਆਪਣੀ ਜਾਨ ਕੁਰਬਾਨ ਕਰਨ ਵਾਲਾ", "word2": "ਸ਼ਹੀਦ" },
+                { "word1": "ਜਿਸਦੇ ਮਨ ਵਿੱਚ ਕੋਈ ਡਰ ਨਾ ਹੋਵੇ", "word2": "ਨਿਡਰ" },
+                { "word1": "ਦੂਜੇ ਦੇਸ ਦਾ ਰਾਜ ਹੋਣਾ", "word2": "ਗੁਲਾਮੀ" }
+              ]
+            },
+            {
+              "type": "make_sentences",
+              "title": "ਵਾਕ ਬਣਾਓ:",
+              "content": [
+                { "word": "ਸ਼ਹੀਦ", "sentence": "ਸ਼ਹੀਦ ਸੁਖਦੇਵ ਇੱਕ ਮਹਾਨ ਦੇਸ਼ ਭਗਤ ਸੀ।" },
+                { "word": "ਅਜ਼ਾਦੀ", "sentence": "ਸਾਨੂੰ ਅਜ਼ਾਦੀ ਬਹੁਤ ਕੁਰਬਾਨੀਆਂ ਤੋਂ ਬਾਅਦ ਮਿਲੀ ਹੈ।" },
+                { "word": "ਸ਼ਰਾਰਤ", "sentence": "ਬੱਚੇ ਸ਼ਰਾਰਤਾਂ ਕਰਦੇ ਰਹਿੰਦੇ ਹਨ।" },
+                { "word": "ਹੁਸ਼ਿਆਰੀ", "sentence": "ਸੁਖਦੇਵ ਨੇ ਬਹੁਤ ਹੁਸ਼ਿਆਰੀ ਨਾਲ ਬੱਚੇ ਦੀ ਜਾਨ ਬਚਾਈ।" },
+                { "word": "ਇਨਕਾਰ", "sentence": "ਸੁਖਦੇਵ ਨੇ ਅੰਗਰੇਜ਼ ਅਫ਼ਸਰ ਨੂੰ ਸਲਾਮੀ ਦੇਣ ਤੋਂ ਇਨਕਾਰ ਕਰ ਦਿੱਤਾ।" }
+              ]
+            }
+          ]
+        };
+
+        // =========================================================================
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.content-section').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => {
+                el.classList.remove('active', 'bg-gradient-to-bottom', 'from-blue-500', 'to-blue-700', 'text-white');
+                el.classList.add('bg-gradient-to-b', 'from-white', 'to-gray-100', 'text-gray-800');
+                el.style.setProperty('--shadow-color', '#94a3b8');
+            });
+
+            document.getElementById('content-' + tabId).classList.add('active');
+            
+            const activeBtn = document.getElementById('tab-' + tabId);
+            activeBtn.classList.remove('bg-gradient-to-b', 'from-white', 'to-gray-100', 'text-gray-800');
+            activeBtn.classList.add('active');
+        }
+
+        // Render Functions
+        function renderAbhyas() {
+            const container = document.getElementById('content-abhyas');
+            if (!lessonData.abhyas || lessonData.abhyas.length === 0) return;
+
+            let html = '';
+            lessonData.abhyas.forEach((section, secIndex) => {
+                html += `<div class="mb-8">`;
+                
+                let icon = "fa-pen-nib";
+                if(section.type === 'remember_points') icon = "fa-lightbulb text-yellow-500";
+                if(section.type === 'dictation') icon = "fa-microphone-lines text-red-500";
+                if(section.type === 'mind_map') icon = "fa-sitemap text-orange-500";
+                if(section.type === 'teacher_note') icon = "fa-chalkboard-user text-green-600";
+                
+                html += `<h3 class="text-lg md:text-xl font-black text-blue-800 border-b-2 border-blue-200 pb-2 mb-4"><i class="fa-solid ${icon} mr-2"></i>${section.title}</h3>`;
+                
+                if (section.type === 'remember_points') {
+                    // ਨੰਬਰਾਂ ਵਾਲੀ ਲਿਸਟ (ਬਿਨਾਂ ਸਟਾਰ ਤੋਂ)
+                    html += `<ol class="list-decimal pl-5 ml-2 space-y-2 font-bold text-gray-800">`;
+                    section.content.forEach(item => {
+                        html += `<li>${item}</li>`;
+                    });
+                    html += `</ol>`;
+                } 
+                else if (section.type === 'word_meanings') {
+                    html += `<div class="grid grid-cols-1 md:grid-cols-2 gap-3">`;
+                    section.content.forEach(item => {
+                        html += `<div class="bg-white border-2 border-indigo-100 p-3 rounded-xl flex flex-col shadow-sm">
+                            <span class="text-indigo-600 font-black text-lg mb-1">${item.word1}</span>
+                            <span class="text-gray-700 font-bold">${item.word2}</span>
+                        </div>`;
+                    });
+                    html += `</div>`;
+                }
+                else if (section.type === 'qa') {
+                    section.content.forEach((item, index) => {
+                        // ਪ੍ਰਸ਼ਨ ਨੀਲਾ, ਉੱਤਰ ਸਾਧਾਰਨ ਨੀਲਾ (ਲਾਲ ਨਹੀਂ)
+                        html += `
+                        <div class="bg-blue-50 rounded-xl p-4 mb-3 border border-blue-100">
+                            <p class="font-black text-blue-800 mb-2">${item.q}</p>
+                            <p class="font-bold text-blue-700 bg-white p-3 rounded-lg border border-gray-200">ਉੱਤਰ: ${item.a}</p>
+                        </div>`;
+                    });
+                } 
+                else if (section.type === 'fill_blanks') {
+                    html += `<div class="bg-gray-50 border border-gray-200 rounded-xl p-4 space-y-3">`;
+                    section.content.forEach(item => { 
+                        // ਖਾਲੀ ਥਾਂ ਦਾ ਉੱਤਰ ਲਾਲ ਰੰਗ ਵਿੱਚ
+                        let formattedText = item.replace(/\(([^)]+)\)/g, '<span class="text-red-600 font-black px-1">($1)</span>');
+                        html += `<p class="font-bold text-gray-800 text-lg border-b border-gray-200 pb-2 last:border-0">${formattedText}</p>`; 
+                    });
+                    html += `</div>`;
+                }
+                else if (section.type === 'dictation') {
+                    html += `<div class="space-y-3">`;
+                    section.content.forEach((sentence, i) => {
+                        // ਨੰਬਰ ਲਿਖਿਆ ਹੈ, 'ਬੋਲ-ਲਿਖਤ' ਨਹੀਂ।
+                        html += `<div class="bg-rose-50 p-4 rounded-xl border border-rose-200 flex flex-col md:flex-row gap-3 items-start md:items-center">
+                            <span class="font-black text-rose-700 text-xl w-6">${i+1}.</span>
+                            <button onclick="playDictation('dict-${i}', '${sentence}')" class="btn-3d-super bg-gradient-to-b from-rose-500 to-rose-700 text-white px-4 py-2 rounded-lg font-bold shadow-[0_3px_0_#9f1239] shrink-0" style="--shadow-color: #9f1239;">
+                                <i class="fa-solid fa-play mr-2"></i> ਸੁਣੋ ਤੇ ਦੇਖੋ
+                            </button>
+                            <div id="dict-${i}" class="text-lg md:text-xl font-black text-gray-800 min-h-[2.5rem] w-full bg-white px-4 py-2 rounded border border-rose-100 flex items-center"></div>
+                        </div>`;
+                    });
+                    html += `</div>`;
+                }
+                else if (section.type === 'mind_map') {
+                    // 360 ਡਿਗਰੀ ਵਾਲਾ ਮਾਈਂਡ ਮੈਪ
+                    html += `
+                    <div class="mind-map-container my-8">
+                        <svg class="absolute inset-0 w-full h-full z-0" style="pointer-events: none;">
+                            <line x1="50%" y1="50%" x2="50%" y2="15%" stroke="#f97316" stroke-width="3" />
+                            <line x1="50%" y1="50%" x2="85%" y2="35%" stroke="#f97316" stroke-width="3" />
+                            <line x1="50%" y1="50%" x2="85%" y2="65%" stroke="#f97316" stroke-width="3" />
+                            <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#f97316" stroke-width="3" />
+                            <line x1="50%" y1="50%" x2="15%" y2="65%" stroke="#f97316" stroke-width="3" />
+                            <line x1="50%" y1="50%" x2="15%" y2="35%" stroke="#f97316" stroke-width="3" />
+                        </svg>
+                        
+                        <div class="mind-node mind-node-center">ਬਾਲ ਸੁਖਦੇਵ</div>
+                        
+                        <div class="mind-node mind-node-outer" style="top: 15%; left: 50%;" onclick="revealMindNode(this, '${section.content[0]}')">?</div>
+                        <div class="mind-node mind-node-outer" style="top: 35%; left: 85%;" onclick="revealMindNode(this, '${section.content[1]}')">?</div>
+                        <div class="mind-node mind-node-outer" style="top: 65%; left: 85%;" onclick="revealMindNode(this, '${section.content[2]}')">?</div>
+                        <div class="mind-node mind-node-outer" style="top: 85%; left: 50%;" onclick="revealMindNode(this, '${section.content[3]}')">?</div>
+                        <div class="mind-node mind-node-outer" style="top: 65%; left: 15%;" onclick="revealMindNode(this, '${section.content[4]}')">?</div>
+                        <div class="mind-node mind-node-outer" style="top: 35%; left: 15%;" onclick="revealMindNode(this, '${section.content[5]}')">?</div>
+                    </div>`;
+                }
+                else if (section.type === 'teacher_note') {
+                    // ਟਾਈਪਰਾਈਟਰ ਇਫੈਕਟ ਲਈ ਬਟਨ
+                    html += `<div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-r-xl shadow-sm">
+                        <button onclick="playTypewriter('teacher-note-text', \`${section.content}\`)" class="btn-3d-super bg-gradient-to-b from-green-500 to-green-700 text-white px-4 py-2 rounded-lg font-bold shadow-[0_3px_0_#166534] mb-3" style="--shadow-color: #166534;">
+                            <i class="fa-solid fa-eye mr-2"></i> ਵਿਸਥਾਰ ਪੜ੍ਹੋ
+                        </button>
+                        <p id="teacher-note-text" class="font-bold text-green-900 leading-relaxed min-h-[100px]"></p>
+                    </div>`;
+                }
+
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        // ਮਾਈਂਡ ਮੈਪ ਖੋਲ੍ਹਣ ਵਾਲਾ ਫੰਕਸ਼ਨ (ਟੈਕਸਟ ਲਾਲ ਰੰਗ ਵਿੱਚ)
+        function revealMindNode(element, text) {
+            element.innerHTML = text;
+            element.style.color = '#dc2626'; // Red text
+            element.style.backgroundColor = '#fef3c7'; // Light orange bg to show it's clicked
+            element.onclick = null; // Disable further clicks
+        }
+
+        // ਅਧਿਆਪਕ ਨੋਟ ਲਈ ਟਾਈਪਰਾਈਟਰ
+        function playTypewriter(elementId, text) {
+            const el = document.getElementById(elementId);
+            el.innerHTML = '';
+            el.classList.add('typing-cursor');
+            let i = 0;
+            let interval = setInterval(() => {
+                if(i < text.length) {
+                    el.innerHTML += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    el.classList.remove('typing-cursor');
+                }
+            }, 30); // 30ms speed
+        }
+
+        // ਡਿਕਟੇਸ਼ਨ (ਬੋਲ-ਲਿਖਤ) ਫੰਕਸ਼ਨ
+        function playDictation(elementId, text) {
+            const el = document.getElementById(elementId);
+            el.innerHTML = '';
+            el.classList.add('typing-cursor');
+            
+            if ('speechSynthesis' in window) {
+                let msg = new SpeechSynthesisUtterance();
+                msg.text = text;
+                msg.lang = 'pa-IN'; 
+                msg.rate = 0.8; 
+                window.speechSynthesis.speak(msg);
+            }
+
+            let i = 0;
+            let interval = setInterval(() => {
+                if(i < text.length) {
+                    el.innerHTML += text.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    el.classList.remove('typing-cursor');
+                }
+            }, 80); 
+        }
+
+        function renderMCQ() {
+            const container = document.getElementById('content-mcq');
+            if (!lessonData.mcq || lessonData.mcq.length === 0) return;
+
+            let html = '<h3 class="text-lg md:text-xl font-black text-green-800 border-b-2 border-green-200 pb-2 mb-4"><i class="fa-solid fa-list-check mr-2"></i>ਸਹੀ ਉੱਤਰ ਚੁਣੋ</h3>';
+            
+            lessonData.mcq.forEach((mcq, qIndex) => {
+                html += `
+                <div class="bg-green-50 rounded-xl p-4 md:p-5 mb-4 border border-green-100 shadow-sm" id="mcq-box-${qIndex}">
+                    <p class="font-black text-gray-900 mb-3 text-base md:text-lg">${qIndex + 1}. ${mcq.question}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2">`;
+                
+                mcq.options.forEach((opt, optIndex) => {
+                    const isCorrect = optIndex === mcq.correct_index;
+                    html += `<div onclick="checkAnswer(${qIndex}, ${isCorrect}, this)" class="mcq-option bg-white border-2 border-gray-200 rounded-lg p-3 font-bold text-sm md:text-base text-gray-700 flex justify-between items-center">
+                        <span>${opt}</span>
+                    </div>`;
+                });
+                
+                html += `</div></div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        function checkAnswer(qIndex, isCorrect, element) {
+            const parentBox = document.getElementById(`mcq-box-${qIndex}`);
+            const options = parentBox.querySelectorAll('.mcq-option');
+            
+            options.forEach(opt => {
+                opt.onclick = null;
+                opt.classList.remove('hover:bg-e0f2fe', 'cursor-pointer');
+            });
+
+            if (isCorrect) {
+                element.classList.add('correct');
+                element.innerHTML += '<i class="fa-solid fa-circle-check text-xl"></i>';
+            } else {
+                element.classList.add('wrong');
+                element.innerHTML += '<i class="fa-solid fa-circle-xmark text-xl"></i>';
+                
+                const correctIndex = lessonData.mcq[qIndex].correct_index;
+                const correctElement = options[correctIndex];
+                correctElement.classList.add('correct');
+                correctElement.innerHTML += '<i class="fa-solid fa-circle-check text-xl"></i>';
+            }
+        }
+
+        function renderActivities() {
+            const container = document.getElementById('content-gatividhia');
+            if (!lessonData.gatividhia || lessonData.gatividhia.length === 0) return;
+
+            let html = '';
+            lessonData.gatividhia.forEach(act => {
+                html += `<div class="mb-6"><h3 class="text-lg md:text-xl font-black text-purple-800 border-b-2 border-purple-200 pb-2 mb-4"><i class="fa-solid fa-puzzle-piece mr-2"></i>${act.title}</h3>`;
+                
+                if (act.type === 'make_sentences') {
+                    html += '<div class="space-y-3">';
+                    act.content.forEach(item => {
+                        html += `<div class="bg-purple-50 p-4 rounded-xl border border-purple-100 flex flex-col md:flex-row md:items-center gap-2 shadow-sm">
+                            <span class="bg-purple-600 text-white px-3 py-1 rounded-md font-black text-sm min-w-[80px] text-center shrink-0">${item.word}</span> 
+                            <span class="font-bold text-gray-800">${item.sentence}</span>
+                        </div>`;
+                    });
+                    html += '</div>';
+                } 
+                else if (act.type === 'opposites' || act.type === 'gender' || act.type === 'singular_plural' || act.type === 'synonyms' || act.type === 'one_word') {
+                    html += '<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">';
+                    act.content.forEach(item => {
+                        html += `<div class="bg-white border-2 border-purple-200 p-3 rounded-xl text-center shadow-sm flex flex-col justify-center items-center gap-1 hover:bg-purple-50 transition-colors">
+                            <span class="text-gray-500 font-bold text-sm bg-gray-100 px-3 py-0.5 rounded-full w-max">${item.word1}</span>
+                            <span class="text-purple-700 font-black text-lg">${item.word2}</span>
+                        </div>`;
+                    });
+                    html += '</div>';
+                }
+                
+                html += `</div>`;
+            });
+            container.innerHTML = html;
+        }
+
+        window.onload = function() {
+            renderAbhyas();
+            renderMCQ();
+            renderActivities();
+        };
+
+    </script>
+</body>
+</html>
