@@ -170,6 +170,17 @@
         .qr-container { position: relative; transition: all 0.3s ease; cursor: zoom-in; }
         .qr-container:hover { transform: scale(1.1); z-index: 50; }
         .qr-container:hover img { box-shadow: 0 10px 20px rgba(0,0,0,0.2); border-color: #3b82f6; }
+
+        /* ===== ਲੈਂਡਸਕੇਪ ਮੋਡ ਅਤੇ LG ਪੈਨਲ ਲਈ ਖਾਸ ਫਿਕਸ ===== */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .landscape-compact-header { padding: 0.25rem 0.5rem !important; }
+            .landscape-compact-icon { width: 2.5rem !important; height: 2.5rem !important; }
+            .landscape-compact-icon span { font-size: 1.5rem !important; }
+            .landscape-compact-title { font-size: 1.1rem !important; }
+            .side-social-btn { display: none !important; } /* ਲੈਂਡਸਕੇਪ ਵਿੱਚ ਛੋਟੀਆਂ ਸਕ੍ਰੀਨਾਂ 'ਤੇ ਸਾਈਡ ਬਟਨ ਲੁਕਾਓ */
+            .scrolling-container { padding: 3px 0 !important; }
+            .scrolling-text { font-size: 1.1rem !important; }
+        }
     </style>
 </head>
 <body class="pb-24 md:pb-0 relative">
@@ -177,13 +188,13 @@
     <div class="bg-3d-pattern"></div>
 
     <header class="sticky top-2 md:top-4 z-50 px-2 md:px-4 max-w-7xl mx-auto w-full pt-1">
-        <div class="clay-card bg-gradient-to-r from-blue-500 to-indigo-600 p-2 md:p-3 flex justify-between items-center shadow-[0_6px_15px_rgba(37,99,235,0.3)]">
+        <div class="clay-card bg-gradient-to-r from-blue-500 to-indigo-600 p-2 md:p-3 flex justify-between items-center shadow-[0_6px_15px_rgba(37,99,235,0.3)] landscape-compact-header">
             <div class="flex items-center gap-2 md:gap-3 cursor-pointer group" onclick="showHome()">
-                <div class="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full border-2 border-white shadow-[0_3px_0_#b45309] flex items-center justify-center shrink-0 z-20 group-hover:scale-105 transition-transform float-anim icon-box-3d">
+                <div class="relative w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 bg-gradient-to-br from-yellow-300 to-orange-400 rounded-full border-2 border-white shadow-[0_3px_0_#b45309] flex items-center justify-center shrink-0 z-20 group-hover:scale-105 transition-transform float-anim icon-box-3d landscape-compact-icon">
                     <span class="text-xl sm:text-2xl md:text-3xl drop-shadow-md">🎓</span>
                 </div>
                 <div class="flex flex-col justify-center">
-                    <h1 class="text-base sm:text-lg md:text-2xl font-extrabold text-white text-3d tracking-wide leading-tight">ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ</h1>
+                    <h1 class="text-base sm:text-lg md:text-2xl font-extrabold text-white text-3d tracking-wide leading-tight landscape-compact-title">ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ</h1>
                     <p class="text-[0.6rem] sm:text-[0.7rem] md:text-xs font-bold text-yellow-200 bg-black/20 px-2 py-0.5 rounded-full inline-block mt-0.5 shadow-inner border border-white/10 w-max">3D ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ</p>
                 </div>
             </div>
@@ -196,13 +207,14 @@
         </div>
     </header>
 
-    <div class="scrolling-container mt-1 shrink-0 shadow-sm">
+    <div class="scrolling-container mt-1 shrink-0 shadow-sm relative z-40">
         <div class="scrolling-text">
             ✨ ਜੀ ਆਇਆਂ ਨੂੰ! ਨਵੇਂ ਵਿਦਿਅਕ ਸੈਸ਼ਨ 2026-27 ਲਈ ਬੱਚਿਆਂ ਵਾਸਤੇ ਇਹ ਡਿਜ਼ੀਟਲ ਪਲੇਟਫਾਰਮ ਤਿਆਰ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ। 🚀 ਹੋਰ ਵਿਦਿਅਕ ਸਹਾਇਕ ਸਮੱਗਰੀ ਲਈ ਸਾਡੇ ਨਾਲ ਜੁੜੇ ਰਹੋ, ਬਾਕੀ ਸਮੱਗਰੀ ਜਲਦ ਹੀ ਅਪਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ! 📚
         </div>
     </div>
 
-    <div class="fixed top-[115px] md:top-[135px] left-2 md:left-4 z-[60]">
+    <!-- ਯੂਟਿਊਬ ਬਟਨ - ਥੱਲੇ ਸੈੱਟ ਕੀਤਾ ਗਿਆ ਤਾਂ ਜੋ ਸਕ੍ਰੋਲਿੰਗ ਟੈਕਸਟ ਅਤੇ LG ਪੈਨਲ ਓਵਰਲੈਪ ਨਾ ਹੋਵੇ -->
+    <div class="side-social-btn fixed bottom-[90px] md:bottom-[40px] left-2 md:left-4 z-[60]">
         <a href="https://youtube.com/@gurminderjassal?si=8wgllXcc1LnChxvZ" target="_blank" class="social-btn-3d bg-gradient-to-b from-red-500 to-red-700 border-2 border-white rounded-full shadow-[0_6px_0_#7f1d1d,0_10px_20px_rgba(0,0,0,0.3)] gap-2 px-1.5 py-1.5 md:px-2 md:py-2 group" style="--btn-shadow: #7f1d1d;">
             <div class="shimmer-effect rounded-full"></div>
             <div class="absolute -top-2 -right-1 bg-yellow-400 text-red-900 text-[8px] md:text-[9px] font-black px-1.5 py-0.5 rounded-full animate-bounce shadow-md border border-white z-10">ਨਵਾਂ</div>
@@ -216,7 +228,8 @@
         </a>
     </div>
 
-    <div class="fixed top-[115px] md:top-[135px] right-2 md:right-4 z-[60]">
+    <!-- ਵਟਸਐਪ ਬਟਨ - ਥੱਲੇ ਸੈੱਟ ਕੀਤਾ ਗਿਆ -->
+    <div class="side-social-btn fixed bottom-[90px] md:bottom-[40px] right-2 md:right-4 z-[60]">
         <a href="https://chat.whatsapp.com/I4Xkh7R2g1U7O4qxJOZzJq?mode=gi_t" target="_blank" class="social-btn-3d bg-gradient-to-b from-green-500 to-green-700 border-2 border-white rounded-full shadow-[0_6px_0_#14532d,0_10px_20px_rgba(0,0,0,0.3)] gap-2 px-1.5 py-1.5 md:px-2 md:py-2 group" style="--btn-shadow: #14532d;">
             <div class="shimmer-effect rounded-full"></div>
             <div class="absolute -top-2 -left-1 bg-yellow-400 text-green-900 text-[8px] md:text-[9px] font-black px-1.5 py-0.5 rounded-full animate-bounce shadow-md border border-white z-10">ਜੁੜੋ</div>
@@ -230,7 +243,7 @@
         </a>
     </div>
 
-    <main id="main-content" class="flex-grow container mx-auto px-2 md:px-4 py-4 relative max-w-6xl z-10 mt-6 md:mt-2">
+    <main id="main-content" class="flex-grow container mx-auto px-2 md:px-4 py-4 relative max-w-6xl z-10 mt-2">
 
         <div id="home-view" class="view-section active">
             <div class="text-center mb-6">
@@ -359,7 +372,7 @@
             </div>
 
         <template id="landscape-selector-template">
-            <div class="landscape-class-selector items-center bg-gray-100 p-1 md:p-1.5 rounded-xl border border-gray-300 shadow-inner mr-1 md:mr-3 overflow-hidden flex-wrap">
+            <div class="landscape-class-selector items-center bg-gray-100 p-1 md:p-1.5 rounded-xl border border-gray-300 shadow-inner mr-1 md:mr-3 overflow-x-auto flex-nowrap hide-scrollbar whitespace-nowrap max-w-[50vw]">
                 <div class="flex items-center gap-1.5 mr-2">
                     <button onclick="openMissionSamarth()" class="class-btn-text bg-gradient-to-r from-purple-500 to-pink-500">🚀 ਸਮਰੱਥ</button>
                     <button onclick="openYouTubeFolder()" class="class-btn-text bg-gradient-to-r from-red-500 to-red-600">▶️ ਵੀਡੀਓਜ਼</button>
