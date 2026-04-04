@@ -1,5 +1,3 @@
-
-html
 <!DOCTYPE html>
 <html lang="pa">
 <head>
@@ -27,7 +25,7 @@ html
         /* Disclaimer Screen */
         #disclaimer-screen { position: absolute; inset: 0; z-index: 999999; background: rgba(0,0,0,0.92); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; padding: 3vmin; }
         .disclaimer-box { background: #fff; border-radius: 3vmin; padding: 3vmin; width: 95%; max-width: 850px; border: 0.8vmin solid #d32f2f; display: flex; flex-direction: column; max-height: 98%; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .disclaimer-content { overflow-y: auto; flex-grow: 1; margin-bottom: 2vmin; padding: 2.2vmin; background: #fffdf5; border-radius: 2vmin; border: 1px solid #ddd; scroll-behavior: smooth; }
+        .disclaimer-content { overflow-y: auto; flex-grow: 1; margin-bottom: 2vmin; padding: 2.2vmin; background: #fffdf5; border-radius: 2vmin; border: 1px solid #ddd; }
         .disclaimer-content h2 { text-align: center; color: #d32f2f; font-size: 5vmin; margin-bottom: 1.5vmin; }
         .disclaimer-content li { font-size: 2.8vmin; line-height: 1.5; margin-bottom: 1vmin; font-weight: bold; color: #333; list-style: none; }
         .warning-box-red { background: #ffebee; border-left: 1.2vmin solid #d32f2f; padding: 1.5vmin; border-radius: 1vmin; margin: 1vmin 0; }
@@ -82,26 +80,33 @@ html
         .toc-text { font-weight: 900; font-size: 2.8vmin; color: #333; flex: 1; text-align: left; }
         .toc-go-btn { background: #2ecc71; color: #fff; border: none; padding: 1vmin 2vmin; border-radius: 1vmin; font-weight: 900; font-size: 2.2vmin; cursor: pointer; }
         
-        /* Flash Card Slide Display */
-        .flash-card { flex-grow: 1; position: relative; height: 100%; background: #fff; border-radius: 4vmin; padding: 2vmin; border: 0.5vmin solid #ddd; display: none; flex-direction: column; align-items: center; }
-        .flash-card.active { display: flex; }
-        .top-bar { width: 100%; padding: 0.8vmin; background: #fffde7; color: #d32f2f; font-weight: 900; font-size: 2.6vmin; text-align: center; border-radius: 1.5vmin; margin-bottom: 1vmin; border: 2px dashed #ff9f43; }
-        .text-container { width: 100%; overflow: hidden; flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
-        .title-text { font-size: 4vmin; font-weight: 900; color: #d32f2f; margin-bottom: 0.5vmin; border-bottom: 2px solid #eee; width: 100%; text-align: center; padding-bottom: 0.5vmin; }
-        .instr-text { font-size: 2.8vmin; font-weight: bold; color: #666; margin-bottom: 0.8vmin; text-align: center; width: 100%; }
+        /* --- FLASH CARD LAYOUT (FIXED SECTIONS TO PREVENT OVERLAP) --- */
+        .flash-card { position: relative; width: 100%; height: 100%; background: #fff; border-radius: 4vmin; border: 0.5vmin solid #ddd; display: none; overflow: hidden; }
+        .flash-card.active { display: block; }
         
-        /* List Styling */
-        .interactive-list { width: 100%; display: grid; grid-template-columns: 1fr; gap: 0.8vmin; overflow-y: auto; padding: 0.5vmin 1vmin; align-content: start; scroll-behavior: smooth; }
-        @media (orientation: landscape) { .interactive-list { grid-template-columns: 1fr 1fr; column-gap: 2vmin; row-gap: 1vmin; align-content: center; justify-content: center; } }
-        .interactive-item { display: flex; flex-direction: column; padding: 0.8vmin 1.2vmin; border: 2px solid #dcdcdc; border-radius: 1.5vmin; background: #ffffff; width: 100%; transition: opacity 0.5s, box-shadow 0.3s; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.06); scroll-margin-top: 10vmin; }
+        /* Top Bar: Absolutely Positioned */
+        .top-bar { position: absolute; top: 1vmin; left: 1vmin; right: 1vmin; height: 4.5vmin; background: #fffde7; color: #d32f2f; font-weight: 900; font-size: 2.6vmin; text-align: center; border-radius: 1.5vmin; border: 2px dashed #ff9f43; display: flex; align-items: center; justify-content: center; z-index: 10; box-sizing: border-box; }
+        
+        /* Text Container (Middle): Absolute and restricted so it NEVER touches bottom ribbon */
+        .text-container { position: absolute; top: 6.5vmin; bottom: 8.5vmin; left: 1vmin; right: 1vmin; overflow: hidden !important; display: flex; flex-direction: column; align-items: center; z-index: 5; padding: 0.5vmin; box-sizing: border-box; }
+        .title-text { font-size: 3.5vmin; font-weight: 900; color: #d32f2f; margin-bottom: 0.5vmin; border-bottom: 2px solid #eee; width: 100%; text-align: center; padding-bottom: 0.5vmin; flex-shrink: 0; }
+        .instr-text { font-size: 2.5vmin; font-weight: bold; color: #666; margin-bottom: 0.5vmin; text-align: center; width: 100%; flex-shrink: 0; }
+        
+        /* Bottom Ribbon: Fixed height and absolutely positioned at bottom */
+        .bottom-ribbon { position: absolute; bottom: 1vmin; left: 1vmin; right: 1vmin; height: 6.5vmin; background: #fff; z-index: 20; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #eee; padding-top: 0.5vmin; box-sizing: border-box; gap: 1vmin; }
+        
+        /* List Styling - SCROLL DISABLED ENTIRELY */
+        .interactive-list { width: 100%; display: grid; grid-template-columns: 1fr; gap: 0.5vmin; overflow: hidden !important; align-content: start; }
+        @media (orientation: landscape) { .interactive-list { grid-template-columns: 1fr 1fr; column-gap: 2vmin; row-gap: 0.5vmin; justify-content: center; align-content: center; } }
+        .interactive-item { display: flex; flex-direction: column; padding: 0.5vmin 1vmin; border: 2px solid #dcdcdc; border-radius: 1.5vmin; background: #ffffff; width: 100%; transition: opacity 0.5s, box-shadow 0.3s; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
         .q-row { display: flex; align-items: center; width: 100%; text-align: left; justify-content: space-between; }
-        .item-q { font-weight: 900; color: #000; font-size: 2.5vmin; flex: 1; line-height: 1.4; text-align: left; }
+        .item-q { font-weight: 900; color: #000; font-size: 2.2vmin; flex: 1; line-height: 1.3; text-align: left; }
         .qa-mode .item-q { color: #d32f2f; }
-        .item-reveal-btn { background: #f39c12; color: #fff; border: none; padding: 0.8vmin 1.5vmin; border-radius: 1vmin; cursor: pointer; font-size: 2.2vmin; font-weight: 900; margin-left: 2vmin; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .item-reveal-btn { background: #f39c12; color: #fff; border: none; padding: 0.8vmin 1.5vmin; border-radius: 1vmin; cursor: pointer; font-size: 2vmin; font-weight: 900; margin-left: 2vmin; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
         
         /* Regular QA Wrappers */
-        .ans-wrapper { position: relative; width: 100%; border-top: 1px dashed #ccc; margin-top: 0.8vmin; padding-top: 0.8vmin; }
-        .item-a { font-weight: 900; color: #1565c0; font-size: 2.5vmin; opacity: 0; line-height: 1.4; text-align: left; width: 100%; display: block; margin: 0; padding: 0; }
+        .ans-wrapper { position: relative; width: 100%; border-top: 1px dashed #ccc; margin-top: 0.5vmin; padding-top: 0.5vmin; }
+        .item-a { font-weight: 900; color: #1565c0; font-size: 2.2vmin; opacity: 0; line-height: 1.3; text-align: left; width: 100%; display: block; margin: 0; padding: 0; }
         .item-a.revealed { opacity: 1; }
         .fade-out { opacity: 0.4; }
         
@@ -109,42 +114,55 @@ html
         .blank-dash { color: #888; font-weight: bold; letter-spacing: 2px; }
         .hl-red { color: #e74c3c !important; font-weight: 900; }
         .hl-blue { color: #1565c0 !important; font-weight: 900; }
-        .options-box { margin-top: 2vmin; padding: 1.5vmin; background: #fdf2e9; border: 2px dashed #e67e22; border-radius: 1.5vmin; width: 100%; text-align: center; grid-column: 1 / -1; }
-        .options-list { display: flex; flex-wrap: wrap; gap: 1vmin; justify-content: center; margin-top: 1vmin; }
-        .opt-pill { background: #fff; border: 1px solid #ccc; padding: 0.5vmin 1.5vmin; border-radius: 2vmin; font-weight: bold; font-size: 2.5vmin; transition: all 0.3s; color: #333; }
+        .options-box { margin-top: 0.5vmin; padding: 0.8vmin; background: #fdf2e9; border: 2px dashed #e67e22; border-radius: 1.5vmin; width: 100%; text-align: center; grid-column: 1 / -1; }
+        .options-list { display: flex; flex-wrap: wrap; gap: 1vmin; justify-content: center; margin-top: 0.5vmin; }
+        .opt-pill { background: #fff; border: 1px solid #ccc; padding: 0.4vmin 1.2vmin; border-radius: 2vmin; font-weight: bold; font-size: 2vmin; transition: all 0.3s; color: #333; }
         .opt-pill.used { text-decoration: line-through; opacity: 0.4; background: #eee; color: #999; }
         
-        /* TYPING STYLING */
-        .typing-text-container { width: 95%; max-width: 800px; flex-grow: 1; min-height: 40vmin; overflow-y: auto; text-align: left; padding: 3vmin; border-radius: 2vmin; border: 0.8vmin dashed #2ecc71; background: #f0fdf4; margin: 0 auto 1vmin auto; font-size: 3vmin; font-weight: bold; line-height: 1.8; color: #1565c0; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+        /* TYPING STYLING - SCROLL DISABLED */
+        .typing-text-container { width: 95%; max-width: 800px; height: 100%; overflow: hidden !important; text-align: left; padding: 2vmin; border-radius: 2vmin; border: 0.8vmin dashed #2ecc71; background: #f0fdf4; margin: 0 auto; font-size: 2.2vmin; font-weight: bold; line-height: 1.5; color: #1565c0; box-shadow: 0 8px 16px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: center; }
         .typing-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #e74c3c; font-weight: 900; }
         @keyframes blink { 50% { opacity: 0; } }
+
+        /* MATCH LINES SVG STYLING */
+        .match-container-wrapper { position: relative; display: flex; justify-content: space-between; width: 100%; height: 100%; max-height: 38vmin; padding: 1.5vmin; background: #fffdf5; border-radius: 2vmin; border: 2px solid #ccc; flex-grow: 1; }
+        #match-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+        .match-col { display: flex; flex-direction: column; gap: 1.5vmin; width: 45%; z-index: 2; justify-content: space-around; }
+        .match-box { padding: 1.2vmin; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 1vmin; background: #fff; transition: background 0.3s, border-color 0.3s; display: flex; align-items: center; justify-content: center; }
+        .match-l { border: 2px solid #3498db; cursor: pointer; }
+        .match-r { border: 2px solid #e67e22; }
+        .match-text { font-size: 2.2vmin; font-weight: bold; color: #333; }
+
+        /* ELEPHANT DRAWING STYLING */
+        .layout-dot { fill: none; stroke: #444444; stroke-width: 7; stroke-dasharray: 0 25; stroke-linecap: round; stroke-linejoin: round; }
+        .draw-line { fill: transparent; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
+        .color-layer { opacity: 0; transition: opacity 1.5s ease; }
         
         /* MIND MAP STYLING */
-        .mind-map-container { position: relative; width: 100%; height: 100%; cursor: pointer; display: block; min-height: 45vmin; }
+        .mind-map-container { position: relative; width: 100%; height: 100%; cursor: pointer; display: block; flex-grow:1; }
         .mind-node { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; text-align: center; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; font-weight: 900; user-select: none; padding: 1vmin; line-height: 1.2; }
-        .mind-node-center { width: 32vmin; height: 32vmin; top: 50%; left: 50%; background: linear-gradient(135deg, #1565c0, #0d47a1); color: white; z-index: 20; border: 1vmin solid white; font-size: clamp(2.5vmin, 3.5vmin, 3rem); box-shadow: 0 8px 20px rgba(13, 71, 161, 0.4), inset 0 -4px 8px rgba(0,0,0,0.2); }
-        .mind-node-outer { width: 21vmin; height: 21vmin; background: white; border: 0.8vmin solid #1565c0; color: #0d47a1; z-index: 10; font-size: clamp(2vmin, 2.5vmin, 2rem); }
+        .mind-node-center { width: 28vmin; height: 28vmin; top: 50%; left: 50%; background: linear-gradient(135deg, #1565c0, #0d47a1); color: white; z-index: 20; border: 1vmin solid white; font-size: clamp(2vmin, 2.8vmin, 3rem); box-shadow: 0 8px 20px rgba(13, 71, 161, 0.4), inset 0 -4px 8px rgba(0,0,0,0.2); }
+        .mind-node-outer { width: 18vmin; height: 18vmin; background: white; border: 0.8vmin solid #1565c0; color: #0d47a1; z-index: 10; font-size: clamp(1.6vmin, 2vmin, 2rem); }
         .mind-node-outer:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 6px 15px rgba(21, 101, 192, 0.3); }
         .conclusion-box { text-align: center; padding: 4vmin; background: #e3f2fd; border: 0.8vmin dashed #1565c0; border-radius: 4vmin; width: 100%; margin: auto; }
-        .conc-title { font-size: 6vmin; color: #1565c0; font-weight: 900; margin-bottom: 3vmin; }
-        .conc-msg { font-size: 3.5vmin; color: #333; line-height: 1.6; font-weight: bold; }
+        .conc-title { font-size: 6vmin; color: #1565c0; font-weight: 900; margin-bottom: 2vmin; }
+        .conc-msg { font-size: 3vmin; color: #333; line-height: 1.6; font-weight: bold; }
         
         /* Navigation Ribbon & Split Action Buttons */
-        .bottom-ribbon { position: relative; width: 100%; display: flex; justify-content: space-between; align-items: center; padding-top: 1vmin; border-top: 2px solid #eee; flex-shrink: 0; gap: 1vmin; }
-        .nav-btn { padding: 1vmin 1.5vmin; font-size: 2.2vmin; font-weight: 900; border-radius: 1vmin; border: none; cursor: pointer; color: #fff; background: #333; flex-shrink: 0; }
+        .nav-btn { padding: 1vmin 1.5vmin; font-size: 2.2vmin; font-weight: 900; border-radius: 1vmin; border: none; cursor: pointer; color: #fff; background: #333; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         .btn-retry { background: #e67e22; }
         .btn-skip { background: #7f8c8d; }
         .btn-showall { background: #8e44ad; }
         .btn-home { background: #c0392b; }
-        .action-btn-wrap { flex-grow: 1; display: flex; gap: 1vmin; }
-        .bottom-listen { flex: 1; text-align: center; background: #8e44ad; padding: 1vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 2.5vmin; cursor: pointer; border: 2px solid #fff; color: #fff; display: none; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        #tap-indicator { flex: 1; text-align: center; background: #ffeb3b; padding: 1vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 2.5vmin; cursor: pointer; border: 2px solid #d32f2f; color: #000; display: flex; align-items: center; justify-content: center; }
+        .action-btn-wrap { flex-grow: 1; display: flex; gap: 1vmin; height: 100%; }
+        .bottom-listen { flex: 1; text-align: center; background: #8e44ad; padding: 0.5vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 2.2vmin; cursor: pointer; border: 2px solid #fff; color: #fff; display: none; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        #tap-indicator { flex: 1; text-align: center; background: #ffeb3b; padding: 0.5vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 2.2vmin; cursor: pointer; border: 2px solid #d32f2f; color: #000; display: flex; align-items: center; justify-content: center; }
         
         /* MCQ */
-        .mcq-options-grid { width: 100%; display: grid; gap: 1.5vmin; padding: 0.5vmin 0; }
+        .mcq-options-grid { width: 100%; display: grid; gap: 1.2vmin; padding: 0.5vmin 0; }
         @media (orientation: landscape) { .mcq-options-grid { grid-template-columns: 1fr 1fr; } }
         @media (orientation: portrait) { .mcq-options-grid { grid-template-columns: 1fr; } }
-        .mcq-btn { padding: 1.5vmin; border-radius: 1.5vmin; border: 2px solid #ddd; font-size: 3vmin; font-weight: 900; text-align: center; background: #f9f9f9; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); color: #333; margin: 0; }
+        .mcq-btn { padding: 1.2vmin; border-radius: 1.5vmin; border: 2px solid #ddd; font-size: 2.5vmin; font-weight: 900; text-align: center; background: #f9f9f9; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); color: #333; margin: 0; }
         .mcq-btn:active { transform: scale(0.95); }
         .correct { background: #2ecc71 !important; color: #fff !important; border-color: #27ae60 !important; }
         .wrong { background: #e74c3c !important; color: #fff !important; border-color: #c0392b !important; opacity: 0.6; }
@@ -174,35 +192,35 @@ html
     <div id="studio-frame">
         <div id="bg-layer"></div>
         <div id="border-frame"></div>
-        <button id="fs-btn-id" class="fs-btn" onclick="toggleFullScreen(event)">🔲 ਫੱੁਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ</button>
+        <button id="fs-btn-id" class="fs-btn" onclick="toggleFullScreen(event)">🔲 ਫੁੱਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ</button>
         <!-- SMART LISTEN BUTTON (TOP) -->
         <button id="global-listen-btn" class="fs-btn" style="top:14vmin; background:#8e44ad; display:none;" onclick="readAloud(event)">🔊 ਸੁਣੋ</button>
         
         <div id="top-ticker" class="glitter-ticker">
-            <div class="ticker-text">⭐ ਿਬਹਤਰ ਿਰਜ਼ਲਟ ਲੈਣ ਲਈ ਇਸ ਨੰੂ ਲੈਂਡਸਕੇਪ ਮੋਡ ਿਵੱਚ ਚਲਾਓ 🔸 ਮੋਬਾਇਲ ਤੇ <span class="hl-red-ticker">ਡਬਲ ਟੈਪ</span> ਕਰਕੇ ਫੱੁਲ ਸਕਰੀਨ ਿਵੱਚ ਚਲਾਓ ⭐</div>
+            <div class="ticker-text">⭐ ਬਿਹਤਰ ਰਿਜ਼ਲਟ ਲੈਣ ਲਈ ਇਸ ਨੂੰ ਲੈਂਡਸਕੇਪ ਮੋਡ ਵਿੱਚ ਚਲਾਓ 🔸 ਮੋਬਾਇਲ ਤੇ <span class="hl-red-ticker">ਡਬਲ ਟੈਪ</span> ਕਰਕੇ ਫੁੱਲ ਸਕਰੀਨ ਵਿੱਚ ਚਲਾਓ ⭐</div>
         </div>
         <div id="bottom-ticker" class="glitter-ticker">
-            <div class="ticker-text" id="ticker-text-content">⭐ ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਿਵਕਾਸ ਦੇ ਪੜਾਅ ਿਵੱਚ ਹੈ ਇਸ ਕਾਰਨ ਿਲਖਤੀ ਗਲਤੀਆਂ ਹੋ ਸਕਦੀਆਂ ਹਨ ਇਹ ਸਮੱਗਰੀ ਅਿਧਆਪਕਾਂ ਦਾ ਬਦਲ ਨਹੀ ਹੈ ⭐ 🌟 ਸਾਡੀ ਿਮਹਨਤ ਤੁਹਾਡਾ ਸਾਥ , ਿਮਲ ਕੇ ਰਚੀਏ ਿਸੱਿਖਆ ਦਾ ਨਵਾਂ ਇਿਤਹਾਸ 🌟 ⭐</div>
+            <div class="ticker-text" id="ticker-text-content">⭐ ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਵਿਕਾਸ ਦੇ ਪੜਾਅ ਵਿੱਚ ਹੈ ਇਸ ਕਾਰਨ ਲਿਖਤੀ ਗਲਤੀਆਂ ਹੋ ਸਕਦੀਆਂ ਹਨ ਇਹ ਸਮੱਗਰੀ ਅਧਿਆਪਕਾਂ ਦਾ ਬਦਲ ਨਹੀਂ ਹੈ ⭐ 🌟 ਸਾਡੀ ਮਿਹਨਤ ਤੁਹਾਡਾ ਸਾਥ , ਮਿਲ ਕੇ ਰਚੀਏ ਸਿੱਖਿਆ ਦਾ ਨਵਾਂ ਇਤਿਹਾਸ 🌟 ⭐</div>
         </div>
         
         <div id="viewport">
             <div id="disclaimer-screen">
                 <div class="disclaimer-box">
                     <div class="disclaimer-content">
-                        <h2>⚠ ਿਨਯਮ ਅਤੇ ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ</h2>
+                        <h2>⚠ ਨਿਯਮ ਅਤੇ ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ</h2>
                         <ul>
-                            <li><strong>1 . ਸੰਸਥਾ ਦਾ ਉਦੇਸ਼ :</strong> ਪ੍ਰਾਇਮਰੀ ਿਸੱਿਖਆ ਪੰਜਾਬ ਟੀਮ ਵੱਲੋਂ ਿਤਆਰ ਕੀਤਾ ਿਗਆ ਇੱਕ ਿਡਜੀਟਲ ਪਲੇਟਫਾਰਮ ਹੈ । ਸਾਡਾ ਮੱੁਖ ਮਕਸਦ ਪੰਜਾਬ ਦੇ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲਾਂ ਦੇ ਬੱਿਚਆਂ ਨੰੂ ਿਮਆਰੀ ਿਸੱਿਖਆ ਸਮੱਗਰੀ ਮੁਫ਼ਤ ਮੁਹੱਈਆ ਕਰਵਾਉਣਾ ਹੈ ।</li>
-                            <li><strong>2 . ਵਰਤੋਂਕਾਰ :</strong> ਇਹ ਿਸਰਫ਼ ਿਵੱਿਦਅਕ ਵਰਤੋਂ ਲਈ ਹੈ । ਿਕਸੇ ਵੀ ਿਵਅਕਤੀ ਜਾਂ ਸੰਸਥਾ ਨੰੂ ਇਸ ਦੀ ਵਰਤੋਂ ਆਪਣੇ ਿਨੱਜੀ ਫਾਇਦੇ ਲਈ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀ ਹੈ ।</li>
-                            <li><strong>3 . ਪਾਠਕ੍ਰਮ :</strong> ਵੈੱਬਸਾਈਟ ਦੀ ਸਮੱਗਰੀ PSEB ਪਾਠਕ੍ਰਮ 'ਤੇ ਆਧਾਿਰਤ ਹੈ ।</li>
-                            <div class="warning-box-red"><li><strong>4 . ਿਡਵੈਲਪਮੈਂਟ ਮੋਡ :</strong> ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਿਵਕਾਸ ਦੇ ਪੜਾਅ ਿਵੱਚ ਹੈ । ਅਿਧਆਪਕ ਸਾਿਹਬਾਨ ਇਸ ਨੰੂ ਆਪਣੇ ਪੱਧਰ ਤੇ ਵੀ ਘੋਖਦੇ ਰਿਹਣ ।</li></div>
-                            <li><strong>5 . ਸੋਧ :</strong> ਪ੍ਰਾਇਮਰੀ ਿਸੱਿਖਆ ਪੰਜਾਬ ਕੋਲ ਿਕਸੇ ਵੀ ਸਮੇਂ ਿਨਯਮਾਂ ਿਵੱਚ ਬਦਲਾਅ ਕਰਨ ਦਾ ਅਿਧਕਾਰ ਰਾਖਵਾਂ ਹੈ ।</li>
-                            <li><strong>6 . ਸੁਝਾਅ :</strong> ਜੇਕਰ ਤੁਹਾਨੰੂ ਇਸ ਿਵੱਚ ਕੋਈ ਸੁਧਾਰ ਕਰਨਾ ਚਾਹੰੁਦੇ ਹੋ ਤਾਂ ਸਾਡੀ ਟੀਮ ਨਾਲ ਸੰਪਰਕ ਕਰੋ ।</li>
-                            <li><strong>7 . ਸਿਹਮਤੀ :</strong> ਹੇਠਾਂ ਿਦੱਤੇ 'ਮੈਂ ਸਿਹਮਤ ਹਾਂ' ਬਟਨ ਨੰੂ ਦਬਾ ਕੇ ਤੁਸੀਂ ਤਸਦੀਕ ਕਰਦੇ ਹੋ ਿਕ ਤੁਸੀਂ ਿਨਯਮ ਪੜ੍ਹ ਲਏ ਹਨ ।</li>
+                            <li><strong>1 . ਸੰਸਥਾ ਦਾ ਉਦੇਸ਼ :</strong> ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ ਟੀਮ ਵੱਲੋਂ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਇੱਕ ਡਿਜੀਟਲ ਪਲੇਟਫਾਰਮ ਹੈ । ਸਾਡਾ ਮੁੱਖ ਮਕਸਦ ਪੰਜਾਬ ਦੇ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲਾਂ ਦੇ ਬੱਚਿਆਂ ਨੂੰ ਮਿਆਰੀ ਸਿੱਖਿਆ ਸਮੱਗਰੀ ਮੁਫ਼ਤ ਮੁਹੱਈਆ ਕਰਵਾਉਣਾ ਹੈ ।</li>
+                            <li><strong>2 . ਵਰਤੋਂਕਾਰ :</strong> ਇਹ ਸਿਰਫ਼ ਵਿੱਦਿਅਕ ਵਰਤੋਂ ਲਈ ਹੈ । ਕਿਸੇ ਵੀ ਵਿਅਕਤੀ ਜਾਂ ਸੰਸਥਾ ਨੂੰ ਇਸ ਦੀ ਵਰਤੋਂ ਆਪਣੇ ਨਿੱਜੀ ਫਾਇਦੇ ਲਈ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ ।</li>
+                            <li><strong>3 . ਪਾਠਕ੍ਰਮ :</strong> ਵੈੱਬਸਾਈਟ ਦੀ ਸਮੱਗਰੀ PSEB ਪਾਠਕ੍ਰਮ 'ਤੇ ਆਧਾਰਿਤ ਹੈ ।</li>
+                            <div class="warning-box-red"><li><strong>4 . ਡਿਵੈਲਪਮੈਂਟ ਮੋਡ :</strong> ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਵਿਕਾਸ ਦੇ ਪੜਾਅ ਵਿੱਚ ਹੈ । ਅਧਿਆਪਕ ਸਾਹਿਬਾਨ ਇਸ ਨੂੰ ਆਪਣੇ ਪੱਧਰ ਤੇ ਵੀ ਘੋਖਦੇ ਰਹਿਣ ।</li></div>
+                            <li><strong>5 . ਸੋਧ :</strong> ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ ਕੋਲ ਕਿਸੇ ਵੀ ਸਮੇਂ ਨਿਯਮਾਂ ਵਿੱਚ ਬਦਲਾਅ ਕਰਨ ਦਾ ਅਧਿਕਾਰ ਰਾਖਵਾਂ ਹੈ ।</li>
+                            <li><strong>6 . ਸੁਝਾਅ :</strong> ਜੇਕਰ ਤੁਹਾਨੂੰ ਇਸ ਵਿੱਚ ਕੋਈ ਸੁਧਾਰ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਤਾਂ ਸਾਡੀ ਟੀਮ ਨਾਲ ਸੰਪਰਕ ਕਰੋ ।</li>
+                            <li><strong>7 . ਸਹਿਮਤੀ :</strong> ਹੇਠਾਂ ਦਿੱਤੇ 'ਮੈਂ ਸਹਿਮਤ ਹਾਂ' ਬਟਨ ਨੂੰ ਦਬਾ ਕੇ ਤੁਸੀਂ ਤਸਦੀਕ ਕਰਦੇ ਹੋ ਕਿ ਤੁਸੀਂ ਨਿਯਮ ਪੜ੍ਹ ਲਏ ਹਨ ।</li>
                         </ul>
                     </div>
                     <div class="disclaimer-actions">
-                        <button class="disagree-btn" onclick="showDiscModal(event)">ਅਸਿਹਮਤ ਹਾਂ</button>
-                        <button class="agree-btn" onclick="agreeAndIntro(event)">ਮੈਂ ਸਿਹਮਤ ਹਾਂ</button>
+                        <button class="disagree-btn" onclick="showDiscModal(event)">ਅਸਹਿਮਤ ਹਾਂ</button>
+                        <button class="agree-btn" onclick="agreeAndIntro(event)">ਮੈਂ ਸਹਿਮਤ ਹਾਂ</button>
                     </div>
                 </div>
             </div>
@@ -210,7 +228,7 @@ html
             <div id="custom-modal">
                 <div class="modal-box">
                     <h3>⚠ ਸੂਚਨਾ</h3>
-                    <p>ਐਪ ਦੀ ਵਰਤੋਂ ਕਰਨ ਲਈ ਿਨਯਮਾਂ ਅਤੇ ਸ਼ਰਤਾਂ ਨਾਲ ਸਿਹਮਤੀ ਹੋਣੀ ਜ਼ਰੂਰੀ ਹੈ। ਜੇਕਰ ਤੁਸੀਂ ਸਿਹਮਤ ਨਹੀਂ ਹੋ, ਤਾਂ ਤੁਸੀਂ ਇਸ ਪਲੇਟਫਾਰਮ ਦੀ ਵਰਤੋਂ ਨਹੀਂ ਕਰ ਸਕਦੇ।</p>
+                    <p>ਐਪ ਦੀ ਵਰਤੋਂ ਕਰਨ ਲਈ ਨਿਯਮਾਂ ਅਤੇ ਸ਼ਰਤਾਂ ਨਾਲ ਸਹਿਮਤੀ ਹੋਣੀ ਜ਼ਰੂਰੀ ਹੈ। ਜੇਕਰ ਤੁਸੀਂ ਸਹਿਮਤ ਨਹੀਂ ਹੋ, ਤਾਂ ਤੁਸੀਂ ਇਸ ਪਲੇਟਫਾਰਮ ਦੀ ਵਰਤੋਂ ਨਹੀਂ ਕਰ ਸਕਦੇ।</p>
                     <button class="modal-close-btn" onclick="hideDiscModal(event)">ਵਾਪਸ ਜਾਓ</button>
                 </div>
             </div>
@@ -218,8 +236,8 @@ html
             <div id="wrong-modal" onclick="hideWrongModal(event)">
                 <div class="wrong-modal-box" onclick="event.stopPropagation()">
                     <h3>❌ ਗਲਤ ਉੱਤਰ</h3>
-                    <p>ਿਕਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਿਸ਼ਸ਼ ਕਰੋ।</p>
-                    <button class="wrong-close-btn" onclick="hideWrongModal(event)">ਦੁਬਾਰਾ ਕੋਿਸ਼ਸ਼ ਕਰੋ</button>
+                    <p>ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</p>
+                    <button class="wrong-close-btn" onclick="hideWrongModal(event)">ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</button>
                 </div>
             </div>
             
@@ -228,7 +246,7 @@ html
                     <div class="intro-title-center">ਜਮਾਤ ਚੌਥੀ ਵਿਸ਼ਾ ਪੰਜਾਬੀ<br>ਪਾਠ-4 (ਹਾਥੀ)</div>
                 </div>
                 <div class="intro-bottom-area" style="position:absolute; bottom:2vmin; width:100%; display:flex; justify-content:center; z-index:100;">
-                    <button class="big-start-btn" style="padding:2vmin 4vmin; font-size:4vmin; font-weight:900; background:#2ecc71; color:#fff; border:none; border-radius:2vmin;  cursor:pointer;" onclick="showMainMenu()">ਸੁ਼ਰੂ ਕਰੋ ⏭</button>
+                    <button class="big-start-btn" style="padding:2vmin 4vmin; font-size:4vmin; font-weight:900; background:#2ecc71; color:#fff; border:none; border-radius:2vmin; cursor:pointer;" onclick="showMainMenu()">ਸ਼ੁਰੂ ਕਰੋ ⏭</button>
                 </div>
                 <div class="balloon pos-1">ਤੁਕਾਂਤ ਸ਼ਬਦ</div><div class="balloon pos-2">ਪ੍ਰਸ਼ਨ-ਉੱਤਰ</div>
                 <div class="balloon pos-3">ਮਿਲਾਨ ਕਰੋ</div><div class="balloon pos-4">ਦਸ ਵਾਕ</div>
@@ -242,19 +260,19 @@ html
                     <div class="mode-card auto-card" id="card-auto">
                         <div class="mode-header" onclick="toggleAccordion('auto')">🔴 ਆਟੋ ਮੋਡ <span>▼</span></div>
                         <div class="mode-content" id="content-auto">
-                            <p style="text-align:center; font-size:2.2vmin; font-weight:bold; color:#d35400;">ਆਟੋ ਮੋਡ ਿਬਲਕੁਲ ਸਾਫ਼ ਚੱਲੇਗਾ। ਰੋਕਣ ਜਾਂ ਚਲਾਉਣ ਲਈ ਸਕਰੀਨ ਤੇ ਿਕਤੇ ਵੀ ਇੱਕ ਵਾਰ ਟੱਚ ਕਰੋ।</p>
-                            <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startAutoWithToc('exercise')">📘 ਪੂਰਾ ਅਿਭਆਸ</button></div>
-                            <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startAutoWithToc('mcq')">📝 MCQ (ਬਹੁਿਵਕਲਪੀ)</button></div>
-                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startAutoWithToc('activities')">🎨 ਹੋਰ ਗਤੀਿਵਧੀਆਂ</button></div>
+                            <p style="text-align:center; font-size:2.2vmin; font-weight:bold; color:#d35400;">ਆਟੋ ਮੋਡ ਬਿਲਕੁਲ ਸਾਫ਼ ਚੱਲੇਗਾ। ਰੋਕਣ ਜਾਂ ਚਲਾਉਣ ਲਈ ਸਕਰੀਨ ਤੇ ਕਿਤੇ ਵੀ ਇੱਕ ਵਾਰ ਟੱਚ ਕਰੋ।</p>
+                            <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startAutoWithToc('exercise')">📘 ਪੂਰਾ ਅਭਿਆਸ</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startAutoWithToc('mcq')">📝 MCQ (ਬਹੁਵਿਕਲਪੀ)</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startAutoWithToc('activities')">🎨 ਹੋਰ ਗਤੀਵਿਧੀਆਂ</button></div>
                         </div>
                     </div>
                     <div class="mode-card" id="card-live">
                         <div class="mode-header" onclick="toggleAccordion('live')">📺 ਲਾਈਵ ਮੋਡ <span>▼</span></div>
                         <div class="mode-content" id="content-live">
-                            <p style="text-align:center; font-size:2.2vmin; font-weight:bold; color:#27ae60;">ਲਾਈਵ ਮੋਡ ਿਵੱਚ ਅਿਧਆਪਕ ਜਾਂ ਬੱਚਾ ਬਟਨ ਦਬਾ ਕੇ ਆਪ ਕੰਟਰੋਲ ਕਰੇਗਾ।</p>
-                            <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startSection('exercise', 'live')">📘 ਪੂਰਾ ਅਿਭਆਸ</button></div>
-                            <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startSection('mcq', 'live')">📝 MCQ (ਬਹੁਿਵਕਲਪੀ)</button></div>
-                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startSection('activities', 'live')">🎨 ਹੋਰ ਗਤੀਿਵਧੀਆਂ</button></div>
+                            <p style="text-align:center; font-size:2.2vmin; font-weight:bold; color:#27ae60;">ਲਾਈਵ ਮੋਡ ਵਿੱਚ ਅਧਿਆਪਕ ਜਾਂ ਬੱਚਾ ਬਟਨ ਦਬਾ ਕੇ ਆਪ ਕੰਟਰੋਲ ਕਰੇਗਾ।</p>
+                            <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startSection('exercise', 'live')">📘 ਪੂਰਾ ਅਭਿਆਸ</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startSection('mcq', 'live')">📝 MCQ (ਬਹੁਵਿਕਲਪੀ)</button></div>
+                            <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startSection('activities', 'live')">🎨 ਹੋਰ ਗਤੀਵਿਧੀਆਂ</button></div>
                         </div>
                     </div>
                 </div>
@@ -272,13 +290,13 @@ html
                 <div class="text-container">
                     <h2 id="slide-title" class="title-text"></h2>
                     <p id="slide-instr" class="instr-text"></p>
-                    <div id="html-content" class="interactive-list"></div>
+                    <div id="html-content" class="interactive-list" style="width: 100%; height: 100%;"></div>
                 </div>
                 <div class="bottom-ribbon">
-                    <button class="nav-btn btn-prev" onclick="prevStep()">⏮ ਿਪੱਛੇ</button>
+                    <button class="nav-btn btn-prev" onclick="prevStep()">⏮ ਪਿੱਛੇ</button>
                     <button class="nav-btn btn-retry" onclick="retrySlide()">🔄 ਦੁਬਾਰਾ</button>
                     <button class="nav-btn btn-showall" onclick="showAllAnswers(event)">📑 ਸਾਰਾ</button>
-                    <button class="nav-btn btn-skip" onclick="skipStep()">⏭ ਸਿਕਪ</button>
+                    <button class="nav-btn btn-skip" onclick="skipStep()">⏭ ਸਕਿਪ</button>
                     <button class="nav-btn btn-home" onclick="goHome()">🏠 ਮੇਨੂ</button>
                     <!-- SPLIT BUTTONS AREA -->
                     <div class="action-btn-wrap">
@@ -286,7 +304,7 @@ html
                         <div id="tap-indicator" onclick="if(mode === 'live') nextStep()">ਅੱਗੇ ⏭</div>
                     </div>
                     <div id="auto-status-container">
-                        <span class="status-text" id="auto-status-text" style="color:#2ecc71;">ਚੱਲ ਿਰਹਾ ਹੈ</span>
+                        <span class="status-text" id="auto-status-text" style="color:#2ecc71;">ਚੱਲ ਰਿਹਾ ਹੈ</span>
                         <div id="auto-status-bubble" class="status-bubble status-running"></div>
                     </div>
                 </div>
@@ -343,8 +361,8 @@ html
           ]
         },
         {
-          title: "3. ਮਿਲਾਨ ਕਰੋ :",
-          instruction: "ਸਹੀ ਮਿਲਾਨ ਕਰਨ ਲਈ ਟੱਚ ਕਰੋ:",
+          title: "3. ਮਿਲਾਣ ਕਰੋ :",
+          instruction: "ਸਹੀ ਮਿਲਾਣ ਕਰਨ ਲਈ ਖੱਬੇ ਪਾਸੇ ਵਾਲੇ ਸ਼ਬਦ ਉੱਪਰ ਟੱਚ ਕਰੋ :",
           type: "match_lines",
           items: [
             { q: "ਕਿਵਾੜ", a: "ਦਰਵਾਜ਼ਾ" },
@@ -359,25 +377,24 @@ html
           title: "4. ਹਾਥੀ ਬਾਰੇ ਦਸ ਵਾਕ ਲਿਖੋ :",
           instruction: "ਪੜ੍ਹਨ ਲਈ ਬਟਨ 'ਤੇ ਟੱਚ ਕਰੋ:",
           type: "typewriter",
-          content: "<strong>ਹਾਥੀ ਬਾਰੇ ਦਸ ਵਾਕ:</strong><br><br>1. ਹਾਥੀ ਧਰਤੀ 'ਤੇ ਰਹਿਣ ਵਾਲਾ ਸਭ ਤੋਂ ਵੱਡਾ ਜਾਨਵਰ ਹੈ।<br>2. ਇਹ ਤੁਰਦਾ ਹੋਇਆ ਇੱਕ ਵੱਡੇ ਪਹਾੜ ਵਰਗਾ ਲੱਗਦਾ ਹੈ।<br>3. ਇਸਦੇ ਕੰਨ ਛੱਜਾਂ ਵਰਗੇ ਵੱਡੇ ਹੁੰਦੇ ਹਨ।<br>4. ਹਾਥੀ ਦੇ ਪੈਰ ਚੱਕੀ ਦੇ ਪੁੜਾਂ ਵਰਗੇ ਭਾਰੇ ਹੁੰਦੇ ਹਨ।<br>5. ਇਸਦੀ ਇੱਕ ਲੰਮ-ਸਲੰਮੀ ਸੁੰਡ ਹੁੰਦੀ ਹੈ ਜਿਸ ਨਾਲ ਇਹ ਖਾਣਾ ਖਾਂਦਾ ਹੈ।<br>6. ਮੂੰਹ ਵਿੱਚੋਂ ਬਾਹਰ ਨਿਕਲੇ ਇਸਦੇ ਦੋ ਦੰਦ ਲਿਸ਼ਕਦੀਆਂ ਤਲਵਾਰਾਂ ਵਰਗੇ ਲੱਗਦੇ ਹਨ।<br>7. ਹਾਥੀ ਨੂੰ ਹਰਾ ਚਾਰਾ ਅਤੇ ਗੰਨੇ ਖਾਣੇ ਬਹੁਤ ਪਸੰਦ ਹਨ।<br>8. ਇਹ ਨਹਿਰ ਵਿੱਚ ਨਹਾਉਣਾ ਅਤੇ ਸੁੰਡ ਨਾਲ ਫੁਹਾਰੇ ਛੱਡਣਾ ਪਸੰਦ ਕਰਦਾ ਹੈ।<br>9. ਕੁੱਤੇ ਹਾਥੀ ਨੂੰ ਦੇਖ ਕੇ ਭੌਂਕਦੇ ਹਨ ਪਰ ਇਹ ਆਪਣੀ ਮਸਤੀ ਵਿੱਚ ਬੇਪਰਵਾਹ ਚੱਲਦਾ ਰਹਿੰਦਾ ਹੈ।<br>10. ਇਹ ਬਹੁਤ ਤਾਕਤਵਰ ਅਤੇ ਸਮਝਦਾਰ ਜਾਨਵਰ ਹੈ।"
+          content: "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 0.8vmin; font-size: 2vmin; width: 100%; text-align: left;'><div style='grid-column: 1 / -1; text-align:center; font-weight:900; color:#d32f2f;'>ਹਾਥੀ ਬਾਰੇ ਦਸ ਵਾਕ:</div><div>1. ਹਾਥੀ ਧਰਤੀ 'ਤੇ ਰਹਿਣ ਵਾਲਾ ਸਭ ਤੋਂ ਵੱਡਾ ਜਾਨਵਰ ਹੈ।</div><div>2. ਇਹ ਤੁਰਦਾ ਹੋਇਆ ਇੱਕ ਵੱਡੇ ਪਹਾੜ ਵਰਗਾ ਲੱਗਦਾ ਹੈ।</div><div>3. ਇਸਦੇ ਕੰਨ ਛੱਜਾਂ ਵਰਗੇ ਵੱਡੇ ਹੁੰਦੇ ਹਨ।</div><div>4. ਹਾਥੀ ਦੇ ਪੈਰ ਚੱਕੀ ਦੇ ਪੁੜਾਂ ਵਰਗੇ ਭਾਰੇ ਹੁੰਦੇ ਹਨ।</div><div>5. ਇਸਦੀ ਇੱਕ ਲੰਮ-ਸਲੰਮੀ ਸੁੰਡ ਹੁੰਦੀ ਹੈ ਜਿਸ ਨਾਲ ਇਹ ਖਾਣਾ ਖਾਂਦਾ ਹੈ।</div><div>6. ਮੂੰਹ ਵਿੱਚੋਂ ਬਾਹਰ ਨਿਕਲੇ ਇਸਦੇ ਦੋ ਦੰਦ ਲਿਸ਼ਕਦੀਆਂ ਤਲਵਾਰਾਂ ਵਰਗੇ ਲੱਗਦੇ ਹਨ।</div><div>7. ਹਾਥੀ ਨੂੰ ਹਰਾ ਚਾਰਾ ਅਤੇ ਗੰਨੇ ਖਾਣੇ ਬਹੁਤ ਪਸੰਦ ਹਨ।</div><div>8. ਇਹ ਨਹਿਰ ਵਿੱਚ ਨਹਾਉਣਾ ਅਤੇ ਸੁੰਡ ਨਾਲ ਫੁਹਾਰੇ ਛੱਡਣਾ ਪਸੰਦ ਕਰਦਾ ਹੈ।</div><div>9. ਕੁੱਤੇ ਹਾਥੀ ਨੂੰ ਦੇਖ ਕੇ ਭੌਂਕਦੇ ਹਨ ਪਰ ਇਹ ਬੇਪਰਵਾਹ ਚੱਲਦਾ ਰਹਿੰਦਾ ਹੈ।</div><div>10. ਇਹ ਬਹੁਤ ਤਾਕਤਵਰ ਅਤੇ ਸਮਝਦਾਰ ਜਾਨਵਰ ਹੈ।</div></div>"
         },
         {
-          title: "5. ਘਰ ਵਿੱਚ ਜ਼ਰੂਰੀ ਕੰਮ ਹੋਣ ਕਾਰਨ ਸਕੂਲ ਵਿੱਚੋਂ ਛੁੱਟੀ ਲੈਣ ਲਈ ਅਰਜ਼ੀ ਲਿਖੋ।",
-          instruction: "ਅਰਜ਼ੀ ਦਾ ਫਾਰਮੈਟ ਪੜ੍ਹੋ:",
+          title: "5. ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਛੁੱਟੀ ਦੀ ਅਰਜ਼ੀ:",
+          instruction: "ਅਰਜ਼ੀ ਦਾ ਸਹੀ ਫਾਰਮੈਟ ਪੜ੍ਹੋ:",
           type: "typewriter",
-          content: "ਸੇਵਾ ਵਿਖੇ,<br><br>ਮੁੱਖ ਅਧਿਆਪਕ ਜੀ,<br>ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ,<br>(ਆਪਣੇ ਪਿੰਡ/ਸ਼ਹਿਰ ਦਾ ਨਾਮ)<br><br><strong>ਵਿਸ਼ਾ: ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਛੁੱਟੀ ਲੈਣ ਸੰਬੰਧੀ।</strong><br><br>ਸ੍ਰੀ ਮਾਨ ਜੀ / ਸ੍ਰੀਮਤੀ ਜੀ,<br><br>ਸਨਿਮਰ ਬੇਨਤੀ ਹੈ ਕਿ ਮੈਨੂੰ ਅੱਜ ਘਰ ਵਿੱਚ ਇੱਕ ਬਹੁਤ ਜ਼ਰੂਰੀ ਕੰਮ ਪੈ ਗਿਆ ਹੈ। ਇਸ ਕਾਰਨ ਮੈਂ ਅੱਜ ਸਕੂਲ ਹਾਜ਼ਰ ਨਹੀਂ ਹੋ ਸਕਦਾ/ਸਕਦੀ। ਕਿਰਪਾ ਕਰਕੇ ਮੈਨੂੰ ਅੱਜ ਇੱਕ ਦਿਨ ਦੀ ਛੁੱਟੀ ਦਿੱਤੀ ਜਾਵੇ। ਮੈਂ ਆਪ ਜੀ ਦਾ/ਦੀ ਬਹੁਤ ਧੰਨਵਾਦੀ ਹੋਵਾਂਗਾ/ਹੋਵਾਂਗੀ।<br><br>ਧੰਨਵਾਦ ਸਹਿਤ!<br><br>ਆਪ ਜੀ ਦਾ ਆਗਿਆਕਾਰੀ ਵਿਦਿਆਰਥੀ,<br>ਨਾਮ: ........................<br>ਜਮਾਤ: ਚੌਥੀ<br>ਰੋਲ ਨੰਬਰ: ........................<br>ਮਿਤੀ: ........................"
+          content: "<div style='width:95%; max-width:700px; display:flex; flex-direction:column; justify-content:center; text-align:left; font-size: 2.1vmin; line-height: 1.4; margin: 0 auto;'><div style='text-align:left;'>ਸੇਵਾ ਵਿਖੇ,<br><span style='margin-left:3vmin;'>ਮੁੱਖ ਅਧਿਆਪਕ ਜੀ,</span><br><span style='margin-left:3vmin;'>ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ,</span><br><span style='margin-left:3vmin;'>(ਆਪਣੇ ਪਿੰਡ/ਸ਼ਹਿਰ ਦਾ ਨਾਮ)</span></div><div style='text-align:center; font-weight:900; color:#d32f2f; margin: 1vmin 0; font-size: 2.4vmin;'>ਵਿਸ਼ਾ: ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਛੁੱਟੀ ਲੈਣ ਸੰਬੰਧੀ।</div><div style='text-align:left;'>ਸ੍ਰੀ ਮਾਨ ਜੀ / ਸ੍ਰੀਮਤੀ ਜੀ,</div><div style='text-align:justify; text-indent: 4vmin; margin-top: 0.5vmin;'>ਸਨਿਮਰ ਬੇਨਤੀ ਹੈ ਕਿ ਮੈਨੂੰ ਅੱਜ ਘਰ ਵਿੱਚ ਇੱਕ ਬਹੁਤ ਜ਼ਰੂਰੀ ਕੰਮ ਪੈ ਗਿਆ ਹੈ। ਇਸ ਕਾਰਨ ਮੈਂ ਅੱਜ ਸਕੂਲ ਹਾਜ਼ਰ ਨਹੀਂ ਹੋ ਸਕਦਾ/ਸਕਦੀ। ਕਿਰਪਾ ਕਰਕੇ ਮੈਨੂੰ ਅੱਜ ਇੱਕ ਦਿਨ ਦੀ ਛੁੱਟੀ ਦਿੱਤੀ ਜਾਵੇ। ਮੈਂ ਆਪ ਜੀ ਦਾ/ਦੀ ਬਹੁਤ ਧੰਨਵਾਦੀ ਹੋਵਾਂਗਾ/ਹੋਵਾਂਗੀ।</div><div style='text-align:center; font-weight:900; margin-top: 0.5vmin;'>ਧੰਨਵਾਦ ਸਹਿਤ!</div><div style='text-align:right; margin-top: 0.5vmin;'>ਆਪ ਜੀ ਦਾ ਆਗਿਆਕਾਰੀ ਵਿਦਿਆਰਥੀ,<br>ਨਾਮ: ........................<br>ਜਮਾਤ: ਚੌਥੀ<br>ਰੋਲ ਨੰ: ........ ਮਿਤੀ: ........</div></div>"
         },
         {
-          title: "6. ਬਿੰਦੀਆਂ ਨੂੰ ਆਪਸ ਵਿੱਚ ਮਿਲਾਓ ਅਤੇ ਰੰਗ ਭਰੋ :",
-          instruction: "X-Y ਪਿਕਸਲ ਆਧਾਰਿਤ ਤਸਵੀਰ ਦੇਖੋ:",
-          type: "typewriter",
-          content: "<div style='text-align:center;'><h3 style='color:#1565c0;'>ਬਿੰਦੀਆਂ ਮਿਲਾ ਕੇ ਹਾਥੀ ਬਣਾਓ</h3><svg viewBox='0 0 200 150' style='width:100%; max-width:400px; border:3px dashed #d32f2f; border-radius:2vmin; background:#fffdf5; margin:auto; display:block;'><path d='M 50,80 Q 50,40 100,40 Q 150,40 160,70 L 160,110 L 140,110 L 140,80 L 120,80 L 120,110 L 100,110 L 100,80 L 80,80 L 80,110 L 60,110 Z' fill='none' stroke='#333' stroke-width='3' stroke-dasharray='4,4'/><circle cx='160' cy='60' r='20' fill='none' stroke='#333' stroke-width='3' stroke-dasharray='4,4'/><path d='M 175,70 Q 190,90 180,120' fill='none' stroke='#333' stroke-width='3' stroke-dasharray='4,4'/><path d='M 150,50 Q 130,40 140,70 Z' fill='none' stroke='#333' stroke-width='3' stroke-dasharray='4,4'/><circle cx='165' cy='55' r='3' fill='#000'/><path d='M 170,75 L 185,85 L 175,78 Z' fill='#fff' stroke='#000' stroke-width='1'/><path d='M 50,70 Q 30,80 40,100' fill='none' stroke='#333' stroke-width='3' stroke-dasharray='4,4'/><text x='100' y='140' text-anchor='middle' font-size='8' font-family='Arial' font-weight='bold' fill='#d32f2f'>ਬੱਚਿਓ! ਇਨ੍ਹਾਂ ਬਿੰਦੀਆਂ ਨੂੰ ਮਿਲਾ ਕੇ ਰੰਗ ਭਰੋ।</text></svg></div>"
+          title: "6. ਰਚਨਾਤਮਕ ਕੰਮ (ਬਿੰਦੀਆਂ ਮਿਲਾਓ)",
+          instruction: "ਬਿੰਦੀਆਂ ਮਿਲਾਉਣ ਲਈ ਹੇਠਾਂ ਬਟਨ 'ਤੇ ਟੱਚ ਕਰੋ:",
+          type: "creative_draw"
         },
         {
-          title: "7. ਅਧਿਆਪਕਾਂ ਲਈ ਹਦਾਇਤ (ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਢੰਗ)",
-          instruction: "ਅਰਜ਼ੀ ਲਿਖਣ ਦੇ ਨਿਯਮ ਪੜ੍ਹੋ:",
+          title: "7. ਅਧਿਆਪਕਾਂ ਲਈ ਹਦਾਇਤ",
+          instruction: "ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਢੰਗ ਪੜ੍ਹੋ:",
           type: "typewriter",
-          content: "<div style='background:#fdf0d5; padding:3vmin; border:2px solid #d32f2f; border-radius:2vmin;'><strong>ਰੋਜ਼ਾਨਾ ਜੀਵਨ ਵਿੱਚ ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਢੰਗ (ਅਧਿਆਪਕ ਵਿਦਿਆਰਥੀਆਂ ਨੂੰ ਸਮਝਾਉਣ):</strong><br><br>ਜਦੋਂ ਵੀ ਅਸੀਂ ਦਫ਼ਤਰੀ ਕੰਮ, ਬਿਮਾਰੀ ਜਾਂ ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਲਿਖਤੀ ਰੂਪ ਵਿੱਚ ਛੁੱਟੀ ਜਾਂ ਬੇਨਤੀ ਕਰਨੀ ਹੁੰਦੀ ਹੈ, ਤਾਂ ਅਸੀਂ 'ਅਰਜ਼ੀ' ਲਿਖਦੇ ਹਾਂ।<br><br><span style='color:#d32f2f;'><strong>ਅਰਜ਼ੀ ਦੇ ਮੁੱਖ ਭਾਗ:</strong></span><br><span style='color:#1565c0;'>1. ਸਿਰਲੇਖ/ਪਤਾ:</span> ਜਿਸ ਨੂੰ ਅਰਜ਼ੀ ਲਿਖਣੀ ਹੈ ਉਸਦਾ ਅਹੁਦਾ ਅਤੇ ਪਤਾ।<br><span style='color:#1565c0;'>2. ਵਿਸ਼ਾ:</span> ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਕਾਰਨ ਸੰਖੇਪ ਵਿੱਚ।<br><span style='color:#1565c0;'>3. ਸਤਿਕਾਰਯੋਗ ਸੰਬੋਧਨ:</span> ਸ੍ਰੀ ਮਾਨ ਜੀ / ਸ੍ਰੀਮਤੀ ਜੀ।<br><span style='color:#1565c0;'>4. ਮੁੱਖ ਭਾਗ:</span> ਆਪਣੀ ਪੂਰੀ ਗੱਲ ਜਾਂ ਬੇਨਤੀ ਲਿਖਣਾ।<br><span style='color:#1565c0;'>5. ਧੰਨਵਾਦ ਅਤੇ ਆਗਿਆਕਾਰੀ:</span> ਅੰਤ ਵਿੱਚ ਧੰਨਵਾਦ ਕਰਨਾ ਅਤੇ ਆਪਣਾ ਵੇਰਵਾ ਦੇਣਾ।<br><span style='color:#1565c0;'>6. ਮਿਤੀ:</span> ਅਰਜ਼ੀ ਲਿਖਣ ਵਾਲੇ ਦਿਨ ਦੀ ਤਾਰੀਖ ਲਿਖਣੀ।</div>"
+          content: "<div style='background:#fdf0d5; padding:2vmin; border:2px solid #d32f2f; border-radius:2vmin;'><strong>ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਢੰਗ:</strong><br><br>ਜਦੋਂ ਵੀ ਅਸੀਂ ਦਫ਼ਤਰੀ ਕੰਮ, ਬਿਮਾਰੀ ਜਾਂ ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਲਿਖਤੀ ਰੂਪ ਵਿੱਚ ਛੁੱਟੀ ਮੰਗਣੀ ਹੁੰਦੀ ਹੈ, ਤਾਂ ਅਸੀਂ 'ਅਰਜ਼ੀ' ਲਿਖਦੇ ਹਾਂ।<br><br><span style='color:#d32f2f;'><strong>ਅਰਜ਼ੀ ਦੇ ਮੁੱਖ ਭਾਗ:</strong></span><br><span style='color:#1565c0;'>1. ਸਿਰਲੇਖ/ਪਤਾ:</span> ਜਿਸ ਨੂੰ ਅਰਜ਼ੀ ਲਿਖਣੀ ਹੈ ਉਸਦਾ ਅਹੁਦਾ।<br><span style='color:#1565c0;'>2. ਵਿਸ਼ਾ:</span> ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਕਾਰਨ ਸੰਖੇਪ ਵਿੱਚ।<br><span style='color:#1565c0;'>3. ਸਤਿਕਾਰਯੋਗ ਸੰਬੋਧਨ:</span> ਸ੍ਰੀ ਮਾਨ ਜੀ / ਸ੍ਰੀਮਤੀ ਜੀ।<br><span style='color:#1565c0;'>4. ਮੁੱਖ ਭਾਗ:</span> ਆਪਣੀ ਪੂਰੀ ਗੱਲ ਜਾਂ ਬੇਨਤੀ ਲਿਖਣਾ।<br><span style='color:#1565c0;'>5. ਧੰਨਵਾਦ ਅਤੇ ਆਗਿਆਕਾਰੀ:</span> ਅੰਤ ਵਿੱਚ ਆਪਣਾ ਵੇਰਵਾ ਦੇਣਾ।</div>"
         },
         { type: "conclude" }
       ],
@@ -412,7 +429,7 @@ html
         if (document.fullscreenElement) {
             btn.innerHTML = "🔲 ਵਾਪਸ ਆਉਣ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ"; btn.style.background = "#3498db";
         } else {
-            btn.innerHTML = "🔲 ਫੱੁਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ"; btn.style.background = "#e74c3c";
+            btn.innerHTML = "🔲 ਫੁੱਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ"; btn.style.background = "#e74c3c";
         }
     }
     
@@ -453,7 +470,7 @@ html
     function handleGlobalClick(e) {
         if(state === 'intro' && !e.target.closest('button')) { showMainMenu(); return; }
         if(mode === 'auto' && state === 'slide') {
-            if(e.target.closest('.btn-home') || e.target.closest('button') || e.target.closest('.bottom-listen') || e.target.closest('.mind-map-container')) return;
+            if(e.target.closest('.btn-home') || e.target.closest('button') || e.target.closest('.bottom-listen') || e.target.closest('.mind-map-container') || e.target.closest('.match-l')) return;
             paused = !paused;
             updateStatusIndicator();
             if(!paused) {
@@ -470,10 +487,10 @@ html
         if(!bubble || !text) return;
         if(paused) {
             bubble.className = 'status-bubble status-paused';
-            text.innerText = 'ਰੁਿਕਆ ਹੋਇਆ'; text.style.color = '#e74c3c';
+            text.innerText = 'ਰੁਕਿਆ ਹੋਇਆ'; text.style.color = '#e74c3c';
         } else {
             bubble.className = 'status-bubble status-running';
-            text.innerText = 'ਚੱਲ ਿਰਹਾ ਹੈ'; text.style.color = '#2ecc71';
+            text.innerText = 'ਚੱਲ ਰਿਹਾ ਹੈ'; text.style.color = '#2ecc71';
         }
     }
     
@@ -520,16 +537,6 @@ html
         document.getElementById('toc-overlay').style.display = 'flex';
     }
     
-    // --- AUTO-SCROLL HELPER (NEW FIX) ---
-    function scrollToActiveRow(idx) {
-        if (mode === 'auto') {
-            setTimeout(() => {
-                const row = document.getElementById(`row-${idx}`);
-                if (row) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
-        }
-    }
-    
     async function typeEffect(el, html, speed = TYPE_SPEED) {
         typing = true; let currentHTML = ""; let i = 0;
         while (i < html.length && typing) {
@@ -543,7 +550,6 @@ html
         typing = false;
     }
     
-    // --- MIND MAP LOGIC ---
     function drawMindMap(container, items) {
         container.className = 'mind-map-container';
         container.onclick = (e) => {
@@ -604,7 +610,7 @@ html
         if(mode === 'auto' && !paused) readAloud();
     }
     
-    // --- MALE TTS HELPER FUNCTION ---
+    // --- TTS LOGIC ---
     let ttsTimeout;
     function speakText(text) {
         if (!('speechSynthesis' in window)) return;
@@ -613,10 +619,7 @@ html
         ttsSpeaking = true;
         
         let msg = new SpeechSynthesisUtterance();
-        msg.text = text;
-        msg.lang = 'pa-IN';
-        msg.rate = 0.8;
-        msg.pitch = 0.85;
+        msg.text = text; msg.lang = 'pa-IN'; msg.rate = 0.8; msg.pitch = 0.85;
         
         let voices = window.speechSynthesis.getVoices();
         let paVoice = voices.find(v => v.lang.includes('pa') && (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('man')));
@@ -646,7 +649,7 @@ html
     }
     
     function getOrdinal(idx) {
-        const ordinals = ["ਪਿਹਲਾ", "ਦੂਸਰਾ", "ਤੀਸਰਾ", "ਚੌਥਾ", "ਪੰਜਵਾਂ"];
+        const ordinals = ["ਪਹਿਲਾ", "ਦੂਸਰਾ", "ਤੀਸਰਾ", "ਚੌਥਾ", "ਪੰਜਵਾਂ", "ਛੇਵਾਂ"];
         return ordinals[idx] || (idx + 1) + "ਵਾਂ";
     }
     
@@ -656,27 +659,21 @@ html
         if(!btn || !btnBottom) return;
         
         if (step === 'toc') {
-            btn.style.display = 'block';
-            btn.innerHTML = "🔊 ਜਾਣਕਾਰੀ ਸੁਣੋ";
-            btnBottom.style.display = 'flex';
-            btnBottom.innerHTML = "🔊 ਸੁਣੋ";
+            btn.style.display = 'block'; btn.innerHTML = "🔊 ਜਾਣਕਾਰੀ ਸੁਣੋ";
+            btnBottom.style.display = 'flex'; btnBottom.innerHTML = "🔊 ਸੁਣੋ";
             return;
         }
         const d = lessonData[section] ? lessonData[section][step] : null;
         if(!d || d.type === 'conclude') {
-            btn.style.display = 'none';
-            btnBottom.style.display = 'none';
+            btn.style.display = 'none'; btnBottom.style.display = 'none';
             return;
         }
-        btn.style.display = 'block';
-        btnBottom.style.display = 'flex';
+        btn.style.display = 'block'; btnBottom.style.display = 'flex';
         
         if(reviewMode) {
-            btn.innerHTML = "🔊 ਪੂਰਾ ਸੁਣੋ";
-            btnBottom.innerHTML = "🔊 ਪੂਰਾ ਸੁਣੋ";
+            btn.innerHTML = "🔊 ਪੂਰਾ ਸੁਣੋ"; btnBottom.innerHTML = "🔊 ਪੂਰਾ ਸੁਣੋ";
         } else {
-            btn.innerHTML = "🔊 ਸੁਣੋ";
-            btnBottom.innerHTML = "🔊 ਸੁਣੋ";
+            btn.innerHTML = "🔊 ਸੁਣੋ"; btnBottom.innerHTML = "🔊 ਸੁਣੋ";
         }
     }
     
@@ -685,7 +682,7 @@ html
         let textToSpeak = "";
         
         if (step === 'toc') {
-            textToSpeak = "ਪਾਠ ਤਤਕਰਾ। ਤੁਸੀਂ ਆਪਣਾ ਕੋਈ ਵੀ ਭਾਗ ਸਲੈਕਟ ਕਰ ਸਕਦੇ ਹੋ, ਤੁਸੀਂ ਇੱਥੋਂ ਿਸੱਧਾ ਿਕਸੇ ਵੀ ਜਗ੍ਹਾ ਤੇ ਜਾ ਸਕਦੇ ਹੋ।";
+            textToSpeak = "ਪਾਠ ਤਤਕਰਾ। ਤੁਸੀਂ ਆਪਣਾ ਕੋਈ ਵੀ ਭਾਗ ਸਲੈਕਟ ਕਰ ਸਕਦੇ ਹੋ, ਤੁਸੀਂ ਇੱਥੋਂ ਸਿੱਧਾ ਕਿਸੇ ਵੀ ਜਗ੍ਹਾ ਤੇ ਜਾ ਸਕਦੇ ਹੋ।";
         } else {
             const d = lessonData[section][step];
             if(!d) return;
@@ -710,10 +707,18 @@ html
                     d.items.forEach(item => {
                         textToSpeak += "ਸ਼ਬਦ " + cleanTextForSpeech(item.q) + " . ਇਸਦਾ ਅਰਥ ਹੈ , " + cleanTextForSpeech(item.a) + " . ";
                     });
+                } else if (d.type === 'match_lines') {
+                    d.items.forEach(item => {
+                        textToSpeak += "ਸ਼ਬਦ " + cleanTextForSpeech(item.q) + " . ਇਸਦਾ ਸਹੀ ਮਿਲਾਨ ਹੈ , " + cleanTextForSpeech(item.a) + " . ";
+                    });
                 } else if (d.type === 'mind_map') {
-                    textToSpeak += "ਮਾਈਡਂ ਮੈਪ . " + d.items.map(i => cleanTextForSpeech(i)).join(", ");
-                } else if (d.type === 'typewriter') {
-                    textToSpeak += cleanTextForSpeech(d.content);
+                    textToSpeak += "ਮਾਈਂਡ ਮੈਪ . " + d.items.map(i => cleanTextForSpeech(i)).join(", ");
+                } else if (d.type === 'typewriter' || d.type === 'creative_draw') {
+                    if(d.title.includes('ਬਿੰਦੀਆਂ') || d.type === 'creative_draw') {
+                        textToSpeak += "ਬੱਚਿਓ! ਇਨ੍ਹਾਂ ਬਿੰਦੀਆਂ ਨੂੰ ਮਿਲਾ ਕੇ ਹਾਥੀ ਬਣਾਓ ਅਤੇ ਰੰਗ ਭਰੋ।";
+                    } else {
+                        textToSpeak += cleanTextForSpeech(d.content);
+                    }
                 } else {
                     d.items.forEach(item => {
                         textToSpeak += "ਪ੍ਰਸ਼ਨ ਹੈ . " + cleanTextForSpeech(item.q) + " . ਇਸਦਾ ਉੱਤਰ ਹੈ . " + cleanTextForSpeech(item.a) + " . ";
@@ -733,11 +738,15 @@ html
                     if(stepState === 'reveal' && currentMindMapNodes[mindMapIndex-1]) {
                         textToSpeak = cleanTextForSpeech(currentMindMapNodes[mindMapIndex-1].node.dataset.text);
                     } else {
-                        textToSpeak = slideHeading + "ਮਾਈਡਂ ਮੈਪ ਦੇਖੋ";
+                        textToSpeak = slideHeading + "ਮਾਈਂਡ ਮੈਪ ਦੇਖੋ";
                     }
-                } else if (d.type === 'typewriter') {
-                    if(stepState === 'reveal') textToSpeak = cleanTextForSpeech(d.content);
-                    else textToSpeak = slideHeading;
+                } else if (d.type === 'typewriter' || d.type === 'creative_draw') {
+                    if(d.title.includes('ਬਿੰਦੀਆਂ') || d.type === 'creative_draw') {
+                        textToSpeak = slideHeading + " ਬੱਚਿਓ! ਇਨ੍ਹਾਂ ਬਿੰਦੀਆਂ ਨੂੰ ਮਿਲਾ ਕੇ ਹਾਥੀ ਬਣਾਓ ਅਤੇ ਰੰਗ ਭਰੋ।";
+                    } else {
+                        if(stepState === 'reveal') textToSpeak = cleanTextForSpeech(d.content);
+                        else textToSpeak = slideHeading;
+                    }
                 } else {
                     let rawQ = d.items[subIdx].q.replace(/\......./g, '').replace(/\.\.\.\./g, '');
                     let currentQ = cleanTextForSpeech(rawQ);
@@ -749,6 +758,8 @@ html
                             textToSpeak = slideHeading + " ਵਾਕ ਪੂਰਾ ਕਰੋ , " + currentQ + " ਖਾਲੀ ਥਾਂ " + currentAfter;
                         } else if (d.type === 'list') {
                             textToSpeak = slideHeading + " ਸ਼ਬਦ ਹੈ... " + currentQ;
+                        } else if (d.type === 'match_lines') {
+                            textToSpeak = slideHeading + " ਸਹੀ ਮਿਲਾਣ ਕਰੋ, ਖੱਬਾ ਸ਼ਬਦ ਹੈ... " + currentQ;
                         } else {
                             textToSpeak = slideHeading + " ਪ੍ਰਸ਼ਨ ਹੈ... " + currentQ;
                         }
@@ -757,6 +768,8 @@ html
                             textToSpeak = "ਸਹੀ ਵਾਕ ਹੈ , " + currentQ + " " + currentA + " " + currentAfter;
                         } else if (d.type === 'list') {
                             textToSpeak = "ਇਸ ਸ਼ਬਦ ਦਾ ਅਰਥ ਹੈ... " + currentA;
+                        } else if (d.type === 'match_lines') {
+                            textToSpeak = "ਇਸਦਾ ਸਹੀ ਮਿਲਾਣ ਹੈ... " + currentA;
                         } else {
                             textToSpeak = "ਇਸਦਾ ਉੱਤਰ ਹੈ... " + currentA;
                         }
@@ -773,7 +786,7 @@ html
         const titleEl = document.getElementById('slide-title'), instrEl = document.getElementById('slide-instr'), hEl = document.getElementById('html-content');
         
         if(step === 'toc') {
-            titleEl.innerHTML = "📑 ਪਾਠ ਤਤਕਰਾ (Index)"; instrEl.innerHTML = "ਿਸੱਧਾ ਿਕਸੇ ਵੀ ਭਾਗ 'ਤੇ ਜਾਣ ਲਈ ਕਿਲੱਕ ਕਰੋ :";
+            titleEl.innerHTML = "📑 ਪਾਠ ਤਤਕਰਾ (Index)"; instrEl.innerHTML = "ਸਿੱਧਾ ਕਿਸੇ ਵੀ ਭਾਗ 'ਤੇ ਜਾਣ ਲਈ ਕਲਿੱਕ ਕਰੋ :";
             hEl.className = 'interactive-list'; hEl.innerHTML = '';
             lessonData[section].forEach((data, idx) => {
                 if(data.type === 'conclude') return;
@@ -782,7 +795,7 @@ html
                 row.innerHTML = `<span class="item-q" style="color:#000;">${data.title}</span><button class="item-reveal-btn" style="background:#2ecc71;" onclick="jumpTo('${section}', '${mode}', ${idx})">ਜਾਓ</button>`;
                 hEl.appendChild(row);
             });
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਸੁ਼ਰੂ ਕਰੋ ⏭";
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਸ਼ੁਰੂ ਕਰੋ ⏭";
             updateListenBtn();
             if(mode === 'auto' && !paused) readAloud();
             return;
@@ -790,7 +803,7 @@ html
         
         if(d.type === "conclude") {
             titleEl.innerHTML = "ਧੰਨਵਾਦ !"; instrEl.innerHTML = ""; hEl.className = '';
-            hEl.innerHTML = `<div class="conclusion-box"><h2 class="conc-title">ਸ਼ਾਬਾਸ਼ !</h2><p class="conc-msg">ਿਵਸ਼ਵਾਸ ਰੱਖੋ ਬੱਿਚਓ , ਤੁਸੀਂ ਅੱਜ <b>ਜਮਾਤ ਚੌਥੀ ਵਿਸ਼ਾ ਪੰਜਾਬੀ ਪਾਠ-4 (ਹਾਥੀ)</b> ਦਾ ਅਿਭਆਸ ਪੂਰਾ ਕਰ ਿਲਆ ਹੈ। ਹੁਣ ਤੁਸੀਂ ਇਸ ਨੰੂ ਆਪਣੀਆਂ ਕਾਪੀਆਂ ਤੇ ਿਤਆਰ ਕਰਨਾ ਹੈ ਅਤੇ ਸਕੂਲ ਲੈ ਕੇ ਆਉਣਾ ਹੈ।</p></div>`;
+            hEl.innerHTML = `<div class="conclusion-box"><h2 class="conc-title">ਸ਼ਾਬਾਸ਼ !</h2><p class="conc-msg">ਵਿਸ਼ਵਾਸ ਰੱਖੋ ਬੱਚਿਓ , ਤੁਸੀਂ ਅੱਜ <b>ਜਮਾਤ ਚੌਥੀ ਵਿਸ਼ਾ ਪੰਜਾਬੀ ਪਾਠ-4 (ਹਾਥੀ)</b> ਦਾ ਅਭਿਆਸ ਪੂਰਾ ਕਰ ਲਿਆ ਹੈ। ਹੁਣ ਤੁਸੀਂ ਇਸ ਨੂੰ ਆਪਣੀਆਂ ਕਾਪੀਆਂ ਤੇ ਤਿਆਰ ਕਰਨਾ ਹੈ ਅਤੇ ਸਕੂਲ ਲੈ ਕੇ ਆਉਣਾ ਹੈ।</p></div>`;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਮੁਕੰਮਲ 🏁";
             updateListenBtn();
             if(mode === 'auto' && !paused) readAloud();
@@ -800,7 +813,7 @@ html
         titleEl.innerHTML = d.title; instrEl.innerHTML = mode === 'auto' ? "" : (d.instruction || "");
         hEl.innerHTML = ''; subIdx = -1; reviewMode = false; mindMapIndex = 0;
         
-        if(d.type === 'list' || d.type === 'qa' || d.type === 'match_lines') {
+        if(d.type === 'list' || d.type === 'qa') {
             hEl.className = 'interactive-list qa-mode';
             d.items.forEach((item, idx) => {
                 const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
@@ -812,27 +825,113 @@ html
                     </div>
                     <div class="ans-wrapper">
                         <div class="item-a" style="visibility:hidden; opacity:0; pointer-events:none;">${item.a}</div>
-                        <div class="item-a" id="ans-${idx}" style="position:absolute; top:0.8vmin; left:0;"></div>
+                        <div class="item-a" id="ans-${idx}" style="position:absolute; top:0.6vmin; left:0;"></div>
                     </div>`;
                 hEl.appendChild(row);
             });
             subIdx = 0; stepState = 'focus';
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭";
-            scrollToActiveRow(0);
             
+        } else if(d.type === 'match_lines') {
+            hEl.className = 'interactive-list';
+            hEl.style.display = 'block';
+
+            let rightItems = [];
+            if (d.rightOrder) {
+                rightItems = d.rightOrder.map(text => ({ text: text, origIdx: d.items.findIndex(item => item.a === text) }));
+            } else {
+                rightItems = d.items.map((item, idx) => ({ text: item.a, origIdx: idx }));
+                for (let i = rightItems.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [rightItems[i], rightItems[j]] = [rightItems[j], rightItems[i]];
+                }
+            }
+
+            hEl.innerHTML = `
+                <div class="match-container-wrapper" id="match-container">
+                    <svg id="match-svg"></svg>
+                    <div class="match-col" id="left-col"></div>
+                    <div class="match-col" id="right-col"></div>
+                </div>
+            `;
+
+            const leftCol = document.getElementById('left-col');
+            const rightCol = document.getElementById('right-col');
+
+            d.items.forEach((item, idx) => {
+                leftCol.innerHTML += `
+                    <div class="match-box match-l" id="match-l-${idx}" onclick="revealAnswer(event, ${idx})">
+                        <span class="match-text">${item.q}</span>
+                    </div>
+                `;
+            });
+
+            rightItems.forEach((rItem) => {
+                rightCol.innerHTML += `
+                    <div class="match-box match-r" id="match-r-${rItem.origIdx}">
+                        <span class="match-text">${rItem.text}</span>
+                    </div>
+                `;
+            });
+
+            subIdx = 0; stepState = 'focus';
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਮਿਲਾਓ ⏭";
+            
+        } else if(d.type === 'creative_draw') {
+            hEl.className = 'interactive-list';
+            hEl.innerHTML = `
+                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
+                    <svg id="elephantCanvas" viewBox="0 0 1000 900">
+                        <g id="color-fills" class="color-layer">
+                            <path d="M 250 600 L 250 770 L 330 770 L 320 650 Z" fill="#95a5a6" />
+                            <path d="M 520 600 L 520 770 L 610 770 L 600 650 Z" fill="#95a5a6" />
+                            <path d="M 150 450 C 150 150, 500 100, 650 150 C 800 200, 850 250, 850 400 Q 900 650, 750 750 Q 650 750, 680 650 Q 700 600, 750 650 Q 720 700, 680 480 L 680 480 Q 650 500, 620 520 L 620 800 L 480 800 L 500 650 Q 420 650, 330 650 L 350 800 L 210 800 L 230 600 Q 180 550, 150 450 Z" fill="#bdc3c7" />
+                            <path d="M 620 180 Q 800 150, 750 400 Q 700 550, 580 400 Q 550 250, 620 180 Z" fill="#aab7b8" />
+                            <path d="M 720 460 Q 850 480, 950 490 Q 850 520, 690 490 Z" fill="#ffffff" />
+                            <polygon points="720,280 735,270 745,285 730,295" fill="#000000" />
+                        </g>
+                        <g id="layout-dots">
+                            <path class="layout-dot" d="M 150 450 C 150 150, 500 100, 650 150 C 800 200, 850 250, 850 400 Q 900 650, 750 750 Q 650 750, 680 650 Q 700 600, 750 650 Q 720 700, 680 480 L 680 480 Q 650 500, 620 520 L 620 800 L 480 800 L 500 650 Q 420 650, 330 650 L 350 800 L 210 800 L 230 600 Q 180 550, 150 450 Z" />
+                            <path class="layout-dot" d="M 620 180 Q 800 150, 750 400 Q 700 550, 580 400 Q 550 250, 620 180 Z" />
+                            <path class="layout-dot" d="M 720 460 Q 850 480, 950 490 Q 850 520, 690 490" />
+                            <path class="layout-dot" d="M 250 600 L 250 770 L 330 770 L 320 650" />
+                            <path class="layout-dot" d="M 520 600 L 520 770 L 610 770 L 600 650" />
+                            <path class="layout-dot" d="M 150 450 Q 80 550, 100 680 L 70 720 L 100 760 L 130 720 L 100 680" />
+                            <path class="layout-dot" d="M 220 800 Q 230 770 240 800 M 260 800 Q 270 770 280 800 M 300 800 Q 310 770 320 800 M 490 800 Q 500 770 510 800 M 530 800 Q 540 770 550 800 M 570 800 Q 580 770 590 800 M 240 780 Q 250 750 260 780 M 280 780 Q 290 750 300 780 M 310 780 Q 315 750 320 780 M 530 780 Q 540 750 550 780 M 570 780 Q 580 750 590 780 M 600 780 Q 605 750 610 780" />
+                        </g>
+                        <g id="drawing-lines">
+                            <path id="anim-body" class="draw-line" style="stroke-dasharray: 4000; stroke-dashoffset: 4000;" d="M 150 450 C 150 150, 500 100, 650 150 C 800 200, 850 250, 850 400 Q 900 650, 750 750 Q 650 750, 680 650 Q 700 600, 750 650 Q 720 700, 680 480 L 680 480 Q 650 500, 620 520 L 620 800 L 480 800 L 500 650 Q 420 650, 330 650 L 350 800 L 210 800 L 230 600 Q 180 550, 150 450 Z" />
+                            <path id="anim-ear" class="draw-line" style="stroke-dasharray: 2000; stroke-dashoffset: 2000;" d="M 620 180 Q 800 150, 750 400 Q 700 550, 580 400 Q 550 250, 620 180 Z" />
+                            <path id="anim-tusk" class="draw-line" style="stroke-dasharray: 1000; stroke-dashoffset: 1000;" d="M 720 460 Q 850 480, 950 490 Q 850 520, 690 490" />
+                            <path id="anim-bg-leg1" class="draw-line" style="stroke-dasharray: 1000; stroke-dashoffset: 1000;" d="M 250 600 L 250 770 L 330 770 L 320 650" />
+                            <path id="anim-bg-leg2" class="draw-line" style="stroke-dasharray: 1000; stroke-dashoffset: 1000;" d="M 520 600 L 520 770 L 610 770 L 600 650" />
+                            <path id="anim-tail" class="draw-line" style="stroke-dasharray: 1000; stroke-dashoffset: 1000;" d="M 150 450 Q 80 550, 100 680 L 70 720 L 100 760 L 130 720 L 100 680" />
+                            <path id="anim-toes" class="draw-line" style="stroke-dasharray: 1500; stroke-dashoffset: 1500;" d="M 220 800 Q 230 770 240 800 M 260 800 Q 270 770 280 800 M 300 800 Q 310 770 320 800 M 490 800 Q 500 770 510 800 M 530 800 Q 540 770 550 800 M 570 800 Q 580 770 590 800 M 240 780 Q 250 750 260 780 M 280 780 Q 290 750 300 780 M 310 780 Q 315 750 320 780 M 530 780 Q 540 750 550 780 M 570 780 Q 580 750 590 780 M 600 780 Q 605 750 610 780" />
+                        </g>
+                    </svg>
+                    <div style="display: flex; gap: 1.5vmin; margin-top: 2vmin; justify-content: center;">
+                        <button id="realStartBtn" class="action-btn" onclick="drawUserElephant(event)" style="background: #e74c3c;">✏️ ਬਿੰਦੀਆਂ ਮਿਲਾਓ</button>
+                        <button id="realResetBtn" class="action-btn" onclick="initUserElephantCanvas(event)" style="background: #3498db; display: none;">🔄 ਦੁਬਾਰਾ ਕਰੋ</button>
+                    </div>
+                </div>
+            `;
+            stepState = 'focus';
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+            setTimeout(() => initUserElephantCanvas(), 50);
+
         } else if(d.type === 'blanks_with_options') {
             hEl.className = 'interactive-list';
             const itemsContainer = document.createElement('div'); itemsContainer.style.width = '100%';
             d.items.forEach((item, idx) => {
                 const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
                 if(idx !== 0) row.classList.add('fade-out');
-                row.innerHTML = `<div class="q-row"><span class="item-q" style="line-height:1.8;">${item.q}<span id="blank-${idx}" class="blank-dash">.......</span>${item.after}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਭਰੋ</button></div>`;
+                row.innerHTML = `<div class="q-row"><span class="item-q" style="line-height:1.6;">${item.q}<span id="blank-${idx}" class="blank-dash">.......</span>${item.after}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਭਰੋ</button></div>`;
                 itemsContainer.appendChild(row);
             });
             hEl.appendChild(itemsContainer);
             
             const optBox = document.createElement('div'); optBox.className = 'options-box';
-            optBox.innerHTML = `<strong style="font-size:3vmin; color:#d35400;">ਿਵਕਲਪ:</strong> <div id="options-list" class="options-list"></div>`;
+            optBox.innerHTML = `<strong style="font-size:2.2vmin; color:#d35400;">ਵਿਕਲਪ:</strong> <div id="options-list" class="options-list"></div>`;
             hEl.appendChild(optBox);
             
             const optList = optBox.querySelector('#options-list');
@@ -841,23 +940,10 @@ html
             });
             subIdx = 0; stepState = 'focus';
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਭਰੋ ✍";
-            scrollToActiveRow(0);
-            
-        } else if(d.type === 'blanks') {
-            hEl.className = 'interactive-list';
-            d.items.forEach((item, idx) => {
-                const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
-                if(idx !== 0) row.classList.add('fade-out');
-                row.innerHTML = `<div class="q-row"><span class="item-q">${item.q}<span id="blank-${idx}" class="hl-red blank-dash">.......</span>${item.a}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਭਰੋ</button></div>`;
-                hEl.appendChild(row);
-            });
-            subIdx = 0; stepState = 'focus';
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਭਰੋ ✍";
-            scrollToActiveRow(0);
             
         } else if(d.type === 'mcq') {
             hEl.className = ''; hEl.style.display = 'flex'; hEl.style.flexDirection = 'column'; hEl.style.width = '100%'; hEl.style.alignItems = 'center';
-            const qP = document.createElement('p'); qP.className = 'item-q'; qP.style.color = '#d32f2f'; qP.style.textAlign = 'center'; qP.style.marginBottom = '1.5vmin'; qP.style.width = '100%'; qP.innerHTML = d.q;
+            const qP = document.createElement('p'); qP.className = 'item-q'; qP.style.color = '#d32f2f'; qP.style.textAlign = 'center'; qP.style.marginBottom = '1vmin'; qP.style.width = '100%'; qP.innerHTML = d.q;
             hEl.appendChild(qP);
             const optGrid = document.createElement('div'); optGrid.className = 'mcq-options-grid';
             d.opts.forEach((o, i) => {
@@ -868,7 +954,7 @@ html
             hEl.appendChild(optGrid);
             
             const wrapper = document.createElement('div'); wrapper.style.position = 'relative'; wrapper.style.width = '100%'; wrapper.style.marginTop = '1vmin';
-            const placeholder = document.createElement('div'); placeholder.className = 'item-a'; placeholder.style.visibility = 'hidden'; placeholder.style.opacity = '0'; placeholder.style.pointerEvents = 'none'; placeholder.innerHTML = "ਸ਼ਾਬਾਸ਼ ! ਿਬਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.2vmin;'>" + d.a + "</span>";
+            const placeholder = document.createElement('div'); placeholder.className = 'item-a'; placeholder.style.visibility = 'hidden'; placeholder.style.opacity = '0'; placeholder.style.pointerEvents = 'none'; placeholder.innerHTML = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3vmin;'>" + d.a + "</span>";
             const box = document.createElement('div'); box.id = "final-ans"; box.className = "item-a"; box.style.position = 'absolute'; box.style.top = '0'; box.style.left = '0'; box.style.textAlign = 'center';
             wrapper.appendChild(placeholder); wrapper.appendChild(box); hEl.appendChild(wrapper);
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
@@ -878,19 +964,24 @@ html
             drawMindMap(hEl, d.items);
             stepState = 'focus';
             if (mode === 'auto' && !paused) { setTimeout(() => revealSingleMindNode(0), 1500); }
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਕਿਲੱਕ ਕਰੋ 👆";
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਕਲਿੱਕ ਕਰੋ 👆";
             
         } else if (d.type === 'typewriter') {
             hEl.className = ''; hEl.style.display = 'flex'; hEl.style.flexDirection = 'column'; hEl.style.width = '100%'; hEl.style.height = '100%';
             const textContainer = document.createElement('div'); textContainer.className = 'typing-text-container'; textContainer.id = 'typewriter-box';
+            
+            const playBtn = document.createElement('button'); playBtn.className = 'item-reveal-btn'; playBtn.style.marginBottom = '2vmin'; playBtn.style.display = 'block'; playBtn.style.margin = '0 auto 2vmin auto'; playBtn.innerText = 'ਪੜ੍ਹੋ';
+            playBtn.onclick = (e) => { e.stopPropagation(); playBtn.style.display = 'none'; startTypewriter(textContainer, d.content); };
+            
             if (mode === 'live') {
-                const playBtn = document.createElement('button'); playBtn.className = 'item-reveal-btn'; playBtn.style.marginBottom = '2vmin'; playBtn.style.display = 'block'; playBtn.style.margin = '0 auto 2vmin auto'; playBtn.innerText = 'ਪੜ੍ਹੋ';
-                playBtn.onclick = (e) => { e.stopPropagation(); playBtn.style.display = 'none'; startTypewriter(textContainer, d.content); };
                 hEl.appendChild(playBtn);
             }
             hEl.appendChild(textContainer); stepState = 'focus';
-            if (mode === 'auto') setTimeout(() => startTypewriter(textContainer, d.content), 1000);
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਪੜ੍ਹ ੋ✍";
+            
+            if (mode === 'auto') {
+                setTimeout(() => startTypewriter(textContainer, d.content), 1000);
+            }
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਪੜ੍ਹੋ ✍";
         }
         
         updateListenBtn();
@@ -911,13 +1002,14 @@ html
         if(e) e.stopPropagation();
         if(typing) { typing = false; return; }
         
-        scrollToActiveRow(idx);
-        
         const d = lessonData[section][step];
         const btn = document.getElementById(`btn-${idx}`);
-        document.querySelectorAll('.interactive-item').forEach((row, i) => {
-            if(i === idx) row.classList.remove('fade-out'); else row.classList.add('fade-out');
-        });
+        
+        if (d.type !== 'match_lines') {
+            document.querySelectorAll('.interactive-item').forEach((row, i) => {
+                if(i === idx) row.classList.remove('fade-out'); else row.classList.add('fade-out');
+            });
+        }
         if(btn) btn.style.display = 'none';
         
         if (d.type === 'blanks_with_options') {
@@ -928,12 +1020,50 @@ html
             subIdx = idx; stepState = 'reveal'; updateListenBtn();
             if(mode === 'auto' && !paused) readAloud();
             await typeEffect(target, `<span class="hl-red">${d.items[idx].blank}</span>`, TYPE_SPEED);
-        } else if (d.type === 'blanks') {
-            const target = document.getElementById(`blank-${idx}`);
-            target.classList.remove('blank-dash'); target.innerHTML = "";
+        } else if (d.type === 'match_lines') {
+            const leftEl = document.getElementById(`match-l-${idx}`);
+            const rightEl = document.getElementById(`match-r-${d.items[idx].origIdx}`); 
+            // We use the same idx for left because we rendered it sequentially. For right, we just need the correct matching box.
+            // Wait, we need to locate the right box by matching text or known structure. 
+            // Let's modify the rightEl search:
+            const allRightBoxes = document.querySelectorAll('.match-r');
+            let correctRightEl = null;
+            allRightBoxes.forEach(rBox => {
+                if (rBox.innerText.trim() === d.items[idx].a) correctRightEl = rBox;
+            });
+
+            if(!leftEl || !correctRightEl || leftEl.dataset.matched) { typing=false; return; }
+
+            leftEl.dataset.matched = 'true';
+            leftEl.style.background = '#d4efdf'; leftEl.style.borderColor = '#27ae60';
+            correctRightEl.style.background = '#d4efdf'; correctRightEl.style.borderColor = '#27ae60';
+
+            const svg = document.getElementById('match-svg');
+            const container = document.getElementById('match-container');
+            
+            const lRect = leftEl.getBoundingClientRect();
+            const rRect = correctRightEl.getBoundingClientRect();
+            const cRect = container.getBoundingClientRect();
+
+            const x1 = lRect.right - cRect.left;
+            const y1 = lRect.top + lRect.height / 2 - cRect.top;
+            const x2 = rRect.left - cRect.left;
+            const y2 = rRect.top + rRect.height / 2 - cRect.top;
+
+            const colors = ['#e74c3c', '#8e44ad', '#2980b9', '#27ae60', '#f39c12'];
+            const color = colors[idx % colors.length];
+
+            const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+            line.setAttribute('x1', x1); line.setAttribute('y1', y1);
+            line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+            line.setAttribute('stroke', color); line.setAttribute('stroke-width', '0'); line.setAttribute('stroke-linecap', 'round');
+            svg.appendChild(line);
+
+            setTimeout(() => { line.style.transition = 'stroke-width 0.3s ease'; line.setAttribute('stroke-width', '4'); }, 10);
+
             subIdx = idx; stepState = 'reveal'; updateListenBtn();
             if(mode === 'auto' && !paused) readAloud();
-            await typeEffect(target, `<span class="hl-red">${d.items[idx].b}</span>`, TYPE_SPEED);
+
         } else {
             const target = document.getElementById(`ans-${idx}`);
             target.classList.add('revealed');
@@ -944,7 +1074,10 @@ html
         
         if(mode === 'live') {
             if(idx === d.items.length - 1) document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
-            else document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ਪ੍ਰਸ਼ਨ ⏭";
+            else {
+                if(d.type === 'match_lines') document.getElementById('tap-indicator').innerText = "ਮਿਲਾਓ ⏭";
+                else document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ਪ੍ਰਸ਼ਨ ⏭";
+            }
         }
     }
     
@@ -961,16 +1094,16 @@ html
             updateListenBtn();
             
             let correctOrd = getOrdinal(d.correct);
-            let ttsMessage = "ਸ਼ਾਬਾਸ਼ ! ਿਬਲਕੁਲ ਸਹੀ ਉੱਤਰ । " + correctOrd + " ਆਪਸ਼ਨ ਸਹੀ ਹੈ । " + cleanTextForSpeech(d.a);
+            let ttsMessage = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ । " + correctOrd + " ਆਪਸ਼ਨ ਸਹੀ ਹੈ । " + cleanTextForSpeech(d.a);
             speakText(ttsMessage);
             
-            await typeEffect(box, "ਸ਼ਾਬਾਸ਼ ! ਿਬਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.2vmin;'>" + d.a + "</span>", TYPE_SPEED);
+            await typeEffect(box, "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3vmin;'>" + d.a + "</span>", TYPE_SPEED);
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else {
             btn.classList.add('wrong');
             document.getElementById('wrong-modal').style.display = 'flex';
             btn.style.pointerEvents = 'none';
-            speakText("ਗਲਤ ਉੱਤਰ , ਿਕਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਿਸ਼ਸ਼ ਕਰੋ।");
+            speakText("ਗਲਤ ਉੱਤਰ , ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
         }
     }
     
@@ -980,13 +1113,17 @@ html
         if(step === 'toc' || lessonData[section][step].type === 'conclude') return;
         typing = false; const d = lessonData[section][step];
         
-        if(d.type === 'list' || d.type === 'qa' || d.type === 'match_lines') {
+        if(d.type === 'list' || d.type === 'qa') {
             document.querySelectorAll('.interactive-item').forEach((row, idx) => {
                 row.classList.remove('fade-out');
                 const btn = document.getElementById(`btn-${idx}`); if(btn) btn.style.display = 'none';
                 const target = document.getElementById(`ans-${idx}`);
                 target.classList.add('revealed'); target.innerHTML = d.items[idx].a;
             });
+            subIdx = d.items.length - 1; stepState = 'reveal'; reviewMode = true;
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+        } else if (d.type === 'match_lines') {
+            for(let i=0; i<d.items.length; i++) { await revealAnswer(null, i); }
             subIdx = d.items.length - 1; stepState = 'reveal'; reviewMode = true;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else if (d.type === 'blanks_with_options') {
@@ -1000,14 +1137,9 @@ html
             });
             subIdx = d.items.length - 1; stepState = 'reveal'; reviewMode = true;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
-        } else if (d.type === 'blanks') {
-            document.querySelectorAll('.interactive-item').forEach((row, idx) => {
-                row.classList.remove('fade-out');
-                const btn = document.getElementById(`btn-${idx}`); if(btn) btn.style.display = 'none';
-                const target = document.getElementById(`blank-${idx}`);
-                target.classList.remove('blank-dash'); target.innerHTML = `<span class="hl-red">${d.items[idx].b}</span>`;
-            });
-            subIdx = d.items.length - 1; stepState = 'reveal'; reviewMode = true;
+        } else if (d.type === 'creative_draw') {
+            await drawUserElephant();
+            stepState = 'reveal'; reviewMode = true;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else if (d.type === 'mcq') {
             const box = document.getElementById('final-ans'); box.classList.add('revealed');
@@ -1038,27 +1170,31 @@ html
         if (step === 'toc') { step = 0; renderSlide(); return; }
         const d = lessonData[section][step];
         
-        if(d.type === 'list' || d.type === 'blanks_with_options' || d.type === 'blanks' || d.type === 'qa' || d.type === 'match_lines') {
+        if(d.type === 'list' || d.type === 'blanks_with_options' || d.type === 'qa' || d.type === 'match_lines') {
             const items = d.items || [];
             if (reviewMode) {
                 if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); return;
             }
-            if (stepState === 'focus') { await revealAnswer(null, subIdx); }
+            if (stepState === 'focus') { await revealAnswer(null, subIdx < 0 ? 0 : subIdx); }
             else if (stepState === 'reveal') {
                 if (subIdx < items.length - 1) {
                     subIdx++; stepState = 'focus';
-                    document.querySelectorAll('.interactive-item').forEach((row, i) => {
-                        if (i === subIdx) row.classList.remove('fade-out'); else row.classList.add('fade-out');
-                    });
+                    if (d.type !== 'match_lines') {
+                        document.querySelectorAll('.interactive-item').forEach((row, i) => {
+                            if (i === subIdx) row.classList.remove('fade-out'); else row.classList.add('fade-out');
+                        });
+                    }
                     if(mode === 'live') {
-                        if(d.type === 'blanks_with_options' || d.type === 'blanks') document.getElementById('tap-indicator').innerText = "ਭਰੋ ✍";
+                        if(d.type === 'blanks_with_options') document.getElementById('tap-indicator').innerText = "ਭਰੋ ✍";
+                        else if(d.type === 'match_lines') document.getElementById('tap-indicator').innerText = "ਮਿਲਾਓ ⏭";
                         else document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭";
                     }
-                    scrollToActiveRow(subIdx);
                     updateListenBtn();
                     if(mode === 'auto' && !paused) readAloud();
                 } else {
-                    document.querySelectorAll('.interactive-item').forEach(row => row.classList.remove('fade-out'));
+                    if (d.type !== 'match_lines') {
+                        document.querySelectorAll('.interactive-item').forEach(row => row.classList.remove('fade-out'));
+                    }
                     reviewMode = true;
                     if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
                     updateListenBtn();
@@ -1085,6 +1221,12 @@ html
             } else if (reviewMode) {
                 if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome();
             }
+        } else if (d.type === 'creative_draw') {
+            if (reviewMode) {
+                if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); return;
+            } else {
+                await drawUserElephant();
+            }
         } else if(d.type !== 'conclude') {
             const box = document.getElementById('final-ans');
             if(box && !box.classList.contains('revealed')) {
@@ -1094,7 +1236,7 @@ html
                 
                 if(d.type === 'mcq' && mode === 'auto' && !paused) {
                     let correctOrd = getOrdinal(d.correct);
-                    speakText("ਸ਼ਾਬਾਸ਼ ! ਿਬਲਕੁਲ ਸਹੀ ਉੱਤਰ । " + correctOrd + " ਆਪਸ਼ਨ ਸਹੀ ਹੈ । " + cleanTextForSpeech(d.a));
+                    speakText("ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ । " + correctOrd + " ਆਪਸ਼ਨ ਸਹੀ ਹੈ । " + cleanTextForSpeech(d.a));
                 } else if (mode === 'auto' && !paused) {
                     readAloud();
                 }
@@ -1156,6 +1298,105 @@ html
         }
         autoLoopRunning = false;
     }
+
+    // --- ELEPHANT DRAWING FUNCTIONS ---
+    function initUserElephantCanvas(event) {
+        if(event) event.stopPropagation();
+        
+        const animationSequence = [
+            { id: 'anim-body' }, { id: 'anim-ear' }, { id: 'anim-tusk' },
+            { id: 'anim-bg-leg1' }, { id: 'anim-bg-leg2' }, { id: 'anim-tail' }, { id: 'anim-toes' }
+        ];
+        
+        animationSequence.forEach(config => {
+            const path = document.getElementById(config.id);
+            if (path) {
+                const len = config.id === 'anim-body' ? 4000 : config.id === 'anim-ear' ? 2000 : config.id === 'anim-toes' ? 1500 : 1000;
+                path.style.transition = 'none';
+                path.style.strokeDasharray = len;
+                path.style.strokeDashoffset = len;
+            }
+        });
+        
+        const colorFills = document.getElementById('color-fills');
+        if(colorFills) colorFills.style.opacity = '0';
+        
+        const btn = document.getElementById('realStartBtn');
+        if(btn) {
+            btn.innerText = "✏️ ਬਿੰਦੀਆਂ ਮਿਲਾਓ";
+            btn.disabled = false;
+            btn.dataset.step = '0';
+            btn.style.background = "#e74c3c";
+            btn.style.opacity = "1";
+        }
+        
+        const rBtn = document.getElementById('realResetBtn');
+        if(rBtn) rBtn.style.display = 'none';
+    }
+
+    async function drawUserElephant(event) {
+        if(event) event.stopPropagation();
+        const btn = document.getElementById('realStartBtn');
+        if(!btn || btn.disabled) return;
+        
+        let stepNum = btn.dataset.step || '0';
+
+        if (stepNum === '0') {
+            btn.disabled = true;
+            btn.innerText = "ਮਿਲ ਰਹੀਆਂ ਹਨ...";
+            btn.style.opacity = "0.7";
+
+            const animationSequence = [
+                { id: 'anim-body', duration: 4000 },
+                { id: 'anim-ear', duration: 1500 },
+                { id: 'anim-tusk', duration: 1000 },
+                { id: 'anim-bg-leg1', duration: 1000 },
+                { id: 'anim-bg-leg2', duration: 1000 },
+                { id: 'anim-tail', duration: 1500 },
+                { id: 'anim-toes', duration: 2500 }
+            ];
+
+            for (let i = 0; i < animationSequence.length; i++) {
+                const config = animationSequence[i];
+                const path = document.getElementById(config.id);
+                if (path) {
+                    path.style.transition = `stroke-dashoffset ${config.duration}ms linear`;
+                    path.style.strokeDashoffset = '0';
+                    await new Promise(resolve => setTimeout(resolve, config.duration));
+                }
+            }
+
+            btn.dataset.step = '1';
+            btn.innerText = "🎨 ਰੰਗ ਭਰੋ";
+            btn.style.background = "#f39c12"; 
+            btn.style.opacity = "1";
+            btn.disabled = false;
+        } 
+        else if (stepNum === '1') {
+            btn.disabled = true;
+            btn.innerText = "ਰੰਗ ਭਰਿਆ ਜਾ ਰਿਹਾ ਹੈ...";
+            btn.style.opacity = "0.7";
+
+            const colorFills = document.getElementById('color-fills');
+            if (colorFills) {
+                colorFills.style.opacity = '1';
+            }
+            
+            await new Promise(r => setTimeout(r, 1500));
+            
+            btn.innerText = "ਮੁਕੰਮਲ!";
+            btn.style.background = "#27ae60"; 
+            btn.style.opacity = "1";
+            btn.dataset.step = '2';
+            
+            const rBtn = document.getElementById('realResetBtn');
+            if(rBtn) rBtn.style.display = 'block';
+
+            reviewMode = true;
+            stepState = 'reveal';
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+        }
+    }
     
     if ('speechSynthesis' in window) {
         window.speechSynthesis.onvoiceschanged = function() {
@@ -1165,4 +1406,5 @@ html
 </script>
 </body>
 </html>
-```
+
+
