@@ -1,59 +1,27 @@
+html
 <!DOCTYPE html>
 <html lang="pa">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>ਪੰਜਾਬੀ ਜਮਾਤ ਚੌਥੀ ਪਾਠ 3 - ਬਾਲ ਸੁਖਦੇਵ</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Mukta+Malar:wght@400;600;700;800&display=swap" rel="stylesheet">
-    
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: { 'punjabi': ['"Mukta Malar"', 'sans-serif'] },
-                    colors: {
-                        'punjab-blue': '#0f4c81', 'punjab-gold': '#f59e0b', 'punjab-orange': '#ea580c'
-                    }
-                }
-            }
-        }
-    </script>
+    <title>ਜਮਾਤ ਚੌਥੀ ਵਿਸ਼ਾ ਪੰਜਾਬੀ ਪਾਠ-3 (ਬਾਲ ਸੁਖਦੇਵ)</title>
     <style>
-        /* --- Master Layout (Fixed for Mobile Compatibility) --- */
+        /* --- ਮਾਸਟਰ ਲੇਆਊਟ --- */
         :root { --unit: 9.5vmin; }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; touch-action: manipulation; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; -webkit-tap-highlight-color: transparent; user-select: none; }
         html, body { width: 100%; height: 100%; overflow: hidden; background-color: #000; }
-        
-        #studio-frame { 
-            background: #fffdf5; position: absolute; top: 50%; left: 50%; 
-            transform: translate(-50%, -50%); overflow: hidden; 
-            box-shadow: 0 0 50px rgba(0,0,0,1);
-        }
-        
+        #studio-frame { background: #fffdf5; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); overflow: hidden; container-type: size; box-shadow: 0 0 50px rgba(0,0,0,1); }
         @media (orientation: landscape) { #studio-frame { width: 100vw; height: 56.25vw; max-height: 100vh; max-width: 177.78vh; } }
         @media (orientation: portrait) { #studio-frame { height: 100vh; width: 56.25vh; max-width: 100vw; max-height: 177.78vw; } }
-
         #bg-layer { position: absolute; inset: 0; z-index: 1; background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb, #84fab0, #8fd3f4); background-size: 400% 400%; animation: moveBG 20s ease infinite; }
         @keyframes moveBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         #border-frame { position: absolute; inset: 0; z-index: 1000; pointer-events: none; border: 2vmin solid rgba(255, 255, 255, 0.8); box-shadow: inset 0 0 3vmin rgba(0,0,0,0.3); }
-        
-        .glitter-ticker {
-            position: absolute; width: 100%; height: 7vmin;
-            background: linear-gradient(45deg, #4A2511, #D4AF37, #8B4513, #FFDF00, #4A2511);
-            background-size: 300% 300%; animation: glitterFlow 4s ease-in-out infinite alternate;
-            z-index: 10000; display: none; align-items: center; overflow: hidden;
-            border-top: 0.5vmin solid #FFD700; border-bottom: 0.5vmin solid #FFD700;
-        }
-        #top-ticker { top: 0; }
-        #bottom-ticker { bottom: 0; }
+        .glitter-ticker { position: absolute; width: 100%; height: 7vmin; background: linear-gradient(45deg, #4A2511, #D4AF37, #8B4513, #FFDF00, #4A2511); background-size: 300% 300%; animation: glitterFlow 4s ease-in-out infinite alternate; z-index: 10000; display: none; align-items: center; overflow: hidden; border-top: 0.5vmin solid #FFD700; border-bottom: 0.5vmin solid #FFD700; }
+        #top-ticker { top: 0; } #bottom-ticker { bottom: 0; }
         .ticker-text { white-space: nowrap; font-size: 2.8vmin; font-weight: 900; color: #FFF; text-shadow: 2px 2px 0px #000; padding-left: 100%; animation: scrollTicker 45s linear infinite; }
         @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         .hl-red-ticker { color: #ff3d3d !important; text-shadow: 1px 1px 0px #fff; font-weight: 900; }
-
         #viewport { position: absolute; top: 7vmin; bottom: 7vmin; left: 0; right: 0; z-index: 10; display: flex; padding: 2vmin; overflow: hidden; justify-content: center; align-items: center; }
-        
         /* Disclaimer Screen */
         #disclaimer-screen { position: absolute; inset: 0; z-index: 999999; background: rgba(0,0,0,0.92); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; padding: 3vmin; }
         .disclaimer-box { background: #fff; border-radius: 3vmin; padding: 3vmin; width: 95%; max-width: 850px; border: 0.8vmin solid #d32f2f; display: flex; flex-direction: column; max-height: 98%; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
@@ -64,18 +32,17 @@
         .disclaimer-actions { display: flex; gap: 2vmin; flex-shrink: 0; }
         .agree-btn { background: #2ecc71; color: #fff; padding: 2vmin; font-size: 3.5vmin; font-weight: 900; border-radius: 2vmin; border: none; cursor: pointer; flex: 1; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
         .disagree-btn { background: #e74c3c; color: #fff; padding: 2vmin; font-size: 3.5vmin; font-weight: 900; border-radius: 2vmin; border: none; cursor: pointer; flex: 1; }
-
-        /* Custom Modal for Disagreement */
-        #custom-modal { position: absolute; inset: 0; z-index: 1000000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 4vmin; }
-        .modal-box { background: #fff; border-radius: 3vmin; border: 1vmin solid #e74c3c; width: 90%; max-width: 500px; padding: 4vmin; text-align: center; }
-        .modal-box h3 { color: #e74c3c; font-size: 5vmin; margin-bottom: 2vmin; }
-        .modal-box p { font-size: 3.5vmin; font-weight: bold; margin-bottom: 3vmin; line-height: 1.5; color: #333; }
-        .modal-close-btn { background: #333; color: #fff; padding: 1.5vmin 4vmin; border-radius: 2vmin; border: none; cursor: pointer; font-size: 3vmin; font-weight: 900; }
-
+        /* Custom Modal */
+        #custom-modal, #wrong-modal { position: absolute; inset: 0; z-index: 1000000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 4vmin; }
+        .modal-box, .wrong-modal-box { background: #fff; border-radius: 3vmin; border: 1vmin solid #e74c3c; width: 90%; max-width: 500px; padding: 4vmin; text-align: center; }
+        .modal-box h3, .wrong-modal-box h3 { color: #e74c3c; font-size: 5vmin; margin-bottom: 2vmin; }
+        .modal-box p, .wrong-modal-box p { font-size: 3.5vmin; font-weight: bold; margin-bottom: 3vmin; line-height: 1.5; color: #333; }
+        .modal-close-btn, .wrong-close-btn { background: #333; color: #fff; padding: 1.5vmin 4vmin; border-radius: 2vmin; border: none; cursor: pointer; font-size: 3vmin; font-weight: 900; }
+        .wrong-close-btn { background: #f39c12; }
         /* Intro Screen */
         #intro-screen { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 500; background: #fffdf5; cursor: pointer; }
-        .center-circle { background: radial-gradient(circle, #ffffff, #ffeb3b); border: 1.5vmin solid #ff9f43; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 45vmin; height: 45vmin; box-shadow: 0 0 30px rgba(0,0,0,0.2); }
-        .intro-title-center { font-weight: 900; color: #d32f2f; font-size: 4.8vmin; line-height: 1.3; text-align: center; }
+        .center-circle { background: radial-gradient(circle, #ffffff, #ffeb3b); border: 1.5vmin solid #ff9f43; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 55vmin; height: 55vmin; box-shadow: 0 0 30px rgba(0,0,0,0.2); }
+        .intro-title-center { font-weight: 900; color: #d32f2f; font-size: 4.5vmin; line-height: 1.3; text-align: center; padding: 2vmin; }
         .balloon { position: absolute; width: 16vmin; height: 18vmin; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; color: #fff; font-weight: 900; font-size: 2.5vmin; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1vmin; box-shadow: 0 8px 15px rgba(0,0,0,0.3); animation: dropBalloon 1.5s forwards; z-index: 50; }
         @keyframes dropBalloon { 0% { opacity: 0; transform: translateY(-100vh) scale(0.5); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
         .pos-1 { top: 5%; left: 8%; background: #ff4757; animation-delay: 0.1s; }
@@ -86,28 +53,21 @@
         .pos-6 { bottom: 18%; right: 5%; background: #e84393; animation-delay: 0.6s; }
         .pos-7 { top: 20%; left: 18%; background: #00cec9; animation-delay: 0.7s; }
         .pos-8 { top: 20%; right: 18%; background: #e1b12c; animation-delay: 0.8s; }
-
         /* Menu Screen */
         #main-menu-screen { position: absolute; inset: 0; z-index: 400; display: none; flex-direction: column; align-items: center; background: #fffdf5; padding: 4vmin; overflow-y: auto; }
-        .menu-heading { font-size: 5vmin; font-weight: 900; color: #d32f2f; margin-bottom: 4vmin; border-bottom: 0.5vmin dashed #ff9f43; width: 90%; text-align: center; }
+        .menu-heading { font-size: 4.5vmin; font-weight: 900; color: #d32f2f; margin-bottom: 4vmin; border-bottom: 0.5vmin dashed #ff9f43; width: 90%; text-align: center; }
         .mode-container { display: flex; width: 100%; gap: 4vmin; justify-content: center; align-items: flex-start; }
         @media (orientation: portrait) { .mode-container { flex-direction: column; align-items: center; } }
-        
         .mode-card { border-radius: 2.5vmin; border: 0.5vmin solid #d32f2f; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); background: #fff; height: var(--unit); flex-shrink: 0; width: 100%; max-width: 480px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .mode-card.expanded { height: calc(5.5 * var(--unit)); } 
+        .mode-card.expanded { height: calc(6.5 * var(--unit)); }
         .mode-header { background: #d32f2f; color: #fff; padding: 2vmin; font-size: 4.5vmin; font-weight: 900; cursor: pointer; display: flex; justify-content: space-between; align-items: center; height: var(--unit); }
         .auto-card { border-color: #2980b9; }
         .auto-card .mode-header { background: #2980b9; }
-
-        .mode-content { display: none; padding: 2vmin; flex-direction: column; gap: 1.2vmin; background: #fffdf5; border-top: 1px solid #ddd; height: calc(4.5 * var(--unit)); justify-content: center; }
+        .mode-content { display: none; padding: 2vmin; flex-direction: column; gap: 1.2vmin; background: #fffdf5; border-top: 1px solid #ddd; height: calc(5.5 * var(--unit)); justify-content: center; }
         .mode-card.expanded .mode-content { display: flex; }
-        
         .btn-wrap { display: flex; width: 100%; gap: 1vmin; }
         .menu-btn { flex: 1; padding: 1.8vmin; font-size: 3.2vmin; font-weight: 900; border-radius: 1.2vmin; border: none; color: #fff; cursor: pointer; text-align: center; }
-        .btn-ex { background: #e74c3c; }
-        .btn-mcq { background: #3498db; }
-        .btn-act { background: #9b59b6; }
-
+        .btn-ex { background: #e74c3c; } .btn-mcq { background: #3498db; } .btn-act { background: #9b59b6; }
         /* ToC Modal */
         #toc-overlay { position: absolute; inset: 0; z-index: 100000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 4vmin; }
         .toc-box { background: #fff; border-radius: 3vmin; width: 95%; max-width: 700px; max-height: 85%; display: flex; flex-direction: column; border: 1vmin solid #d32f2f; padding: 3vmin; box-shadow: 0 0 50px rgba(0,0,0,1); }
@@ -115,48 +75,58 @@
         .toc-item { display: flex; justify-content: space-between; align-items: center; padding: 1vmin 1.5vmin; background: #f9f9f9; border-radius: 1.5vmin; border-left: 0.8vmin solid #d32f2f; }
         .toc-text { font-weight: 900; font-size: 2.8vmin; color: #333; flex: 1; text-align: left; }
         .toc-go-btn { background: #2ecc71; color: #fff; border: none; padding: 1vmin 2vmin; border-radius: 1vmin; font-weight: 900; font-size: 2.2vmin; cursor: pointer; }
-
         /* Flash Card Slide Display */
         .flash-card { flex-grow: 1; position: relative; height: 100%; background: #fff; border-radius: 4vmin; padding: 2vmin; border: 0.5vmin solid #ddd; display: none; flex-direction: column; align-items: center; }
         .flash-card.active { display: flex; }
-        
-        /* Top Bar */
         .top-bar { width: 100%; padding: 0.8vmin; background: #fffde7; color: #d32f2f; font-weight: 900; font-size: 2.6vmin; text-align: center; border-radius: 1.5vmin; margin-bottom: 1vmin; border: 2px dashed #ff9f43; }
-        
         .text-container { width: 100%; overflow: hidden; flex-grow: 1; display: flex; flex-direction: column; align-items: center; }
         .title-text { font-size: 4vmin; font-weight: 900; color: #d32f2f; margin-bottom: 0.5vmin; border-bottom: 2px solid #eee; width: 100%; text-align: center; padding-bottom: 0.5vmin; }
         .instr-text { font-size: 2.8vmin; font-weight: bold; color: #666; margin-bottom: 0.8vmin; text-align: center; width: 100%; }
-        
-        /* List Styling - Pre-allocated spaces prevent scrolling */
-        .interactive-list { width: 100%; display: grid; grid-template-columns: 1fr; gap: 1vmin; overflow-y: auto; padding: 0.5vmin 1vmin; align-content: start; }
-        @media (orientation: landscape) { .interactive-list { grid-template-columns: 1fr 1fr; column-gap: 2vmin; row-gap: 1.2vmin; } }
-        
-        .interactive-item { display: flex; flex-direction: column; padding: 1.2vmin 1.5vmin; border: 2px solid #dcdcdc; border-radius: 1.5vmin; background: #ffffff; width: 100%; transition: opacity 0.5s, box-shadow 0.3s; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.06); }
+        /* List Styling (Optimized to avoid scrolling) */
+        .interactive-list { width: 100%; display: grid; grid-template-columns: 1fr; gap: 0.8vmin; overflow-y: auto; padding: 0.5vmin 1vmin; align-content: start; scroll-behavior: smooth; }
+        @media (orientation: landscape) { .interactive-list { grid-template-columns: 1fr 1fr; column-gap: 2vmin; row-gap: 1vmin; align-content: center; justify-content: center; } }
+        /* Slightly reduced padding and font size for perfect fit */
+        .interactive-item { display: flex; flex-direction: column; padding: 0.8vmin 1.2vmin; border: 2px solid #dcdcdc; border-radius: 1.5vmin; background: #ffffff; width: 100%; transition: opacity 0.5s, box-shadow 0.3s; position: relative; box-shadow: 0 4px 8px rgba(0,0,0,0.06); scroll-margin-top: 10vmin; }
         .q-row { display: flex; align-items: center; width: 100%; text-align: left; justify-content: space-between; }
-        .item-q { font-weight: 900; color: #000; font-size: 2.7vmin; flex: 1; line-height: 1.4; text-align: left; } 
+        .item-q { font-weight: 900; color: #000; font-size: 2.5vmin; flex: 1; line-height: 1.4; text-align: left; }
+        .qa-mode .item-q { color: #d32f2f; }
         .item-reveal-btn { background: #f39c12; color: #fff; border: none; padding: 0.8vmin 1.5vmin; border-radius: 1vmin; cursor: pointer; font-size: 2.2vmin; font-weight: 900; margin-left: 2vmin; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-        
         /* Regular QA Wrappers */
         .ans-wrapper { position: relative; width: 100%; border-top: 1px dashed #ccc; margin-top: 0.8vmin; padding-top: 0.8vmin; }
-        .item-a { font-weight: 900; color: #1565c0; font-size: 2.7vmin; opacity: 0; line-height: 1.4; text-align: left; width: 100%; display: block; margin: 0; padding: 0; }
+        .item-a { font-weight: 900; color: #1565c0; font-size: 2.5vmin; opacity: 0; line-height: 1.4; text-align: left; width: 100%; display: block; margin: 0; padding: 0; }
         .item-a.revealed { opacity: 1; }
-        .hl-red { color: #ff0000 !important; font-weight: 900; }
-        .hl-blue { color: #1565c0 !important; font-weight: 900; }
         .fade-out { opacity: 0.4; }
-
+        /* BLANKS STYLING */
+        .blank-dash { color: #888; font-weight: bold; letter-spacing: 2px; }
+        .hl-red { color: #e74c3c !important; font-weight: 900; }
+        .hl-blue { color: #1565c0 !important; font-weight: 900; }
+        .options-box { margin-top: 2vmin; padding: 1.5vmin; background: #fdf2e9; border: 2px dashed #e67e22; border-radius: 1.5vmin; width: 100%; text-align: center; grid-column: 1 / -1; }
+        .options-list { display: flex; flex-wrap: wrap; gap: 1vmin; justify-content: center; margin-top: 1vmin; }
+        .opt-pill { background: #fff; border: 1px solid #ccc; padding: 0.5vmin 1.5vmin; border-radius: 2vmin; font-weight: bold; font-size: 2.5vmin; transition: all 0.3s; color: #333; }
+        .opt-pill.used { text-decoration: line-through; opacity: 0.4; background: #eee; color: #999; }
+        /* TYPING STYLING */
+        .typing-text-container { width: 95%; max-width: 800px; flex-grow: 1; min-height: 40vmin; overflow-y: auto; text-align: left; padding: 3vmin; border-radius: 2vmin; border: 0.8vmin dashed #2ecc71; background: #f0fdf4; margin: 0 auto 1vmin auto; font-size: 3vmin; font-weight: bold; line-height: 1.8; color: #1565c0; box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+        .typing-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #e74c3c; font-weight: 900; }
+        @keyframes blink { 50% { opacity: 0; } }
+        /* MIND MAP STYLING */
+        .mind-map-container { position: relative; width: 100%; height: 100%; cursor: pointer; display: block; min-height: 45vmin; }
+        .mind-node { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; text-align: center; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; font-weight: 900; user-select: none; padding: 1vmin; line-height: 1.2; }
+        .mind-node-center { width: 32vmin; height: 32vmin; top: 50%; left: 50%; background: linear-gradient(135deg, #1565c0, #0d47a1); color: white; z-index: 20; border: 1vmin solid white; font-size: clamp(2.5vmin, 3.5vmin, 3rem); box-shadow: 0 8px 20px rgba(13, 71, 161, 0.4), inset 0 -4px 8px rgba(0,0,0,0.2); }
+        .mind-node-outer { width: 21vmin; height: 21vmin; background: white; border: 0.8vmin solid #1565c0; color: #0d47a1; z-index: 10; font-size: clamp(2vmin, 2.5vmin, 2rem); }
+        .mind-node-outer:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 6px 15px rgba(21, 101, 192, 0.3); }
         .conclusion-box { text-align: center; padding: 4vmin; background: #e3f2fd; border: 0.8vmin dashed #1565c0; border-radius: 4vmin; width: 100%; margin: auto; }
         .conc-title { font-size: 6vmin; color: #1565c0; font-weight: 900; margin-bottom: 3vmin; }
         .conc-msg { font-size: 3.5vmin; color: #333; line-height: 1.6; font-weight: bold; }
-
-        /* Navigation Ribbon */
+        /* Navigation Ribbon & Split Action Buttons */
         .bottom-ribbon { position: relative; width: 100%; display: flex; justify-content: space-between; align-items: center; padding-top: 1vmin; border-top: 2px solid #eee; flex-shrink: 0; gap: 1vmin; }
         .nav-btn { padding: 1vmin 1.5vmin; font-size: 2.2vmin; font-weight: 900; border-radius: 1vmin; border: none; cursor: pointer; color: #fff; background: #333; flex-shrink: 0; }
         .btn-retry { background: #e67e22; }
         .btn-skip { background: #7f8c8d; }
         .btn-showall { background: #8e44ad; }
         .btn-home { background: #c0392b; }
-        #tap-indicator { flex-grow: 1; text-align: center; background: #ffeb3b; padding: 1vmin 2vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 2.5vmin; cursor: pointer; border: 2px solid #d32f2f; color: #000; }
-
+        .action-btn-wrap { flex-grow: 1; display: flex; gap: 1vmin; }
+        .bottom-listen { flex: 1; text-align: center; background: #8e44ad; padding: 1vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 2.5vmin; cursor: pointer; border: 2px solid #fff; color: #fff; display: none; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        #tap-indicator { flex: 1; text-align: center; background: #ffeb3b; padding: 1vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 2.5vmin; cursor: pointer; border: 2px solid #d32f2f; color: #000; display: flex; align-items: center; justify-content: center; }
         /* MCQ */
         .mcq-options-grid { width: 100%; display: grid; gap: 1.5vmin; padding: 0.5vmin 0; }
         @media (orientation: landscape) { .mcq-options-grid { grid-template-columns: 1fr 1fr; } }
@@ -164,134 +134,56 @@
         .mcq-btn { padding: 1.5vmin; border-radius: 1.5vmin; border: 2px solid #ddd; font-size: 3vmin; font-weight: 900; text-align: center; background: #f9f9f9; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); color: #333; margin: 0; }
         .mcq-btn:active { transform: scale(0.95); }
         .correct { background: #2ecc71 !important; color: #fff !important; border-color: #27ae60 !important; }
-
-        /* --- AUTO MODE CSS --- */
-        body.auto-mode .nav-btn:not(.btn-home) { display: none !important; } 
-        body.auto-mode #tap-indicator { display: none !important; } 
-        body.auto-mode .bottom-ribbon { justify-content: center; border-top: none; padding-top: 0; } 
-        body.auto-mode .item-reveal-btn { display: none !important; } 
-        body.auto-mode .mcq-btn { pointer-events: none !important; } 
-
-        /* Full Screen Button */
+        .wrong { background: #e74c3c !important; color: #fff !important; border-color: #c0392b !important; opacity: 0.6; }
+        /* AUTO MODE CSS */
+        body.auto-mode .nav-btn:not(.btn-home) { display: none !important; }
+        body.auto-mode .action-btn-wrap { display: none !important; }
+        body.auto-mode .bottom-listen { display: none !important; }
+        body.auto-mode .bottom-ribbon { justify-content: center; border-top: none; padding-top: 0; }
+        body.auto-mode .item-reveal-btn { display: none !important; }
+        body.auto-mode .mcq-btn { pointer-events: none !important; }
         .fs-btn { position: absolute; top: 8.5vmin; right: 2vmin; z-index: 1000001; background: #e74c3c; color: #fff; border: 0.3vmin solid #fff; border-radius: 1.5vmin; padding: 1vmin 2vmin; font-size: 2.2vmin; font-weight: 900; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s; }
         .fs-btn:active { transform: scale(0.95); }
         body.auto-mode .fs-btn { display: none !important; }
-
-        /* --- AUTO MODE STATUS BUBBLE --- */
-        #auto-status-container {
-            display: none; 
-            align-items: center;
-            gap: 1vmin;
-            position: absolute;
-            right: 0.5vmin; 
-            top: 50%;
-            transform: translateY(-50%);
-            background: #fff;
-            padding: 0.8vmin 1.5vmin;
-            border-radius: 2vmin;
-            border: 2px solid #ddd;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            pointer-events: none; 
-        }
-        body.auto-mode #auto-status-container {
-            display: flex; 
-        }
-        #auto-status-text {
-            font-size: 2.2vmin;
-            font-weight: 900;
-        }
-        .status-bubble {
-            width: 2.5vmin;
-            height: 2.5vmin;
-            border-radius: 50%;
-            animation: pulseBubble 0.8s infinite alternate;
-        }
+        /* AUTO MODE STATUS BUBBLE */
+        #auto-status-container { display: none; align-items: center; gap: 1vmin; position: absolute; right: 0.5vmin; top: 50%; transform: translateY(-50%); background: #fff; padding: 0.8vmin 1.5vmin; border-radius: 2vmin; border: 2px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.1); pointer-events: none; }
+        body.auto-mode #auto-status-container { display: flex; }
+        #auto-status-text { font-size: 2.2vmin; font-weight: 900; }
+        .status-bubble { width: 2.5vmin; height: 2.5vmin; border-radius: 50%; animation: pulseBubble 0.8s infinite alternate; }
         .status-running { background: #2ecc71; box-shadow: 0 0 8px #2ecc71; }
         .status-paused { background: #e74c3c; box-shadow: 0 0 8px #e74c3c; }
-
-        @keyframes pulseBubble {
-            0% { transform: scale(0.85); opacity: 0.8; }
-            100% { transform: scale(1.15); opacity: 1; }
-        }
-
-        /* --- STYLING FOR MIND MAP & TYPING EFFECT --- */
-        .mind-map-container { position: relative; width: 100%; height: 100%; cursor: pointer; display: block; }
-        
-        .mind-node {
-            position: absolute; transform: translate(-50%, -50%);
-            display: flex; align-items: center; justify-content: center; text-align: center;
-            border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;
-            font-weight: 900; user-select: none;
-        }
-        .mind-node-center {
-            width: 35vmin; height: 35vmin; top: 50%; left: 50%;
-            background: linear-gradient(135deg, #f97316, #dc2626); color: white;
-            z-index: 20; border: 1vmin solid white; font-size: clamp(2vmin, 4vmin, 3rem);
-            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.4), inset 0 -4px 8px rgba(0,0,0,0.2);
-        }
-        .mind-node-outer {
-            width: 20vmin; height: 20vmin; background: white; border: 0.8vmin solid #f97316;
-            color: #dc2626; z-index: 10; font-size: clamp(1.5vmin, 2.5vmin, 2rem);
-            line-height: 1.1;
-        }
-        .mind-node-outer:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 6px 15px rgba(249, 115, 22, 0.3); }
-
-        .typing-text-container { 
-            width: 95%; 
-            max-width: 800px; 
-            flex-grow: 1; 
-            min-height: 40vmin; 
-            overflow-y: auto; 
-            text-align: left; 
-            padding: 3vmin; 
-            border-radius: 2vmin; 
-            border: 0.8vmin dashed #2ecc71; 
-            background: #f0fdf4; 
-            margin: 0 auto 1vmin auto; 
-            font-size: 3.2vmin; 
-            font-weight: bold; 
-            line-height: 1.6; 
-            color: #1565c0; 
-            box-shadow: 0 8px 16px rgba(0,0,0,0.1); 
-        }
-        .typing-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #e74c3c; font-weight: 900; }
+        @keyframes pulseBubble { 0% { transform: scale(0.85); opacity: 0.8; } 100% { transform: scale(1.15); opacity: 1; } }
     </style>
 </head>
-<body onload="initDisclaimer()" onclick="handleGlobalClick(event)">
-
+<body onload="initDisclaimer()" onclick="handleGlobalClick(event)" ondblclick="toggleFullScreen()">
     <div id="studio-frame">
         <div id="bg-layer"></div>
         <div id="border-frame"></div>
-        
         <button id="fs-btn-id" class="fs-btn" onclick="toggleFullScreen(event)">🔲 ਫੁੱਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ</button>
-
+        <!-- SMART LISTEN BUTTON (TOP) -->
+        <button id="global-listen-btn" class="fs-btn" style="top:14vmin; background:#8e44ad; display:none;" onclick="readAloud(event)">🔊 ਸੁਣੋ</button>
+        
         <div id="top-ticker" class="glitter-ticker">
-            <div class="ticker-text">⭐ ਬਿਹਤਰ ਰਿਜਲਟ ਲੈਣ ਲਈ ਇਸ ਨੂੰ ਲੈਂਡਸਕੇਪ ਮੋਡ ਵਿੱਚ ਚਲਾਓ 🔸 ਮੋਬਾਇਲ ਤੇ <span class="hl-red-ticker">ਡਬਲ ਟੈਪ</span> ਕਰਕੇ ਫੁੱਲ ਸਕਰੀਨ ਵਿੱਚ ਚਲਾਓ ⭐</div>
+            <div class="ticker-text">⭐ ਬਿਹਤਰ ਰਿਜ਼ਲਟ ਲੈਣ ਲਈ ਇਸ ਨੂੰ ਲੈਂਡਸਕੇਪ ਮੋਡ ਵਿੱਚ ਚਲਾਓ 🔸 ਮੋਬਾਇਲ ਤੇ <span class="hl-red-ticker">ਡਬਲ ਟੈਪ</span> ਕਰਕੇ ਫੁੱਲ ਸਕਰੀਨ ਵਿੱਚ ਚਲਾਓ ⭐</div>
         </div>
         <div id="bottom-ticker" class="glitter-ticker">
-            <div class="ticker-text" id="ticker-text-content">⭐ ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਵਿਕਾਸ ਦੇ ਪੜਾਅ ਵਿੱਚ ਹੈ ਇਸ ਕਾਰਨ ਲਿਖਤੀ ਗਲਤੀਆਂ ਹੋ ਸਕਦੀਆਂ ਹਨ ਇਹ ਸਮੱਗਰੀ ਅਧਿਆਪਕਾਂ ਦਾ ਬਦਲ ਨਹੀਂ ਹੈ ⭐ 🌟 ਸਾਡੀ ਮਿਹਨਤ ਤੁਹਾਡਾ ਸਾਥ , ਮਿਲ ਕੇ ਰਚੀਏ ਸਿੱਖਿਆ ਦਾ ਨਵਾਂ ਇਤਿਹਾਸ 🌟 ⭐</div>
+            <div class="ticker-text" id="ticker-text-content">⭐ ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਵਿਕਾਸ ਦੇ ਪੜਾਅ ਵਿੱਚ ਹੈ ਇਸ ਕਾਰਨ ਲਿਖਤੀ ਗਲਤੀਆਂ ਹੋ ਸਕਦੀਆਂ ਹਨ ਇਹ ਸਮੱਗਰੀ ਅਧਿਆਪਕਾਂ ਦਾ ਬਦਲ ਨਹੀ ਹੈ ⭐ 🌟 ਸਾਡੀ ਮਿਹਨਤ ਤੁਹਾਡਾ ਸਾਥ , ਮਿਲ ਕੇ ਰਚੀਏ ਸਿੱਖਿਆ ਦਾ ਨਵਾਂ ਇਤਿਹਾਸ 🌟 ⭐</div>
         </div>
-
+        
         <div id="viewport">
-            
-            <!-- Disclaimer Screen -->
             <div id="disclaimer-screen">
                 <div class="disclaimer-box">
                     <div class="disclaimer-content">
-                        <h2>⚠️ ਨਿਯਮ ਅਤੇ ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ</h2>
+                        <h2>⚠ ਨਿਯਮ ਅਤੇ ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ</h2>
                         <ul>
                             <li><strong>1 . ਸੰਸਥਾ ਦਾ ਉਦੇਸ਼ :</strong> ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ ਟੀਮ ਵੱਲੋਂ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਇੱਕ ਡਿਜੀਟਲ ਪਲੇਟਫਾਰਮ ਹੈ । ਸਾਡਾ ਮੁੱਖ ਮਕਸਦ ਪੰਜਾਬ ਦੇ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲਾਂ ਦੇ ਬੱਚਿਆਂ ਨੂੰ ਮਿਆਰੀ ਸਿੱਖਿਆ ਸਮੱਗਰੀ ਮੁਫ਼ਤ ਮੁਹੱਈਆ ਕਰਵਾਉਣਾ ਹੈ ।</li>
-                            <li><strong>2 . ਵਰਤੋਂਕਾਰ :</strong> ਇਹ ਸਿਰਫ਼ ਵਿੱਦਿਅਕ ਵਰਤੋਂ ਲਈ ਹੈ । ਕਿਸੇ ਵੀ ਵਿਅਕਤੀ ਜਾਂ ਸੰਸਥਾ ਨੂੰ ਇਸ ਦੀ ਵਰਤੋਂ ਆਪਣੇ ਨਿੱਜੀ ਫਾਇਦੇ ਲਈ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ ।</li>
+                            <li><strong>2 . ਵਰਤੋਂਕਾਰ :</strong> ਇਹ ਸਿਰਫ਼ ਵਿੱਦਿਅਕ ਵਰਤੋਂ ਲਈ ਹੈ । ਕਿਸੇ ਵੀ ਵਿਅਕਤੀ ਜਾਂ ਸੰਸਥਾ ਨੂੰ ਇਸ ਦੀ ਵਰਤੋਂ ਆਪਣੇ ਨਿੱਜੀ ਫਾਇਦੇ ਲਈ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀ ਹੈ ।</li>
                             <li><strong>3 . ਪਾਠਕ੍ਰਮ :</strong> ਵੈੱਬਸਾਈਟ ਦੀ ਸਮੱਗਰੀ PSEB ਪਾਠਕ੍ਰਮ 'ਤੇ ਆਧਾਰਿਤ ਹੈ ।</li>
                             <div class="warning-box-red"><li><strong>4 . ਡਿਵੈਲਪਮੈਂਟ ਮੋਡ :</strong> ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਵਿਕਾਸ ਦੇ ਪੜਾਅ ਵਿੱਚ ਹੈ । ਅਧਿਆਪਕ ਸਾਹਿਬਾਨ ਇਸ ਨੂੰ ਆਪਣੇ ਪੱਧਰ ਤੇ ਵੀ ਘੋਖਦੇ ਰਹਿਣ ।</li></div>
                             <li><strong>5 . ਸੋਧ :</strong> ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ ਕੋਲ ਕਿਸੇ ਵੀ ਸਮੇਂ ਨਿਯਮਾਂ ਵਿੱਚ ਬਦਲਾਅ ਕਰਨ ਦਾ ਅਧਿਕਾਰ ਰਾਖਵਾਂ ਹੈ ।</li>
                             <li><strong>6 . ਸੁਝਾਅ :</strong> ਜੇਕਰ ਤੁਹਾਨੂੰ ਇਸ ਵਿੱਚ ਕੋਈ ਸੁਧਾਰ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ ਤਾਂ ਸਾਡੀ ਟੀਮ ਨਾਲ ਸੰਪਰਕ ਕਰੋ ।</li>
                             <li><strong>7 . ਸਹਿਮਤੀ :</strong> ਹੇਠਾਂ ਦਿੱਤੇ 'ਮੈਂ ਸਹਿਮਤ ਹਾਂ' ਬਟਨ ਨੂੰ ਦਬਾ ਕੇ ਤੁਸੀਂ ਤਸਦੀਕ ਕਰਦੇ ਹੋ ਕਿ ਤੁਸੀਂ ਨਿਯਮ ਪੜ੍ਹ ਲਏ ਹਨ ।</li>
                         </ul>
-                        <div style="text-align:center; padding:1vmin; background:#fffde7; border:2px dashed orange; border-radius:1vmin; margin-top:1vmin;">
-                            <span style="font-weight:900; color:red; font-size:3vmin;">🌟 ਸਾਡੀ ਮਿਹਨਤ ਤੁਹਾਡਾ ਸਾਥ 🌟<br>🌟 ਮਿਲ ਕੇ ਰਚੀਏ ਸਿੱਖਿਆ ਦਾ ਨਵਾਂ ਇਤਿਹਾਸ 🌟</span>
-                        </div>
                     </div>
                     <div class="disclaimer-actions">
                         <button class="disagree-btn" onclick="showDiscModal(event)">ਅਸਹਿਮਤ ਹਾਂ</button>
@@ -299,35 +191,39 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Custom Disagree Modal -->
+            
             <div id="custom-modal">
                 <div class="modal-box">
-                    <h3>⚠️ ਸੂਚਨਾ</h3>
+                    <h3>⚠ ਸੂਚਨਾ</h3>
                     <p>ਐਪ ਦੀ ਵਰਤੋਂ ਕਰਨ ਲਈ ਨਿਯਮਾਂ ਅਤੇ ਸ਼ਰਤਾਂ ਨਾਲ ਸਹਿਮਤੀ ਹੋਣੀ ਜ਼ਰੂਰੀ ਹੈ। ਜੇਕਰ ਤੁਸੀਂ ਸਹਿਮਤ ਨਹੀਂ ਹੋ, ਤਾਂ ਤੁਸੀਂ ਇਸ ਪਲੇਟਫਾਰਮ ਦੀ ਵਰਤੋਂ ਨਹੀਂ ਕਰ ਸਕਦੇ।</p>
                     <button class="modal-close-btn" onclick="hideDiscModal(event)">ਵਾਪਸ ਜਾਓ</button>
                 </div>
             </div>
-
-            <!-- Intro Screen -->
-            <div id="intro-screen" style="display:none;">
-                <div class="center-circle" onclick="showMainMenu()">
-                    <div class="intro-title-center">ਪੰਜਾਬੀ ਜਮਾਤ ਚੌਥੀ<br>ਪਾਠ 3 - ਬਾਲ ਸੁਖਦੇਵ</div>
+            
+            <div id="wrong-modal" onclick="hideWrongModal(event)">
+                <div class="wrong-modal-box" onclick="event.stopPropagation()">
+                    <h3>❌ ਗਲਤ ਉੱਤਰ</h3>
+                    <p>ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।</p>
+                    <button class="wrong-close-btn" onclick="hideWrongModal(event)">ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ</button>
                 </div>
-                <div class="intro-bottom-area" style="position:absolute; bottom:2vmin; width:100%; display:flex; justify-content:center; z-index:100;">
-                    <button class="big-start-btn" style="padding:2vmin 4vmin; font-size:4vmin; font-weight:900; background:#2ecc71; color:#fff; border:none; border-radius:2vmin; cursor:pointer;" onclick="showMainMenu()">ਸ਼ੁਰੂ ਕਰੋ ⏭️</button>
-                </div>
-                <div class="balloon pos-1">ਸ਼ਬਦ ਅਰਥ</div><div class="balloon pos-2">ਸਤਰਾਂ ਪੂਰੀਆਂ</div>
-                <div class="balloon pos-3">ਤੁਕਾਂਤ ਮੇਲ</div><div class="balloon pos-4">ਵਾਕ ਬਣਾਓ</div>
-                <div class="balloon pos-5">MCQ</div><div class="balloon pos-6">ਸੁੰਦਰ ਲਿਖਾਈ</div>
-                <div class="balloon pos-7">ਗਤੀਵਿਧੀਆਂ</div><div class="balloon pos-8">ਅਭਿਆਸ</div>
             </div>
 
-            <!-- Menu Screen -->
+            <div id="intro-screen" style="display:none;">
+                <div class="center-circle" onclick="showMainMenu()">
+                    <div class="intro-title-center">ਜਮਾਤ ਚੌਥੀ ਵਿਸ਼ਾ ਪੰਜਾਬੀ<br>ਪਾਠ-3 (ਬਾਲ ਸੁਖਦੇਵ)</div>
+                </div>
+                <div class="intro-bottom-area" style="position:absolute; bottom:2vmin; width:100%; display:flex; justify-content:center; z-index:100;">
+                    <button class="big-start-btn" style="padding:2vmin 4vmin; font-size:4vmin; font-weight:900; background:#2ecc71; color:#fff; border:none; border-radius:2vmin; cursor:pointer;" onclick="showMainMenu()">ਸ਼ੁਰੂ ਕਰੋ ⏭</button>
+                </div>
+                <div class="balloon pos-1">ਯਾਦ ਰੱਖਣਯੋਗ</div><div class="balloon pos-2">ਸ਼ਬਦ ਅਰਥ</div>
+                <div class="balloon pos-3">ਖ਼ਾਲੀ ਥਾਂਵਾਂ</div><div class="balloon pos-4">ਪ੍ਰਸ਼ਨ ਉੱਤਰ</div>
+                <div class="balloon pos-5">ਕੌਣ ਸਨ?</div><div class="balloon pos-6">ਮਾਈਂਡ ਮੈਪ</div>
+                <div class="balloon pos-7">MCQ</div><div class="balloon pos-8">ਵਾਧੂ ਗਤੀਵਿਧੀਆਂ</div>
+            </div>
+            
             <div id="main-menu-screen">
-                <h1 class="menu-heading">ਪੰਜਾਬੀ ਜਮਾਤ ਚੌਥੀ ਪਾਠ 3 - ਬਾਲ ਸੁਖਦੇਵ</h1>
+                <h1 class="menu-heading">ਜਮਾਤ ਚੌਥੀ ਵਿਸ਼ਾ ਪੰਜਾਬੀ ਪਾਠ-3 (ਬਾਲ ਸੁਖਦੇਵ)</h1>
                 <div class="mode-container" id="mode-container">
-                    <!-- Auto Mode Card -->
                     <div class="mode-card auto-card" id="card-auto">
                         <div class="mode-header" onclick="toggleAccordion('auto')">🔴 ਆਟੋ ਮੋਡ <span>▼</span></div>
                         <div class="mode-content" id="content-auto">
@@ -337,7 +233,6 @@
                             <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startAutoWithToc('activities')">🎨 ਹੋਰ ਗਤੀਵਿਧੀਆਂ</button></div>
                         </div>
                     </div>
-                    <!-- Live Mode Card -->
                     <div class="mode-card" id="card-live">
                         <div class="mode-header" onclick="toggleAccordion('live')">📺 ਲਾਈਵ ਮੋਡ <span>▼</span></div>
                         <div class="mode-content" id="content-live">
@@ -349,37 +244,32 @@
                     </div>
                 </div>
             </div>
-
-            <!-- ToC Modal -->
+            
             <div id="toc-overlay">
                 <div class="toc-box">
                     <h2 style="color:#d32f2f; text-align:center; font-size:4vmin; border-bottom:2px solid #eee; padding-bottom:1vmin;">📑 ਪਾਠ ਤਤਕਰਾ</h2>
                     <div class="toc-list" id="toc-list"></div>
                 </div>
             </div>
-
-            <!-- Flash Card Display -->
+            
             <div class="flash-card" id="master-card">
-                <div class="top-bar">ਪੰਜਾਬੀ ਜਮਾਤ ਚੌਥੀ ਪਾਠ 3 - ਬਾਲ ਸੁਖਦੇਵ</div>
-                <div class="text-container" style="flex-grow: 1;">
+                <div class="top-bar">ਜਮਾਤ ਚੌਥੀ ਵਿਸ਼ਾ ਪੰਜਾਬੀ ਪਾਠ-3 (ਬਾਲ ਸੁਖਦੇਵ)</div>
+                <div class="text-container">
                     <h2 id="slide-title" class="title-text"></h2>
                     <p id="slide-instr" class="instr-text"></p>
-                    <div id="html-content" class="interactive-list" style="flex-grow: 1;"></div>
+                    <div id="html-content" class="interactive-list"></div>
                 </div>
                 <div class="bottom-ribbon">
-                    <!-- Live Mode Navigation -->
-                    <button class="nav-btn btn-prev" onclick="prevStep()">⏮️ ਪਿੱਛੇ</button>
+                    <button class="nav-btn btn-prev" onclick="prevStep()">⏮ ਪਿੱਛੇ</button>
                     <button class="nav-btn btn-retry" onclick="retrySlide()">🔄 ਦੁਬਾਰਾ</button>
                     <button class="nav-btn btn-showall" onclick="showAllAnswers(event)">📑 ਸਾਰਾ</button>
-                    <button class="nav-btn btn-skip" onclick="skipStep()">⏭️ ਸਕਿਪ</button>
-                    
-                    <!-- Always visible home button -->
+                    <button class="nav-btn btn-skip" onclick="skipStep()">⏭ ਸਕਿਪ</button>
                     <button class="nav-btn btn-home" onclick="goHome()">🏠 ਮੇਨੂ</button>
-                    
-                    <!-- Dynamic Tap Indicator -->
-                    <div id="tap-indicator" onclick="if(mode === 'live') nextStep()">ਅੱਗੇ ⏭️</div>
-
-                    <!-- Auto Mode Custom Status Bubble -->
+                    <!-- SPLIT BUTTONS AREA -->
+                    <div class="action-btn-wrap">
+                        <div id="bottom-listen-btn" class="bottom-listen" onclick="readAloud(event)">🔊 ਸੁਣੋ</div>
+                        <div id="tap-indicator" onclick="if(mode === 'live') nextStep()">ਅੱਗੇ ⏭</div>
+                    </div>
                     <div id="auto-status-container">
                         <span class="status-text" id="auto-status-text" style="color:#2ecc71;">ਚੱਲ ਰਿਹਾ ਹੈ</span>
                         <div id="auto-status-bubble" class="status-bubble status-running"></div>
@@ -392,436 +282,296 @@
 <script>
     let state = 'disclaimer', mode = 'live', section = '', step = 0, subIdx = -1, stepState = 'focus', paused = false, typing = false, reviewMode = false;
     let autoLoopRunning = false;
+    let ttsSpeaking = false; 
+    let headingReadForStep = -1; 
+    const TYPE_SPEED = 100;
     
-    // TYPE SPEED CONTROL
-    const TYPE_SPEED = 60; 
-    
-    // MIND MAP GLOBALS
+    // Mind Map Support
     let currentMindMapNodes = [];
     let mindMapIndex = 0;
-
-    // COMPLETE TEXTBOOK DATA FOR CHAPTER 3
+    
+    function initDisclaimer() {
+        state = 'disclaimer';
+        document.getElementById('disclaimer-screen').style.display = 'flex';
+    }
+    
+    // --- UPDATED CHAPTER 3 DATA ---
     const lessonData = {
-        exercise: [
-            {
-                title: "1. ਯਾਦ ਰੱਖਣਯੋਗ ਗੱਲਾਂ",
-                instruction: "ਪੜ੍ਹਨ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "list",
-                items: [
-                    {q: "1.", a: "<span class='hl-blue'>ਸ਼ਹੀਦ ਸੁਖਦੇਵ ਦਾ ਜਨਮ ਲੁਧਿਆਣਾ ਵਿੱਚ ਹੋਇਆ।</span>"},
-                    {q: "2.", a: "<span class='hl-blue'>ਜੱਲ੍ਹਿਆਂਵਾਲੇ ਬਾਗ਼ ਦਾ ਸਾਕਾ 13 ਅਪਰੈਲ, 1919 ਨੂੰ ਵਾਪਰਿਆ।</span>"},
-                    {q: "3.", a: "<span class='hl-blue'>23 ਮਾਰਚ, 1931 ਨੂੰ ਸੁਖਦੇਵ ਨੂੰ ਭਗਤ ਸਿੰਘ ਅਤੇ ਰਾਜਗੁਰੂ ਦੇ ਨਾਲ ਫਾਂਸੀ ਦਿੱਤੀ ਗਈ।</span>"}
-                ]
-            },
-            {
-                title: "2. ਪੜ੍ਹੋ ਅਤੇ ਸਮਝੋ (ਸ਼ਬਦ-ਅਰਥ)",
-                instruction: "ਅਰਥ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "list",
-                items: [
-                    {q: "ਅਜ਼ਾਦੀ", a: "ਅਰਥ ਹੈ - <span class='hl-blue'>ਸੁਤੰਤਰਤਾ, ਆਪਣੀ ਮਰਜ਼ੀ ਨਾਲ ਚੱਲਣ ਦਾ ਭਾਵ</span>"},
-                    {q: "ਝੁਰਮਟ", a: "ਅਰਥ ਹੈ - <span class='hl-blue'>ਇਕੱਠ</span>"},
-                    {q: "ਚਿੜਚਿੜਾ", a: "ਅਰਥ ਹੈ - <span class='hl-blue'>ਖਿਝਣ ਵਾਲਾ, ਖਿਝੂ ਸੁਭਾਅ</span>"},
-                    {q: "ਹੁਸ਼ਿਆਰੀ", a: "ਅਰਥ ਹੈ - <span class='hl-blue'>ਚੁਸਤੀ, ਚਲਾਕੀ</span>"}
-                ]
-            },
-            {
-                title: "2. ਪੜ੍ਹੋ ਅਤੇ ਸਮਝੋ (ਸ਼ਬਦ-ਅਰਥ) ਭਾਗ-2",
-                instruction: "ਅਰਥ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "list",
-                items: [
-                    {q: "ਤਾਇਨਾਤ", a: "ਅਰਥ ਹੈ - <span class='hl-blue'>ਨਿਯੁਕਤ ਕਰਨਾ</span>"},
-                    {q: "ਛਿੱਥਾ", a: "ਅਰਥ ਹੈ - <span class='hl-blue'>ਸ਼ਰਮਿੰਦਾ</span>"},
-                    {q: "ਪੈੜਾਂ", a: "ਅਰਥ ਹੈ - <span class='hl-blue'>ਪੈਰਾਂ ਦੇ ਨਿਸ਼ਾਨ</span>"}
-                ]
-            },
-            {
-                title: "3. ਠੀਕ ਸ਼ਬਦ ਚੁਣ ਕੇ ਖ਼ਾਲੀ ਥਾਂਵਾਂ ਭਰੋ",
-                instruction: "ਖ਼ਾਲੀ ਥਾਂ ਭਰਨ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "blanks",
-                items: [
-                    {q: "(ੳ) ਸੁਖਦੇਵ ਦੇ ਮਾਤਾ ਜੀ ਦਾ ਨਾਂ ", b: "<span class='hl-red'>ਰਲ਼ੀ ਦੇਈ</span>", a: " ਸੀ।"},
-                    {q: "(ਅ) ਸੁਖਦੇਵ ਲਾਇਲਪੁਰ ਦੇ ", b: "<span class='hl-red'>ਸਨਾਤਨ ਧਰਮ</span>", a: " ਸਕੂਲ 'ਚ ਪੜ੍ਹਦਾ ਸੀ।"},
-                    {q: "(ੲ) ਅੰਗਰੇਜ਼ ਅਫ਼ਸਰ ", b: "<span class='hl-red'>ਅੱਗ-ਬਗੋਲਾ</span>", a: " ਹੋ ਗਿਆ।"},
-                    {q: "(ਸ) ਅੰਗਰੇਜ਼ ਹਕੂਮਤ ਨਾਲ ਸੁਖਦੇਵ ਦੀ ਇਹ ", b: "<span class='hl-red'>ਪਹਿਲੀ</span>", a: " ਟੱਕਰ ਸੀ।"},
-                    {q: "(ਹ) ਸੁਖਦੇਵ ਦਾ ਪਰਿਵਾਰ ", b: "<span class='hl-red'>ਲਾਇਲਪੁਰ</span>", a: " ਵਿਖੇ ਰਹਿੰਦਾ ਸੀ।"}
-                ]
-            },
-            {
-                title: "4. ਹੇਠ ਲਿਖੇ ਪ੍ਰਸ਼ਨਾਂ ਦੇ ਉੱਤਰ ਲਿਖੋ",
-                instruction: "ਉੱਤਰ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "qa",
-                items: [
-                    {q: "(ੳ) ਸੁਖਦੇਵ ਦਾ ਜਨਮ ਕਦੋਂ ਹੋਇਆ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਸੁਖਦੇਵ ਦਾ ਜਨਮ 15 ਮਈ, 1907 ਈ. ਨੂੰ ਪਿਤਾ ਰਾਮ ਲਾਲ ਥਾਪਰ ਅਤੇ ਮਾਤਾ ਰਲ਼ੀ ਦੇਈ ਦੇ ਘਰ ਲੁਧਿਆਣਾ ਵਿੱਚ ਹੋਇਆ।</span>"},
-                    {q: "(ਅ) ਸੁਖਦੇਵ ਦੀ ਚਚੇਰੀ ਭੈਣ ਦਾ ਕੀ ਨਾਂ ਸੀ ਅਤੇ ਉਹ ਸੁਖਦੇਵ ਨਾਲ ਕਿਸ ਤਰ੍ਹਾਂ ਦਾ ਵਰਤਾਅ ਕਰਦੀ ਸੀ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਸੁਖਦੇਵ ਦੀ ਚਚੇਰੀ ਭੈਣ ਦਾ ਨਾਂ ਗੌਰਾਂ ਸੀ। ਉਹ ਸੁਖਦੇਵ ਨੂੰ ਬਹੁਤ ਪਿਆਰ ਕਰਦੀ ਸੀ। ਜਦੋਂ ਘਰ ਵਿੱਚ ਸੁਖਦੇਵ ਕੋਈ ਸ਼ਰਾਰਤ ਜਾਂ ਗ਼ਲਤੀ ਕਰਦਾ ਤਾਂ ਗੌਰਾਂ ਸੁਖਦੇਵ ਦਾ ਹੀ ਪੱਖ ਪੂਰਦੀ ਸੀ।</span>"}
-                ]
-            },
-            {
-                title: "4. ਹੇਠ ਲਿਖੇ ਪ੍ਰਸ਼ਨਾਂ ਦੇ ਉੱਤਰ ਲਿਖੋ (ਭਾਗ 2)",
-                instruction: "ਉੱਤਰ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "qa",
-                items: [
-                    {q: "(ੲ) ਜਦੋਂ ਬੱਚਾ ਖੂਹ ਵਿੱਚ ਡਿਗ ਪਿਆ ਤਾਂ ਸੁਖਦੇਵ ਨੇ ਉਸ ਨੂੰ ਬਚਾਉਣ ਲਈ ਕੀ ਕੀਤਾ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਸੁਖਦੇਵ ਕਾਹਲੀ ਨਾਲ ਭੱਜਾ-ਭੱਜਾ ਆਪਣੇ ਘਰ ਗਿਆ ਅਤੇ ਨੌਕਰ ਸ਼ਿਵ ਰਾਮ ਨੂੰ ਰੱਸੇ ਸਮੇਤ ਖੂਹ 'ਤੇ ਲੈ ਆਇਆ ਅਤੇ ਬੱਚੇ ਨੂੰ ਬਚਾ ਲਿਆ।</span>"},
-                    {q: "(ਸ) ਜੱਲ੍ਹਿਆਂਵਾਲੇ ਬਾਗ ਦੇ ਸਾਕੇ ਤੋਂ ਬਾਅਦ ਅੰਗਰੇਜ਼ ਸਰਕਾਰ ਨੇ ਸਾਰੇ ਪੰਜਾਬ ਵਿੱਚ ਸਥਿਤੀ ਨੂੰ ਕਾਬੂ ਵਿੱਚ ਰੱਖਣ ਲਈ ਕੀ ਕੀਤਾ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਅੰਗਰੇਜ਼ਾਂ ਨੇ ਜੱਲ੍ਹਿਆਂਵਾਲਾ ਬਾਗ਼ ਦੇ ਸਾਕੇ ਤੋਂ ਤੀਜੇ ਦਿਨ ਸਾਰੇ ਪੰਜਾਬ ਵਿੱਚ ਫ਼ੌਜ ਅਤੇ ਪੁਲਿਸ ਤਾਇਨਾਤ ਕਰ ਦਿੱਤੀ।</span>"},
-                    {q: "(ਹ) ਸੁਖਦੇਵ ਦੇ ਭਗਤ ਸਿੰਘ ਨਾਲ ਸੰਬੰਧ ਕਿਵੇਂ ਬਣੇ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਸੁਖਦੇਵ ਦੇ ਤਾਇਆ ਜੀ ਲਾਲਾ ਚਿੰਤ ਰਾਮ ਅਤੇ ਭਗਤ ਸਿੰਘ ਦੇ ਪਿਤਾ ਸ. ਕਿਸ਼ਨ ਸਿੰਘ ਦਾ ਇੱਕ-ਦੂਜੇ ਦੇ ਘਰ ਆਉਣ-ਜਾਣ ਸੀ, ਜਿਸ ਕਾਰਨ ਬਚਪਨ ਵਿੱਚ ਹੀ ਸੁਖਦੇਵ ਅਤੇ ਭਗਤ ਸਿੰਘ ਦੀ ਆਪਸ ਵਿੱਚ ਆੜੀ (ਦੋਸਤੀ) ਪੈ ਚੁੱਕੀ ਸੀ।</span>"}
-                ]
-            },
-            {
-                title: "5. ਹੇਠ ਲਿਖੇ ਕੌਣ ਸਨ?",
-                instruction: "ਜਾਣਕਾਰੀ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "qa",
-                items: [
-                    {q: "(ੳ) ਸੁਖਦੇਵ", a: "ਉੱਤਰ : <span class='hl-blue'>ਸ਼ਹੀਦ ਸੁਖਦੇਵ ਭਾਰਤ ਦੀ ਆਜ਼ਾਦੀ ਦੀ ਲੜਾਈ ਵਿੱਚ ਹਿੱਸਾ ਲੈਣ ਵਾਲਾ ਮਹਾਨ ਦੇਸ਼ ਭਗਤ ਅਤੇ ਭਗਤ ਸਿੰਘ ਦਾ ਨੇੜਲਾ ਸਾਥੀ ਸੀ।</span>"},
-                    {q: "(ਅ) ਗੋਰਾਂ", a: "ਉੱਤਰ : <span class='hl-blue'>ਗੌਰਾਂ ਸੁਖਦੇਵ ਦੀ ਚਚੇਰੀ ਭੈਣ ਸੀ ਜੋ ਉਸ ਤੋਂ ਸੱਤ ਸਾਲ ਵੱਡੀ ਸੀ ਅਤੇ ਉਸ ਨੂੰ ਬਹੁਤ ਪਿਆਰ ਕਰਦੀ ਸੀ।</span>"}
-                ]
-            },
-            {
-                title: "5. ਹੇਠ ਲਿਖੇ ਕੌਣ ਸਨ? (ਭਾਗ 2)",
-                instruction: "ਜਾਣਕਾਰੀ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "qa",
-                items: [
-                    {q: "(ੲ) ਰਹੀਮਣ", a: "ਉੱਤਰ : <span class='hl-blue'>ਰਹੀਮਣ ਸੁਖਦੇਵ ਦੇ ਘਰ ਕੰਮ ਕਰਨ ਵਾਲੀ ਇੱਕ ਔਰਤ ਸੀ ਜੋ ਸੁਖਦੇਵ ਨੂੰ ਤਿਆਰ ਕਰਕੇ ਸਕੂਲ ਭੇਜਦੀ ਸੀ।</span>"},
-                    {q: "(ਸ) ਕਿਸ਼ਨ ਸਿੰਘ", a: "ਉੱਤਰ : <span class='hl-blue'>ਸਰਦਾਰ ਕਿਸ਼ਨ ਸਿੰਘ ਸ਼ਹੀਦ ਭਗਤ ਸਿੰਘ ਦੇ ਪਿਤਾ ਜੀ ਸਨ।</span>"}
-                ]
-            },
-            {
-                title: "6. ਬੋਲ-ਲਿਖਤ",
-                instruction: "ਅਧਿਆਪਕ ਆਪ ਬੋਲ ਕੇ ਵਿਦਿਆਰਥੀਆਂ ਨੂੰ ਲਿਖਣ ਲਈ ਕਹੇ :",
-                type: "dictation",
-                items: [
-                    {q: "1.", a: "<span class='hl-blue'>ਉਹ ਭਗਤ ਸਿੰਘ ਦਾ ਨੇੜੇ ਦਾ ਸਾਥੀ ਸੀ।</span>"},
-                    {q: "2.", a: "<span class='hl-blue'>ਗੌਰਾਂ ਸੁਖਦੇਵ ਤੋਂ ਸੱਤ ਸਾਲ ਵੱਡੀ ਸੀ।</span>"},
-                    {q: "3.", a: "<span class='hl-blue'>ਉਸ ਦਾ ਸੁਭਾਅ ਚਿੜਚਿੜਾ ਸੀ।</span>"},
-                    {q: "4.", a: "<span class='hl-blue'>ਸੁਖਦੇਵ ਅਤੇ ਭਗਤ ਸਿੰਘ ਖੇਡਣ ਲੱਗ ਜਾਂਦੇ।</span>"},
-                    {q: "5.", a: "<span class='hl-blue'>ਇਹ ਘਟਨਾ ਨਿੱਕੀ ਨਹੀਂ ਸੀ।</span>"}
-                ]
-            },
-            {
-                title: "7. ਮਾਈਂਡ ਮੈਪ",
-                instruction: "ਬਾਲ ਸੁਖਦੇਵ ਦੇ ਸੁਭਾਅ ਬਾਰੇ ਜਾਣਨ ਲਈ ਸਕਰੀਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "mind_map",
-                items: [
-                    "ਜ਼ਿੱਦੀ ਬਾਲਕ",
-                    "ਚਿੜਚਿੜਾ ਸੁਭਾਅ",
-                    "ਇਕੱਲਿਆਂ ਘੁੰਮਣ ਦਾ ਸ਼ੌਕ",
-                    "ਹੁਸ਼ਿਆਰ",
-                    "ਬਚਪਨ ਤੋਂ ਹੀ ਨਿਡਰ",
-                    "ਆਜ਼ਾਦੀ ਘੁਲਾਟੀਆ"
-                ]
-            },
-            {
-                title: "8. ਵਿਸ਼ੇਸ਼ ਨੋਟ",
-                instruction: "ਅਧਿਆਪਕਾਂ ਅਤੇ ਬੱਚਿਆਂ ਲਈ ਜ਼ਰੂਰੀ ਜਾਣਕਾਰੀ (ਪੜ੍ਹਨ ਲਈ ਟੱਚ ਕਰੋ) :",
-                type: "typewriter",
-                content: "ਅਧਿਆਪਕ ਵਿਦਿਆਰਥੀਆਂ ਨੂੰ ਭਾਰਤ ਦੀ ਅਜ਼ਾਦੀ ਦੀ ਲੜਾਈ ਵਿੱਚ ਹਿੱਸਾ ਪਾਉਣ ਵਾਲੇ ਹੋਰਨਾਂ ਦੇਸ-ਭਗਤਾਂ ਬਾਰੇ ਵਿਸਤਾਰ ਨਾਲ ਜਾਣਕਾਰੀ ਦੇਣ। ਬੱਚਿਆਂ ਨੂੰ ਦੱਸਿਆ ਜਾਵੇ ਕਿ ਕਿਵੇਂ ਸ਼ਹੀਦ ਭਗਤ ਸਿੰਘ, ਰਾਜਗੁਰੂ ਅਤੇ ਸੁਖਦੇਵ ਨੇ ਛੋਟੀ ਉਮਰੇ ਹੀ ਦੇਸ਼ ਲਈ ਹੱਸਦੇ-ਹੱਸਦੇ ਫਾਂਸੀ ਦਾ ਰੱਸਾ ਚੁੰਮ ਲਿਆ ਸੀ। ਕਰਤਾਰ ਸਿੰਘ ਸਰਾਭਾ ਜਿਹੇ ਸੂਰਬੀਰਾਂ ਨੇ ਗ਼ਦਰ ਪਾਰਟੀ ਰਾਹੀਂ ਵਿਦੇਸ਼ਾਂ ਵਿੱਚ ਬੈਠ ਕੇ ਵੀ ਭਾਰਤ ਦੀ ਆਜ਼ਾਦੀ ਦਾ ਸੁਪਨਾ ਵੇਖਿਆ। ਸ਼ਹੀਦ ਊਧਮ ਸਿੰਘ ਨੇ ਜੱਲ੍ਹਿਆਂਵਾਲੇ ਬਾਗ ਦੇ ਸਾਕੇ ਦਾ ਬਦਲਾ ਲੰਡਨ ਜਾ ਕੇ ਲਿਆ ਸੀ। ਇਹਨਾਂ ਮਹਾਨ ਯੋਧਿਆਂ ਦੀਆਂ ਕੁਰਬਾਨੀਆਂ ਸਦਕਾ ਹੀ ਅੱਜ ਅਸੀਂ ਆਜ਼ਾਦ ਫਿਜ਼ਾ ਵਿੱਚ ਸਾਹ ਲੈ ਰਹੇ ਹਾਂ। ਇਸ ਲਈ ਸਾਡਾ ਸਾਰਿਆਂ ਦਾ ਫ਼ਰਜ਼ ਬਣਦਾ ਹੈ ਕਿ ਅਸੀਂ ਆਪਣੇ ਦੇਸ਼ ਅਤੇ ਕੌਮ ਦੀ ਤਰੱਕੀ ਲਈ ਪੂਰੀ ਇਮਾਨਦਾਰੀ ਅਤੇ ਮਿਹਨਤ ਨਾਲ ਕੰਮ ਕਰੀਏ।"
-            },
-            { type: "conclude" }
-        ],
-        mcq: [
-            {
-                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 1", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
-                q: "ਸ਼ਹੀਦ ਸੁਖਦੇਵ ਦਾ ਜਨਮ ਕਦੋਂ ਹੋਇਆ?", type: "mcq",
-                opts: ["15 ਮਈ 1907", "13 ਅਪ੍ਰੈਲ 1919", "23 ਮਾਰਚ 1931", "15 ਅਗਸਤ 1947"], correct: 0,
-                a: "ਸ਼ਹੀਦ ਸੁਖਦੇਵ ਦਾ ਜਨਮ <span class='hl-blue'>15 ਮਈ 1907</span> ਨੂੰ ਹੋਇਆ।"
-            },
-            {
-                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 2", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
-                q: "ਸੁਖਦੇਵ ਦੇ ਪਿਤਾ ਜੀ ਦਾ ਕੀ ਨਾਂ ਸੀ?", type: "mcq",
-                opts: ["ਸਰਦਾਰ ਕਿਸ਼ਨ ਸਿੰਘ", "ਲਾਲਾ ਚਿੰਤ ਰਾਮ", "ਸ਼ਿਵ ਰਾਮ", "ਰਾਮ ਲਾਲ ਥਾਪਰ"], correct: 3,
-                a: "ਸੁਖਦੇਵ ਦੇ ਪਿਤਾ ਜੀ ਦਾ ਨਾਂ <span class='hl-blue'>ਰਾਮ ਲਾਲ ਥਾਪਰ</span> ਸੀ।"
-            },
-            {
-                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 3", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
-                q: "ਸੁਖਦੇਵ, ਭਗਤ ਸਿੰਘ ਦੇ ਨਾਲ ਤੀਜਾ ਕਿਹੜਾ ਸਾਥੀ ਫਾਂਸੀ ਚੜ੍ਹਿਆ ਸੀ?", type: "mcq",
-                opts: ["ਚੰਦਰ ਸ਼ੇਖਰ ਆਜ਼ਾਦ", "ਰਾਜਗੁਰੂ", "ਊਧਮ ਸਿੰਘ", "ਕਰਤਾਰ ਸਿੰਘ ਸਰਾਭਾ"], correct: 1,
-                a: "ਸੁਖਦੇਵ, ਭਗਤ ਸਿੰਘ ਦੇ ਨਾਲ ਤੀਜਾ ਸਾਥੀ <span class='hl-blue'>ਰਾਜਗੁਰੂ</span> ਫਾਂਸੀ ਚੜ੍ਹਿਆ ਸੀ।"
-            },
-            {
-                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 4", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
-                q: "ਸੁਖਦੇਵ ਦੀ ਚਚੇਰੀ ਭੈਣ ਦਾ ਕੀ ਨਾਂ ਸੀ?", type: "mcq",
-                opts: ["ਰਲ਼ੀ ਦੇਈ", "ਗੌਰਾਂ", "ਰਹੀਮਣ", "ਪਾਰਵਤੀ"], correct: 1,
-                a: "ਸੁਖਦੇਵ ਦੀ ਚਚੇਰੀ ਭੈਣ ਦਾ ਨਾਂ <span class='hl-blue'>ਗੌਰਾਂ</span> ਸੀ।"
-            },
-            {
-                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 5", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
-                q: "ਗੌਰਾਂ ਸੁਖਦੇਵ ਤੋਂ ਕਿੰਨੇ ਸਾਲ ਵੱਡੀ ਸੀ?", type: "mcq",
-                opts: ["ਪੰਜ ਸਾਲ", "ਸੱਤ ਸਾਲ", "ਦਸ ਸਾਲ", "ਦੋ ਸਾਲ"], correct: 1,
-                a: "ਗੌਰਾਂ ਸੁਖਦੇਵ ਤੋਂ <span class='hl-blue'>ਸੱਤ ਸਾਲ</span> ਵੱਡੀ ਸੀ।"
-            },
-            {
-                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 6", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
-                q: "ਸੁਖਦੇਵ ਨੂੰ ਬਚਪਨ ਵਿੱਚ ਸਕੂਲ ਕੌਣ ਤਿਆਰ ਕਰਕੇ ਭੇਜਦਾ ਸੀ?", type: "mcq",
-                opts: ["ਗੌਰਾਂ", "ਮਾਤਾ ਰਲ਼ੀ ਦੇਈ", "ਰਹੀਮਣ ਚਾਚੀ", "ਤਾਇਆ ਚਿੰਤ ਰਾਮ"], correct: 2,
-                a: "ਸੁਖਦੇਵ ਨੂੰ ਬਚਪਨ ਵਿੱਚ ਸਕੂਲ <span class='hl-blue'>ਰਹੀਮਣ ਚਾਚੀ</span> ਤਿਆਰ ਕਰਕੇ ਭੇਜਦਾ ਸੀ।"
-            },
-            {
-                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 7", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
-                q: "ਜੱਲ੍ਹਿਆਂਵਾਲਾ ਬਾਗ਼ ਦਾ ਸਾਕਾ ਕਦੋਂ ਵਾਪਰਿਆ ਸੀ?", type: "mcq",
-                opts: ["15 ਮਈ 1907", "13 ਅਪ੍ਰੈਲ 1919", "23 ਮਾਰਚ 1931", "26 ਜਨਵਰੀ 1950"], correct: 1,
-                a: "ਜੱਲ੍ਹਿਆਂਵਾਲਾ ਬਾਗ਼ ਦਾ ਸਾਕਾ <span class='hl-blue'>13 ਅਪ੍ਰੈਲ 1919</span> ਨੂੰ ਵਾਪਰਿਆ ਸੀ।"
-            },
-            {
-                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 8", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
-                q: "ਬਾਲ ਸੁਖਦੇਵ ਨੇ ਸਕੂਲ ਵਿੱਚ ਕਿਸਨੂੰ ਸਲਾਮੀ ਦੇਣ ਤੋਂ ਇਨਕਾਰ ਕਰ ਦਿੱਤਾ ਸੀ?", type: "mcq",
-                opts: ["ਮੁੱਖ ਅਧਿਆਪਕ ਨੂੰ", "ਆਪਣੇ ਪਿਤਾ ਨੂੰ", "ਅੰਗਰੇਜ਼ ਅਫ਼ਸਰ ਨੂੰ", "ਪੁਲਿਸ ਵਾਲੇ ਨੂੰ"], correct: 2,
-                a: "ਬਾਲ ਸੁਖਦੇਵ ਨੇ <span class='hl-blue'>ਅੰਗਰੇਜ਼ ਅਫ਼ਸਰ ਨੂੰ</span> ਸਲਾਮੀ ਦੇਣ ਤੋਂ ਇਨਕਾਰ ਕਰ ਦਿੱਤਾ ਸੀ।"
-            },
-            {
-                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 9", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
-                q: "ਸਲਾਮੀ ਦੇਣ ਤੋਂ ਇਨਕਾਰ ਕਰਨ ਸਮੇਂ ਸੁਖਦੇਵ ਦੀ ਉਮਰ ਕਿੰਨੀ ਸੀ?", type: "mcq",
-                opts: ["10 ਸਾਲ", "12 ਸਾਲ", "15 ਸਾਲ", "18 ਸਾਲ"], correct: 1,
-                a: "ਸਲਾਮੀ ਦੇਣ ਤੋਂ ਇਨਕਾਰ ਕਰਨ ਸਮੇਂ ਸੁਖਦੇਵ ਦੀ ਉਮਰ <span class='hl-blue'>12 ਸਾਲ</span> ਸੀ।"
-            },
-            {
-                title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 10", instruction: "ਸਹੀ ਵਿਕਲਪ ਦੀ ਚੋਣ ਕਰੋ :",
-                q: "ਬਚਪਨ ਵਿੱਚ ਸੁਖਦੇਵ ਅਤੇ ਭਗਤ ਸਿੰਘ ਮਿੱਟੀ ਦੇ ਕੀ ਬਣਾ ਕੇ ਖੇਡਦੇ ਸਨ?", type: "mcq",
-                opts: ["ਖਿਡੌਣੇ", "ਭਾਂਡੇ", "ਘਰ", "ਜਹਾਜ਼"], correct: 2,
-                a: "ਉਹ ਮਿੱਟੀ ਦੇ <span class='hl-blue'>ਘਰ</span> ਬਣਾ ਕੇ ਖੇਡਦੇ ਸਨ।"
-            },
-            { type: "conclude" }
-        ],
-        activities: [
-            {
-                title: "ਵਿਰੋਧੀ ਸ਼ਬਦ (ਭਾਗ 1)",
-                instruction: "ਵਿਰੋਧੀ ਸ਼ਬਦ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "list",
-                items: [
-                    {q: "ਵੱਡੀ", a: "ਵਿਰੋਧੀ ਸ਼ਬਦ : <span class='hl-blue'>ਛੋਟੀ</span>"},
-                    {q: "ਪਿਆਰ", a: "ਵਿਰੋਧੀ ਸ਼ਬਦ : <span class='hl-blue'>ਨਫ਼ਰਤ</span>"},
-                    {q: "ਅਜ਼ਾਦੀ", a: "ਵਿਰੋਧੀ ਸ਼ਬਦ : <span class='hl-blue'>ਗੁਲਾਮੀ</span>"}
-                ]
-            },
-            {
-                title: "ਵਿਰੋਧੀ ਸ਼ਬਦ (ਭਾਗ 2)",
-                instruction: "ਵਿਰੋਧੀ ਸ਼ਬਦ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "list",
-                items: [
-                    {q: "ਰੋਣਾ", a: "ਵਿਰੋਧੀ ਸ਼ਬਦ : <span class='hl-blue'>ਹੱਸਣਾ</span>"},
-                    {q: "ਬਚਪਨ", a: "ਵਿਰੋਧੀ ਸ਼ਬਦ : <span class='hl-blue'>ਬੁਢਾਪਾ</span>"}
-                ]
-            },
-            {
-                title: "ਇਕਵਚਨ - ਬਹੁਵਚਨ (ਭਾਗ 1)",
-                instruction: "ਬਹੁਵਚਨ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "list",
-                items: [
-                    {q: "ਬੱਚਾ", a: "ਬਹੁਵਚਨ : <span class='hl-blue'>ਬੱਚੇ</span>"},
-                    {q: "ਕਤਾਰ", a: "ਬਹੁਵਚਨ : <span class='hl-blue'>ਕਤਾਰਾਂ</span>"},
-                    {q: "ਰੱਸਾ", a: "ਬਹੁਵਚਨ : <span class='hl-blue'>ਰੱਸੇ</span>"}
-                ]
-            },
-            {
-                title: "ਇਕਵਚਨ - ਬਹੁਵਚਨ (ਭਾਗ 2)",
-                instruction: "ਬਹੁਵਚਨ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "list",
-                items: [
-                    {q: "ਅਫ਼ਸਰ", a: "ਬਹੁਵਚਨ : <span class='hl-blue'>ਅਫ਼ਸਰਾਂ</span>"},
-                    {q: "ਪੈੜ", a: "ਬਹੁਵਚਨ : <span class='hl-blue'>ਪੈੜਾਂ</span>"}
-                ]
-            },
-            {
-                title: "ਲਿੰਗ ਬਦਲੋ (ਪੁਲਿੰਗ - ਇਸਤਰੀ ਲਿੰਗ)",
-                instruction: "ਇਸਤਰੀ ਲਿੰਗ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "list",
-                items: [
-                    {q: "ਪਿਤਾ", a: "ਲਿੰਗ ਬਦਲੋ : <span class='hl-blue'>ਮਾਤਾ</span>"},
-                    {q: "ਭਰਾ", a: "ਲਿੰਗ ਬਦਲੋ : <span class='hl-blue'>ਭੈਣ</span>"},
-                    {q: "ਚਾਚਾ", a: "ਲਿੰਗ ਬਦਲੋ : <span class='hl-blue'>ਚਾਚੀ</span>"},
-                    {q: "ਨੌਕਰ", a: "ਲਿੰਗ ਬਦਲੋ : <span class='hl-blue'>ਨੌਕਰਾਣੀ</span>"},
-                    {q: "ਬੱਚਾ", a: "ਲਿੰਗ ਬਦਲੋ : <span class='hl-blue'>ਬੱਚੀ</span>"}
-                ]
-            },
-            {
-                title: "ਸਮਾਨਾਰਥਕ ਸ਼ਬਦ (ਭਾਗ 1)",
-                instruction: "ਸਮਾਨਾਰਥਕ ਸ਼ਬਦ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "list",
-                items: [
-                    {q: "ਅਜ਼ਾਦੀ", a: "ਸਮਾਨਾਰਥਕ ਸ਼ਬਦ : <span class='hl-blue'>ਸੁਤੰਤਰਤਾ</span>"},
-                    {q: "ਪਿਆਰ", a: "ਸਮਾਨਾਰਥਕ ਸ਼ਬਦ : <span class='hl-blue'>ਸਨੇਹ</span>"},
-                    {q: "ਝੁਰਮਟ", a: "ਸਮਾਨਾਰਥਕ ਸ਼ਬਦ : <span class='hl-blue'>ਇਕੱਠ</span>"}
-                ]
-            },
-            {
-                title: "ਸਮਾਨਾਰਥਕ ਸ਼ਬਦ (ਭਾਗ 2)",
-                instruction: "ਸਮਾਨਾਰਥਕ ਸ਼ਬਦ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "list",
-                items: [
-                    {q: "ਛਿੱਥਾ", a: "ਸਮਾਨਾਰਥਕ ਸ਼ਬਦ : <span class='hl-blue'>ਸ਼ਰਮਿੰਦਾ</span>"},
-                    {q: "ਹੁਸ਼ਿਆਰੀ", a: "ਸਮਾਨਾਰਥਕ ਸ਼ਬਦ : <span class='hl-blue'>ਚਲਾਕੀ / ਚੁਸਤੀ</span>"}
-                ]
-            },
-            {
-                title: "ਬਹੁਤੇ ਸ਼ਬਦਾਂ ਦੀ ਥਾਂ ਇੱਕ ਸ਼ਬਦ",
-                instruction: "ਇੱਕ ਸ਼ਬਦ ਦੇਖਣ ਲਈ ਬਟਨ ਤੇ ਟੱਚ ਕਰੋ :",
-                type: "list",
-                items: [
-                    {q: "ਦੇਸ਼ ਲਈ ਆਪਣੀ ਜਾਨ ਕੁਰਬਾਨ ਕਰਨ ਵਾਲਾ", a: "ਇੱਕ ਸ਼ਬਦ : <span class='hl-blue'>ਸ਼ਹੀਦ</span>"},
-                    {q: "ਜਿਸਦੇ ਮਨ ਵਿੱਚ ਕੋਈ ਡਰ ਨਾ ਹੋਵੇ", a: "ਇੱਕ ਸ਼ਬਦ : <span class='hl-blue'>ਨਿਡਰ</span>"},
-                    {q: "ਦੂਜੇ ਦੇਸ ਦਾ ਰਾਜ ਹੋਣਾ", a: "ਇੱਕ ਸ਼ਬਦ : <span class='hl-blue'>ਗੁਲਾਮੀ</span>"}
-                ]
-            },
-            {
-                title: "ਵਾਕ ਬਣਾਓ (ਭਾਗ 1)",
-                instruction: "ਵਾਕ ਦੇਖਣ ਲਈ ਸ਼ਬਦ ਦੇ ਸਾਹਮਣੇ ਟੱਚ ਕਰੋ :",
-                type: "qa",
-                items: [
-                    {q: "ਸ਼ਹੀਦ", a: "ਵਾਕ : <span class='hl-blue'>ਸ਼ਹੀਦ ਸੁਖਦੇਵ ਇੱਕ ਮਹਾਨ ਦੇਸ਼ ਭਗਤ ਸੀ।</span>"},
-                    {q: "ਅਜ਼ਾਦੀ", a: "ਵਾਕ : <span class='hl-blue'>ਸਾਨੂੰ ਅਜ਼ਾਦੀ ਬਹੁਤ ਕੁਰਬਾਨੀਆਂ ਤੋਂ ਬਾਅਦ ਮਿਲੀ ਹੈ।</span>"},
-                    {q: "ਸ਼ਰਾਰਤ", a: "ਵਾਕ : <span class='hl-blue'>ਬੱਚੇ ਸ਼ਰਾਰਤਾਂ ਕਰਦੇ ਰਹਿੰਦੇ ਹਨ।</span>"}
-                ]
-            },
-            {
-                title: "ਵਾਕ ਬਣਾਓ (ਭਾਗ 2)",
-                instruction: "ਵਾਕ ਦੇਖਣ ਲਈ ਸ਼ਬਦ ਦੇ ਸਾਹਮਣੇ ਟੱਚ ਕਰੋ :",
-                type: "qa",
-                items: [
-                    {q: "ਹੁਸ਼ਿਆਰੀ", a: "ਵਾਕ : <span class='hl-blue'>ਸੁਖਦੇਵ ਨੇ ਬਹੁਤ ਹੁਸ਼ਿਆਰੀ ਨਾਲ ਬੱਚੇ ਦੀ ਜਾਨ ਬਚਾਈ।</span>"},
-                    {q: "ਇਨਕਾਰ", a: "ਵਾਕ : <span class='hl-blue'>ਸੁਖਦੇਵ ਨੇ ਅੰਗਰੇਜ਼ ਅਫ਼ਸਰ ਨੂੰ ਸਲਾਮੀ ਦੇਣ ਤੋਂ ਇਨਕਾਰ ਕਰ ਦਿੱਤਾ।</span>"}
-                ]
-            },
-            { type: "conclude" }
-        ]
+      exercise: [
+        {
+          title: "1. ਯਾਦ ਰੱਖਣਯੋਗ ਗੱਲਾਂ",
+          instruction: "ਪੜ੍ਹਨ ਲਈ ਬਟਨ 'ਤੇ ਟੱਚ ਕਰੋ :",
+          type: "list",
+          items: [
+            { q: "ਬਿੰਦੂ 1", a: "ਜਾਣਕਾਰੀ : <span class='hl-blue'>ਸ਼ਹੀਦ ਸੁਖਦੇਵ ਦਾ ਜਨਮ ਲੁਧਿਆਣਾ ਵਿੱਚ ਹੋਇਆ।</span>" },
+            { q: "ਬਿੰਦੂ 2", a: "ਜਾਣਕਾਰੀ : <span class='hl-blue'>ਜੱਲ੍ਹਿਆਂਵਾਲੇ ਬਾਗ ਦਾ ਸਾਕਾ 13 ਅਪ੍ਰੈਲ, 1919 ਨੂੰ ਵਾਪਰਿਆ।</span>" },
+            { q: "ਬਿੰਦੂ 3", a: "ਜਾਣਕਾਰੀ : <span class='hl-blue'>23 ਮਾਰਚ, 1931 ਨੂੰ ਸੁਖਦੇਵ ਨੂੰ ਭਗਤ ਸਿੰਘ ਅਤੇ ਰਾਜਗੁਰੂ ਦੇ ਨਾਲ ਫਾਂਸੀ ਦਿੱਤੀ ਗਈ।</span>" }
+          ]
+        },
+        {
+          title: "2. ਪੜ੍ਹੋ ਅਤੇ ਸਮਝੋ (ਸ਼ਬਦ-ਅਰਥ)",
+          instruction: "ਅਰਥ ਦੇਖਣ ਲਈ ਬਟਨ 'ਤੇ ਟੱਚ ਕਰੋ :",
+          type: "list",
+          items: [
+            { q: "ਅਜ਼ਾਦੀ", a: "ਅਰਥ : <span class='hl-blue'>ਸੁਤੰਤਰਤਾ, ਆਪਣੀ ਮਰਜ਼ੀ ਨਾਲ ਚੱਲਣ ਦਾ ਭਾਵ</span>" },
+            { q: "ਝੁਰਮਟ", a: "ਅਰਥ : <span class='hl-blue'>ਇਕੱਠ</span>" },
+            { q: "ਚਿੜਚਿੜਾ", a: "ਅਰਥ : <span class='hl-blue'>ਖਿਝਣ ਵਾਲਾ, ਖਿਝੂ ਸੁਭਾਅ</span>" },
+            { q: "ਹੁਸ਼ਿਆਰੀ", a: "ਅਰਥ : <span class='hl-blue'>ਚੁਸਤੀ, ਚਲਾਕੀ</span>" },
+            { q: "ਤਾਇਨਾਤ", a: "ਅਰਥ : <span class='hl-blue'>ਨਿਯੁਕਤ ਕਰਨਾ</span>" },
+            { q: "ਛਿੱਬਾ", a: "ਅਰਥ : <span class='hl-blue'>ਸ਼ਰਮਿੰਦਾ</span>" },
+            { q: "ਪੈੜਾਂ", a: "ਅਰਥ : <span class='hl-blue'>ਪੈਰਾਂ ਦੇ ਨਿਸ਼ਾਨ</span>" }
+          ]
+        },
+        {
+          title: "3. ਠੀਕ ਸ਼ਬਦ ਚੁਣ ਕੇ ਖ਼ਾਲੀ ਥਾਂਵਾਂ ਭਰੋ",
+          instruction: "ਸਹੀ ਸ਼ਬਦ ਚੁਣੋ:",
+          type: "blanks_with_options",
+          options: ["ਅੱਗ-ਬਗੋਲਾ", "ਪਹਿਲੀ", "ਲਾਇਲਪੁਰ", "ਰਲੀ ਦੇਈ", "ਸਨਾਤਨ ਧਰਮ"],
+          items: [
+            { q: "(ੳ) ਸੁਖਦੇਵ ਦੇ ਮਾਤਾ ਜੀ ਦਾ ਨਾਂ ", blank: "ਰਲੀ ਦੇਈ", after: " ਸੀ।" },
+            { q: "(ਅ) ਸੁਖਦੇਵ ਲਾਇਲਪੁਰ ਦੇ ", blank: "ਸਨਾਤਨ ਧਰਮ", after: " ਸਕੂਲ 'ਚ ਪੜ੍ਹਦਾ ਸੀ।" },
+            { q: "(ੲ) ਅੰਗਰੇਜ਼ ਅਫ਼ਸਰ ", blank: "ਅੱਗ-ਬਗੋਲਾ", after: " ਹੋ ਗਿਆ।" },
+            { q: "(ਸ) ਅੰਗਰੇਜ਼ ਹਕੂਮਤ ਨਾਲ ਸੁਖਦੇਵ ਦੀ ਇਹ ", blank: "ਪਹਿਲੀ", after: " ਟੱਕਰ ਸੀ।" },
+            { q: "(ਹ) ਸੁਖਦੇਵ ਦਾ ਪਰਿਵਾਰ ", blank: "ਲਾਇਲਪੁਰ", after: " ਵਿਖੇ ਰਹਿੰਦਾ ਸੀ।" }
+          ]
+        },
+        {
+          title: "4. ਹੇਠ ਲਿਖੇ ਪ੍ਰਸ਼ਨਾਂ ਦੇ ਉੱਤਰ ਲਿਖੋ - ਭਾਗ 1",
+          instruction: "ਉੱਤਰ ਦੇਖਣ ਲਈ ਬਟਨ 'ਤੇ ਟੱਚ ਕਰੋ:",
+          type: "qa",
+          items: [
+            { q: "(ੳ) ਸੁਖਦੇਵ ਦਾ ਜਨਮ ਕਦੋਂ ਹੋਇਆ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਸੁਖਦੇਵ ਦਾ ਜਨਮ 15 ਮਈ, 1907 ਈ. ਨੂੰ ਹੋਇਆ।</span>" },
+            { q: "(ਅ) ਸੁਖਦੇਵ ਦੀ ਚਚੇਰੀ ਭੈਣ ਦਾ ਕੀ ਨਾਂ ਸੀ ਅਤੇ ਉਹ ਸੁਖਦੇਵ ਨਾਲ ਕਿਸ ਤਰ੍ਹਾਂ ਦਾ ਵਰਤਾਅ ਕਰਦੀ ਸੀ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਉਸਦੀ ਚਚੇਰੀ ਭੈਣ ਦਾ ਨਾਂ ਗੌਰਾਂ ਸੀ। ਉਹ ਸੁਖਦੇਵ ਨੂੰ ਬਹੁਤ ਪਿਆਰ ਕਰਦੀ ਸੀ ਅਤੇ ਜਦੋਂ ਸੁਖਦੇਵ ਸ਼ਰਾਰਤ ਕਰਦਾ ਤਾਂ ਉਸਦਾ ਪੱਖ ਪੂਰਦੀ ਸੀ।</span>" },
+            { q: "(ੲ) ਜਦੋਂ ਬੱਚਾ ਖੂਹ ਵਿੱਚ ਡਿੱਗ ਪਿਆ ਤਾਂ ਸੁਖਦੇਵ ਨੇ ਉਸ ਨੂੰ ਬਚਾਉਣ ਲਈ ਕੀ ਕੀਤਾ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਸੁਖਦੇਵ ਕਾਹਲੀ ਨਾਲ ਭੱਜਾ-ਭੱਜਾ ਆਪਣੇ ਘਰ ਗਿਆ ਅਤੇ ਨੌਕਰ ਸ਼ਿਵ ਰਾਮ ਨੂੰ ਰੱਸੇ ਸਮੇਤ ਖੂਹ 'ਤੇ ਲੈ ਆਇਆ ਅਤੇ ਹੁਸ਼ਿਆਰੀ ਨਾਲ ਬੱਚੇ ਨੂੰ ਬਚਾ ਲਿਆ।</span>" }
+          ]
+        },
+        {
+          title: "4. ਹੇਠ ਲਿਖੇ ਪ੍ਰਸ਼ਨਾਂ ਦੇ ਉੱਤਰ ਲਿਖੋ - ਭਾਗ 2",
+          instruction: "ਉੱਤਰ ਦੇਖਣ ਲਈ ਬਟਨ 'ਤੇ ਟੱਚ ਕਰੋ:",
+          type: "qa",
+          items: [
+            { q: "(ਸ) ਜੱਲ੍ਹਿਆਂਵਾਲੇ ਬਾਗ ਦੇ ਸਾਕੇ ਤੋਂ ਬਾਅਦ ਅੰਗਰੇਜ਼ ਸਰਕਾਰ ਨੇ ਸਾਰੇ ਪੰਜਾਬ ਵਿੱਚ ਸਥਿਤੀ ਨੂੰ ਕਾਬੂ ਵਿੱਚ ਰੱਖਣ ਲਈ ਕੀ ਕੀਤਾ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਅੰਗਰੇਜ਼ ਸਰਕਾਰ ਨੇ ਜੱਲ੍ਹਿਆਂਵਾਲਾ ਬਾਗ ਦੇ ਸਾਕੇ ਤੋਂ ਤੀਜੇ ਦਿਨ ਸਾਰੇ ਪੰਜਾਬ ਵਿੱਚ ਫ਼ੌਜ ਅਤੇ ਪੁਲਿਸ ਤਾਇਨਾਤ ਕਰ ਦਿੱਤੀ।</span>" },
+            { q: "(ਹ) ਸੁਖਦੇਵ ਦੇ ਭਗਤ ਸਿੰਘ ਨਾਲ ਸੰਬੰਧ ਕਿਵੇਂ ਬਣੇ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਭਗਤ ਸਿੰਘ ਦਾ ਪਿਤਾ ਕਿਸ਼ਨ ਸਿੰਘ, ਸੁਖਦੇਵ ਦੇ ਤਾਇਆ ਲਾਲਾ ਚਿੰਤ ਰਾਮ ਦੇ ਘਰ ਆਉਂਦਾ-ਜਾਂਦਾ ਸੀ। ਇਸ ਤਰ੍ਹਾਂ ਬਾਲ ਭਗਤ ਸਿੰਘ ਵੀ ਆਉਂਦਾ ਸੀ ਅਤੇ ਸੁਖਦੇਵ ਤੇ ਭਗਤ ਸਿੰਘ ਇਕੱਠੇ ਖੇਡਣ ਲੱਗ ਪਏ।</span>" }
+          ]
+        },
+        {
+          title: "5. ਹੇਠ ਲਿਖੇ ਕੌਣ ਸਨ ?",
+          instruction: "ਜਾਣਨ ਲਈ ਬਟਨ 'ਤੇ ਟੱਚ ਕਰੋ:",
+          type: "qa",
+          items: [
+            { q: "(ੳ) ਸੁਖਦੇਵ", a: "ਉੱਤਰ : <span class='hl-blue'>ਇੱਕ ਮਹਾਨ ਦੇਸ਼-ਭਗਤ ਅਤੇ ਭਗਤ ਸਿੰਘ ਦਾ ਨੇੜੇ ਦਾ ਸਾਥੀ।</span>" },
+            { q: "(ਅ) ਗੌਰਾਂ", a: "ਉੱਤਰ : <span class='hl-blue'>ਸੁਖਦੇਵ ਦੀ ਚਚੇਰੀ ਭੈਣ, ਜੋ ਉਸ ਤੋਂ ਸੱਤ ਸਾਲ ਵੱਡੀ ਸੀ।</span>" },
+            { q: "(ੲ) ਰਹਿਮਤ", a: "ਉੱਤਰ : <span class='hl-blue'>ਸੁਖਦੇਵ ਦੇ ਘਰ ਕੰਮ ਕਰਨ ਵਾਲੀ ਔਰਤ, ਜਿਸਨੂੰ ਸੁਖਦੇਵ 'ਰਹਿਮਤ ਚਾਚੀ' ਕਹਿ ਕੇ ਬੁਲਾਉਂਦਾ ਸੀ।</span>" },
+            { q: "(ਸ) ਕਿਸ਼ਨ ਸਿੰਘ", a: "ਉੱਤਰ : <span class='hl-blue'>ਬਾਲ ਭਗਤ ਸਿੰਘ ਦੇ ਪਿਤਾ ਜੀ।</span>" }
+          ]
+        },
+        {
+          title: "6. ਅਧਿਆਪਕ ਆਪ ਬੋਲ ਕੇ ਲਿਖਣ ਲਈ ਕਹੇ (ਡਿਕਟੇਸ਼ਨ)",
+          instruction: "ਸੁਣੋ ਅਤੇ ਮਿਲਾਓ:",
+          type: "qa",
+          items: [
+            { q: "ਵਾਕ 1", a: "ਵਾਕ : <span class='hl-blue'>ਉਹ ਭਗਤ ਸਿੰਘ ਦਾ ਨੇੜੇ ਦਾ ਸਾਥੀ ਸੀ।</span>" },
+            { q: "ਵਾਕ 2", a: "ਵਾਕ : <span class='hl-blue'>ਗੌਰਾਂ ਸੁਖਦੇਵ ਤੋਂ ਸੱਤ ਸਾਲ ਵੱਡੀ ਸੀ।</span>" },
+            { q: "ਵਾਕ 3", a: "ਵਾਕ : <span class='hl-blue'>ਉਸ ਦਾ ਸੁਭਾਅ ਚਿੜਚਿੜਾ ਸੀ।</span>" },
+            { q: "ਵਾਕ 4", a: "ਵਾਕ : <span class='hl-blue'>ਸੁਖਦੇਵ ਅਤੇ ਭਗਤ ਸਿੰਘ ਖੇਡਣ ਲੱਗ ਜਾਂਦੇ।</span>" },
+            { q: "ਵਾਕ 5", a: "ਵਾਕ : <span class='hl-blue'>ਇਹ ਘਟਨਾ ਨਿੱਕੀ ਨਹੀਂ ਸੀ।</span>" }
+          ]
+        },
+        {
+          title: "7. ਬਾਲ ਸੁਖਦੇਵ ਦੇ ਸੁਭਾਅ/ਬਚਪਨ ਬਾਰੇ ਜਾਣਕਾਰੀ",
+          instruction: "ਗੋਲ ਚੱਕਰ (Mind Map) ਦੇਖਣ ਲਈ ਟੱਚ ਕਰੋ:",
+          type: "mind_map",
+          items: ["ਜ਼ਿੱਦੀ ਅਤੇ ਚਿੜਚਿੜਾ", "ਚੁਸਤ ਅਤੇ ਹੁਸ਼ਿਆਰ", "ਖੇਡਣ ਦਾ ਸ਼ੌਕੀਨ", "ਅੰਗਰੇਜ਼ਾਂ ਪ੍ਰਤੀ ਨਫ਼ਰਤ", "ਭਗਤ ਸਿੰਘ ਦਾ ਸਾਥੀ", "ਮਹਾਨ ਦੇਸ਼-ਭਗਤ"]
+        },
+        {
+          title: "8. ਅਧਿਆਪਕ ਲਈ ਹਦਾਇਤਾਂ",
+          instruction: "ਧਿਆਨ ਦਿਓ:",
+          type: "typewriter",
+          content: "ਅਧਿਆਪਕ ਵਿਦਿਆਰਥੀਆਂ ਨੂੰ ਭਾਰਤ ਦੀ ਅਜ਼ਾਦੀ ਦੀ ਲੜਾਈ ਵਿੱਚ ਹਿੱਸਾ ਪਾਉਣ ਵਾਲੇ ਹੋਰਨਾਂ ਦੇਸ਼-ਭਗਤਾਂ ਬਾਰੇ ਜਾਣਕਾਰੀ ਦੇ ਕੇ ਦੇਸ਼-ਭਗਤੀ ਦੀ ਭਾਵਨਾ ਪੈਦਾ ਕਰੇ।"
+        },
+        { type: "conclude" }
+      ],
+      mcq: [
+        { title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 1", instruction: "ਸਹੀ ਵਿਕਲਪ ਚੁਣੋ :", q: "ਸ਼ਹੀਦ ਸੁਖਦੇਵ ਦਾ ਜਨਮ ਕਦੋਂ ਹੋਇਆ?", type: "mcq", opts: ["15 ਮਈ 1907", "13 ਅਪ੍ਰੈਲ 1919", "23 ਮਾਰਚ 1931", "15 ਅਗਸਤ 1947"], correct: 0, a: "ਉੱਤਰ : <span class='hl-blue'>15 ਮਈ 1907</span>" },
+        { title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 2", instruction: "ਸਹੀ ਵਿਕਲਪ ਚੁਣੋ :", q: "ਸ਼ਹੀਦ ਸੁਖਦੇਵ ਦਾ ਜਨਮ ਕਿਸ ਸ਼ਹਿਰ ਵਿੱਚ ਹੋਇਆ?", type: "mcq", opts: ["ਅੰਮ੍ਰਿਤਸਰ", "ਜਲੰਧਰ", "ਲਾਇਲਪੁਰ", "ਲੁਧਿਆਣਾ"], correct: 3, a: "ਉੱਤਰ : <span class='hl-blue'>ਲੁਧਿਆਣਾ</span>" },
+        { title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 3", instruction: "ਸਹੀ ਵਿਕਲਪ ਚੁਣੋ :", q: "ਸੁਖਦੇਵ ਦੇ ਮਾਤਾ ਜੀ ਦਾ ਕੀ ਨਾਂ ਸੀ?", type: "mcq", opts: ["ਵਿਦਿਆਵਤੀ", "ਰਲੀ ਦੇਈ", "ਗੌਰਾਂ", "ਰਹਿਮਤ"], correct: 1, a: "ਉੱਤਰ : <span class='hl-blue'>ਰਲੀ ਦੇਈ</span>" },
+        { title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 4", instruction: "ਸਹੀ ਵਿਕਲਪ ਚੁਣੋ :", q: "ਗੌਰਾਂ ਸੁਖਦੇਵ ਤੋਂ ਕਿੰਨੇ ਸਾਲ ਵੱਡੀ ਸੀ?", type: "mcq", opts: ["ਪੰਜ ਸਾਲ", "ਛੇ ਸਾਲ", "ਸੱਤ ਸਾਲ", "ਅੱਠ ਸਾਲ"], correct: 2, a: "ਉੱਤਰ : <span class='hl-blue'>ਸੱਤ ਸਾਲ</span>" },
+        { title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 5", instruction: "ਸਹੀ ਵਿਕਲਪ ਚੁਣੋ :", q: "ਸੁਖਦੇਵ ਦੇ ਘਰ ਕੰਮ ਕਰਨ ਵਾਲੀ ਔਰਤ ਨੂੰ ਉਹ ਕੀ ਕਹਿ ਕੇ ਬੁਲਾਉਂਦਾ ਸੀ?", type: "mcq", opts: ["ਰਹਿਮਤ ਚਾਚੀ", "ਰਲੀ ਮਾਤਾ", "ਗੌਰਾਂ ਭੈਣ", "ਮਾਸੀ"], correct: 0, a: "ਉੱਤਰ : <span class='hl-blue'>ਰਹਿਮਤ ਚਾਚੀ</span>" },
+        { title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 6", instruction: "ਸਹੀ ਵਿਕਲਪ ਚੁਣੋ :", q: "ਸੁਖਦੇਵ ਲਾਇਲਪੁਰ ਦੇ ਕਿਹੜੇ ਸਕੂਲ ਵਿੱਚ ਪੜ੍ਹਦਾ ਸੀ?", type: "mcq", opts: ["ਡੀ.ਏ.ਵੀ. ਸਕੂਲ", "ਖ਼ਾਲਸਾ ਸਕੂਲ", "ਸਨਾਤਨ ਧਰਮ ਸਕੂਲ", "ਸਰਕਾਰੀ ਸਕੂਲ"], correct: 2, a: "ਉੱਤਰ : <span class='hl-blue'>ਸਨਾਤਨ ਧਰਮ ਸਕੂਲ</span>" },
+        { title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 7", instruction: "ਸਹੀ ਵਿਕਲਪ ਚੁਣੋ :", q: "ਜੱਲ੍ਹਿਆਂਵਾਲੇ ਬਾਗ ਦਾ ਸਾਕਾ ਕਦੋਂ ਵਾਪਰਿਆ?", type: "mcq", opts: ["15 ਮਈ 1907", "13 ਅਪ੍ਰੈਲ 1919", "23 ਮਾਰਚ 1931", "26 ਜਨਵਰੀ 1950"], correct: 1, a: "ਉੱਤਰ : <span class='hl-blue'>13 ਅਪ੍ਰੈਲ 1919</span>" },
+        { title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 8", instruction: "ਸਹੀ ਵਿਕਲਪ ਚੁਣੋ :", q: "ਸਕੂਲ ਵਿੱਚ ਸੁਖਦੇਵ ਨੇ ਕਿਸ ਨੂੰ ਸਲਾਮੀ ਦੇਣ ਤੋਂ ਇਨਕਾਰ ਕਰ ਦਿੱਤਾ?", type: "mcq", opts: ["ਮੁੱਖ ਅਧਿਆਪਕ ਨੂੰ", "ਭਗਤ ਸਿੰਘ ਨੂੰ", "ਅੰਗਰੇਜ਼ ਅਫ਼ਸਰ ਨੂੰ", "ਸਿਪਾਹੀ ਨੂੰ"], correct: 2, a: "ਉੱਤਰ : <span class='hl-blue'>ਅੰਗਰੇਜ਼ ਅਫ਼ਸਰ ਨੂੰ</span>" },
+        { title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 9", instruction: "ਸਹੀ ਵਿਕਲਪ ਚੁਣੋ :", q: "ਸੁਖਦੇਵ ਤੇ ਭਗਤ ਸਿੰਘ ਮਿੱਟੀ ਦੇ ਘਰ ਬਣਾਉਣ ਦੀ ਖੇਡ ਖੇਡਦੇ ਪਿੱਛੋਂ ਆਪ ਹੀ ਕੀ ਕਰ ਦਿੰਦੇ ਸਨ?", type: "mcq", opts: ["ਸਜਾ ਦਿੰਦੇ ਸਨ", "ਢਾਹ ਦਿੰਦੇ ਸਨ", "ਰੰਗ ਕਰਦੇ ਸਨ", "ਛੱਡ ਦਿੰਦੇ ਸਨ"], correct: 1, a: "ਉੱਤਰ : <span class='hl-blue'>ਢਾਹ ਦਿੰਦੇ ਸਨ</span>" },
+        { title: "ਬਹੁਵਿਕਲਪੀ ਪ੍ਰਸ਼ਨ 10", instruction: "ਸਹੀ ਵਿਕਲਪ ਚੁਣੋ :", q: "ਭਗਤ ਸਿੰਘ, ਸੁਖਦੇਵ ਅਤੇ ਰਾਜਗੁਰੂ ਨੂੰ ਫਾਂਸੀ ਕਦੋਂ ਦਿੱਤੀ ਗਈ?", type: "mcq", opts: ["15 ਮਈ 1907", "13 ਅਪ੍ਰੈਲ 1919", "23 ਮਾਰਚ 1931", "15 ਅਗਸਤ 1947"], correct: 2, a: "ਉੱਤਰ : <span class='hl-blue'>23 ਮਾਰਚ 1931</span>" },
+        { type: "conclude" }
+      ],
+      activities: [
+        {
+          title: "ਵਾਧੂ ਗਤੀਵਿਧੀ 1: ਲਿੰਗ ਬਦਲੋ",
+          instruction: "ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੱਚ ਕਰੋ:",
+          type: "qa",
+          items: [
+            { q: "ਮਾਤਾ", a: "ਉੱਤਰ : <span class='hl-blue'>ਪਿਤਾ</span>" },
+            { q: "ਭੈਣ", a: "ਉੱਤਰ : <span class='hl-blue'>ਭਰਾ</span>" },
+            { q: "ਚਾਚੀ", a: "ਉੱਤਰ : <span class='hl-blue'>ਚਾਚਾ</span>" },
+            { q: "ਬੱਚਾ", a: "ਉੱਤਰ : <span class='hl-blue'>ਬੱਚੀ</span>" },
+            { q: "ਤਾਇਆ", a: "ਉੱਤਰ : <span class='hl-blue'>ਤਾਈ</span>" }
+          ]
+        },
+        {
+          title: "ਵਾਧੂ ਗਤੀਵਿਧੀ 2: ਵਚਨ ਬਦਲੋ",
+          instruction: "ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੱਚ ਕਰੋ:",
+          type: "qa",
+          items: [
+            { q: "ਘਰ", a: "ਉੱਤਰ : <span class='hl-blue'>ਘਰਾਂ</span>" },
+            { q: "ਬੱਚਾ", a: "ਉੱਤਰ : <span class='hl-blue'>ਬੱਚੇ</span>" },
+            { q: "ਸਲਾਮੀ", a: "ਉੱਤਰ : <span class='hl-blue'>ਸਲਾਮੀਆਂ</span>" },
+            { q: "ਖੂਹ", a: "ਉੱਤਰ : <span class='hl-blue'>ਖੂਹਾਂ</span>" },
+            { q: "ਗੱਲ", a: "ਉੱਤਰ : <span class='hl-blue'>ਗੱਲਾਂ</span>" }
+          ]
+        },
+        {
+          title: "ਵਾਧੂ ਗਤੀਵਿਧੀ 3: ਵਿਰੋਧੀ ਸ਼ਬਦ",
+          instruction: "ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੱਚ ਕਰੋ:",
+          type: "qa",
+          items: [
+            { q: "ਅਜ਼ਾਦੀ", a: "ਉੱਤਰ : <span class='hl-blue'>ਗੁਲਾਮੀ</span>" },
+            { q: "ਵੱਡੀ", a: "ਉੱਤਰ : <span class='hl-blue'>ਛੋਟੀ</span>" },
+            { q: "ਪਿਆਰ", a: "ਉੱਤਰ : <span class='hl-blue'>ਨਫ਼ਰਤ</span>" },
+            { q: "ਨੇੜੇ", a: "ਉੱਤਰ : <span class='hl-blue'>ਦੂਰ</span>" },
+            { q: "ਰੋਣਾ", a: "ਉੱਤਰ : <span class='hl-blue'>ਹੱਸਣਾ</span>" }
+          ]
+        },
+        {
+          title: "ਵਾਧੂ ਗਤੀਵਿਧੀ 4: ਸਮਾਨਾਰਥਕ ਸ਼ਬਦ",
+          instruction: "ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੱਚ ਕਰੋ:",
+          type: "qa",
+          items: [
+            { q: "ਸੁਤੰਤਰਤਾ", a: "ਉੱਤਰ : <span class='hl-blue'>ਅਜ਼ਾਦੀ</span>" },
+            { q: "ਮਾਤਾ", a: "ਉੱਤਰ : <span class='hl-blue'>ਮਾਂ</span>" },
+            { q: "ਚਲਾਕੀ", a: "ਉੱਤਰ : <span class='hl-blue'>ਹੁਸ਼ਿਆਰੀ / ਚੁਸਤੀ</span>" },
+            { q: "ਸਾਥੀ", a: "ਉੱਤਰ : <span class='hl-blue'>ਦੋਸਤ / ਮਿੱਤਰ</span>" },
+            { q: "ਮਕਾਨ", a: "ਉੱਤਰ : <span class='hl-blue'>ਘਰ</span>" }
+          ]
+        },
+        {
+          title: "ਵਾਧੂ ਗਤੀਵਿਧੀ 5: ਬਹੁਤੇ ਸ਼ਬਦਾਂ ਦੀ ਥਾਂ ਇੱਕ ਸ਼ਬਦ",
+          instruction: "ਉੱਤਰ ਦੇਖਣ ਲਈ ਟੱਚ ਕਰੋ:",
+          type: "qa",
+          items: [
+            { q: "ਆਪਣੀ ਮਰਜ਼ੀ ਨਾਲ ਚੱਲਣ ਵਾਲਾ", a: "ਉੱਤਰ : <span class='hl-blue'>ਅਜ਼ਾਦ</span>" },
+            { q: "ਜਿਸ ਦੇ ਮਨ ਵਿੱਚ ਦੇਸ਼ ਲਈ ਪਿਆਰ ਹੋਵੇ", a: "ਉੱਤਰ : <span class='hl-blue'>ਦੇਸ਼-ਭਗਤ</span>" },
+            { q: "ਜਲਦੀ ਖਿਝਣ ਵਾਲਾ ਸੁਭਾਅ", a: "ਉੱਤਰ : <span class='hl-blue'>ਚਿੜਚਿੜਾ</span>" },
+            { q: "ਜੋ ਕਦੇ ਨਾ ਡਰੇ", a: "ਉੱਤਰ : <span class='hl-blue'>ਨਿਡਰ</span>" }
+          ]
+        },
+        { type: "conclude" }
+      ]
     };
-
-    // ਫੁੱਲ ਸਕ੍ਰੀਨ ਈਵੈਂਟ (iOS 'ਤੇ error ਰੋਕਣ ਲਈ try/catch ਨਾਲ)
+    
     document.addEventListener("fullscreenchange", updateFsBtn);
-    document.addEventListener("webkitfullscreenchange", updateFsBtn);
     function updateFsBtn() {
         const btn = document.getElementById('fs-btn-id');
         if(!btn) return;
-        if (document.fullscreenElement || document.webkitFullscreenElement) {
-            btn.innerHTML = "🔲 ਵਾਪਸ ਆਉਣ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ"; btn.style.background = "#3498db"; 
+        if (document.fullscreenElement) {
+            btn.innerHTML = "🔲 ਵਾਪਸ ਆਉਣ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ"; btn.style.background = "#3498db";
         } else {
-            btn.innerHTML = "🔲 ਫੁੱਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ"; btn.style.background = "#e74c3c"; 
+            btn.innerHTML = "🔲 ਫੁੱਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ"; btn.style.background = "#e74c3c";
         }
     }
-
-    // ਡਬਲ ਟੈਪ ਫੁੱਲ ਸਕ੍ਰੀਨ
+    
     let lastTapTime = 0;
     document.addEventListener('touchend', function(e) {
-        if(e.target.closest('button')) return; // ਬਟਨਾਂ ਉੱਤੇ ਡਬਲ ਟੈਪ ਹੋਣ ਤੋਂ ਰੋਕੇਗਾ
+        if(e.target.tagName.toLowerCase() === 'button') return;
         const currentTime = new Date().getTime();
         const tapLength = currentTime - lastTapTime;
-        if (tapLength < 400 && tapLength > 0) toggleFullScreen(e);
+        if (tapLength < 400 && tapLength > 0) toggleFullScreen();
         lastTapTime = currentTime;
     });
-
+    
     function toggleFullScreen(e) {
-        if(e && e.stopPropagation) e.stopPropagation();
-        try {
-            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                if (document.documentElement.requestFullscreen) { 
-                    document.documentElement.requestFullscreen().catch(()=>{}); 
-                } else if (document.documentElement.webkitRequestFullscreen) { 
-                    document.documentElement.webkitRequestFullscreen(); 
-                }
-            } else {
-                if (document.exitFullscreen) { 
-                    document.exitFullscreen().catch(()=>{}); 
-                } else if (document.webkitExitFullscreen) { 
-                    document.webkitExitFullscreen(); 
-                }
-            }
-        } catch(err) {}
-    }
-
-    // Modal Control
-    function initDisclaimer() {
-        document.getElementById('disclaimer-screen').style.display = 'flex';
+        if(e) e.stopPropagation();
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(()=>{});
+        else document.exitFullscreen().catch(()=>{});
     }
     
     function showDiscModal(e) { if(e) e.stopPropagation(); document.getElementById('custom-modal').style.display = 'flex'; }
     function hideDiscModal(e) { if(e) e.stopPropagation(); document.getElementById('custom-modal').style.display = 'none'; }
-
-    // ਪਹਿਲੀ ਸਕਰੀਨ ਤੋਂ ਅੱਗੇ ਵਧਣ ਦਾ ਫੰਕਸ਼ਨ
+    function hideWrongModal(e) { if(e) e.stopPropagation(); document.getElementById('wrong-modal').style.display = 'none'; }
+    
     function agreeAndIntro(e) {
-        if(e) { e.preventDefault(); e.stopPropagation(); }
+        if(e) e.stopPropagation();
         document.getElementById('disclaimer-screen').style.display = 'none';
         document.getElementById('top-ticker').style.display = 'flex';
         document.getElementById('bottom-ticker').style.display = 'flex';
         document.getElementById('intro-screen').style.display = 'flex';
         state = 'intro';
     }
-
+    
     function showMainMenu() {
         document.getElementById('intro-screen').style.display = 'none';
         document.getElementById('main-menu-screen').style.display = 'flex';
         state = 'menu';
     }
-
-    // Global Click Handler
+    
     function handleGlobalClick(e) {
         if(state === 'intro' && !e.target.closest('button')) { showMainMenu(); return; }
-        
-        // ਆਟੋ ਮੋਡ ਵਿੱਚ ਸਿੰਗਲ ਟੱਚ ਨਾਲ ਚੁੱਪ-ਚਾਪ (Silently) ਰੋਕਣ/ਚਲਾਉਣ ਦਾ ਸਿਸਟਮ
         if(mode === 'auto' && state === 'slide') {
-            if(e.target.closest('.btn-home') || e.target.closest('.mind-map-container')) return; 
-            paused = !paused; 
-            updateStatusIndicator(); // ਸਟੇਟਸ ਬਬਲ ਨੂੰ ਅੱਪਡੇਟ ਕਰੋ
+            if(e.target.closest('.btn-home') || e.target.closest('button') || e.target.closest('.bottom-listen') || e.target.closest('.mind-map-container')) return;
+            paused = !paused;
+            updateStatusIndicator();
+            if(!paused) {
+                readAloud();
+            } else {
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+            }
         }
     }
-
-    // ਸਟੇਟਸ ਬਬਲ ਅੱਪਡੇਟ ਕਰਨ ਦਾ ਫੰਕਸ਼ਨ
+    
     function updateStatusIndicator() {
         const bubble = document.getElementById('auto-status-bubble');
         const text = document.getElementById('auto-status-text');
         if(!bubble || !text) return;
-        
         if(paused) {
             bubble.className = 'status-bubble status-paused';
-            text.innerText = 'ਰੁਕਿਆ ਹੋਇਆ';
-            text.style.color = '#e74c3c';
+            text.innerText = 'ਰੁਕਿਆ ਹੋਇਆ'; text.style.color = '#e74c3c';
         } else {
             bubble.className = 'status-bubble status-running';
-            text.innerText = 'ਚੱਲ ਰਿਹਾ ਹੈ';
-            text.style.color = '#2ecc71';
+            text.innerText = 'ਚੱਲ ਰਿਹਾ ਹੈ'; text.style.color = '#2ecc71';
         }
     }
-
+    
     function toggleAccordion(m) {
         const auto = document.getElementById('card-auto'), live = document.getElementById('card-live');
         if(m === 'auto') { auto.classList.toggle('expanded'); live.classList.remove('expanded'); }
         else { live.classList.toggle('expanded'); auto.classList.remove('expanded'); }
     }
-
+    
     function jumpTo(sec, mod, idx) {
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
         section = sec; mode = mod; step = idx; subIdx = -1; paused = false; reviewMode = false;
-        
         document.getElementById('main-menu-screen').style.display = 'none';
         document.getElementById('master-card').classList.add('active');
-        
-        if(mode === 'auto') {
-            document.body.classList.add('auto-mode');
-            updateStatusIndicator(); // ਸ਼ੁਰੂ ਕਰਨ ਵੇਲੇ ਬਬਲ ਨੂੰ ਹਰਾ ਕਰ ਦਿਓ
-        } else {
-            document.body.classList.remove('auto-mode');
-        }
-
-        state = 'slide'; 
-        renderSlide();
-        
+        if(mode === 'auto') { document.body.classList.add('auto-mode'); updateStatusIndicator(); }
+        else { document.body.classList.remove('auto-mode'); }
+        state = 'slide'; renderSlide();
         if(mode === 'auto') runAutoLoop();
     }
-
-    function startSection(sec, mod) { 
-        jumpTo(sec, mod, 'toc'); 
-    }
-
+    
+    function startSection(sec, mod) { jumpTo(sec, mod, 'toc'); }
+    
     function startAutoWithToc(sec) {
-        mode = 'auto'; 
-        document.body.classList.add('auto-mode');
+        mode = 'auto'; document.body.classList.add('auto-mode');
         openToc(null, sec, 'auto');
-        
         document.querySelectorAll('#toc-overlay .toc-go-btn').forEach(btn => btn.style.display = 'none');
-        
         setTimeout(() => {
             if (state === 'menu' && document.getElementById('toc-overlay').style.display === 'flex') {
-                document.getElementById('toc-overlay').style.display = 'none';
-                jumpTo(sec, 'auto', 0); 
+                document.getElementById('toc-overlay').style.display = 'none'; jumpTo(sec, 'auto', 0);
             }
-        }, 3000); 
+        }, 3000);
     }
-
+    
     function openToc(e, sec, mod) {
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
         if (e && e.stopPropagation) e.stopPropagation();
         const list = document.getElementById('toc-list'); list.innerHTML = '';
         lessonData[sec].forEach((d, idx) => {
@@ -832,165 +582,295 @@
         });
         document.getElementById('toc-overlay').style.display = 'flex';
     }
-
-    // Smooth Typewriter with custom speed
-    async function typeEffect(el, html, speed = TYPE_SPEED) {
-        typing = true; 
-        let currentHTML = "";
-        let i = 0;
-        while (i < html.length && typing) {
-            if (html[i] === '<') { 
-                let end = html.indexOf('>', i); 
-                currentHTML += html.substring(i, end + 1); 
-                i = end + 1; 
-                el.innerHTML = currentHTML;
-            } 
-            else { 
-                currentHTML += html[i]; 
-                el.innerHTML = currentHTML;
-                i++; 
-                await new Promise(r => setTimeout(r, speed)); 
-            }
+    
+    // --- AUTO-SCROLL HELPER ---
+    function scrollToActiveRow(idx) {
+        if (mode === 'auto') {
+            setTimeout(() => {
+                const row = document.getElementById(`row-${idx}`);
+                if (row) row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
         }
-        if(!typing) el.innerHTML = html; 
-        typing = false;
     }
 
-    /* === ਨਵਾਂ ਮਾਈਂਡ ਮੈਪ ਲੌਜਿਕ === */
+    async function typeEffect(el, html, speed = TYPE_SPEED) {
+        typing = true; let currentHTML = ""; let i = 0;
+        while (i < html.length && typing) {
+            if (html[i] === '<') {
+                let end = html.indexOf('>', i); currentHTML += html.substring(i, end + 1); i = end + 1; el.innerHTML = currentHTML;
+            } else {
+                currentHTML += html[i]; el.innerHTML = currentHTML; i++; await new Promise(r => setTimeout(r, speed));
+            }
+        }
+        if(!typing) el.innerHTML = html;
+        typing = false;
+    }
+    
+    // --- MIND MAP LOGIC ---
     function drawMindMap(container, items) {
         container.className = 'mind-map-container';
         container.onclick = (e) => {
             e.stopPropagation();
             if (typing || mode === 'auto') return;
-            // ਕੰਟੇਨਰ 'ਤੇ ਕਲਿੱਕ ਕਰਨ ਨਾਲ ਲਗਾਤਾਰ ਉੱਤਰ ਆਉਣਗੇ
-            if (mindMapIndex < currentMindMapNodes.length) {
-                revealSingleMindNode(mindMapIndex);
-            }
+            if (mindMapIndex < currentMindMapNodes.length) { revealSingleMindNode(mindMapIndex); }
         };
-
-        // ਲਾਈਨਾਂ ਬਣਾਉਣ ਲਈ SVG
         const svgHTML = `
-            <svg class="absolute inset-0 w-full h-full z-0" style="pointer-events: none;">
-                <line x1="50%" y1="50%" x2="50%" y2="15%" stroke="#f97316" stroke-width="3" />
-                <line x1="50%" y1="50%" x2="85%" y2="35%" stroke="#f97316" stroke-width="3" />
-                <line x1="50%" y1="50%" x2="85%" y2="65%" stroke="#f97316" stroke-width="3" />
-                <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#f97316" stroke-width="3" />
-                <line x1="50%" y1="50%" x2="15%" y2="65%" stroke="#f97316" stroke-width="3" />
-                <line x1="50%" y1="50%" x2="15%" y2="35%" stroke="#f97316" stroke-width="3" />
+            <svg class="absolute inset-0 w-full h-full z-0" style="pointer-events: none; position:absolute; top:0; left:0; width:100%; height:100%;">
+                <line x1="50%" y1="50%" x2="50%" y2="15%" stroke="#1565c0" stroke-width="3" />
+                <line x1="50%" y1="50%" x2="85%" y2="35%" stroke="#1565c0" stroke-width="3" />
+                <line x1="50%" y1="50%" x2="85%" y2="65%" stroke="#1565c0" stroke-width="3" />
+                <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#1565c0" stroke-width="3" />
+                <line x1="50%" y1="50%" x2="15%" y2="65%" stroke="#1565c0" stroke-width="3" />
+                <line x1="50%" y1="50%" x2="15%" y2="35%" stroke="#1565c0" stroke-width="3" />
             </svg>
         `;
         container.innerHTML = svgHTML;
-
-        // ਵਿਚਕਾਰਲਾ ਹਿੱਸਾ (Center Node)
+        
         const centerNode = document.createElement('div');
         centerNode.className = 'mind-node mind-node-center';
-        centerNode.innerHTML = 'ਬਾਲ ਸੁਖਦੇਵ';
+        centerNode.innerHTML = 'ਬਾਲ ਸੁਖਦੇਵ<br>ਬਾਰੇ';
         container.appendChild(centerNode);
-
+        
         currentMindMapNodes = [];
-
-        // ਗੋਲ ਚੱਕਰਾਂ ਦੀ ਪੋਜ਼ੀਸ਼ਨ (SVG ਲਾਈਨਾਂ ਦੇ ਮੁਤਾਬਕ)
         const positions = [
-            { top: '15%', left: '50%' },
-            { top: '35%', left: '85%' },
-            { top: '65%', left: '85%' },
-            { top: '85%', left: '50%' },
-            { top: '65%', left: '15%' },
-            { top: '35%', left: '15%' }
+            { top: '15%', left: '50%' }, { top: '35%', left: '85%' }, { top: '65%', left: '85%' },
+            { top: '85%', left: '50%' }, { top: '65%', left: '15%' }, { top: '35%', left: '15%' }
         ];
-
+        
         items.forEach((text, i) => {
             const pos = positions[i % 6];
             const node = document.createElement('div');
             node.className = 'mind-node mind-node-outer';
-            node.style.top = pos.top;
-            node.style.left = pos.left;
-            node.innerHTML = "?"; 
-            node.dataset.index = i;
-            node.dataset.text = text;
-            
+            node.style.top = pos.top; node.style.left = pos.left;
+            node.innerHTML = "?";
+            node.dataset.index = i; node.dataset.text = text;
             container.appendChild(node);
             currentMindMapNodes.push({ node: node });
         });
     }
-
-    /* === ਮਾਈਂਡ ਮੈਪ ਦਾ ਇੱਕ-ਇੱਕ ਉੱਤਰ ਦਿਖਾਉਣ ਵਾਲਾ ਫੰਕਸ਼ਨ === */
+    
     async function revealSingleMindNode(index) {
-        if(typing) return;
-        typing = true;
-
+        if(typing) return; typing = true;
         const item = currentMindMapNodes[index];
-        
-        // ਸਟਾਈਲ ਅੱਪਡੇਟ (ਲਾਲ ਰੰਗ ਅਤੇ ਸੰਤਰੀ ਪਿਛੋਕੜ)
-        item.node.style.color = '#dc2626'; 
-        item.node.style.backgroundColor = '#fef3c7'; 
+        item.node.style.color = '#0d47a1'; item.node.style.backgroundColor = '#bbdefb';
         item.node.innerHTML = item.node.dataset.text;
-        
-        // ਪੌਪ-ਅਪ (Pop-up) ਇਫੈਕਟ
         item.node.style.transform = 'translate(-50%, -50%) scale(1.15)';
-        
         await new Promise(r => setTimeout(r, 400));
         item.node.style.transform = 'translate(-50%, -50%) scale(1)';
+        typing = false; mindMapIndex++;
         
-        typing = false;
-
-        mindMapIndex++;
         if(mindMapIndex >= currentMindMapNodes.length) {
-            stepState = 'reveal';
-            reviewMode = true;
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+            stepState = 'reveal'; reviewMode = true;
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         }
+        updateListenBtn();
+        if(mode === 'auto' && !paused) readAloud();
+    }
+    
+    // --- TTS HELPER FUNCTION ---
+    let ttsTimeout;
+    function speakText(text) {
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        if (ttsTimeout) clearTimeout(ttsTimeout);
+        ttsSpeaking = true;
+        
+        let msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.lang = 'pa-IN';
+        msg.rate = 0.8;
+        msg.pitch = 0.85;
+        
+        let voices = window.speechSynthesis.getVoices();
+        let paVoice = voices.find(v => v.lang.includes('pa') && (v.name.toLowerCase().includes('male') || v.name.toLowerCase().includes('man')));
+        if(!paVoice) paVoice = voices.find(v => v.lang.includes('pa') && !v.name.toLowerCase().includes('female') && !v.name.toLowerCase().includes('woman'));
+        if(!paVoice) paVoice = voices.find(v => v.lang.includes('pa'));
+        if(paVoice) msg.voice = paVoice;
+        
+        msg.onend = function() { ttsSpeaking = false; clearTimeout(ttsTimeout); };
+        msg.onerror = function() { ttsSpeaking = false; clearTimeout(ttsTimeout); };
+        
+        let estimatedTime = text.length * 150 + 3000;
+        ttsTimeout = setTimeout(() => { ttsSpeaking = false; }, estimatedTime);
+        
+        window.speechSynthesis.speak(msg);
     }
 
-
+    function cleanTextForSpeech(text) {
+        if(!text) return "";
+        let clean = text.replace(/<[^>]*>?/gm, '');
+        clean = clean.replace(/^\s*\d+\.\s*/g, '');
+        clean = clean.replace(/\([ੳਅੲਸਹਕਖਗਘਚਛਜਝਟਠਡਢਤਥਦਧਨਪਫਬਭਮਯਰਲਵੜ]\)\s*/g, '');
+        clean = clean.replace(/ਉੱਤਰ\s*:/g, '');
+        clean = clean.replace(/ਵਾਕ\s*:/g, '');
+        clean = clean.replace(/ਅਰਥ\s*(➔|:|-)?\s*/g, '');
+        clean = clean.replace(/-/g, ' ');
+        return clean.replace(/\s+/g, ' ').trim();
+    }
+    
+    function getOrdinal(idx) {
+        const ordinals = ["ਪਹਿਲਾ", "ਦੂਸਰਾ", "ਤੀਸਰਾ", "ਚੌਥਾ", "ਪੰਜਵਾਂ"];
+        return ordinals[idx] || (idx + 1) + "ਵਾਂ";
+    }
+    
+    function updateListenBtn() {
+        const btn = document.getElementById('global-listen-btn');
+        const btnBottom = document.getElementById('bottom-listen-btn');
+        if(!btn || !btnBottom) return;
+        
+        if (step === 'toc') {
+            btn.style.display = 'block';
+            btn.innerHTML = "🔊 ਜਾਣਕਾਰੀ ਸੁਣੋ";
+            btnBottom.style.display = 'flex';
+            btnBottom.innerHTML = "🔊 ਸੁਣੋ";
+            return;
+        }
+        const d = lessonData[section] ? lessonData[section][step] : null;
+        if(!d || d.type === 'conclude') {
+            btn.style.display = 'none';
+            btnBottom.style.display = 'none';
+            return;
+        }
+        btn.style.display = 'block';
+        btnBottom.style.display = 'flex';
+        
+        if(reviewMode) {
+            btn.innerHTML = "🔊 ਪੂਰਾ ਸੁਣੋ";
+            btnBottom.innerHTML = "🔊 ਪੂਰਾ ਸੁਣੋ";
+        } else {
+            btn.innerHTML = "🔊 ਸੁਣੋ";
+            btnBottom.innerHTML = "🔊 ਸੁਣੋ";
+        }
+    }
+    
+    function readAloud(e) {
+        if(e) e.stopPropagation();
+        let textToSpeak = "";
+        
+        if (step === 'toc') {
+            textToSpeak = "ਪਾਠ ਤਤਕਰਾ। ਤੁਸੀਂ ਆਪਣਾ ਕੋਈ ਵੀ ਭਾਗ ਸਲੈਕਟ ਕਰ ਸਕਦੇ ਹੋ, ਤੁਸੀਂ ਇੱਥੋਂ ਸਿੱਧਾ ਕਿਸੇ ਵੀ ਜਗ੍ਹਾ ਤੇ ਜਾ ਸਕਦੇ ਹੋ।";
+        } else {
+            const d = lessonData[section][step];
+            if(!d) return;
+            
+            let slideHeading = "";
+            if (headingReadForStep !== step && !reviewMode) {
+                slideHeading = cleanTextForSpeech(d.title) + " . ";
+                headingReadForStep = step;
+            }
+            
+            if (reviewMode) {
+                if (d.type === 'mcq') {
+                    let correctOrd = getOrdinal(d.correct);
+                    textToSpeak += "ਪ੍ਰਸ਼ਨ . " + cleanTextForSpeech(d.q) + " . ਇਸਦਾ ਸਹੀ ਉੱਤਰ ਹੈ , " + cleanTextForSpeech(d.a);
+                } else if (d.type === 'blanks_with_options' || d.type === 'blanks') {
+                    d.items.forEach(item => {
+                        let blankVal = item.blank || item.b || "";
+                        let afterVal = item.after || item.a || "";
+                        textToSpeak += "ਪੂਰਾ ਵਾਕ ਹੈ . " + cleanTextForSpeech(item.q) + " " + cleanTextForSpeech(blankVal) + " " + cleanTextForSpeech(afterVal) + " . ";
+                    });
+                } else if (d.type === 'list') {
+                    d.items.forEach(item => {
+                        textToSpeak += "ਸ਼ਬਦ " + cleanTextForSpeech(item.q) + " . ਇਸਦਾ ਅਰਥ ਹੈ , " + cleanTextForSpeech(item.a) + " . ";
+                    });
+                } else if (d.type === 'mind_map') {
+                    textToSpeak += "ਮਾਈਂਡ ਮੈਪ . " + d.items.map(i => cleanTextForSpeech(i)).join(", ");
+                } else if (d.type === 'typewriter') {
+                    textToSpeak += cleanTextForSpeech(d.content);
+                } else {
+                    d.items.forEach(item => {
+                        textToSpeak += "ਪ੍ਰਸ਼ਨ ਹੈ . " + cleanTextForSpeech(item.q) + " . ਇਸਦਾ ਉੱਤਰ ਹੈ . " + cleanTextForSpeech(item.a) + " . ";
+                    });
+                }
+            } else {
+                if (d.type === 'mcq') {
+                    const box = document.getElementById('final-ans');
+                    let correctOrd = getOrdinal(d.correct);
+                    if (box && box.classList.contains('revealed')) {
+                        textToSpeak = correctOrd + " ਆਪਸ਼ਨ ਸਹੀ ਹੈ . ਉੱਤਰ . " + cleanTextForSpeech(d.a);
+                    } else {
+                        let optsText = d.opts.map((opt, i) => getOrdinal(i) + " ਆਪਸ਼ਨ . " + cleanTextForSpeech(opt)).join(" . ");
+                        textToSpeak = slideHeading + " ਪ੍ਰਸ਼ਨ ਹੈ . " + cleanTextForSpeech(d.q) + " . ਇਸਦੇ ਆਪਸ਼ਨ ਹਨ . " + optsText;
+                    }
+                } else if (d.type === 'mind_map') {
+                    if(stepState === 'reveal' && currentMindMapNodes[mindMapIndex-1]) {
+                        textToSpeak = cleanTextForSpeech(currentMindMapNodes[mindMapIndex-1].node.dataset.text);
+                    } else {
+                        textToSpeak = slideHeading + "ਮਾਈਂਡ ਮੈਪ ਦੇਖੋ";
+                    }
+                } else if (d.type === 'typewriter') {
+                    if(stepState === 'reveal') textToSpeak = cleanTextForSpeech(d.content);
+                    else textToSpeak = slideHeading;
+                } else {
+                    let rawQ = d.items[subIdx].q.replace(/\......./g, '').replace(/\.\.\.\./g, '');
+                    let currentQ = cleanTextForSpeech(rawQ);
+                    let currentA = cleanTextForSpeech(d.type === 'blanks_with_options' ? d.items[subIdx].blank : (d.type === 'blanks' ? d.items[subIdx].b : d.items[subIdx].a));
+                    let currentAfter = d.items[subIdx].after ? cleanTextForSpeech(d.items[subIdx].after) : (d.type === 'blanks' ? cleanTextForSpeech(d.items[subIdx].a) : "");
+                    
+                    if (stepState === 'focus') {
+                        if (d.type === 'blanks_with_options' || d.type === 'blanks') {
+                            textToSpeak = slideHeading + " ਵਾਕ ਪੂਰਾ ਕਰੋ , " + currentQ + " ਖਾਲੀ ਥਾਂ " + currentAfter;
+                        } else if (d.type === 'list') {
+                            textToSpeak = slideHeading + " ਸ਼ਬਦ ਹੈ... " + currentQ;
+                        } else {
+                            textToSpeak = slideHeading + " ਪ੍ਰਸ਼ਨ ਹੈ... " + currentQ;
+                        }
+                    } else if (stepState === 'reveal') {
+                        if (d.type === 'blanks_with_options' || d.type === 'blanks') {
+                            textToSpeak = "ਸਹੀ ਵਾਕ ਹੈ , " + currentQ + " " + currentA + " " + currentAfter;
+                        } else if (d.type === 'list') {
+                            textToSpeak = "ਇਸ ਸ਼ਬਦ ਦਾ ਅਰਥ ਹੈ... " + currentA;
+                        } else {
+                            textToSpeak = "ਇਸਦਾ ਉੱਤਰ ਹੈ... " + currentA;
+                        }
+                    }
+                }
+            }
+        }
+        if (textToSpeak) speakText(textToSpeak);
+    }
+    
     function renderSlide() {
+        headingReadForStep = -1;
         const d = lessonData[section][step];
         const titleEl = document.getElementById('slide-title'), instrEl = document.getElementById('slide-instr'), hEl = document.getElementById('html-content');
         
         if(step === 'toc') {
-            titleEl.innerHTML = "📑 ਪਾਠ ਤਤਕਰਾ (Index)";
-            instrEl.innerHTML = "ਸਿੱਧਾ ਕਿਸੇ ਵੀ ਭਾਗ 'ਤੇ ਜਾਣ ਲਈ ਕਲਿੱਕ ਕਰੋ :";
-            hEl.className = 'interactive-list';
-            hEl.innerHTML = '';
-            
+            titleEl.innerHTML = "📑 ਪਾਠ ਤਤਕਰਾ (Index)"; instrEl.innerHTML = "ਸਿੱਧਾ ਕਿਸੇ ਵੀ ਭਾਗ 'ਤੇ ਜਾਣ ਲਈ ਕਲਿੱਕ ਕਰੋ :";
+            hEl.className = 'interactive-list'; hEl.innerHTML = '';
             lessonData[section].forEach((data, idx) => {
                 if(data.type === 'conclude') return;
-                const row = document.createElement('div');
-                row.className = 'interactive-item';
-                row.style.flexDirection = 'row';
-                row.style.justifyContent = 'space-between';
+                const row = document.createElement('div'); row.className = 'interactive-item';
+                row.style.flexDirection = 'row'; row.style.justifyContent = 'space-between';
                 row.innerHTML = `<span class="item-q" style="color:#000;">${data.title}</span><button class="item-reveal-btn" style="background:#2ecc71;" onclick="jumpTo('${section}', '${mode}', ${idx})">ਜਾਓ</button>`;
                 hEl.appendChild(row);
             });
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਸ਼ੁਰੂ ਕਰੋ ⏭️";
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਸ਼ੁਰੂ ਕਰੋ ⏭";
+            updateListenBtn();
+            if(mode === 'auto' && !paused) readAloud();
             return;
         }
-
-        if(d.type === "conclude") {
-            titleEl.innerHTML = "ਧੰਨਵਾਦ !"; instrEl.innerHTML = "";
-            hEl.className = '';
-            hEl.innerHTML = `<div class="conclusion-box"><h2 class="conc-title">ਸ਼ਾਬਾਸ਼ !</h2><p class="conc-msg">ਵਿਸ਼ਵਾਸ ਰੱਖੋ ਬੱਚਿਓ , ਤੁਸੀਂ ਅੱਜ <b>ਪਾਠ 3 - ਬਾਲ ਸੁਖਦੇਵ</b> ਦਾ ਅਭਿਆਸ ਪੂਰਾ ਕਰ ਲਿਆ ਹੈ। ਹੁਣ ਤੁਸੀਂ ਇਸ ਨੂੰ ਆਪਣੀਆਂ ਕਾਪੀਆਂ ਤੇ ਤਿਆਰ ਕਰਨਾ ਹੈ ਅਤੇ ਸਕੂਲ ਲੈ ਕੇ ਆਉਣਾ ਹੈ। ਆਪਾਂ ਅਗਲਾ ਟੋਪਿਕ ਅਗਲੇ ਦਿਨਾਂ ਵਿੱਚ ਕਰਾਂਗੇ।</p></div>`;
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਮੁਕੰਮਲ 🏁"; 
-            return;
-        }
-
-        titleEl.innerHTML = d.title; 
-        // Hide instructions in Auto Mode to keep it cleaner
-        instrEl.innerHTML = mode === 'auto' ? "" : (d.instruction || "");
         
+        if(d.type === "conclude") {
+            titleEl.innerHTML = "ਧੰਨਵਾਦ !"; instrEl.innerHTML = ""; hEl.className = '';
+            hEl.innerHTML = `<div class="conclusion-box"><h2 class="conc-title">ਸ਼ਾਬਾਸ਼ !</h2><p class="conc-msg">ਵਿਸ਼ਵਾਸ ਰੱਖੋ ਬੱਚਿਓ, ਤੁਸੀਂ ਅੱਜ <b>ਜਮਾਤ ਚੌਥੀ ਵਿਸ਼ਾ ਪੰਜਾਬੀ ਪਾਠ-3 (ਬਾਲ ਸੁਖਦੇਵ)</b> ਦਾ ਅਭਿਆਸ ਪੂਰਾ ਕਰ ਲਿਆ ਹੈ। ਹੁਣ ਤੁਸੀਂ ਇਸ ਨੂੰ ਆਪਣੀਆਂ ਕਾਪੀਆਂ ਤੇ ਤਿਆਰ ਕਰਨਾ ਹੈ ਅਤੇ ਸਕੂਲ ਲੈ ਕੇ ਆਉਣਾ ਹੈ।</p></div>`;
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਮੁਕੰਮਲ 🏁";
+            updateListenBtn();
+            if(mode === 'auto' && !paused) readAloud();
+            return;
+        }
+        
+        titleEl.innerHTML = d.title; instrEl.innerHTML = mode === 'auto' ? "" : (d.instruction || "");
         hEl.innerHTML = ''; subIdx = -1; reviewMode = false; mindMapIndex = 0;
-
+        
         if(d.type === 'list' || d.type === 'qa') {
             hEl.className = 'interactive-list qa-mode';
             d.items.forEach((item, idx) => {
                 const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
                 if(idx !== 0) row.classList.add('fade-out');
-                
-                let questionHTML = `<span class="item-q">${item.q}</span>`;
-                
                 row.innerHTML = `
                     <div class="q-row">
-                        ${questionHTML}
+                        <span class="item-q">${item.q}</span>
                         <button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਉੱਤਰ ਦੇਖੋ</button>
                     </div>
                     <div class="ans-wrapper">
@@ -999,25 +879,49 @@
                     </div>`;
                 hEl.appendChild(row);
             });
-            subIdx = 0; stepState = 'focus'; 
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭️";
+            subIdx = 0; stepState = 'focus';
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭";
+            scrollToActiveRow(0);
+            
+        } else if(d.type === 'blanks_with_options') {
+            hEl.className = 'interactive-list';
+            const itemsContainer = document.createElement('div'); itemsContainer.style.width = '100%';
+            d.items.forEach((item, idx) => {
+                const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
+                if(idx !== 0) row.classList.add('fade-out');
+                row.innerHTML = `<div class="q-row"><span class="item-q" style="line-height:1.8;">${item.q}<span id="blank-${idx}" class="blank-dash">.......</span>${item.after}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਭਰੋ</button></div>`;
+                itemsContainer.appendChild(row);
+            });
+            hEl.appendChild(itemsContainer);
+            
+            const optBox = document.createElement('div'); optBox.className = 'options-box';
+            optBox.innerHTML = `<strong style="font-size:3vmin; color:#d35400;">ਵਿਕਲਪ:</strong> <div id="options-list" class="options-list"></div>`;
+            hEl.appendChild(optBox);
+            
+            const optList = optBox.querySelector('#options-list');
+            d.options.forEach((opt) => {
+                const span = document.createElement('span'); span.className = 'opt-pill'; span.id = `opt-${opt}`; span.innerText = opt; optList.appendChild(span);
+            });
+            subIdx = 0; stepState = 'focus';
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਭਰੋ ✍";
+            scrollToActiveRow(0);
+            
         } else if(d.type === 'blanks') {
             hEl.className = 'interactive-list';
             d.items.forEach((item, idx) => {
                 const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
                 if(idx !== 0) row.classList.add('fade-out');
-                row.innerHTML = `<div class="q-row"><span class="item-q">${item.q}<span id="blank-${idx}" class="hl-red">.......</span>${item.a}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਭਰੋ</button></div>`;
+                row.innerHTML = `<div class="q-row"><span class="item-q">${item.q}<span id="blank-${idx}" class="hl-red blank-dash">.......</span>${item.a}</span><button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਭਰੋ</button></div>`;
                 hEl.appendChild(row);
             });
             subIdx = 0; stepState = 'focus';
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਭਰੋ ✍️";
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਭਰੋ ✍";
+            scrollToActiveRow(0);
+            
         } else if(d.type === 'mcq') {
-            hEl.className = ''; 
-            hEl.style.display = 'flex'; hEl.style.flexDirection = 'column'; hEl.style.width = '100%'; hEl.style.alignItems = 'center';
-            
-            const qP = document.createElement('p'); qP.className = 'item-q'; qP.style.color = '#d32f2f'; qP.style.textAlign = 'center'; qP.style.marginBottom = '1.5vmin'; qP.style.width = '100%'; qP.innerHTML = d.q; 
+            hEl.className = ''; hEl.style.display = 'flex'; hEl.style.flexDirection = 'column'; hEl.style.width = '100%'; hEl.style.alignItems = 'center';
+            const qP = document.createElement('p'); qP.className = 'item-q'; qP.style.color = '#d32f2f'; qP.style.textAlign = 'center'; qP.style.marginBottom = '1.5vmin'; qP.style.width = '100%'; qP.innerHTML = d.q;
             hEl.appendChild(qP);
-            
             const optGrid = document.createElement('div'); optGrid.className = 'mcq-options-grid';
             d.opts.forEach((o, i) => {
                 const btn = document.createElement('button'); btn.className = 'mcq-btn'; btn.innerText = o;
@@ -1026,340 +930,302 @@
             });
             hEl.appendChild(optGrid);
             
-            const wrapper = document.createElement('div');
-            wrapper.style.position = 'relative'; wrapper.style.width = '100%'; wrapper.style.marginTop = '1vmin';
-            
-            const placeholder = document.createElement('div'); placeholder.className = 'item-a';
-            placeholder.style.visibility = 'hidden'; placeholder.style.opacity = '0'; placeholder.style.pointerEvents = 'none';
-            placeholder.innerHTML = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.2vmin;'>" + d.a + "</span>";
-            
-            const box = document.createElement('div'); box.id = "final-ans"; box.className = "item-a"; 
-            box.style.position = 'absolute'; box.style.top = '0'; box.style.left = '0'; box.style.textAlign = 'center';
-            
+            const wrapper = document.createElement('div'); wrapper.style.position = 'relative'; wrapper.style.width = '100%'; wrapper.style.marginTop = '1vmin';
+            const placeholder = document.createElement('div'); placeholder.className = 'item-a'; placeholder.style.visibility = 'hidden'; placeholder.style.opacity = '0'; placeholder.style.pointerEvents = 'none'; placeholder.innerHTML = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.2vmin;'>" + d.a + "</span>";
+            const box = document.createElement('div'); box.id = "final-ans"; box.className = "item-a"; box.style.position = 'absolute'; box.style.top = '0'; box.style.left = '0'; box.style.textAlign = 'center';
             wrapper.appendChild(placeholder); wrapper.appendChild(box); hEl.appendChild(wrapper);
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
-        }
-        else if (d.type === 'dictation') {
-            hEl.className = 'interactive-list qa-mode';
-            d.items.forEach((item, idx) => {
-                const row = document.createElement('div'); row.className = 'interactive-item'; row.id = `row-${idx}`;
-                if(idx !== 0) row.classList.add('fade-out');
-                
-                // Extract text to dictate
-                let sentenceText = item.a.replace(/<[^>]*>?/gm, '').replace('ਬੋਲ-ਲਿਖਤ : ', '');
-                let questionHTML = `<span class="item-q" style="flex:0.2;">${item.q}</span><button class="item-reveal-btn" style="margin-left:0; background:#e74c3c;" onclick="playDictationAudio('${sentenceText}')"><i class="fa-solid fa-volume-high"></i> ਸੁਣੋ</button>`;
-                
-                row.innerHTML = `
-                    <div class="q-row">
-                        ${questionHTML}
-                        <button class="item-reveal-btn" id="btn-${idx}" onclick="revealAnswer(event, ${idx})">ਉੱਤਰ ਦੇਖੋ</button>
-                    </div>
-                    <div class="ans-wrapper">
-                        <div class="item-a" style="visibility:hidden; opacity:0; pointer-events:none;">${item.a}</div>
-                        <div class="item-a" id="ans-${idx}" style="position:absolute; top:0.8vmin; left:0;"></div>
-                    </div>`;
-                hEl.appendChild(row);
-            });
-            subIdx = 0; stepState = 'focus'; 
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭️";
-        }
-        else if (d.type === 'typewriter') {
-            hEl.className = '';
-            hEl.style.display = 'flex';
-            hEl.style.flexDirection = 'column';
-            hEl.style.width = '100%';
-            hEl.style.height = '100%'; // ਜ਼ਰੂਰੀ: ਬਾਕਸ ਨੂੰ ਪੂਰਾ ਫੈਲਣ ਦੇਣ ਲਈ
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
             
-            const textContainer = document.createElement('div');
-            textContainer.className = 'typing-text-container';
-            textContainer.id = 'typewriter-box';
-            
-            // Add a "Play" button for live mode
-            if (mode === 'live') {
-                const playBtn = document.createElement('button');
-                playBtn.className = 'item-reveal-btn';
-                playBtn.style.marginBottom = '2vmin';
-                playBtn.style.display = 'block';
-                playBtn.style.margin = '0 auto 2vmin auto';
-                playBtn.innerText = 'ਨੋਟ ਪੜ੍ਹੋ';
-                playBtn.onclick = (e) => {
-                    e.stopPropagation();
-                    playBtn.style.display = 'none';
-                    startTypewriter(textContainer, d.content);
-                };
-                hEl.appendChild(playBtn);
-            }
-
-            hEl.appendChild(textContainer);
-            stepState = 'focus';
-            
-            if (mode === 'auto') {
-                setTimeout(() => startTypewriter(textContainer, d.content), 1000);
-            }
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਪੜ੍ਹੋ ✍️";
-        }
-        else if (d.type === 'mind_map') {
+        } else if (d.type === 'mind_map') {
             hEl.className = '';
             drawMindMap(hEl, d.items);
             stepState = 'focus';
-            
-            if (mode === 'auto' && !paused) {
-                setTimeout(() => revealSingleMindNode(0), 1500);
-            }
-            
+            if (mode === 'auto' && !paused) { setTimeout(() => revealSingleMindNode(0), 1500); }
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਕਲਿੱਕ ਕਰੋ 👆";
+            
+        } else if (d.type === 'typewriter') {
+            hEl.className = ''; hEl.style.display = 'flex'; hEl.style.flexDirection = 'column'; hEl.style.width = '100%'; hEl.style.height = '100%';
+            const textContainer = document.createElement('div'); textContainer.className = 'typing-text-container'; textContainer.id = 'typewriter-box';
+            if (mode === 'live') {
+                const playBtn = document.createElement('button'); playBtn.className = 'item-reveal-btn'; playBtn.style.marginBottom = '2vmin'; playBtn.style.display = 'block'; playBtn.style.margin = '0 auto 2vmin auto'; playBtn.innerText = 'ਪੜ੍ਹੋ';
+                playBtn.onclick = (e) => { e.stopPropagation(); playBtn.style.display = 'none'; startTypewriter(textContainer, d.content); };
+                hEl.appendChild(playBtn);
+            }
+            hEl.appendChild(textContainer); stepState = 'focus';
+            if (mode === 'auto') setTimeout(() => startTypewriter(textContainer, d.content), 1000);
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਪੜ੍ਹੋ ✍";
         }
+        
+        updateListenBtn();
+        if(mode === 'auto' && !paused) readAloud();
     }
-
-    // TTS for dictation
-    function playDictationAudio(text) {
-        if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel(); // clear previous
-            let msg = new SpeechSynthesisUtterance();
-            msg.text = text;
-            msg.lang = 'pa-IN'; 
-            msg.rate = 0.8; 
-            window.speechSynthesis.speak(msg);
-        }
-    }
-
+    
     async function startTypewriter(el, html) {
         el.classList.add('typing-cursor');
-        await typeEffect(el, html, 50); // Faster speed for long paragraph
+        await typeEffect(el, html, 60);
         el.classList.remove('typing-cursor');
-        
-        stepState = 'reveal';
-        reviewMode = true;
-        if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+        stepState = 'reveal'; reviewMode = true;
+        if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+        updateListenBtn();
+        if(mode === 'auto' && !paused) readAloud();
     }
-
+    
     async function revealAnswer(e, idx) {
-        if(e) e.stopPropagation(); 
+        if(e) e.stopPropagation();
         if(typing) { typing = false; return; }
+        
+        scrollToActiveRow(idx);
         
         const d = lessonData[section][step];
         const btn = document.getElementById(`btn-${idx}`);
-        const target = d.type === 'blanks' ? document.getElementById(`blank-${idx}`) : document.getElementById(`ans-${idx}`);
-        
         document.querySelectorAll('.interactive-item').forEach((row, i) => {
-            if(i === idx) row.classList.remove('fade-out');
-            else row.classList.add('fade-out');
+            if(i === idx) row.classList.remove('fade-out'); else row.classList.add('fade-out');
         });
         if(btn) btn.style.display = 'none';
         
-        target.classList.add('revealed'); 
-        subIdx = idx; stepState = 'reveal';
-        
-        await typeEffect(target, d.type === 'blanks' ? d.items[idx].b : d.items[idx].a, TYPE_SPEED);
+        if (d.type === 'blanks_with_options') {
+            const target = document.getElementById(`blank-${idx}`);
+            target.classList.remove('blank-dash'); target.innerHTML = "";
+            const optPill = document.getElementById(`opt-${d.items[idx].blank}`);
+            if (optPill) optPill.classList.add('used');
+            subIdx = idx; stepState = 'reveal'; updateListenBtn();
+            if(mode === 'auto' && !paused) readAloud();
+            await typeEffect(target, `<span class="hl-red">${d.items[idx].blank}</span>`, TYPE_SPEED);
+        } else if (d.type === 'blanks') {
+            const target = document.getElementById(`blank-${idx}`);
+            target.classList.remove('blank-dash'); target.innerHTML = "";
+            subIdx = idx; stepState = 'reveal'; updateListenBtn();
+            if(mode === 'auto' && !paused) readAloud();
+            await typeEffect(target, `<span class="hl-red">${d.items[idx].b}</span>`, TYPE_SPEED);
+        } else {
+            const target = document.getElementById(`ans-${idx}`);
+            target.classList.add('revealed');
+            subIdx = idx; stepState = 'reveal'; updateListenBtn();
+            if(mode === 'auto' && !paused) readAloud();
+            await typeEffect(target, d.items[idx].a, TYPE_SPEED);
+        }
         
         if(mode === 'live') {
-            if(idx === d.items.length - 1) document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️"; 
-            else document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ਪ੍ਰਸ਼ਨ ⏭️"; 
+            if(idx === d.items.length - 1) document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+            else document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ਪ੍ਰਸ਼ਨ ⏭";
         }
     }
-
+    
     async function checkMcq(btn, isCorrect) {
-        if(typing) return; 
+        if(typing) return;
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        
+        const d = lessonData[section][step];
         
         if(isCorrect) {
-            const allBtns = document.querySelectorAll('.mcq-btn');
-            allBtns.forEach(b => b.style.pointerEvents = 'none');
-            
+            document.querySelectorAll('.mcq-btn').forEach(b => b.style.pointerEvents = 'none');
             btn.classList.add('correct');
-            const box = document.getElementById('final-ans');
-            box.classList.add('revealed');
-            box.style.color = '#2ecc71';
-            await typeEffect(box, "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.2vmin;'>" + lessonData[section][step].a + "</span>", TYPE_SPEED);
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+            const box = document.getElementById('final-ans'); box.classList.add('revealed'); box.style.color = '#2ecc71';
+            updateListenBtn();
+            
+            let correctOrd = getOrdinal(d.correct);
+            let ttsMessage = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ । " + correctOrd + " ਆਪਸ਼ਨ ਸਹੀ ਹੈ । " + cleanTextForSpeech(d.a);
+            speakText(ttsMessage);
+            
+            await typeEffect(box, "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.2vmin;'>" + d.a + "</span>", TYPE_SPEED);
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else {
+            btn.classList.add('wrong');
             document.getElementById('wrong-modal').style.display = 'flex';
+            btn.style.pointerEvents = 'none';
+            speakText("ਗਲਤ ਉੱਤਰ , ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
         }
     }
-
+    
     async function showAllAnswers(e) {
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
         if(e) e.stopPropagation();
         if(step === 'toc' || lessonData[section][step].type === 'conclude') return;
+        typing = false; const d = lessonData[section][step];
         
-        typing = false; 
-        const d = lessonData[section][step];
-        
-        if(d.type === 'list' || d.type === 'blanks' || d.type === 'qa' || d.type === 'dictation') {
+        if(d.type === 'list' || d.type === 'qa') {
             document.querySelectorAll('.interactive-item').forEach((row, idx) => {
                 row.classList.remove('fade-out');
-                const btn = document.getElementById(`btn-${idx}`);
-                if(btn) btn.style.display = 'none';
-                
-                const target = d.type === 'blanks' ? document.getElementById(`blank-${idx}`) : document.getElementById(`ans-${idx}`);
-                target.classList.add('revealed');
-                target.innerHTML = d.type === 'blanks' ? d.items[idx].b : d.items[idx].a; 
+                const btn = document.getElementById(`btn-${idx}`); if(btn) btn.style.display = 'none';
+                const target = document.getElementById(`ans-${idx}`);
+                target.classList.add('revealed'); target.innerHTML = d.items[idx].a;
             });
-            subIdx = d.items.length - 1;
-            stepState = 'reveal';
-            reviewMode = true;
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
-        } 
-        else if (d.type === 'mcq') {
-            const box = document.getElementById('final-ans');
-            box.classList.add('revealed');
-            const btns = document.querySelectorAll('.mcq-btn');
-            if(btns[d.correct]) btns[d.correct].classList.add('correct');
-            box.innerHTML = "ਉੱਤਰ : " + d.a; 
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
-        }
-        else if (d.type === 'mind_map') {
-            currentMindMapNodes.forEach((item, idx) => {
-                // "ਸਾਰਾ (Show All)" ਬਟਨ ਦਬਾਉਣ 'ਤੇ ਰੰਗ ਬਦਲੋ
-                item.node.style.color = '#dc2626';
-                item.node.style.backgroundColor = '#fef3c7';
+            subIdx = d.items.length - 1; stepState = 'reveal'; reviewMode = true;
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+        } else if (d.type === 'blanks_with_options') {
+            document.querySelectorAll('.interactive-item').forEach((row, idx) => {
+                row.classList.remove('fade-out');
+                const btn = document.getElementById(`btn-${idx}`); if(btn) btn.style.display = 'none';
+                const target = document.getElementById(`blank-${idx}`);
+                target.classList.remove('blank-dash'); target.innerHTML = `<span class="hl-red">${d.items[idx].blank}</span>`;
+                const optPill = document.getElementById(`opt-${d.items[idx].blank}`);
+                if (optPill) optPill.classList.add('used');
+            });
+            subIdx = d.items.length - 1; stepState = 'reveal'; reviewMode = true;
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+        } else if (d.type === 'blanks') {
+            document.querySelectorAll('.interactive-item').forEach((row, idx) => {
+                row.classList.remove('fade-out');
+                const btn = document.getElementById(`btn-${idx}`); if(btn) btn.style.display = 'none';
+                const target = document.getElementById(`blank-${idx}`);
+                target.classList.remove('blank-dash'); target.innerHTML = `<span class="hl-red">${d.items[idx].b}</span>`;
+            });
+            subIdx = d.items.length - 1; stepState = 'reveal'; reviewMode = true;
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+        } else if (d.type === 'mcq') {
+            const box = document.getElementById('final-ans'); box.classList.add('revealed');
+            const btns = document.querySelectorAll('.mcq-btn'); if(btns[d.correct]) btns[d.correct].classList.add('correct');
+            box.innerHTML = "ਉੱਤਰ : " + d.a;
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+        } else if (d.type === 'mind_map') {
+            currentMindMapNodes.forEach((item) => {
+                item.node.style.color = '#0d47a1'; item.node.style.backgroundColor = '#bbdefb';
                 item.node.innerHTML = item.node.dataset.text;
             });
-            mindMapIndex = currentMindMapNodes.length;
-            stepState = 'reveal';
-            reviewMode = true;
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+            mindMapIndex = currentMindMapNodes.length; stepState = 'reveal'; reviewMode = true;
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+        } else if (d.type === 'typewriter') {
+            const box = document.getElementById('typewriter-box'); if(box) box.innerHTML = d.content;
+            const playBtn = document.querySelector('#html-content .item-reveal-btn'); if(playBtn) playBtn.style.display = 'none';
+            stepState = 'reveal'; reviewMode = true;
+            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         }
-        else if (d.type === 'typewriter') {
-            const box = document.getElementById('typewriter-box');
-            if(box) box.innerHTML = d.content;
-            const playBtn = document.querySelector('#html-content .item-reveal-btn');
-            if(playBtn) playBtn.style.display = 'none';
-            
-            stepState = 'reveal';
-            reviewMode = true;
-            if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
-        }
+        updateListenBtn();
     }
-
+    
     async function nextStep(isAuto = false) {
-        if(typing) { typing = false; return; } 
-        if(mode === 'auto' && !isAuto) return; 
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        if(typing) { typing = false; return; }
+        if(mode === 'auto' && !isAuto) return;
         
         if (step === 'toc') { step = 0; renderSlide(); return; }
-
         const d = lessonData[section][step];
         
-        if (reviewMode) {
-            if(step < lessonData[section].length - 1) { step++; renderSlide(); }
-            else goHome();
-            return;
-        }
-
-        if(d.type === 'list' || d.type === 'blanks' || d.type === 'qa' || d.type === 'dictation') {
+        if(d.type === 'list' || d.type === 'blanks_with_options' || d.type === 'blanks' || d.type === 'qa') {
             const items = d.items || [];
-            if (stepState === 'focus') {
-                await revealAnswer(null, subIdx);
-            } 
+            if (reviewMode) {
+                if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); return;
+            }
+            if (stepState === 'focus') { await revealAnswer(null, subIdx); }
             else if (stepState === 'reveal') {
                 if (subIdx < items.length - 1) {
-                    subIdx++;
-                    stepState = 'focus';
+                    subIdx++; stepState = 'focus';
                     document.querySelectorAll('.interactive-item').forEach((row, i) => {
-                        if (i === subIdx) row.classList.remove('fade-out');
-                        else row.classList.add('fade-out');
+                        if (i === subIdx) row.classList.remove('fade-out'); else row.classList.add('fade-out');
                     });
-                    if(mode === 'live') document.getElementById('tap-indicator').innerText = d.type === 'blanks' ? "ਭਰੋ ✍️" : "ਉੱਤਰ ਦੇਖੋ ⏭️";
+                    if(mode === 'live') {
+                        if(d.type === 'blanks_with_options' || d.type === 'blanks') document.getElementById('tap-indicator').innerText = "ਭਰੋ ✍";
+                        else document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭";
+                    }
+                    scrollToActiveRow(subIdx);
+                    updateListenBtn();
+                    if(mode === 'auto' && !paused) readAloud();
                 } else {
                     document.querySelectorAll('.interactive-item').forEach(row => row.classList.remove('fade-out'));
                     reviewMode = true;
-                    if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+                    if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+                    updateListenBtn();
+                    if(mode === 'auto' && !paused) readAloud();
                 }
             }
-        } 
-        else if (d.type === 'mind_map') {
+        } else if (d.type === 'mind_map') {
             if (stepState === 'focus') {
-                if (mindMapIndex < currentMindMapNodes.length) {
-                    revealSingleMindNode(mindMapIndex);
-                } else {
-                    reviewMode = true;
-                    stepState = 'reveal';
-                    if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
+                if (mindMapIndex < currentMindMapNodes.length) { revealSingleMindNode(mindMapIndex); }
+                else {
+                    reviewMode = true; stepState = 'reveal';
+                    if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+                    updateListenBtn();
+                    if(mode === 'auto' && !paused) readAloud();
                 }
+            } else if (reviewMode) {
+                if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome();
             }
-        }
-        else if (d.type === 'typewriter') {
+        } else if (d.type === 'typewriter') {
             if (stepState === 'focus' && mode === 'live') {
                 const box = document.getElementById('typewriter-box');
-                const playBtn = document.querySelector('#html-content .item-reveal-btn');
-                if(playBtn) playBtn.style.display = 'none';
+                const playBtn = document.querySelector('#html-content .item-reveal-btn'); if(playBtn) playBtn.style.display = 'none';
                 await startTypewriter(box, d.content);
+            } else if (reviewMode) {
+                if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome();
             }
-        }
-        else if(d.type !== 'conclude') {
+        } else if(d.type !== 'conclude') {
             const box = document.getElementById('final-ans');
-            if(box && !box.classList.contains('revealed')) { 
-                box.classList.add('revealed'); 
-                if(d.type === 'mcq') {
-                    const btns = document.querySelectorAll('.mcq-btn');
-                    if(btns[d.correct]) btns[d.correct].classList.add('correct');
+            if(box && !box.classList.contains('revealed')) {
+                box.classList.add('revealed');
+                if(d.type === 'mcq') { const btns = document.querySelectorAll('.mcq-btn'); if(btns[d.correct]) btns[d.correct].classList.add('correct'); }
+                updateListenBtn();
+                
+                if(d.type === 'mcq' && mode === 'auto' && !paused) {
+                    let correctOrd = getOrdinal(d.correct);
+                    speakText("ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ । " + correctOrd + " ਆਪਸ਼ਨ ਸਹੀ ਹੈ । " + cleanTextForSpeech(d.a));
+                } else if (mode === 'auto' && !paused) {
+                    readAloud();
                 }
-                await typeEffect(box, "ਉੱਤਰ : " + d.a, TYPE_SPEED); 
-                if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭️";
-                return; 
+                
+                await typeEffect(box, "ਉੱਤਰ : " + d.a, TYPE_SPEED);
+                if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+                return;
             } else {
-                if(step < lessonData[section].length - 1) { step++; renderSlide(); }
-                else goHome();
+                if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome();
             }
-        } else {
-            goHome(); 
-        }
-    }
-
-    function skipStep() { 
-        typing = false; 
-        if (step === 'toc') { step = 0; renderSlide(); return; }
-        if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); 
+        } else { goHome(); }
     }
     
-    function prevStep() { 
+    function skipStep() {
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        typing = false; if (step === 'toc') { step = 0; renderSlide(); return; }
+        if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome();
+    }
+    
+    function prevStep() {
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
         if(typing) { typing = false; return; }
         if (step === 'toc') { goHome(); return; }
-        if (step === 0) { step = 'toc'; renderSlide(); return; }
-        step--; renderSlide(); 
+        if (step === 0) { step = 'toc'; renderSlide(); return; } step--; renderSlide();
     }
     
-    function retrySlide() { typing = false; renderSlide(); }
-    
-    function goHome() { 
-        state = 'menu'; 
-        autoLoopRunning = false;
-        document.body.classList.remove('auto-mode');
-        document.getElementById('master-card').classList.remove('active'); 
-        document.getElementById('main-menu-screen').style.display = 'flex'; 
+    function retrySlide() {
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        typing = false; renderSlide();
     }
-
-    // --- Auto Loop ---
+    
+    function goHome() {
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        state = 'menu'; autoLoopRunning = false; document.body.classList.remove('auto-mode');
+        document.getElementById('master-card').classList.remove('active');
+        document.getElementById('main-menu-screen').style.display = 'flex';
+    }
+    
     async function runAutoLoop() {
-        if(autoLoopRunning) return;
-        autoLoopRunning = true;
-
+        if(autoLoopRunning) return; autoLoopRunning = true;
         while(state === 'slide' && mode === 'auto') {
-            if(paused || typing) {
-                await new Promise(r => setTimeout(r, 200));
-                continue;
-            }
-
-            let waitTime = 3500; 
-            const d = lessonData[section][step];
+            if(paused) { await new Promise(r => setTimeout(r, 200)); continue; }
             
-            if(step === 'toc') waitTime = 5000;
-            else if(d && d.type === 'conclude') waitTime = 12000; 
-            else if(d && d.type === 'mind_map' && stepState === 'focus') waitTime = 3000;
-            else if(d && d.type === 'typewriter' && stepState === 'reveal') waitTime = 15000;
-            else if(stepState === 'reveal') waitTime = 8000; 
-
-            let elapsed = 0;
-            while(elapsed < waitTime) {
+            while(typing || ttsSpeaking) {
                 await new Promise(r => setTimeout(r, 200));
                 if(state !== 'slide' || mode !== 'auto') { autoLoopRunning = false; return; }
-                if(!paused && !typing) elapsed += 200;
             }
-
-            if(!paused && state === 'slide' && mode === 'auto') {
-                await nextStep(true);
+            
+            let gapElapsed = 0;
+            while(gapElapsed < 3000) {
+                await new Promise(r => setTimeout(r, 200));
+                if(state !== 'slide' || mode !== 'auto' || paused) break;
+                gapElapsed += 200;
             }
+            
+            if(paused || state !== 'slide' || mode !== 'auto') continue;
+            
+            await nextStep(true);
         }
         autoLoopRunning = false;
+    }
+    
+    if ('speechSynthesis' in window) {
+        window.speechSynthesis.onvoiceschanged = function() {
+            window.speechSynthesis.getVoices();
+        };
     }
 </script>
 </body>
 </html>
+```
