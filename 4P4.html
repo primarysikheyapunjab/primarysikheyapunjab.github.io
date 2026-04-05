@@ -57,12 +57,12 @@
         .pos-7 { top: 20%; left: 18%; background: #00cec9; animation-delay: 0.7s; }
         .pos-8 { top: 20%; right: 18%; background: #e1b12c; animation-delay: 0.8s; }
         
-        /* Menu Screen */
-        #main-menu-screen { position: absolute; inset: 0; z-index: 400; display: none; flex-direction: column; align-items: center; background: #fffdf5; padding: 4vmin; overflow-y: auto; }
+        /* Menu Screen - FIXED HORIZONTAL SCROLL */
+        #main-menu-screen { position: absolute; inset: 0; z-index: 400; display: none; flex-direction: column; align-items: center; background: #fffdf5; padding: 4vmin; overflow-y: auto; overflow-x: hidden; }
         .menu-heading { font-size: 6vmin; font-weight: 900; color: #d32f2f; margin-bottom: 4vmin; border-bottom: 0.5vmin dashed #ff9f43; width: 90%; text-align: center; }
         .mode-container { display: flex; width: 100%; gap: 4vmin; justify-content: center; align-items: flex-start; }
-        @media (orientation: portrait) { .mode-container { flex-direction: column; align-items: center; } }
-        .mode-card { border-radius: 2.5vmin; border: 0.5vmin solid #d32f2f; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); background: #fff; height: var(--unit); flex-shrink: 0; width: 100%; max-width: 480px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        @media (orientation: portrait) { .mode-container { flex-direction: column; align-items: center; } .mode-card { width: 100% !important; max-width: 100% !important; } }
+        .mode-card { border-radius: 2.5vmin; border: 0.5vmin solid #d32f2f; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); background: #fff; height: var(--unit); flex: 1 1 0; width: 46%; max-width: 480px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .mode-card.expanded { height: calc(6.5 * var(--unit)); }
         .mode-header { background: #d32f2f; color: #fff; padding: 2vmin; font-size: 5vmin; font-weight: 900; cursor: pointer; display: flex; justify-content: space-between; align-items: center; height: var(--unit); }
         .auto-card { border-color: #2980b9; }
@@ -229,7 +229,7 @@
                         <h2>⚠ ਨਿਯਮ ਅਤੇ ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ</h2>
                         <ul>
                             <li><strong>1 . ਸੰਸਥਾ ਦਾ ਉਦੇਸ਼ :</strong> ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ ਟੀਮ ਵੱਲੋਂ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਇੱਕ ਡਿਜੀਟਲ ਪਲੇਟਫਾਰਮ ਹੈ । ਸਾਡਾ ਮੁੱਖ ਮਕਸਦ ਪੰਜਾਬ ਦੇ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲਾਂ ਦੇ ਬੱਚਿਆਂ ਨੂੰ ਮਿਆਰੀ ਸਿੱਖਿਆ ਸਮੱਗਰੀ ਮੁਫ਼ਤ ਮੁਹੱਈਆ ਕਰਵਾਉਣਾ ਹੈ ।</li>
-                            <li><strong>2 . ਵਰਤੋਂਕਾਰ :</strong> ਇਹ ਸਿਰਫ਼ ਵਿੱਦਿਅਕ ਵਰਤੋਂ ਲਈ ਹੈ । ਕਿਸੇ ਵੀ ਵਿਅਕਤੀ ਜਾਂ ਸੰਸਥਾ ਨੂੰ ਇਸ ਦੀ ਵਰਤੋਂ ਆਪਣੇ ਨਿੱਜੀ ਫਾਇਦੇ ਲਈ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ ।</li>
+                            <li><strong>2 . ਵਰਤੋਂਕਾਰ :</strong> ਇਹ ਸਿਰਫ਼ ਵਿੱਦਿਅਕ ਵਰਤੋਂ ਲਈ ਹੈ । ਕਿਸੇ ਵੀ ਵਿਅਕਤੀ ਜਾਂ ਸੰਸਥਾ ਨੂੰ float ਦੀ ਵਰਤੋਂ ਆਪਣੇ ਨਿੱਜੀ ਫਾਇਦੇ ਲਈ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ ।</li>
                             <li><strong>3 . ਪਾਠਕ੍ਰਮ :</strong> ਵੈੱਬਸਾਈਟ ਦੀ ਸਮੱਗਰੀ PSEB ਪਾਠਕ੍ਰਮ 'ਤੇ ਆਧਾਰਿਤ ਹੈ ।</li>
                             <div class="warning-box-red"><li><strong>4 . ਡਿਵੈਲਪਮੈਂਟ ਮੋਡ :</strong> ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਵਿਕਾਸ ਦੇ ਪੜਾਅ ਵਿੱਚ ਹੈ । ਅਧਿਆਪਕ ਸਾਹਿਬਾਨ ਇਸ ਨੂੰ ਆਪਣੇ ਪੱਧਰ ਤੇ ਵੀ ਘੋਖਦੇ ਰਹਿਣ ।</li></div>
                             <li><strong>5 . ਸੋਧ :</strong> ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ ਕੋਲ ਕਿਸੇ ਵੀ ਸਮੇਂ ਨਿਯਮਾਂ ਵਿੱਚ ਬਦਲਾਅ ਕਰਨ ਦਾ ਅਧਿਕਾਰ ਰਾਖਵਾਂ ਹੈ ।</li>
@@ -347,7 +347,7 @@
         document.getElementById('disclaimer-screen').style.display = 'flex';
     }
     
-    // --- UPDATED LESSON DATA ---
+    // --- LESSON DATA ---
     const lessonData = {
       exercise: [
         {
@@ -569,7 +569,6 @@
     
     function drawMindMap(container, items) {
         container.className = 'mind-map-container';
-        // Allow container click to trigger sequential reveal (optional)
         container.onclick = (e) => {
             e.stopPropagation();
             if (typing || mode === 'auto' || reviewMode) return;
@@ -577,12 +576,12 @@
         };
         const svgHTML = `
             <svg class="absolute inset-0 w-full h-full z-0" style="pointer-events: none; position:absolute; top:0; left:0; width:100%; height:100%;">
-                <line x1="50%" y1="50%" x2="50%" y2="15%" stroke="#1565c0" stroke-width="4" />
-                <line x1="50%" y1="50%" x2="85%" y2="35%" stroke="#1565c0" stroke-width="4" />
-                <line x1="50%" y1="50%" x2="85%" y2="65%" stroke="#1565c0" stroke-width="4" />
-                <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#1565c0" stroke-width="4" />
-                <line x1="50%" y1="50%" x2="15%" y2="65%" stroke="#1565c0" stroke-width="4" />
-                <line x1="50%" y1="50%" x2="15%" y2="35%" stroke="#1565c0" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="50%" y2="15%" stroke="#f97316" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="85%" y2="35%" stroke="#f97316" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="85%" y2="65%" stroke="#f97316" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#f97316" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="15%" y2="65%" stroke="#f97316" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="15%" y2="35%" stroke="#f97316" stroke-width="4" />
             </svg>
         `;
         container.innerHTML = svgHTML;
@@ -606,7 +605,6 @@
             node.innerHTML = "?";
             node.dataset.index = i; node.dataset.text = text;
             
-            // Allow individual node click to reveal it and play audio
             node.onclick = (e) => {
                 e.stopPropagation();
                 if (typing || mode === 'auto' || reviewMode) return;
@@ -624,7 +622,6 @@
     async function revealSingleMindNode(index) {
         if(typing) return; typing = true;
 
-        // Blur all already revealed nodes
         for(let i = 0; i < currentMindMapNodes.length; i++) {
             if (i !== index && currentMindMapNodes[i].node.innerHTML !== "?") {
                 currentMindMapNodes[i].node.style.opacity = '0.4';
@@ -633,14 +630,13 @@
         }
 
         const item = currentMindMapNodes[index];
-        item.node.style.color = '#0d47a1';
-        item.node.style.backgroundColor = '#bbdefb';
+        item.node.style.color = '#dc2626'; 
+        item.node.style.backgroundColor = '#fef3c7'; 
         item.node.innerHTML = item.node.dataset.text;
         item.node.style.transform = 'translate(-50%, -50%) scale(1.15)';
         item.node.style.opacity = '1';
         item.node.style.filter = 'none';
 
-        // Speak this specific node immediately
         if(!paused && ('speechSynthesis' in window)) {
             speakText(cleanTextForSpeech(item.node.dataset.text));
         }
@@ -649,7 +645,6 @@
         item.node.style.transform = 'translate(-50%, -50%) scale(1)';
         typing = false;
         
-        // Check how many nodes are revealed to update logic
         let revealedCount = currentMindMapNodes.filter(n => n.node.innerHTML !== "?").length;
         mindMapIndex = revealedCount;
         
@@ -657,7 +652,6 @@
             stepState = 'reveal'; reviewMode = true;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
             
-            // After 2 seconds (time for the last audio to finish), unblur all and read the full map
             setTimeout(() => {
                 for(let i = 0; i < currentMindMapNodes.length; i++) {
                     currentMindMapNodes[i].node.style.opacity = '1';
@@ -765,7 +759,7 @@
                 } else if (d.type === 'match_lines') {
                     d.items.forEach(item => { textToSpeak += "ਸ਼ਬਦ " + cleanTextForSpeech(item.q) + " . ਇਸਦਾ ਸਹੀ ਮਿਲਾਨ ਹੈ , " + cleanTextForSpeech(item.a) + " . "; });
                 } else if (d.type === 'mind_map') {
-                    textToSpeak += "ਸਾਰਾ ਮਾਈਂਡ ਮੈਪ . " + d.items.map(i => cleanTextForSpeech(i)).join(" . ");
+                    textToSpeak += "ਸਾਰਾ ਮਾਈਂਡ ਮੈਪ . ਹਾਥੀ ਦੀਆਂ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ . " + d.items.map(i => cleanTextForSpeech(i)).join(" . ");
                 } else if (d.type === 'typewriter' || d.type === 'creative_draw') {
                     if(d.title.includes('ਬਿੰਦੀਆਂ') || d.type === 'creative_draw') {
                         textToSpeak += "ਬੱਚਿਓ! ਇਨ੍ਹਾਂ ਬਿੰਦੀਆਂ ਨੂੰ ਮਿਲਾ ਕੇ ਹਾਥੀ ਬਣਾਓ ਅਤੇ ਰੰਗ ਭਰੋ।";
@@ -787,8 +781,6 @@
                     }
                 } else if (d.type === 'mind_map') {
                     if(stepState === 'reveal' && currentMindMapNodes[mindMapIndex-1]) {
-                        // The single node read is handled directly inside revealSingleMindNode
-                        // So if we click the Listen button while a single node is revealed, read it again
                         textToSpeak = cleanTextForSpeech(currentMindMapNodes[mindMapIndex-1].node.dataset.text);
                     } else {
                         textToSpeak = slideHeading + "ਮਾਈਂਡ ਮੈਪ ਦੇਖੋ";
@@ -828,14 +820,12 @@
         const d = lessonData[section][step];
         const titleEl = document.getElementById('slide-title'), instrEl = document.getElementById('slide-instr'), hEl = document.getElementById('html-content');
         
-        // CURE FOR MENU-RETURN BUG (Clear leftover inline styles)
         hEl.removeAttribute('style');
         
         if(step === 'toc') {
             titleEl.innerHTML = "📑 ਪਾਠ ਤਤਕਰਾ (Index)"; instrEl.innerHTML = "ਸਿੱਧਾ ਕਿਸੇ ਵੀ ਭਾਗ 'ਤੇ ਜਾਣ ਲਈ ਕਲਿੱਕ ਕਰੋ :";
             hEl.className = 'interactive-list'; hEl.innerHTML = '';
             
-            // Fix for TOC stretched buttons
             hEl.style.alignContent = 'start'; 
 
             lessonData[section].forEach((data, idx) => {
@@ -1142,7 +1132,7 @@
             box.innerHTML = "ਉੱਤਰ : " + d.a;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else if (d.type === 'mind_map') {
-            currentMindMapNodes.forEach((item) => { item.node.style.color = '#0d47a1'; item.node.style.backgroundColor = '#bbdefb'; item.node.innerHTML = item.node.dataset.text; });
+            currentMindMapNodes.forEach((item) => { item.node.style.color = '#dc2626'; item.node.style.backgroundColor = '#fef3c7'; item.node.innerHTML = item.node.dataset.text; });
             mindMapIndex = currentMindMapNodes.length; stepState = 'reveal'; reviewMode = true;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else if (d.type === 'typewriter') {
@@ -1308,5 +1298,3 @@
 </script>
 </body>
 </html>
-
-
