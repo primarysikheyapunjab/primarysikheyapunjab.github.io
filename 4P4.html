@@ -59,11 +59,11 @@
         
         /* Menu Screen */
         #main-menu-screen { position: absolute; inset: 0; z-index: 400; display: none; flex-direction: column; align-items: center; background: #fffdf5; padding: 3vmin; overflow: hidden; }
-        .menu-heading { font-size: min(5.5vmin, 6.5vh); font-weight: 900; color: #d32f2f; margin-bottom: 3vmin; border-bottom: 0.5vmin dashed #ff9f43; width: 90%; text-align: center; }
-        .mode-container { display: flex; width: 100%; gap: 4vmin; justify-content: center; align-items: flex-start; }
+        .menu-heading { font-size: min(5vmin, 6vh); font-weight: 900; color: #d32f2f; margin-bottom: 2vmin; border-bottom: 0.5vmin dashed #ff9f43; width: 90%; text-align: center; }
+        .mode-container { display: flex; width: 100%; gap: 2vmin; justify-content: center; align-items: stretch; flex: 1; min-height: 0; }
         @media (orientation: portrait) { .mode-container { flex-direction: column; align-items: center; } .mode-card { width: 100% !important; max-width: 100% !important; } }
-        .mode-card { border-radius: 2.5vmin; border: 0.5vmin solid #d32f2f; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); background: #fff; height: var(--unit); flex: 0 1 42%; max-width: 420px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .mode-card.expanded { height: calc(6.5 * var(--unit)); }
+        .mode-card { border-radius: 2.5vmin; border: 0.5vmin solid #d32f2f; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); background: #fff; flex: 1; width: 38%; max-width: 360px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); height: auto !important; max-height: calc(1.3 * var(--unit)); margin: 0 auto;}
+        .mode-card.expanded { max-height: 100%; }
         .mode-header { background: #d32f2f; color: #fff; padding: 2vmin; font-size: min(4.5vmin, 5vh); font-weight: 900; cursor: pointer; display: flex; justify-content: space-between; align-items: center; height: var(--unit); flex: 0 0 auto; }
         .auto-card { border-color: #2980b9; }
         .auto-card .mode-header { background: #2980b9; }
@@ -83,10 +83,10 @@
         .toc-go-btn { background: #2ecc71; color: #fff; border: none; padding: 1.5vmin 3vmin; border-radius: 1.5vmin; font-weight: 900; font-size: min(3vmin, 3.5vh); cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); flex-shrink: 0; margin-left: 2vmin; }
         
         /* --- TOC FLASHCARD GRID --- */
-        .toc-grid { display: grid; grid-template-rows: repeat(4, 1fr); grid-auto-flow: column; gap: 1.5vmin 3vmin; width: 100%; height: 100%; align-content: stretch; overflow: hidden; padding-bottom: 0.5vmin; }
-        @media (orientation: portrait) { .toc-grid { grid-template-rows: auto; grid-template-columns: 1fr; grid-auto-flow: row; } }
-        .toc-item-card { background: #fff; border: 2px solid #dcdcdc; border-radius: 1.5vmin; display: flex; justify-content: space-between; align-items: center; padding: 1vmin 2vmin; min-height: 0; box-shadow: 0 4px 6px rgba(0,0,0,0.06); }
-        .toc-item-text { font-weight: 900; font-size: min(3.2vmin, 3.8vh); color: #000; flex: 1; text-align: left; }
+        .toc-grid { display: grid; grid-template-columns: 1fr; gap: 1.5vmin; width: 100%; height: 100%; align-content: space-evenly; overflow: hidden; padding-bottom: 0.5vmin; }
+        @media (orientation: landscape) { .toc-grid { grid-template-columns: 1fr 1fr; column-gap: 3vmin; row-gap: 1.5vmin; align-content: center; } }
+        .toc-item-card { background: #fff; border: 2px solid #dcdcdc; border-radius: 1.5vmin; display: flex; justify-content: space-between; align-items: center; padding: 1.2vmin 2vmin; min-height: 0; box-shadow: 0 4px 6px rgba(0,0,0,0.06); }
+        .toc-item-text { font-weight: 900; font-size: min(3.2vmin, 3.8vh); color: #000; flex: 1; text-align: left; line-height: 1.3;}
         .toc-item-btn { background: #2ecc71; color: #fff; border: none; padding: 1vmin 2vmin; border-radius: 1vmin; font-weight: 900; font-size: min(2.8vmin, 3.2vh); cursor: pointer; flex-shrink: 0; margin-left: 2vmin; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
 
         /* --- FLASH CARD (STRICT FLEXBOX NO OVERLAP) --- */
@@ -497,8 +497,6 @@
     }
     
     function showMainMenu() {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
         document.getElementById('intro-screen').style.display = 'none';
         document.getElementById('main-menu-screen').style.display = 'flex';
         state = 'menu';
@@ -514,7 +512,6 @@
                 readAloud();
             } else {
                 if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-                ttsSpeaking = false;
             }
         }
     }
@@ -531,8 +528,6 @@
     }
     
     function toggleAccordion(m) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
         const auto = document.getElementById('card-auto'), live = document.getElementById('card-live');
         if(m === 'auto') { auto.classList.toggle('expanded'); live.classList.remove('expanded'); }
         else { live.classList.toggle('expanded'); auto.classList.remove('expanded'); }
@@ -540,7 +535,6 @@
     
     function jumpTo(sec, mod, idx) {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
         section = sec; mode = mod; step = idx; subIdx = -1; paused = false; reviewMode = false;
         document.getElementById('main-menu-screen').style.display = 'none';
         document.getElementById('master-card').classList.add('active');
@@ -556,8 +550,6 @@
     }
     
     function startAutoWithToc(sec) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
         mode = 'auto'; document.body.classList.add('auto-mode');
         if(sec === 'mcq') {
             document.getElementById('main-menu-screen').style.display = 'none';
@@ -575,7 +567,6 @@
     
     function openToc(e, sec, mod) {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
         if (e && e.stopPropagation) e.stopPropagation();
         const list = document.getElementById('toc-list'); list.innerHTML = '';
         lessonData[sec].forEach((d, idx) => {
@@ -644,6 +635,7 @@
             node.onclick = (e) => {
                 e.stopPropagation();
                 if (!mapClickable || typing || mode === 'auto' || reviewMode) return;
+                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
                 if (node.innerHTML === "?") {
                     const idx = currentMindMapNodes.findIndex(item => item.node === node);
                     if(idx !== -1) revealSingleMindNode(idx);
@@ -656,8 +648,6 @@
     }
     
     async function revealSingleMindNode(index) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
         if(typing) return; typing = true;
 
         for(let i = 0; i < currentMindMapNodes.length; i++) {
@@ -675,7 +665,7 @@
         item.node.style.opacity = '1';
         item.node.style.filter = 'none';
 
-        if(!paused) {
+        if(!paused && ('speechSynthesis' in window)) {
             speakText(cleanTextForSpeech(item.node.dataset.text));
         }
 
@@ -694,6 +684,9 @@
                 for(let i = 0; i < currentMindMapNodes.length; i++) {
                     currentMindMapNodes[i].node.style.opacity = '1';
                     currentMindMapNodes[i].node.style.filter = 'none';
+                }
+                if(!paused) {
+                    readAloud();
                 }
             }, 2000);
         }
@@ -766,9 +759,8 @@
     }
     
     function readAloud(e) {
-        if(e) e.stopPropagation();
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
+        if(e) e.stopPropagation();
         let textToSpeak = "";
         
         if (step === 'toc') {
@@ -1040,19 +1032,15 @@
     }
     
     async function startTypewriter(el, html) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
         el.classList.add('typing-cursor'); await typeEffect(el, html, TYPE_SPEED); el.classList.remove('typing-cursor');
         stepState = 'reveal'; reviewMode = true;
         if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
-        updateListenBtn(); if(!paused) readAloud();
+        updateListenBtn(); if(mode === 'auto' && !paused) readAloud();
     }
     
     async function revealAnswer(e, idx) {
-        if(e) e.stopPropagation(); 
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
-        if(typing) { typing = false; return; }
+        if(e) e.stopPropagation(); if(typing) { typing = false; return; }
         
         const d = lessonData[section][step];
         const btn = document.getElementById(`btn-${idx}`);
@@ -1067,7 +1055,7 @@
             target.classList.remove('blank-dash'); target.innerHTML = "";
             const optPill = document.getElementById(`opt-${d.items[idx].blank}`); if (optPill) optPill.classList.add('used');
             subIdx = idx; stepState = 'reveal'; updateListenBtn();
-            if(!paused) readAloud();
+            if(mode === 'auto' && !paused) readAloud();
             await typeEffect(target, `<span class="hl-red">${d.items[idx].blank}</span>`, TYPE_SPEED);
         } else if (d.type === 'match_lines') {
             const leftEl = document.getElementById(`match-l-${idx}`);
@@ -1096,13 +1084,13 @@
             setTimeout(() => { line.style.transition = 'stroke-width 0.3s ease'; line.setAttribute('stroke-width', '6'); }, 10);
 
             subIdx = idx; stepState = 'reveal'; updateListenBtn();
-            if(!paused) readAloud();
+            if(mode === 'auto' && !paused) readAloud();
 
         } else {
             const target = document.getElementById(`ans-${idx}`);
             target.classList.add('revealed');
             subIdx = idx; stepState = 'reveal'; updateListenBtn();
-            if(!paused) readAloud();
+            if(mode === 'auto' && !paused) readAloud();
             await typeEffect(target, d.items[idx].a, TYPE_SPEED);
         }
         
@@ -1117,8 +1105,7 @@
     
     async function checkMcq(btn, isCorrect) {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
-        if(typing) return;
+        if(typing) return; 
         const d = lessonData[section][step];
         
         if(isCorrect) {
@@ -1140,7 +1127,6 @@
     
     async function showAllAnswers(e) {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
         if(e) e.stopPropagation(); if(step === 'toc' || lessonData[section][step].type === 'conclude') return;
         typing = false; const d = lessonData[section][step];
         
@@ -1186,7 +1172,6 @@
     
     async function nextStep(isAuto = false) {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
         if(typing) { typing = false; return; }
         if(mode === 'auto' && !isAuto) return;
         
@@ -1255,13 +1240,11 @@
     
     function skipStep() {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
         typing = false; if (step === 'toc') { step = 0; renderSlide(); return; }
         if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome();
     }
     function prevStep() {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
         if(typing) { typing = false; return; }
         if (step === 'toc') { goHome(); return; }
         if (step === 0) { 
@@ -1270,14 +1253,9 @@
         } 
         step--; renderSlide();
     }
-    function retrySlide() { 
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel(); 
-        ttsSpeaking = false;
-        typing = false; renderSlide(); 
-    }
+    function retrySlide() { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); typing = false; renderSlide(); }
     function goHome() {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
         state = 'menu'; autoLoopRunning = false; document.body.classList.remove('auto-mode');
         document.getElementById('master-card').classList.remove('active'); document.getElementById('main-menu-screen').style.display = 'flex';
     }
@@ -1286,16 +1264,9 @@
         if(autoLoopRunning) return; autoLoopRunning = true;
         while(state === 'slide' && mode === 'auto') {
             if(paused) { await new Promise(r => setTimeout(r, 200)); continue; }
-            while(typing || ('speechSynthesis' in window && window.speechSynthesis.speaking) || ttsSpeaking) { 
-                await new Promise(r => setTimeout(r, 200)); 
-                if(state !== 'slide' || mode !== 'auto') { autoLoopRunning = false; return; } 
-            }
+            while(typing || ttsSpeaking) { await new Promise(r => setTimeout(r, 200)); if(state !== 'slide' || mode !== 'auto') { autoLoopRunning = false; return; } }
             let gapElapsed = 0;
-            while(gapElapsed < 2500) { 
-                await new Promise(r => setTimeout(r, 200)); 
-                if(state !== 'slide' || mode !== 'auto' || paused) break; 
-                gapElapsed += 200; 
-            }
+            while(gapElapsed < 3000) { await new Promise(r => setTimeout(r, 200)); if(state !== 'slide' || mode !== 'auto' || paused) break; gapElapsed += 200; }
             if(paused || state !== 'slide' || mode !== 'auto') continue;
             await nextStep(true);
         }
@@ -1304,9 +1275,8 @@
 
     // --- ELEPHANT DRAWING FUNCTIONS ---
     function initUserElephantCanvas(event) {
-        if(event) event.stopPropagation();
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
+        if(event) event.stopPropagation();
         const animationSequence = [
             { id: 'anim-body' }, { id: 'anim-ear' }, { id: 'anim-tusk' },
             { id: 'anim-bg-leg1' }, { id: 'anim-bg-leg2' }, { id: 'anim-tail' }, { id: 'anim-toes' }
@@ -1326,9 +1296,8 @@
     }
 
     async function drawUserElephant(event) {
-        if(event) event.stopPropagation();
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        ttsSpeaking = false;
+        if(event) event.stopPropagation();
         const btn = document.getElementById('realStartBtn');
         if(!btn || btn.disabled) return;
         
