@@ -26,13 +26,13 @@
         /* Disclaimer Screen */
         #disclaimer-screen { position: absolute; inset: 0; z-index: 999999; background: rgba(0,0,0,0.92); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; padding: 3vmin; }
         .disclaimer-box { background: #fff; border-radius: 3vmin; padding: 3vmin; width: 95%; max-width: 850px; border: 0.8vmin solid #d32f2f; display: flex; flex-direction: column; max-height: 98%; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .disclaimer-content { overflow-y: auto; flex-grow: 1; margin-bottom: 2vmin; padding: 2.2vmin; background: #fffdf5; border-radius: 2vmin; border: 1px solid #ddd; }
-        .disclaimer-content h2 { text-align: center; color: #d32f2f; font-size: 5.5vmin; margin-bottom: 1.5vmin; }
-        .disclaimer-content li { font-size: 3.5vmin; line-height: 1.5; margin-bottom: 1vmin; font-weight: bold; color: #333; list-style: none; }
-        .warning-box-red { background: #ffebee; border-left: 1.2vmin solid #d32f2f; padding: 1.5vmin; border-radius: 1vmin; margin: 1vmin 0; }
+        .disclaimer-content { overflow: hidden; display: flex; flex-direction: column; justify-content: space-evenly; flex-grow: 1; margin-bottom: 2vmin; padding: 2.2vmin; background: #fffdf5; border-radius: 2vmin; border: 1px solid #ddd; }
+        .disclaimer-content h2 { text-align: center; color: #d32f2f; font-size: min(5vmin, 5.5vh); margin-bottom: 1vmin; }
+        .disclaimer-content li { font-size: min(3vmin, 3.5vh); line-height: 1.3; margin-bottom: 0.5vmin; font-weight: bold; color: #333; list-style: none; }
+        .warning-box-red { background: #ffebee; border-left: 1.2vmin solid #d32f2f; padding: 1vmin; border-radius: 1vmin; margin: 0.5vmin 0; }
         .disclaimer-actions { display: flex; gap: 2vmin; flex-shrink: 0; }
-        .agree-btn { background: #2ecc71; color: #fff; padding: 2vmin; font-size: 4vmin; font-weight: 900; border-radius: 2vmin; border: none; cursor: pointer; flex: 1; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-        .disagree-btn { background: #e74c3c; color: #fff; padding: 2vmin; font-size: 4vmin; font-weight: 900; border-radius: 2vmin; border: none; cursor: pointer; flex: 1; }
+        .agree-btn { background: #2ecc71; color: #fff; padding: 1.5vmin; font-size: min(3.5vmin, 4vh); font-weight: 900; border-radius: 2vmin; border: none; cursor: pointer; flex: 1; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .disagree-btn { background: #e74c3c; color: #fff; padding: 1.5vmin; font-size: min(3.5vmin, 4vh); font-weight: 900; border-radius: 2vmin; border: none; cursor: pointer; flex: 1; }
         
         /* Custom Modal */
         #custom-modal, #wrong-modal { position: absolute; inset: 0; z-index: 1000000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 4vmin; }
@@ -57,47 +57,55 @@
         .pos-7 { top: 20%; left: 18%; background: #00cec9; animation-delay: 0.7s; }
         .pos-8 { top: 20%; right: 18%; background: #e1b12c; animation-delay: 0.8s; }
         
-        /* Menu Screen - FIXED HORIZONTAL SCROLL */
-        #main-menu-screen { position: absolute; inset: 0; z-index: 400; display: none; flex-direction: column; align-items: center; background: #fffdf5; padding: 4vmin; overflow-y: auto; overflow-x: hidden; }
-        .menu-heading { font-size: 6vmin; font-weight: 900; color: #d32f2f; margin-bottom: 4vmin; border-bottom: 0.5vmin dashed #ff9f43; width: 90%; text-align: center; }
-        .mode-container { display: flex; width: 100%; gap: 4vmin; justify-content: center; align-items: flex-start; }
+        /* Menu Screen */
+        #main-menu-screen { position: absolute; inset: 0; z-index: 400; display: none; flex-direction: column; align-items: center; background: #fffdf5; padding: 3vmin; overflow: hidden; }
+        .menu-heading { font-size: min(5vmin, 6vh); font-weight: 900; color: #d32f2f; margin-bottom: 2vmin; border-bottom: 0.5vmin dashed #ff9f43; width: 90%; text-align: center; }
+        .mode-container { display: flex; width: 100%; gap: 2vmin; justify-content: center; align-items: stretch; flex: 1; min-height: 0; }
         @media (orientation: portrait) { .mode-container { flex-direction: column; align-items: center; } .mode-card { width: 100% !important; max-width: 100% !important; } }
-        .mode-card { border-radius: 2.5vmin; border: 0.5vmin solid #d32f2f; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); background: #fff; height: var(--unit); flex: 1 1 0; width: 46%; max-width: 480px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
-        .mode-card.expanded { height: calc(6.5 * var(--unit)); }
-        .mode-header { background: #d32f2f; color: #fff; padding: 2vmin; font-size: 5vmin; font-weight: 900; cursor: pointer; display: flex; justify-content: space-between; align-items: center; height: var(--unit); }
+        .mode-card { border-radius: 2.5vmin; border: 0.5vmin solid #d32f2f; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); background: #fff; flex: 1; width: 46%; max-width: 480px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); height: auto !important; max-height: calc(1.3 * var(--unit)); }
+        .mode-card.expanded { max-height: 100%; }
+        .mode-header { background: #d32f2f; color: #fff; padding: 2vmin; font-size: min(4.5vmin, 5vh); font-weight: 900; cursor: pointer; display: flex; justify-content: space-between; align-items: center; height: var(--unit); flex: 0 0 auto; }
         .auto-card { border-color: #2980b9; }
         .auto-card .mode-header { background: #2980b9; }
-        .mode-content { display: none; padding: 2vmin; flex-direction: column; gap: 1.5vmin; background: #fffdf5; border-top: 1px solid #ddd; height: calc(5.5 * var(--unit)); justify-content: center; }
+        .mode-content { display: none; padding: 2vmin; flex-direction: column; gap: 1.5vmin; background: #fffdf5; border-top: 1px solid #ddd; flex: 1; min-height: 0; justify-content: space-evenly; overflow: hidden; }
         .mode-card.expanded .mode-content { display: flex; }
-        .btn-wrap { display: flex; width: 100%; gap: 1vmin; }
-        .menu-btn { flex: 1; padding: 2vmin; font-size: 4vmin; font-weight: 900; border-radius: 1.5vmin; border: none; color: #fff; cursor: pointer; text-align: center; }
+        .btn-wrap { display: flex; width: 100%; gap: 1vmin; flex: 1; min-height: 0; }
+        .menu-btn { flex: 1; padding: 1vmin; font-size: min(3.5vmin, 4vh); font-weight: 900; border-radius: 1.5vmin; border: none; color: #fff; cursor: pointer; text-align: center; display: flex; align-items: center; justify-content: center; height: 100%; }
         .btn-ex { background: #e74c3c; } .btn-mcq { background: #3498db; } .btn-act { background: #9b59b6; }
         
         /* ToC Modal */
         #toc-overlay { position: absolute; inset: 0; z-index: 100000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 4vmin; }
         .toc-box { background: #fff; border-radius: 3vmin; width: 95%; max-width: 800px; max-height: 85%; display: flex; flex-direction: column; border: 1vmin solid #d32f2f; padding: 3vmin; box-shadow: 0 0 50px rgba(0,0,0,1); }
-        .toc-list { overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; gap: 1vmin; margin-top: 1.5vmin; }
-        .toc-item { display: flex; justify-content: space-between; align-items: center; padding: 1.5vmin 2vmin; background: #f9f9f9; border-radius: 1.5vmin; border-left: 1vmin solid #d32f2f; }
-        .toc-text { font-weight: 900; font-size: 4vmin; color: #333; flex: 1; text-align: left; }
-        .toc-go-btn { background: #2ecc71; color: #fff; border: none; padding: 1.5vmin 3vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 3vmin; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .toc-list { overflow: hidden; flex-grow: 1; display: grid; grid-template-columns: 1fr; gap: 1vmin; margin-top: 1.5vmin; align-content: stretch; height: 100%; }
+        @media (orientation: landscape) { .toc-list { grid-template-columns: 1fr 1fr; column-gap: 2.5vmin; } }
+        .toc-item { display: flex; justify-content: space-between; align-items: center; padding: 1vmin 2vmin; background: #f9f9f9; border-radius: 1.5vmin; border-left: 1vmin solid #d32f2f; min-height: 0; }
+        .toc-text { font-weight: 900; font-size: min(3.5vmin, 4vh); color: #333; flex: 1; text-align: left; }
+        .toc-go-btn { background: #2ecc71; color: #fff; border: none; padding: 1.5vmin 3vmin; border-radius: 1.5vmin; font-weight: 900; font-size: min(3vmin, 3.5vh); cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); flex-shrink: 0; margin-left: 2vmin; }
         
-        /* --- FLASH CARD LAYOUT (STRICT FLEXBOX BOUNDARIES - NO OVERLAP) --- */
+        /* --- TOC FLASHCARD GRID --- */
+        .toc-grid { display: grid; grid-template-columns: 1fr; gap: 1.5vmin; width: 100%; height: 100%; align-content: stretch; overflow: hidden; padding-bottom: 0.5vmin; }
+        @media (orientation: landscape) { .toc-grid { grid-template-columns: 1fr 1fr; column-gap: 3vmin; } }
+        .toc-item-card { background: #fff; border: 2px solid #dcdcdc; border-radius: 1.5vmin; display: flex; justify-content: space-between; align-items: center; padding: 1vmin 2vmin; min-height: 0; box-shadow: 0 4px 6px rgba(0,0,0,0.06); }
+        .toc-item-text { font-weight: 900; font-size: min(3.5vmin, 4vh); color: #000; flex: 1; text-align: left; }
+        .toc-item-btn { background: #2ecc71; color: #fff; border: none; padding: 1vmin 2vmin; border-radius: 1vmin; font-weight: 900; font-size: min(3vmin, 3.5vh); cursor: pointer; flex-shrink: 0; margin-left: 2vmin; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+
+        /* --- FLASH CARD (STRICT FLEXBOX NO OVERLAP) --- */
         .flash-card { 
             width: 100%; height: 100%; background: #fff; border-radius: 3vmin; 
             border: 0.5vmin solid #ddd; display: none; flex-direction: column; 
-            padding: 1.2vmin; box-sizing: border-box; overflow: hidden;
+            padding: 1.5vmin; box-sizing: border-box; overflow: hidden;
         }
         .flash-card.active { display: flex; }
         
-        /* 1. Top Bar: Fixed Size */
+        /* Top Bar: Fixed Height */
         .top-bar { 
-            flex: 0 0 auto; width: 100%; padding: 0.8vmin; background: #fffde7; 
+            flex: 0 0 auto; width: 100%; padding: 1vmin; background: #fffde7; 
             color: #d32f2f; font-weight: 900; font-size: 3.5vmin; text-align: center; 
             border-radius: 1.5vmin; border: 2px dashed #ff9f43; margin-bottom: 1.5vmin; 
             box-sizing: border-box; 
         }
         
-        /* 2. Middle Text Container: Dynamic Size, Locked Boundaries */
+        /* Middle Content: Flex Grow, Hidden Overflow */
         .text-container { 
             flex: 1 1 0; min-height: 0; width: 100%; overflow: hidden !important; 
             display: flex; flex-direction: column; align-items: stretch; 
@@ -106,20 +114,20 @@
         .title-text { flex: 0 0 auto; font-size: 4.5vmin; font-weight: 900; color: #d32f2f; margin-bottom: 0.5vmin; border-bottom: 2px solid #eee; width: 100%; text-align: center; padding-bottom: 0.5vmin; }
         .instr-text { flex: 0 0 auto; font-size: 3.2vmin; font-weight: bold; color: #666; margin-bottom: 1vmin; text-align: center; width: 100%; }
         
-        #html-content { flex: 1 1 0; min-height: 0; width: 100%; overflow: hidden !important; }
+        #html-content { flex: 1 1 0; min-height: 0; width: 100%; overflow: hidden !important; display: flex; flex-direction: column; justify-content: center; }
         
-        /* 3. Bottom Ribbon: Fixed Size at the Bottom */
+        /* Bottom Ribbon: Fixed height area to prevent overlap */
         .bottom-ribbon { 
-            flex: 0 0 7vmin; width: 100%; display: flex; justify-content: space-between; 
-            align-items: center; border-top: 2px solid #eee; padding-top: 1vmin; 
-            margin-top: 1vmin; box-sizing: border-box; gap: 1vmin; background: #fff; z-index: 20; 
+            flex: 0 0 auto; min-height: 7.5vmin; width: 100%; display: flex; justify-content: space-between; 
+            align-items: stretch; border-top: 2px solid #eee; padding-top: 1.5vmin; 
+            margin-top: 1.5vmin; box-sizing: border-box; gap: 1vmin; background: #fff; z-index: 20; 
         }
         
-        /* List Styling - BIG FONTS */
+        /* List Styling */
         .interactive-list { display: grid; grid-template-columns: 1fr; gap: 1vmin; overflow: hidden !important; align-content: stretch; height: 100%; padding-bottom: 0.5vmin; }
         @media (orientation: landscape) { .interactive-list { grid-template-columns: 1fr 1fr; column-gap: 2.5vmin; row-gap: 1.5vmin; justify-content: center; align-content: stretch; } }
         
-        .interactive-item { display: flex; flex-direction: column; justify-content: center; padding: 1.5vmin 2vmin; border: 2px solid #dcdcdc; border-radius: 1.5vmin; background: #ffffff; width: 100%; transition: opacity 0.5s, box-shadow 0.3s; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.06); }
+        .interactive-item { display: flex; flex-direction: column; justify-content: center; padding: 1.5vmin 2vmin; border: 2px solid #dcdcdc; border-radius: 1.5vmin; background: #ffffff; width: 100%; transition: opacity 0.5s, box-shadow 0.3s; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.06); min-height: 0;}
         .q-row { display: flex; align-items: center; width: 100%; text-align: left; justify-content: space-between; }
         .item-q { font-weight: 900; color: #000; font-size: 3.5vmin; flex: 1; line-height: 1.5; text-align: left; }
         .qa-mode .item-q { color: #d32f2f; }
@@ -140,47 +148,55 @@
         .opt-pill.used { text-decoration: line-through; opacity: 0.4; background: #eee; color: #999; }
         .options-box strong { font-size: 3.2vmin; }
         
-        /* TYPING STYLING (ESSAY/APP) - BIG FONTS, STRICTLY NO SCROLL */
-        .typing-text-container { width: 100%; height: 100%; overflow: hidden !important; text-align: left; padding: 2vmin; border-radius: 2vmin; background: #f0fdf4; margin: 0; font-size: 3.8vmin; font-weight: bold; color: #1565c0; display: flex; flex-direction: column; justify-content: space-evenly; align-items: stretch; box-sizing: border-box; }
+        /* TYPING STYLING (ESSAY/APP) - NO SCROLL */
+        .typing-text-container { flex: 1 1 0; min-height: 0; width: 100%; overflow: hidden !important; text-align: left; padding: 2vmin; border-radius: 2vmin; background: #f0fdf4; margin: 0; font-size: 3.8vmin; font-weight: bold; color: #1565c0; display: flex; flex-direction: column; justify-content: space-evenly; align-items: stretch; box-sizing: border-box; }
         .typing-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #e74c3c; font-weight: 900; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* MATCH LINES - MAXIMIZED BOXES */
-        .match-container-wrapper { position: relative; display: flex; justify-content: space-between; width: 100%; height: 100%; padding: 1.5vmin; background: #fffdf5; border-radius: 2vmin; border: 2px solid #ccc; flex-grow: 1; box-sizing: border-box; }
+        /* APPLICATION STYLING LANDSCAPE FIX */
+        .app-content { width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-evenly; text-align: left; font-size: min(3vmin, 4vh); line-height: 1.4; box-sizing: border-box; overflow: hidden;}
+        .app-subj { font-size: 3.8vmin; }
+        @media (orientation: landscape) {
+            .app-content { padding: 0 10vw; font-size: min(2.8vmin, 3.5vh); line-height: 1.2; }
+            .app-subj { font-size: 3.2vmin !important; margin: 0.2vmin 0 !important; }
+        }
+
+        /* MATCH LINES - FULL BOUNDS */
+        .match-container-wrapper { flex: 1 1 0; min-height: 0; position: relative; display: flex; flex-direction: row; justify-content: space-between; width: 100%; padding: 1.5vmin; background: #fffdf5; border-radius: 2vmin; border: 2px solid #ccc; box-sizing: border-box; }
         #match-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .match-col { display: flex; flex-direction: column; gap: 1.5vmin; width: 45%; height: 100%; z-index: 2; justify-content: space-between; }
-        .match-box { flex: 1; display: flex; align-items: center; justify-content: center; padding: 1.5vmin; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 1.5vmin; background: #fff; transition: background 0.3s, border-color 0.3s; margin-bottom: 0; }
+        .match-col { display: flex; flex-direction: column; gap: 1.5vmin; width: 38%; height: 100%; z-index: 2; justify-content: space-evenly; flex: 0 0 38%; min-height: 0; }
+        .match-box { flex: 1 1 0; min-height: 0; display: flex; align-items: center; justify-content: center; padding: 1vmin; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 1.5vmin; background: #fff; transition: background 0.3s, border-color 0.3s; margin: 0; }
         .match-l { border: 3px solid #3498db; cursor: pointer; }
         .match-r { border: 3px solid #e67e22; }
-        .match-text { font-size: 3.8vmin; font-weight: bold; color: #333; }
+        .match-text { font-size: min(3.8vmin, 4vh); font-weight: bold; color: #333; } /* Adaptable font */
 
-        /* ELEPHANT DRAWING STYLING - BIGGER SVG */
-        .elephant-svg-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
-        .elephant-svg-container svg { width: 100%; max-width: 80vw; max-height: 60vh; display: block; border: 3px dashed #e67e22; border-radius: 2vmin; background: #fffdf5; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); flex-shrink: 1; }
+        /* ELEPHANT DRAWING STYLING - CENTERED PERFECTLY */
+        .elephant-svg-container { flex: 1 1 0; min-height: 0; width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .elephant-svg-container svg { height: 100%; max-height: 60vh; width: auto; max-width: 95%; display: block; border: 3px dashed #e67e22; border-radius: 2vmin; background: #fffdf5; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); margin: 0 auto; object-fit: contain; }
         .layout-dot { fill: none; stroke: #444444; stroke-width: 7; stroke-dasharray: 0 25; stroke-linecap: round; stroke-linejoin: round; }
         .draw-line { fill: transparent; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
         .color-layer { opacity: 0; transition: opacity 1.5s ease; }
         
-        /* MIND MAP STYLING (NEW PERCENTAGE BASED LAYOUT) */
+        /* MIND MAP STYLING */
         .mind-map-container { position: relative; width: 100%; max-width: 65vh; aspect-ratio: 1/1; margin: auto; cursor: pointer; display: block; }
         .mind-node { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; text-align: center; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; font-weight: 900; user-select: none; line-height: 1.2; padding: 1vmin; }
         .mind-node-center { width: 35%; height: 35%; top: 50%; left: 50%; background: linear-gradient(135deg, #1565c0, #0d47a1); color: white; z-index: 20; border: 0.8vmin solid white; font-size: clamp(3vmin, 4.5vmin, 2.5rem); box-shadow: 0 8px 20px rgba(13, 71, 161, 0.4), inset 0 -4px 8px rgba(0,0,0,0.2); }
         .mind-node-outer { width: 25%; height: 25%; background: white; border: 0.6vmin solid #1565c0; color: #0d47a1; z-index: 10; font-size: clamp(2.2vmin, 3vmin, 1.8rem); }
         .mind-node-outer:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 6px 15px rgba(21, 101, 192, 0.3); }
         
-        .conclusion-box { text-align: center; padding: 5vmin; background: #e3f2fd; border: 1vmin dashed #1565c0; border-radius: 4vmin; width: 100%; margin: auto; }
+        .conclusion-box { text-align: center; padding: 5vmin; background: #e3f2fd; border: 1vmin dashed #1565c0; border-radius: 4vmin; width: 100%; margin: auto; overflow: hidden;}
         .conc-title { font-size: 8vmin; color: #1565c0; font-weight: 900; margin-bottom: 2.5vmin; }
         .conc-msg { font-size: 4.5vmin; color: #333; line-height: 1.6; font-weight: bold; }
         
         /* Navigation Ribbon Buttons */
-        .nav-btn { padding: 1.2vmin 2vmin; font-size: 3vmin; font-weight: 900; border-radius: 1vmin; border: none; cursor: pointer; color: #fff; background: #333; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .nav-btn { display: flex; align-items: center; justify-content: center; padding: 1vmin 2vmin; font-size: 3vmin; font-weight: 900; border-radius: 1vmin; border: none; cursor: pointer; color: #fff; background: #333; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
         .btn-retry { background: #e67e22; } .btn-skip { background: #7f8c8d; } .btn-showall { background: #8e44ad; } .btn-home { background: #c0392b; }
-        .action-btn-wrap { flex-grow: 1; display: flex; gap: 1.5vmin; height: 100%; }
+        .action-btn-wrap { flex-grow: 1; display: flex; gap: 1.5vmin; height: 100%; align-items: stretch;}
         .bottom-listen { flex: 1; text-align: center; background: #8e44ad; padding: 1vmin 2vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 3.2vmin; cursor: pointer; border: 2px solid #fff; color: #fff; display: none; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
         #tap-indicator { flex: 1; text-align: center; background: #ffeb3b; padding: 1vmin 2vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 3.2vmin; cursor: pointer; border: 2px solid #d32f2f; color: #000; display: flex; align-items: center; justify-content: center; }
         
         /* MCQ */
-        .mcq-options-grid { width: 100%; display: flex; flex-direction: column; gap: 1.5vmin; padding: 1vmin 0; height: 100%; justify-content: center; }
+        .mcq-options-grid { width: 100%; display: flex; flex-direction: column; gap: 1.5vmin; padding: 1vmin 0; height: 100%; justify-content: center; overflow: hidden; }
         @media (orientation: landscape) { .mcq-options-grid { display: grid; grid-template-columns: 1fr 1fr; align-content: center; } }
         .mcq-btn { padding: 2vmin; border-radius: 1.5vmin; border: 2px solid #ddd; font-size: 3.8vmin; font-weight: 900; text-align: center; background: #f9f9f9; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); color: #333; margin: 0; }
         .mcq-btn:active { transform: scale(0.95); }
@@ -229,7 +245,7 @@
                         <h2>⚠ ਨਿਯਮ ਅਤੇ ਵਰਤੋਂ ਦੀਆਂ ਸ਼ਰਤਾਂ</h2>
                         <ul>
                             <li><strong>1 . ਸੰਸਥਾ ਦਾ ਉਦੇਸ਼ :</strong> ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ ਟੀਮ ਵੱਲੋਂ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਇੱਕ ਡਿਜੀਟਲ ਪਲੇਟਫਾਰਮ ਹੈ । ਸਾਡਾ ਮੁੱਖ ਮਕਸਦ ਪੰਜਾਬ ਦੇ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲਾਂ ਦੇ ਬੱਚਿਆਂ ਨੂੰ ਮਿਆਰੀ ਸਿੱਖਿਆ ਸਮੱਗਰੀ ਮੁਫ਼ਤ ਮੁਹੱਈਆ ਕਰਵਾਉਣਾ ਹੈ ।</li>
-                            <li><strong>2 . ਵਰਤੋਂਕਾਰ :</strong> ਇਹ ਸਿਰਫ਼ ਵਿੱਦਿਅਕ ਵਰਤੋਂ ਲਈ ਹੈ । ਕਿਸੇ ਵੀ ਵਿਅਕਤੀ ਜਾਂ ਸੰਸਥਾ ਨੂੰ float ਦੀ ਵਰਤੋਂ ਆਪਣੇ ਨਿੱਜੀ ਫਾਇਦੇ ਲਈ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ ।</li>
+                            <li><strong>2 . ਵਰਤੋਂਕਾਰ :</strong> ਇਹ ਸਿਰਫ਼ ਵਿੱਦਿਅਕ ਵਰਤੋਂ ਲਈ ਹੈ । ਕਿਸੇ ਵੀ ਵਿਅਕਤੀ ਜਾਂ ਸੰਸਥਾ ਨੂੰ ਇਸ ਦੀ ਵਰਤੋਂ ਆਪਣੇ ਨਿੱਜੀ ਫਾਇਦੇ ਲਈ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ ।</li>
                             <li><strong>3 . ਪਾਠਕ੍ਰਮ :</strong> ਵੈੱਬਸਾਈਟ ਦੀ ਸਮੱਗਰੀ PSEB ਪਾਠਕ੍ਰਮ 'ਤੇ ਆਧਾਰਿਤ ਹੈ ।</li>
                             <div class="warning-box-red"><li><strong>4 . ਡਿਵੈਲਪਮੈਂਟ ਮੋਡ :</strong> ਇਹ ਪਲੇਟਫਾਰਮ ਅਜੇ ਵਿਕਾਸ ਦੇ ਪੜਾਅ ਵਿੱਚ ਹੈ । ਅਧਿਆਪਕ ਸਾਹਿਬਾਨ ਇਸ ਨੂੰ ਆਪਣੇ ਪੱਧਰ ਤੇ ਵੀ ਘੋਖਦੇ ਰਹਿਣ ।</li></div>
                             <li><strong>5 . ਸੋਧ :</strong> ਪ੍ਰਾਇਮਰੀ ਸਿੱਖਿਆ ਪੰਜਾਬ ਕੋਲ ਕਿਸੇ ਵੀ ਸਮੇਂ ਨਿਯਮਾਂ ਵਿੱਚ ਬਦਲਾਅ ਕਰਨ ਦਾ ਅਧਿਕਾਰ ਰਾਖਵਾਂ ਹੈ ।</li>
@@ -375,7 +391,7 @@
           instruction: "ਉੱਤਰ ਦੇਖਣ ਲਈ ਬਟਨ 'ਤੇ ਟੱਚ ਕਰੋ:",
           type: "qa",
           items: [
-            { q: "(ਸ) ਹਾਥੀ ਦੀ ਸੁੰਡ ਕਿਹੋ-ਜਿਹੀ ਹੁੰਦੀ ਹੈ ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਹਾਥੀ ਦੀ ਸੁੰਡ ਲੰਮ-ਸਲੰਮੀ ਹੁੰਦੀ ਹੈ।</span>" },
+            { q: "(ਸ) ਹਾਥੀ ਦੀ ਸੁੰਡ ਕਿਹੋ-ਜਿਹੀ ਹੁੰਦੀ মিলিটারি ਹੈ ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਹਾਥੀ ਦੀ ਸੁੰਡ ਲੰਮ-ਸਲੰਮੀ ਹੁੰਦੀ ਹੈ।</span>" },
             { q: "(ਹ) ਨਹਿਰ ਵਿੱਚ ਨਹਾਉਂਦਾ ਹਾਥੀ ਕੀ ਕਰ ਰਿਹਾ ਸੀ ?", a: "ਉੱਤਰ : <span class='hl-blue'>ਨਹਿਰ ਵਿੱਚ ਨਹਾਉਂਦਾ ਹਾਥੀ ਆਪਣੀ ਸੁੰਡ ਭਰ-ਭਰ ਕੇ ਫੁਹਾਰੇ ਛੱਡ ਰਿਹਾ ਸੀ।</span>" }
           ]
         },
@@ -396,13 +412,13 @@
           title: "4. ਹਾਥੀ ਬਾਰੇ ਦਸ ਵਾਕ ਲਿਖੋ :",
           instruction: "ਪੜ੍ਹਨ ਲਈ ਬਟਨ 'ਤੇ ਟੱਚ ਕਰੋ:",
           type: "typewriter",
-          content: "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 1.5vmin 3vmin; font-size: 3.4vmin; width: 100%; height: 100%; align-content: space-evenly; text-align: left; line-height: 1.4;'><div style='grid-column: 1 / -1; text-align:center; font-weight:900; color:#d32f2f; font-size: 4vmin;'>ਹਾਥੀ ਬਾਰੇ ਦਸ ਵਾਕ:</div><div>1. ਹਾਥੀ ਧਰਤੀ 'ਤੇ ਰਹਿਣ ਵਾਲਾ ਸਭ ਤੋਂ ਵੱਡਾ ਜਾਨਵਰ ਹੈ।</div><div>2. ਇਹ ਤੁਰਦਾ ਹੋਇਆ ਇੱਕ ਵੱਡੇ ਪਹਾੜ ਵਰਗਾ ਲੱਗਦਾ ਹੈ।</div><div>3. ਇਸਦੇ ਕੰਨ ਛੱਜਾਂ ਵਰਗੇ ਵੱਡੇ ਹੁੰਦੇ ਹਨ।</div><div>4. ਹਾਥੀ ਦੇ ਪੈਰ ਚੱਕੀ ਦੇ ਪੁੜਾਂ ਵਰਗੇ ਭਾਰੇ ਹੁੰਦੇ ਹਨ।</div><div>5. ਇਸਦੀ ਇੱਕ ਲੰਮ-ਸਲੰਮੀ ਸੁੰਡ ਹੁੰਦੀ ਹੈ ਜਿਸ ਨਾਲ ਇਹ ਖਾਣਾ ਖਾਂਦਾ ਹੈ।</div><div>6. ਮੂੰਹ ਵਿੱਚੋਂ ਬਾਹਰ ਨਿਕਲੇ ਇਸਦੇ ਦੋ ਦੰਦ ਲਿਸ਼ਕਦੀਆਂ ਤਲਵਾਰਾਂ ਵਰਗੇ ਲੱਗਦੇ ਹਨ।</div><div>7. ਹਾਥੀ ਨੂੰ ਹਰਾ ਚਾਰਾ ਅਤੇ ਗੰਨੇ ਖਾਣੇ ਬਹੁਤ ਪਸੰਦ ਹਨ।</div><div>8. ਇਹ ਨਹਿਰ ਵਿੱਚ ਨਹਾਉਣਾ ਅਤੇ ਸੁੰਡ ਨਾਲ ਫੁਹਾਰੇ ਛੱਡਣਾ ਪਸੰਦ ਕਰਦਾ ਹੈ।</div><div>9. ਕੁੱਤੇ ਹਾਥੀ ਨੂੰ ਦੇਖ ਕੇ ਭੌਂਕਦੇ ਹਨ ਪਰ ਇਹ ਬੇਪਰਵਾਹ ਚੱਲਦਾ ਰਹਿੰਦਾ ਹੈ।</div><div>10. ਇਹ ਬਹੁਤ ਤਾਕਤਵਰ ਅਤੇ ਸਮਝਦਾਰ ਜਾਨਵਰ ਹੈ।</div></div>"
+          content: "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 1vmin 2vmin; font-size: min(2.8vmin, 3.8vh); width: 100%; height: 100%; align-content: space-evenly; text-align: left; line-height: 1.4; overflow: hidden;'><div style='grid-column: 1 / -1; text-align:center; font-weight:900; color:#d32f2f; font-size: min(3.5vmin, 4vh);'>ਹਾਥੀ ਬਾਰੇ ਦਸ ਵਾਕ:</div><div>1. ਹਾਥੀ ਧਰਤੀ 'ਤੇ ਰਹਿਣ ਵਾਲਾ ਸਭ ਤੋਂ ਵੱਡਾ ਜਾਨਵਰ ਹੈ।</div><div>2. ਇਹ ਤੁਰਦਾ ਹੋਇਆ ਇੱਕ ਵੱਡੇ ਪਹਾੜ ਵਰਗਾ ਲੱਗਦਾ ਹੈ।</div><div>3. ਇਸਦੇ ਕੰਨ ਛੱਜਾਂ ਵਰਗੇ ਵੱਡੇ ਹੁੰਦੇ ਹਨ।</div><div>4. ਹਾਥੀ ਦੇ ਪੈਰ ਚੱਕੀ ਦੇ ਪੁੜਾਂ ਵਰਗੇ ਭਾਰੇ ਹੁੰਦੇ ਹਨ।</div><div>5. ਇਸਦੀ ਇੱਕ ਲੰਮ-ਸਲੰਮੀ ਸੁੰਡ ਹੁੰਦੀ ਹੈ ਜਿਸ ਨਾਲ ਇਹ ਖਾਣਾ ਖਾਂਦਾ ਹੈ।</div><div>6. ਮੂੰਹ ਵਿੱਚੋਂ ਬਾਹਰ ਨਿਕਲੇ ਇਸਦੇ ਦੋ ਦੰਦ ਲਿਸ਼ਕਦੀਆਂ ਤਲਵਾਰਾਂ ਵਰਗੇ ਲੱਗਦੇ ਹਨ।</div><div>7. ਹਾਥੀ ਨੂੰ ਹਰਾ ਚਾਰਾ ਅਤੇ ਗੰਨੇ ਖਾਣੇ ਬਹੁਤ ਪਸੰਦ ਹਨ।</div><div>8. ਇਹ ਨਹਿਰ ਵਿੱਚ ਨਹਾਉਣਾ ਅਤੇ ਸੁੰਡ ਨਾਲ ਫੁਹਾਰੇ ਛੱਡਣਾ ਪਸੰਦ ਕਰਦਾ ਹੈ।</div><div>9. ਕੁੱਤੇ ਹਾਥੀ ਨੂੰ ਦੇਖ ਕੇ ਭੌਂਕਦੇ ਹਨ ਪਰ ਇਹ ਬੇਪਰਵਾਹ ਚੱਲਦਾ ਰਹਿੰਦਾ ਹੈ।</div><div>10. ਇਹ ਬਹੁਤ ਤਾਕਤਵਰ ਅਤੇ ਸਮਝਦਾਰ ਜਾਨਵਰ ਹੈ।</div></div>"
         },
         {
           title: "5. ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਛੁੱਟੀ ਦੀ ਅਰਜ਼ੀ:",
           instruction: "ਅਰਜ਼ੀ ਦਾ ਸਹੀ ਫਾਰਮੈਟ ਪੜ੍ਹੋ:",
           type: "typewriter",
-          content: "<div style='width:100%; height:100%; display:flex; flex-direction:column; justify-content:space-evenly; text-align:left; font-size: 3.4vmin; line-height: 1.4;'><div style='text-align:left;'>ਸੇਵਾ ਵਿਖੇ,<br><span style='margin-left:4vmin;'>ਮੁੱਖ ਅਧਿਆਪਕ ਜੀ,</span><br><span style='margin-left:4vmin;'>ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ,</span><br><span style='margin-left:4vmin;'>(ਆਪਣੇ ਪਿੰਡ/ਸ਼ਹਿਰ ਦਾ ਨਾਮ)</span></div><div style='text-align:center; font-weight:900; color:#d32f2f; font-size: 4vmin;'>ਵਿਸ਼ਾ: ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਛੁੱਟੀ ਲੈਣ ਸੰਬੰਧੀ।</div><div style='text-align:left;'>ਸ੍ਰੀ ਮਾਨ ਜੀ / ਸ੍ਰੀਮਤੀ ਜੀ,</div><div style='text-align:justify; text-indent: 5vmin;'>ਸਨਿਮਰ ਬੇਨਤੀ ਹੈ ਕਿ ਮੈਨੂੰ ਅੱਜ ਘਰ ਵਿੱਚ ਇੱਕ ਬਹੁਤ ਜ਼ਰੂਰੀ ਕੰਮ ਪੈ ਗਿਆ ਹੈ। ਇਸ ਕਾਰਨ ਮੈਂ ਅੱਜ ਸਕੂਲ ਹਾਜ਼ਰ ਨਹੀਂ ਹੋ ਸਕਦਾ/ਸਕਦੀ। ਕਿਰਪਾ ਕਰਕੇ ਮੈਨੂੰ ਅੱਜ ਇੱਕ ਦਿਨ ਦੀ ਛੁੱਟੀ ਦਿੱਤੀ ਜਾਵੇ। ਮੈਂ ਆਪ ਜੀ ਦਾ/ਦੀ ਬਹੁਤ ਧੰਨਵਾਦੀ ਹੋਵਾਂਗਾ/ਹੋਵਾਂਗੀ।</div><div style='text-align:right;'><strong>ਧੰਨਵਾਦ ਸਹਿਤ!</strong><br>ਆਪ ਜੀ ਦਾ ਆਗਿਆਕਾਰੀ ਵਿਦਿਆਰਥੀ,<br>ਨਾਮ: ........................<br>ਜਮਾਤ: ਚੌਥੀ<br>ਰੋਲ ਨੰ: ........ ਮਿਤੀ: ........</div></div>"
+          content: "<div class='app-content'><div style='text-align:left;'>ਸੇਵਾ ਵਿਖੇ,<br><span style='margin-left:4vmin;'>ਮੁੱਖ ਅਧਿਆਪਕ ਜੀ,</span><br><span style='margin-left:4vmin;'>ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ,</span><br><span style='margin-left:4vmin;'>(ਆਪਣੇ ਪਿੰਡ/ਸ਼ਹਿਰ ਦਾ ਨਾਮ)</span></div><div class='app-subj' style='text-align:center; font-weight:900; color:#d32f2f; margin: 0.5vmin 0;'>ਵਿਸ਼ਾ: ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਛੁੱਟੀ ਲੈਣ ਸੰਬੰਧੀ।</div><div style='text-align:left;'>ਸ੍ਰੀ ਮਾਨ ਜੀ / ਸ੍ਰੀਮਤੀ ਜੀ,</div><div style='text-align:justify; text-indent: 5vmin;'>ਸਨਿਮਰ ਬੇਨਤੀ ਹੈ ਕਿ ਮੈਨੂੰ ਅੱਜ ਘਰ ਵਿੱਚ ਇੱਕ ਬਹੁਤ ਜ਼ਰੂਰੀ ਕੰਮ ਪੈ ਗਿਆ ਹੈ। ਇਸ ਕਾਰਨ ਮੈਂ ਅੱਜ ਸਕੂਲ ਹਾਜ਼ਰ ਨਹੀਂ ਹੋ ਸਕਦਾ/ਸਕਦੀ। ਕਿਰਪਾ ਕਰਕੇ ਮੈਨੂੰ ਅੱਜ ਇੱਕ ਦਿਨ ਦੀ ਛੁੱਟੀ ਦਿੱਤੀ ਜਾਵੇ। ਮੈਂ ਆਪ ਜੀ ਦਾ/ਦੀ ਬਹੁਤ ਧੰਨਵਾਦੀ ਹੋਵਾਂਗਾ/ਹੋਵਾਂਗੀ।</div><div style='text-align:right;'><strong>ਧੰਨਵਾਦ ਸਹਿਤ!</strong><br>ਆਪ ਜੀ ਦਾ ਆਗਿਆਕਾਰੀ ਵਿਦਿਆਰਥੀ,<br>ਨਾਮ: ........................<br>ਜਮਾਤ: ਚੌਥੀ<br>ਰੋਲ ਨੰ: ........ ਮਿਤੀ: ........</div></div>"
         },
         {
           title: "6. ਰਚਨਾਤਮਕ ਕੰਮ (ਬਿੰਦੀਆਂ ਮਿਲਾਓ)",
@@ -413,7 +429,7 @@
           title: "7. ਅਧਿਆਪਕਾਂ ਲਈ ਹਦਾਇਤ",
           instruction: "ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਢੰਗ ਪੜ੍ਹੋ:",
           type: "typewriter",
-          content: "<div style='background:#fdf0d5; padding:2vmin; border:2px solid #d32f2f; border-radius:2vmin; height:100%; display:flex; flex-direction:column; justify-content:space-evenly; font-size:3.4vmin; line-height: 1.4;'><div style='text-align:center; color:#d32f2f; font-size:4.5vmin; font-weight:900;'>ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਢੰਗ:</div><div>ਜਦੋਂ ਵੀ ਅਸੀਂ ਦਫ਼ਤਰੀ ਕੰਮ, ਬਿਮਾਰੀ ਜਾਂ ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਲਿਖਤੀ ਰੂਪ ਵਿੱਚ ਛੁੱਟੀ ਮੰਗਣੀ ਹੁੰਦੀ ਹੈ, ਤਾਂ ਅਸੀਂ 'ਅਰਜ਼ੀ' ਲਿਖਦੇ ਹਾਂ।</div><div><strong style='color:#d32f2f;'>ਅਰਜ਼ੀ ਦੇ ਮੁੱਖ ਭਾਗ:</strong><br><span style='color:#1565c0;'>1. ਸਿਰਲੇਖ/ਪਤਾ:</span> ਜਿਸ ਨੂੰ ਅਰਜ਼ੀ ਲਿਖਣੀ ਹੈ ਉਸਦਾ ਅਹੁਦਾ।<br><span style='color:#1565c0;'>2. ਵਿਸ਼ਾ:</span> ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਕਾਰਨ ਸੰਖੇਪ ਵਿੱਚ।<br><span style='color:#1565c0;'>3. ਸਤਿਕਾਰਯੋਗ ਸੰਬੋਧਨ:</span> ਸ੍ਰੀ ਮਾਨ ਜੀ / ਸ੍ਰੀਮਤੀ ਜੀ।<br><span style='color:#1565c0;'>4. ਮੁੱਖ ਭਾਗ:</span> ਆਪਣੀ ਪੂਰੀ ਗੱਲ ਜਾਂ ਬੇਨਤੀ ਲਿਖਣਾ।<br><span style='color:#1565c0;'>5. ਧੰਨਵਾਦ ਅਤੇ ਆਗਿਆਕਾਰੀ:</span> ਅੰਤ ਵਿੱਚ ਆਪਣਾ ਵੇਰਵਾ ਦੇਣਾ।</div></div>"
+          content: "<div style='background:#fdf0d5; padding:2vmin; border:2px solid #d32f2f; border-radius:2vmin; height:100%; display:flex; flex-direction:column; justify-content:space-evenly; font-size: min(2.8vmin, 3.8vh); line-height: 1.4; overflow: hidden;'><div style='text-align:center; color:#d32f2f; font-size: min(3.5vmin, 4.5vh); font-weight:900;'>ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਢੰਗ:</div><div>ਜਦੋਂ ਵੀ ਅਸੀਂ ਦਫ਼ਤਰੀ ਕੰਮ, ਬਿਮਾਰੀ ਜਾਂ ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਲਿਖਤੀ ਰੂਪ ਵਿੱਚ ਛੁੱਟੀ ਮੰਗਣੀ ਹੁੰਦੀ ਹੈ, ਤਾਂ ਅਸੀਂ 'ਅਰਜ਼ੀ' ਲਿਖਦੇ ਹਾਂ।</div><div><strong style='color:#d32f2f;'>ਅਰਜ਼ੀ ਦੇ ਮੁੱਖ ਭਾਗ:</strong><br><span style='color:#1565c0;'>1. ਸਿਰਲੇਖ/ਪਤਾ:</span> ਜਿਸ ਨੂੰ ਅਰਜ਼ੀ ਲਿਖਣੀ ਹੈ ਉਸਦਾ ਅਹੁਦਾ।<br><span style='color:#1565c0;'>2. ਵਿਸ਼ਾ:</span> ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਕਾਰਨ ਸੰਖੇਪ ਵਿੱਚ।<br><span style='color:#1565c0;'>3. ਸਤਿਕਾਰਯੋਗ ਸੰਬੋਧਨ:</span> ਸ੍ਰੀ ਮਾਨ ਜੀ / ਸ੍ਰੀਮਤੀ ਜੀ।<br><span style='color:#1565c0;'>4. ਮੁੱਖ ਭਾਗ:</span> ਆਪਣੀ ਪੂਰੀ ਗੱਲ ਜਾਂ ਬੇਨਤੀ ਲਿਖਣਾ।<br><span style='color:#1565c0;'>5. ਧੰਨਵਾਦ ਅਤੇ ਆਗਿਆਕਾਰੀ:</span> ਅੰਤ ਵਿੱਚ ਆਪਣਾ ਵੇਰਵਾ ਦੇਣਾ।</div></div>"
         },
         { type: "conclude" }
       ],
@@ -528,17 +544,25 @@
         if(mode === 'auto') runAutoLoop();
     }
     
-    function startSection(sec, mod) { jumpTo(sec, mod, 'toc'); }
+    function startSection(sec, mod) { 
+        if(sec === 'mcq') { jumpTo(sec, mod, 0); } 
+        else { jumpTo(sec, mod, 'toc'); }
+    }
     
     function startAutoWithToc(sec) {
         mode = 'auto'; document.body.classList.add('auto-mode');
-        openToc(null, sec, 'auto');
-        document.querySelectorAll('#toc-overlay .toc-go-btn').forEach(btn => btn.style.display = 'none');
-        setTimeout(() => {
-            if (state === 'menu' && document.getElementById('toc-overlay').style.display === 'flex') {
-                document.getElementById('toc-overlay').style.display = 'none'; jumpTo(sec, 'auto', 0);
-            }
-        }, 3000);
+        if(sec === 'mcq') {
+            document.getElementById('main-menu-screen').style.display = 'none';
+            jumpTo(sec, 'auto', 0);
+        } else {
+            openToc(null, sec, 'auto');
+            document.querySelectorAll('#toc-overlay .toc-go-btn').forEach(btn => btn.style.display = 'none');
+            setTimeout(() => {
+                if (state === 'menu' && document.getElementById('toc-overlay').style.display === 'flex') {
+                    document.getElementById('toc-overlay').style.display = 'none'; jumpTo(sec, 'auto', 0);
+                }
+            }, 3000);
+        }
     }
     
     function openToc(e, sec, mod) {
@@ -568,20 +592,23 @@
     }
     
     function drawMindMap(container, items) {
+        let mapClickable = false;
+        setTimeout(() => mapClickable = true, 400);
+
         container.className = 'mind-map-container';
         container.onclick = (e) => {
             e.stopPropagation();
-            if (typing || mode === 'auto' || reviewMode) return;
+            if (!mapClickable || typing || mode === 'auto' || reviewMode) return;
             if (mindMapIndex < currentMindMapNodes.length) { revealSingleMindNode(mindMapIndex); }
         };
         const svgHTML = `
             <svg class="absolute inset-0 w-full h-full z-0" style="pointer-events: none; position:absolute; top:0; left:0; width:100%; height:100%;">
-                <line x1="50%" y1="50%" x2="50%" y2="15%" stroke="#f97316" stroke-width="4" />
-                <line x1="50%" y1="50%" x2="85%" y2="35%" stroke="#f97316" stroke-width="4" />
-                <line x1="50%" y1="50%" x2="85%" y2="65%" stroke="#f97316" stroke-width="4" />
-                <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#f97316" stroke-width="4" />
-                <line x1="50%" y1="50%" x2="15%" y2="65%" stroke="#f97316" stroke-width="4" />
-                <line x1="50%" y1="50%" x2="15%" y2="35%" stroke="#f97316" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="50%" y2="15%" stroke="#1565c0" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="85%" y2="35%" stroke="#1565c0" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="85%" y2="65%" stroke="#1565c0" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#1565c0" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="15%" y2="65%" stroke="#1565c0" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="15%" y2="35%" stroke="#1565c0" stroke-width="4" />
             </svg>
         `;
         container.innerHTML = svgHTML;
@@ -607,7 +634,7 @@
             
             node.onclick = (e) => {
                 e.stopPropagation();
-                if (typing || mode === 'auto' || reviewMode) return;
+                if (!mapClickable || typing || mode === 'auto' || reviewMode) return;
                 if (node.innerHTML === "?") {
                     const idx = currentMindMapNodes.findIndex(item => item.node === node);
                     if(idx !== -1) revealSingleMindNode(idx);
@@ -824,17 +851,12 @@
         
         if(step === 'toc') {
             titleEl.innerHTML = "📑 ਪਾਠ ਤਤਕਰਾ (Index)"; instrEl.innerHTML = "ਸਿੱਧਾ ਕਿਸੇ ਵੀ ਭਾਗ 'ਤੇ ਜਾਣ ਲਈ ਕਲਿੱਕ ਕਰੋ :";
-            hEl.className = 'interactive-list'; hEl.innerHTML = '';
+            hEl.className = 'toc-grid'; hEl.innerHTML = '';
             
-            hEl.style.alignContent = 'start'; 
-
             lessonData[section].forEach((data, idx) => {
                 if(data.type === 'conclude') return;
-                const row = document.createElement('div'); row.className = 'interactive-item';
-                row.style.flexDirection = 'row'; row.style.justifyContent = 'space-between';
-                row.style.alignItems = 'center';
-                
-                row.innerHTML = `<span class="item-q" style="color:#000; flex:1;">${data.title}</span><button class="item-reveal-btn" style="background:#2ecc71; margin-left:2vmin; flex-shrink:0;" onclick="jumpTo('${section}', '${mode}', ${idx})">ਜਾਓ</button>`;
+                const row = document.createElement('div'); row.className = 'toc-item-card';
+                row.innerHTML = `<span class="toc-item-text">${data.title}</span><button class="toc-item-btn" onclick="jumpTo('${section}', '${mode}', ${idx})">ਜਾਓ</button>`;
                 hEl.appendChild(row);
             });
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਸ਼ੁਰੂ ਕਰੋ ⏭";
@@ -875,7 +897,7 @@
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭";
             
         } else if(d.type === 'match_lines') {
-            hEl.className = 'interactive-list'; hEl.style.display = 'block';
+            hEl.className = 'interactive-list'; 
 
             let rightItems = [];
             if (d.rightOrder) rightItems = d.rightOrder.map(text => ({ text: text, origIdx: d.items.findIndex(item => item.a === text) }));
@@ -1221,7 +1243,11 @@
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
         if(typing) { typing = false; return; }
         if (step === 'toc') { goHome(); return; }
-        if (step === 0) { step = 'toc'; renderSlide(); return; } step--; renderSlide();
+        if (step === 0) { 
+            if (section === 'mcq') { goHome(); return; } 
+            step = 'toc'; renderSlide(); return; 
+        } 
+        step--; renderSlide();
     }
     function retrySlide() { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); typing = false; renderSlide(); }
     function goHome() {
