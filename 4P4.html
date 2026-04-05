@@ -14,38 +14,39 @@
         @media (orientation: portrait) { #studio-frame { height: 100vh; width: 56.25vh; max-width: 100vw; max-height: 177.78vw; } }
         #bg-layer { position: absolute; inset: 0; z-index: 1; background: linear-gradient(-45deg, #ff9a9e, #fecfef, #a1c4fd, #c2e9fb, #84fab0, #8fd3f4); background-size: 400% 400%; animation: moveBG 20s ease infinite; }
         @keyframes moveBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
-        #border-frame { position: absolute; inset: 0; z-index: 1000; pointer-events: none; border: 2vmin solid rgba(255, 255, 255, 0.8); box-shadow: inset 0 0 3vmin rgba(0,0,0,0.3); }
-        .glitter-ticker { position: absolute; width: 100%; height: 7vmin; background: linear-gradient(45deg, #4A2511, #D4AF37, #8B4513, #FFDF00, #4A2511); background-size: 300% 300%; animation: glitterFlow 4s ease-in-out infinite alternate; z-index: 10000; display: none; align-items: center; overflow: hidden; border-top: 0.5vmin solid #FFD700; border-bottom: 0.5vmin solid #FFD700; }
+        #border-frame { position: absolute; inset: 0; z-index: 1000; pointer-events: none; border: 1.5vmin solid rgba(255, 255, 255, 0.8); box-shadow: inset 0 0 2vmin rgba(0,0,0,0.3); }
+        .glitter-ticker { position: absolute; width: 100%; height: 6vmin; background: linear-gradient(45deg, #4A2511, #D4AF37, #8B4513, #FFDF00, #4A2511); background-size: 300% 300%; animation: glitterFlow 4s ease-in-out infinite alternate; z-index: 10000; display: none; align-items: center; overflow: hidden; border-top: 0.5vmin solid #FFD700; border-bottom: 0.5vmin solid #FFD700; }
         #top-ticker { top: 0; } #bottom-ticker { bottom: 0; }
-        .ticker-text { white-space: nowrap; font-size: 2.8vmin; font-weight: 900; color: #FFF; text-shadow: 2px 2px 0px #000; padding-left: 100%; animation: scrollTicker 45s linear infinite; }
+        .ticker-text { white-space: nowrap; font-size: 3vmin; font-weight: 900; color: #FFF; text-shadow: 2px 2px 0px #000; padding-left: 100%; animation: scrollTicker 45s linear infinite; }
         @keyframes scrollTicker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
         .hl-red-ticker { color: #ff3d3d !important; text-shadow: 1px 1px 0px #fff; font-weight: 900; }
-        #viewport { position: absolute; top: 7vmin; bottom: 7vmin; left: 0; right: 0; z-index: 10; display: flex; padding: 2vmin; overflow: hidden; justify-content: center; align-items: center; }
+        
+        #viewport { position: absolute; top: 6vmin; bottom: 6vmin; left: 0; right: 0; z-index: 10; display: flex; padding: 1.5vmin; overflow: hidden; justify-content: center; align-items: center; }
         
         /* Disclaimer Screen */
         #disclaimer-screen { position: absolute; inset: 0; z-index: 999999; background: rgba(0,0,0,0.92); backdrop-filter: blur(10px); display: flex; align-items: center; justify-content: center; padding: 3vmin; }
         .disclaimer-box { background: #fff; border-radius: 3vmin; padding: 3vmin; width: 95%; max-width: 850px; border: 0.8vmin solid #d32f2f; display: flex; flex-direction: column; max-height: 98%; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
         .disclaimer-content { overflow-y: auto; flex-grow: 1; margin-bottom: 2vmin; padding: 2.2vmin; background: #fffdf5; border-radius: 2vmin; border: 1px solid #ddd; }
-        .disclaimer-content h2 { text-align: center; color: #d32f2f; font-size: 5vmin; margin-bottom: 1.5vmin; }
-        .disclaimer-content li { font-size: 2.8vmin; line-height: 1.5; margin-bottom: 1vmin; font-weight: bold; color: #333; list-style: none; }
+        .disclaimer-content h2 { text-align: center; color: #d32f2f; font-size: 5.5vmin; margin-bottom: 1.5vmin; }
+        .disclaimer-content li { font-size: 3.5vmin; line-height: 1.5; margin-bottom: 1vmin; font-weight: bold; color: #333; list-style: none; }
         .warning-box-red { background: #ffebee; border-left: 1.2vmin solid #d32f2f; padding: 1.5vmin; border-radius: 1vmin; margin: 1vmin 0; }
         .disclaimer-actions { display: flex; gap: 2vmin; flex-shrink: 0; }
-        .agree-btn { background: #2ecc71; color: #fff; padding: 2vmin; font-size: 3.5vmin; font-weight: 900; border-radius: 2vmin; border: none; cursor: pointer; flex: 1; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
-        .disagree-btn { background: #e74c3c; color: #fff; padding: 2vmin; font-size: 3.5vmin; font-weight: 900; border-radius: 2vmin; border: none; cursor: pointer; flex: 1; }
+        .agree-btn { background: #2ecc71; color: #fff; padding: 2vmin; font-size: 4vmin; font-weight: 900; border-radius: 2vmin; border: none; cursor: pointer; flex: 1; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .disagree-btn { background: #e74c3c; color: #fff; padding: 2vmin; font-size: 4vmin; font-weight: 900; border-radius: 2vmin; border: none; cursor: pointer; flex: 1; }
         
         /* Custom Modal */
         #custom-modal, #wrong-modal { position: absolute; inset: 0; z-index: 1000000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 4vmin; }
         .modal-box, .wrong-modal-box { background: #fff; border-radius: 3vmin; border: 1vmin solid #e74c3c; width: 90%; max-width: 500px; padding: 4vmin; text-align: center; }
-        .modal-box h3, .wrong-modal-box h3 { color: #e74c3c; font-size: 5vmin; margin-bottom: 2vmin; }
-        .modal-box p, .wrong-modal-box p { font-size: 3.5vmin; font-weight: bold; margin-bottom: 3vmin; line-height: 1.5; color: #333; }
-        .modal-close-btn, .wrong-close-btn { background: #333; color: #fff; padding: 1.5vmin 4vmin; border-radius: 2vmin; border: none; cursor: pointer; font-size: 3vmin; font-weight: 900; }
+        .modal-box h3, .wrong-modal-box h3 { color: #e74c3c; font-size: 5.5vmin; margin-bottom: 2vmin; }
+        .modal-box p, .wrong-modal-box p { font-size: 4vmin; font-weight: bold; margin-bottom: 3vmin; line-height: 1.5; color: #333; }
+        .modal-close-btn, .wrong-close-btn { background: #333; color: #fff; padding: 1.5vmin 4vmin; border-radius: 2vmin; border: none; cursor: pointer; font-size: 3.5vmin; font-weight: 900; }
         .wrong-close-btn { background: #f39c12; }
         
         /* Intro Screen */
         #intro-screen { position: absolute; inset: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 500; background: #fffdf5; cursor: pointer; }
         .center-circle { background: radial-gradient(circle, #ffffff, #ffeb3b); border: 1.5vmin solid #ff9f43; border-radius: 50%; display: flex; align-items: center; justify-content: center; width: 55vmin; height: 55vmin; box-shadow: 0 0 30px rgba(0,0,0,0.2); }
-        .intro-title-center { font-weight: 900; color: #d32f2f; font-size: 4.5vmin; line-height: 1.3; text-align: center; padding: 2vmin; }
-        .balloon { position: absolute; width: 16vmin; height: 18vmin; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; color: #fff; font-weight: 900; font-size: 2.5vmin; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1vmin; box-shadow: 0 8px 15px rgba(0,0,0,0.3); animation: dropBalloon 1.5s forwards; z-index: 50; }
+        .intro-title-center { font-weight: 900; color: #d32f2f; font-size: 5.5vmin; line-height: 1.3; text-align: center; padding: 2vmin; }
+        .balloon { position: absolute; width: 18vmin; height: 20vmin; border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%; color: #fff; font-weight: 900; font-size: 3vmin; display: flex; align-items: center; justify-content: center; text-align: center; padding: 1vmin; box-shadow: 0 8px 15px rgba(0,0,0,0.3); animation: dropBalloon 1.5s forwards; z-index: 50; }
         @keyframes dropBalloon { 0% { opacity: 0; transform: translateY(-100vh) scale(0.5); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
         .pos-1 { top: 5%; left: 8%; background: #ff4757; animation-delay: 0.1s; }
         .pos-2 { top: 5%; right: 8%; background: #ffa502; animation-delay: 0.2s; }
@@ -58,55 +59,74 @@
         
         /* Menu Screen */
         #main-menu-screen { position: absolute; inset: 0; z-index: 400; display: none; flex-direction: column; align-items: center; background: #fffdf5; padding: 4vmin; overflow-y: auto; }
-        .menu-heading { font-size: 4.5vmin; font-weight: 900; color: #d32f2f; margin-bottom: 4vmin; border-bottom: 0.5vmin dashed #ff9f43; width: 90%; text-align: center; }
+        .menu-heading { font-size: 6vmin; font-weight: 900; color: #d32f2f; margin-bottom: 4vmin; border-bottom: 0.5vmin dashed #ff9f43; width: 90%; text-align: center; }
         .mode-container { display: flex; width: 100%; gap: 4vmin; justify-content: center; align-items: flex-start; }
         @media (orientation: portrait) { .mode-container { flex-direction: column; align-items: center; } }
         .mode-card { border-radius: 2.5vmin; border: 0.5vmin solid #d32f2f; transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); background: #fff; height: var(--unit); flex-shrink: 0; width: 100%; max-width: 480px; display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
         .mode-card.expanded { height: calc(6.5 * var(--unit)); }
-        .mode-header { background: #d32f2f; color: #fff; padding: 2vmin; font-size: 4.5vmin; font-weight: 900; cursor: pointer; display: flex; justify-content: space-between; align-items: center; height: var(--unit); }
+        .mode-header { background: #d32f2f; color: #fff; padding: 2vmin; font-size: 5vmin; font-weight: 900; cursor: pointer; display: flex; justify-content: space-between; align-items: center; height: var(--unit); }
         .auto-card { border-color: #2980b9; }
         .auto-card .mode-header { background: #2980b9; }
-        .mode-content { display: none; padding: 2vmin; flex-direction: column; gap: 1.2vmin; background: #fffdf5; border-top: 1px solid #ddd; height: calc(5.5 * var(--unit)); justify-content: center; }
+        .mode-content { display: none; padding: 2vmin; flex-direction: column; gap: 1.5vmin; background: #fffdf5; border-top: 1px solid #ddd; height: calc(5.5 * var(--unit)); justify-content: center; }
         .mode-card.expanded .mode-content { display: flex; }
         .btn-wrap { display: flex; width: 100%; gap: 1vmin; }
-        .menu-btn { flex: 1; padding: 1.8vmin; font-size: 3.2vmin; font-weight: 900; border-radius: 1.2vmin; border: none; color: #fff; cursor: pointer; text-align: center; }
+        .menu-btn { flex: 1; padding: 2vmin; font-size: 4vmin; font-weight: 900; border-radius: 1.5vmin; border: none; color: #fff; cursor: pointer; text-align: center; }
         .btn-ex { background: #e74c3c; } .btn-mcq { background: #3498db; } .btn-act { background: #9b59b6; }
         
         /* ToC Modal */
         #toc-overlay { position: absolute; inset: 0; z-index: 100000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 4vmin; }
-        .toc-box { background: #fff; border-radius: 3vmin; width: 95%; max-width: 700px; max-height: 85%; display: flex; flex-direction: column; border: 1vmin solid #d32f2f; padding: 3vmin; box-shadow: 0 0 50px rgba(0,0,0,1); }
+        .toc-box { background: #fff; border-radius: 3vmin; width: 95%; max-width: 800px; max-height: 85%; display: flex; flex-direction: column; border: 1vmin solid #d32f2f; padding: 3vmin; box-shadow: 0 0 50px rgba(0,0,0,1); }
         .toc-list { overflow-y: auto; flex-grow: 1; display: flex; flex-direction: column; gap: 1vmin; margin-top: 1.5vmin; }
-        .toc-item { display: flex; justify-content: space-between; align-items: center; padding: 1vmin 1.5vmin; background: #f9f9f9; border-radius: 1.5vmin; border-left: 0.8vmin solid #d32f2f; }
-        .toc-text { font-weight: 900; font-size: 2.8vmin; color: #333; flex: 1; text-align: left; }
-        .toc-go-btn { background: #2ecc71; color: #fff; border: none; padding: 1vmin 2vmin; border-radius: 1vmin; font-weight: 900; font-size: 2.2vmin; cursor: pointer; }
+        .toc-item { display: flex; justify-content: space-between; align-items: center; padding: 1.5vmin 2vmin; background: #f9f9f9; border-radius: 1.5vmin; border-left: 1vmin solid #d32f2f; }
+        .toc-text { font-weight: 900; font-size: 4vmin; color: #333; flex: 1; text-align: left; }
+        .toc-go-btn { background: #2ecc71; color: #fff; border: none; padding: 1.5vmin 3vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 3vmin; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
         
-        /* --- FLASH CARD LAYOUT (FIXED SECTIONS TO PREVENT OVERLAP) --- */
-        .flash-card { position: relative; width: 100%; height: 100%; background: #fff; border-radius: 4vmin; border: 0.5vmin solid #ddd; display: none; overflow: hidden; }
-        .flash-card.active { display: block; }
+        /* --- FLASH CARD LAYOUT (STRICT FLEXBOX BOUNDARIES - NO OVERLAP) --- */
+        .flash-card { 
+            width: 100%; height: 100%; background: #fff; border-radius: 3vmin; 
+            border: 0.5vmin solid #ddd; display: none; flex-direction: column; 
+            padding: 1.2vmin; box-sizing: border-box; overflow: hidden;
+        }
+        .flash-card.active { display: flex; }
         
-        /* Top Bar: Absolutely Positioned */
-        .top-bar { position: absolute; top: 1vmin; left: 1vmin; right: 1vmin; height: 4.5vmin; background: #fffde7; color: #d32f2f; font-weight: 900; font-size: 2.6vmin; text-align: center; border-radius: 1.5vmin; border: 2px dashed #ff9f43; display: flex; align-items: center; justify-content: center; z-index: 10; box-sizing: border-box; }
+        /* 1. Top Bar: Fixed Size */
+        .top-bar { 
+            flex: 0 0 auto; width: 100%; padding: 0.8vmin; background: #fffde7; 
+            color: #d32f2f; font-weight: 900; font-size: 3.5vmin; text-align: center; 
+            border-radius: 1.5vmin; border: 2px dashed #ff9f43; margin-bottom: 1.5vmin; 
+            box-sizing: border-box; 
+        }
         
-        /* Text Container (Middle): Absolute and restricted so it NEVER touches bottom ribbon */
-        .text-container { position: absolute; top: 6.5vmin; bottom: 8.5vmin; left: 1vmin; right: 1vmin; overflow: hidden !important; display: flex; flex-direction: column; align-items: center; z-index: 5; padding: 0.5vmin; box-sizing: border-box; }
-        .title-text { font-size: 3.5vmin; font-weight: 900; color: #d32f2f; margin-bottom: 0.5vmin; border-bottom: 2px solid #eee; width: 100%; text-align: center; padding-bottom: 0.5vmin; flex-shrink: 0; }
-        .instr-text { font-size: 2.5vmin; font-weight: bold; color: #666; margin-bottom: 0.5vmin; text-align: center; width: 100%; flex-shrink: 0; }
+        /* 2. Middle Text Container: Dynamic Size, Locked Boundaries */
+        .text-container { 
+            flex: 1 1 0; min-height: 0; width: 100%; overflow: hidden !important; 
+            display: flex; flex-direction: column; align-items: stretch; 
+            padding: 0; box-sizing: border-box;
+        }
+        .title-text { flex: 0 0 auto; font-size: 4.5vmin; font-weight: 900; color: #d32f2f; margin-bottom: 0.5vmin; border-bottom: 2px solid #eee; width: 100%; text-align: center; padding-bottom: 0.5vmin; }
+        .instr-text { flex: 0 0 auto; font-size: 3.2vmin; font-weight: bold; color: #666; margin-bottom: 1vmin; text-align: center; width: 100%; }
         
-        /* Bottom Ribbon: Fixed height and absolutely positioned at bottom */
-        .bottom-ribbon { position: absolute; bottom: 1vmin; left: 1vmin; right: 1vmin; height: 6.5vmin; background: #fff; z-index: 20; display: flex; justify-content: space-between; align-items: center; border-top: 2px solid #eee; padding-top: 0.5vmin; box-sizing: border-box; gap: 1vmin; }
+        #html-content { flex: 1 1 0; min-height: 0; width: 100%; overflow: hidden !important; }
         
-        /* List Styling - SCROLL DISABLED ENTIRELY */
-        .interactive-list { width: 100%; display: grid; grid-template-columns: 1fr; gap: 0.5vmin; overflow: hidden !important; align-content: start; }
-        @media (orientation: landscape) { .interactive-list { grid-template-columns: 1fr 1fr; column-gap: 2vmin; row-gap: 0.5vmin; justify-content: center; align-content: center; } }
-        .interactive-item { display: flex; flex-direction: column; padding: 0.5vmin 1vmin; border: 2px solid #dcdcdc; border-radius: 1.5vmin; background: #ffffff; width: 100%; transition: opacity 0.5s, box-shadow 0.3s; position: relative; box-shadow: 0 2px 4px rgba(0,0,0,0.06); }
+        /* 3. Bottom Ribbon: Fixed Size at the Bottom */
+        .bottom-ribbon { 
+            flex: 0 0 7vmin; width: 100%; display: flex; justify-content: space-between; 
+            align-items: center; border-top: 2px solid #eee; padding-top: 1vmin; 
+            margin-top: 1vmin; box-sizing: border-box; gap: 1vmin; background: #fff; z-index: 20; 
+        }
+        
+        /* List Styling - BIG FONTS */
+        .interactive-list { display: grid; grid-template-columns: 1fr; gap: 1vmin; overflow: hidden !important; align-content: stretch; height: 100%; padding-bottom: 0.5vmin; }
+        @media (orientation: landscape) { .interactive-list { grid-template-columns: 1fr 1fr; column-gap: 2.5vmin; row-gap: 1.5vmin; justify-content: center; align-content: stretch; } }
+        
+        .interactive-item { display: flex; flex-direction: column; justify-content: center; padding: 1.5vmin 2vmin; border: 2px solid #dcdcdc; border-radius: 1.5vmin; background: #ffffff; width: 100%; transition: opacity 0.5s, box-shadow 0.3s; position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.06); }
         .q-row { display: flex; align-items: center; width: 100%; text-align: left; justify-content: space-between; }
-        .item-q { font-weight: 900; color: #000; font-size: 2.2vmin; flex: 1; line-height: 1.3; text-align: left; }
+        .item-q { font-weight: 900; color: #000; font-size: 3.5vmin; flex: 1; line-height: 1.5; text-align: left; }
         .qa-mode .item-q { color: #d32f2f; }
-        .item-reveal-btn { background: #f39c12; color: #fff; border: none; padding: 0.8vmin 1.5vmin; border-radius: 1vmin; cursor: pointer; font-size: 2vmin; font-weight: 900; margin-left: 2vmin; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
+        .item-reveal-btn { background: #f39c12; color: #fff; border: none; padding: 1.2vmin 2vmin; border-radius: 1vmin; cursor: pointer; font-size: 3vmin; font-weight: 900; margin-left: 2vmin; white-space: nowrap; box-shadow: 0 4px 6px rgba(0,0,0,0.2); }
         
-        /* Regular QA Wrappers */
-        .ans-wrapper { position: relative; width: 100%; border-top: 1px dashed #ccc; margin-top: 0.5vmin; padding-top: 0.5vmin; }
-        .item-a { font-weight: 900; color: #1565c0; font-size: 2.2vmin; opacity: 0; line-height: 1.3; text-align: left; width: 100%; display: block; margin: 0; padding: 0; }
+        .ans-wrapper { position: relative; width: 100%; border-top: 1px dashed #ccc; margin-top: 1vmin; padding-top: 1vmin; }
+        .item-a { font-weight: 900; color: #1565c0; font-size: 3.5vmin; opacity: 0; line-height: 1.5; text-align: left; width: 100%; display: block; margin: 0; padding: 0; }
         .item-a.revealed { opacity: 1; }
         .fade-out { opacity: 0.4; }
         
@@ -114,55 +134,55 @@
         .blank-dash { color: #888; font-weight: bold; letter-spacing: 2px; }
         .hl-red { color: #e74c3c !important; font-weight: 900; }
         .hl-blue { color: #1565c0 !important; font-weight: 900; }
-        .options-box { margin-top: 0.5vmin; padding: 0.8vmin; background: #fdf2e9; border: 2px dashed #e67e22; border-radius: 1.5vmin; width: 100%; text-align: center; grid-column: 1 / -1; }
-        .options-list { display: flex; flex-wrap: wrap; gap: 1vmin; justify-content: center; margin-top: 0.5vmin; }
-        .opt-pill { background: #fff; border: 1px solid #ccc; padding: 0.4vmin 1.2vmin; border-radius: 2vmin; font-weight: bold; font-size: 2vmin; transition: all 0.3s; color: #333; }
+        .options-box { margin-top: 1vmin; padding: 1.2vmin; background: #fdf2e9; border: 2px dashed #e67e22; border-radius: 1.5vmin; width: 100%; text-align: center; grid-column: 1 / -1; }
+        .options-list { display: flex; flex-wrap: wrap; gap: 1.5vmin; justify-content: center; margin-top: 1vmin; }
+        .opt-pill { background: #fff; border: 1px solid #ccc; padding: 0.8vmin 2vmin; border-radius: 2vmin; font-weight: bold; font-size: 3.5vmin; transition: all 0.3s; color: #333; }
         .opt-pill.used { text-decoration: line-through; opacity: 0.4; background: #eee; color: #999; }
+        .options-box strong { font-size: 3.2vmin; }
         
-        /* TYPING STYLING - SCROLL DISABLED */
-        .typing-text-container { width: 95%; max-width: 800px; height: 100%; overflow: hidden !important; text-align: left; padding: 2vmin; border-radius: 2vmin; border: 0.8vmin dashed #2ecc71; background: #f0fdf4; margin: 0 auto; font-size: 2.2vmin; font-weight: bold; line-height: 1.5; color: #1565c0; box-shadow: 0 8px 16px rgba(0,0,0,0.1); display: flex; flex-direction: column; justify-content: center; }
+        /* TYPING STYLING (ESSAY/APP) - BIG FONTS, STRICTLY NO SCROLL */
+        .typing-text-container { width: 100%; height: 100%; overflow: hidden !important; text-align: left; padding: 2vmin; border-radius: 2vmin; background: #f0fdf4; margin: 0; font-size: 3.8vmin; font-weight: bold; color: #1565c0; display: flex; flex-direction: column; justify-content: space-evenly; align-items: stretch; box-sizing: border-box; }
         .typing-cursor::after { content: '|'; animation: blink 1s step-end infinite; color: #e74c3c; font-weight: 900; }
         @keyframes blink { 50% { opacity: 0; } }
 
-        /* MATCH LINES SVG STYLING */
-        .match-container-wrapper { position: relative; display: flex; justify-content: space-between; width: 100%; height: 100%; max-height: 38vmin; padding: 1.5vmin; background: #fffdf5; border-radius: 2vmin; border: 2px solid #ccc; flex-grow: 1; }
+        /* MATCH LINES - MAXIMIZED BOXES */
+        .match-container-wrapper { position: relative; display: flex; justify-content: space-between; width: 100%; height: 100%; padding: 1.5vmin; background: #fffdf5; border-radius: 2vmin; border: 2px solid #ccc; flex-grow: 1; box-sizing: border-box; }
         #match-svg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
-        .match-col { display: flex; flex-direction: column; gap: 1.5vmin; width: 45%; z-index: 2; justify-content: space-around; }
-        .match-box { padding: 1.2vmin; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 1vmin; background: #fff; transition: background 0.3s, border-color 0.3s; display: flex; align-items: center; justify-content: center; }
-        .match-l { border: 2px solid #3498db; cursor: pointer; }
-        .match-r { border: 2px solid #e67e22; }
-        .match-text { font-size: 2.2vmin; font-weight: bold; color: #333; }
+        .match-col { display: flex; flex-direction: column; gap: 1.5vmin; width: 45%; height: 100%; z-index: 2; justify-content: space-between; }
+        .match-box { flex: 1; display: flex; align-items: center; justify-content: center; padding: 1.5vmin; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); border-radius: 1.5vmin; background: #fff; transition: background 0.3s, border-color 0.3s; margin-bottom: 0; }
+        .match-l { border: 3px solid #3498db; cursor: pointer; }
+        .match-r { border: 3px solid #e67e22; }
+        .match-text { font-size: 3.8vmin; font-weight: bold; color: #333; }
 
-        /* ELEPHANT DRAWING STYLING */
+        /* ELEPHANT DRAWING STYLING - BIGGER SVG */
+        .elephant-svg-container { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .elephant-svg-container svg { width: 100%; max-width: 80vw; max-height: 60vh; display: block; border: 3px dashed #e67e22; border-radius: 2vmin; background: #fffdf5; box-shadow: inset 0 0 10px rgba(0,0,0,0.05); flex-shrink: 1; }
         .layout-dot { fill: none; stroke: #444444; stroke-width: 7; stroke-dasharray: 0 25; stroke-linecap: round; stroke-linejoin: round; }
         .draw-line { fill: transparent; stroke: #111111; stroke-width: 4; stroke-linecap: round; stroke-linejoin: round; }
         .color-layer { opacity: 0; transition: opacity 1.5s ease; }
         
-        /* MIND MAP STYLING */
-        .mind-map-container { position: relative; width: 100%; height: 100%; cursor: pointer; display: block; flex-grow:1; }
-        .mind-node { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; text-align: center; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; font-weight: 900; user-select: none; padding: 1vmin; line-height: 1.2; }
-        .mind-node-center { width: 28vmin; height: 28vmin; top: 50%; left: 50%; background: linear-gradient(135deg, #1565c0, #0d47a1); color: white; z-index: 20; border: 1vmin solid white; font-size: clamp(2vmin, 2.8vmin, 3rem); box-shadow: 0 8px 20px rgba(13, 71, 161, 0.4), inset 0 -4px 8px rgba(0,0,0,0.2); }
-        .mind-node-outer { width: 18vmin; height: 18vmin; background: white; border: 0.8vmin solid #1565c0; color: #0d47a1; z-index: 10; font-size: clamp(1.6vmin, 2vmin, 2rem); }
+        /* MIND MAP STYLING (NEW PERCENTAGE BASED LAYOUT) */
+        .mind-map-container { position: relative; width: 100%; max-width: 65vh; aspect-ratio: 1/1; margin: auto; cursor: pointer; display: block; }
+        .mind-node { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; justify-content: center; text-align: center; border-radius: 50%; box-shadow: 0 4px 10px rgba(0,0,0,0.15); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; font-weight: 900; user-select: none; line-height: 1.2; padding: 1vmin; }
+        .mind-node-center { width: 35%; height: 35%; top: 50%; left: 50%; background: linear-gradient(135deg, #1565c0, #0d47a1); color: white; z-index: 20; border: 0.8vmin solid white; font-size: clamp(3vmin, 4.5vmin, 2.5rem); box-shadow: 0 8px 20px rgba(13, 71, 161, 0.4), inset 0 -4px 8px rgba(0,0,0,0.2); }
+        .mind-node-outer { width: 25%; height: 25%; background: white; border: 0.6vmin solid #1565c0; color: #0d47a1; z-index: 10; font-size: clamp(2.2vmin, 3vmin, 1.8rem); }
         .mind-node-outer:hover { transform: translate(-50%, -50%) scale(1.1); box-shadow: 0 6px 15px rgba(21, 101, 192, 0.3); }
-        .conclusion-box { text-align: center; padding: 4vmin; background: #e3f2fd; border: 0.8vmin dashed #1565c0; border-radius: 4vmin; width: 100%; margin: auto; }
-        .conc-title { font-size: 6vmin; color: #1565c0; font-weight: 900; margin-bottom: 2vmin; }
-        .conc-msg { font-size: 3vmin; color: #333; line-height: 1.6; font-weight: bold; }
         
-        /* Navigation Ribbon & Split Action Buttons */
-        .nav-btn { padding: 1vmin 1.5vmin; font-size: 2.2vmin; font-weight: 900; border-radius: 1vmin; border: none; cursor: pointer; color: #fff; background: #333; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
-        .btn-retry { background: #e67e22; }
-        .btn-skip { background: #7f8c8d; }
-        .btn-showall { background: #8e44ad; }
-        .btn-home { background: #c0392b; }
-        .action-btn-wrap { flex-grow: 1; display: flex; gap: 1vmin; height: 100%; }
-        .bottom-listen { flex: 1; text-align: center; background: #8e44ad; padding: 0.5vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 2.2vmin; cursor: pointer; border: 2px solid #fff; color: #fff; display: none; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        #tap-indicator { flex: 1; text-align: center; background: #ffeb3b; padding: 0.5vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 2.2vmin; cursor: pointer; border: 2px solid #d32f2f; color: #000; display: flex; align-items: center; justify-content: center; }
+        .conclusion-box { text-align: center; padding: 5vmin; background: #e3f2fd; border: 1vmin dashed #1565c0; border-radius: 4vmin; width: 100%; margin: auto; }
+        .conc-title { font-size: 8vmin; color: #1565c0; font-weight: 900; margin-bottom: 2.5vmin; }
+        .conc-msg { font-size: 4.5vmin; color: #333; line-height: 1.6; font-weight: bold; }
+        
+        /* Navigation Ribbon Buttons */
+        .nav-btn { padding: 1.2vmin 2vmin; font-size: 3vmin; font-weight: 900; border-radius: 1vmin; border: none; cursor: pointer; color: #fff; background: #333; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2); }
+        .btn-retry { background: #e67e22; } .btn-skip { background: #7f8c8d; } .btn-showall { background: #8e44ad; } .btn-home { background: #c0392b; }
+        .action-btn-wrap { flex-grow: 1; display: flex; gap: 1.5vmin; height: 100%; }
+        .bottom-listen { flex: 1; text-align: center; background: #8e44ad; padding: 1vmin 2vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 3.2vmin; cursor: pointer; border: 2px solid #fff; color: #fff; display: none; align-items: center; justify-content: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        #tap-indicator { flex: 1; text-align: center; background: #ffeb3b; padding: 1vmin 2vmin; border-radius: 1.5vmin; font-weight: 900; font-size: 3.2vmin; cursor: pointer; border: 2px solid #d32f2f; color: #000; display: flex; align-items: center; justify-content: center; }
         
         /* MCQ */
-        .mcq-options-grid { width: 100%; display: grid; gap: 1.2vmin; padding: 0.5vmin 0; }
-        @media (orientation: landscape) { .mcq-options-grid { grid-template-columns: 1fr 1fr; } }
-        @media (orientation: portrait) { .mcq-options-grid { grid-template-columns: 1fr; } }
-        .mcq-btn { padding: 1.2vmin; border-radius: 1.5vmin; border: 2px solid #ddd; font-size: 2.5vmin; font-weight: 900; text-align: center; background: #f9f9f9; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); color: #333; margin: 0; }
+        .mcq-options-grid { width: 100%; display: flex; flex-direction: column; gap: 1.5vmin; padding: 1vmin 0; height: 100%; justify-content: center; }
+        @media (orientation: landscape) { .mcq-options-grid { display: grid; grid-template-columns: 1fr 1fr; align-content: center; } }
+        .mcq-btn { padding: 2vmin; border-radius: 1.5vmin; border: 2px solid #ddd; font-size: 3.8vmin; font-weight: 900; text-align: center; background: #f9f9f9; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); color: #333; margin: 0; }
         .mcq-btn:active { transform: scale(0.95); }
         .correct { background: #2ecc71 !important; color: #fff !important; border-color: #27ae60 !important; }
         .wrong { background: #e74c3c !important; color: #fff !important; border-color: #c0392b !important; opacity: 0.6; }
@@ -174,15 +194,15 @@
         body.auto-mode .bottom-ribbon { justify-content: center; border-top: none; padding-top: 0; }
         body.auto-mode .item-reveal-btn { display: none !important; }
         body.auto-mode .mcq-btn { pointer-events: none !important; }
-        .fs-btn { position: absolute; top: 8.5vmin; right: 2vmin; z-index: 1000001; background: #e74c3c; color: #fff; border: 0.3vmin solid #fff; border-radius: 1.5vmin; padding: 1vmin 2vmin; font-size: 2.2vmin; font-weight: 900; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s; }
+        .fs-btn { position: absolute; top: 8.5vmin; right: 2vmin; z-index: 1000001; background: #e74c3c; color: #fff; border: 0.3vmin solid #fff; border-radius: 1.5vmin; padding: 1.2vmin 2vmin; font-size: 2.8vmin; font-weight: 900; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.2s; }
         .fs-btn:active { transform: scale(0.95); }
         body.auto-mode .fs-btn { display: none !important; }
         
         /* AUTO MODE STATUS BUBBLE */
-        #auto-status-container { display: none; align-items: center; gap: 1vmin; position: absolute; right: 0.5vmin; top: 50%; transform: translateY(-50%); background: #fff; padding: 0.8vmin 1.5vmin; border-radius: 2vmin; border: 2px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.1); pointer-events: none; }
+        #auto-status-container { display: none; align-items: center; gap: 1.5vmin; position: absolute; right: 0.5vmin; top: 50%; transform: translateY(-50%); background: #fff; padding: 1vmin 2vmin; border-radius: 2vmin; border: 2px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.1); pointer-events: none; }
         body.auto-mode #auto-status-container { display: flex; }
-        #auto-status-text { font-size: 2.2vmin; font-weight: 900; }
-        .status-bubble { width: 2.5vmin; height: 2.5vmin; border-radius: 50%; animation: pulseBubble 0.8s infinite alternate; }
+        #auto-status-text { font-size: 3vmin; font-weight: 900; }
+        .status-bubble { width: 3.5vmin; height: 3.5vmin; border-radius: 50%; animation: pulseBubble 0.8s infinite alternate; }
         .status-running { background: #2ecc71; box-shadow: 0 0 8px #2ecc71; }
         .status-paused { background: #e74c3c; box-shadow: 0 0 8px #e74c3c; }
         @keyframes pulseBubble { 0% { transform: scale(0.85); opacity: 0.8; } 100% { transform: scale(1.15); opacity: 1; } }
@@ -193,8 +213,7 @@
         <div id="bg-layer"></div>
         <div id="border-frame"></div>
         <button id="fs-btn-id" class="fs-btn" onclick="toggleFullScreen(event)">🔲 ਫੁੱਲ ਸਕਰੀਨ ਲਈ ਇੱਥੇ ਟੱਚ ਕਰੋ</button>
-        <!-- SMART LISTEN BUTTON (TOP) -->
-        <button id="global-listen-btn" class="fs-btn" style="top:14vmin; background:#8e44ad; display:none;" onclick="readAloud(event)">🔊 ਸੁਣੋ</button>
+        <button id="global-listen-btn" class="fs-btn" style="top:16vmin; background:#8e44ad; display:none;" onclick="readAloud(event)">🔊 ਸੁਣੋ</button>
         
         <div id="top-ticker" class="glitter-ticker">
             <div class="ticker-text">⭐ ਬਿਹਤਰ ਰਿਜ਼ਲਟ ਲੈਣ ਲਈ ਇਸ ਨੂੰ ਲੈਂਡਸਕੇਪ ਮੋਡ ਵਿੱਚ ਚਲਾਓ 🔸 ਮੋਬਾਇਲ ਤੇ <span class="hl-red-ticker">ਡਬਲ ਟੈਪ</span> ਕਰਕੇ ਫੁੱਲ ਸਕਰੀਨ ਵਿੱਚ ਚਲਾਓ ⭐</div>
@@ -245,8 +264,8 @@
                 <div class="center-circle" onclick="showMainMenu()">
                     <div class="intro-title-center">ਜਮਾਤ ਚੌਥੀ ਵਿਸ਼ਾ ਪੰਜਾਬੀ<br>ਪਾਠ-4 (ਹਾਥੀ)</div>
                 </div>
-                <div class="intro-bottom-area" style="position:absolute; bottom:2vmin; width:100%; display:flex; justify-content:center; z-index:100;">
-                    <button class="big-start-btn" style="padding:2vmin 4vmin; font-size:4vmin; font-weight:900; background:#2ecc71; color:#fff; border:none; border-radius:2vmin; cursor:pointer;" onclick="showMainMenu()">ਸ਼ੁਰੂ ਕਰੋ ⏭</button>
+                <div class="intro-bottom-area" style="position:absolute; bottom:3vmin; width:100%; display:flex; justify-content:center; z-index:100;">
+                    <button class="big-start-btn" style="padding:2.5vmin 5vmin; font-size:4.5vmin; font-weight:900; background:#2ecc71; color:#fff; border:none; border-radius:2vmin; cursor:pointer;" onclick="showMainMenu()">ਸ਼ੁਰੂ ਕਰੋ ⏭</button>
                 </div>
                 <div class="balloon pos-1">ਤੁਕਾਂਤ ਸ਼ਬਦ</div><div class="balloon pos-2">ਪ੍ਰਸ਼ਨ-ਉੱਤਰ</div>
                 <div class="balloon pos-3">ਮਿਲਾਨ ਕਰੋ</div><div class="balloon pos-4">ਦਸ ਵਾਕ</div>
@@ -260,7 +279,7 @@
                     <div class="mode-card auto-card" id="card-auto">
                         <div class="mode-header" onclick="toggleAccordion('auto')">🔴 ਆਟੋ ਮੋਡ <span>▼</span></div>
                         <div class="mode-content" id="content-auto">
-                            <p style="text-align:center; font-size:2.2vmin; font-weight:bold; color:#d35400;">ਆਟੋ ਮੋਡ ਬਿਲਕੁਲ ਸਾਫ਼ ਚੱਲੇਗਾ। ਰੋਕਣ ਜਾਂ ਚਲਾਉਣ ਲਈ ਸਕਰੀਨ ਤੇ ਕਿਤੇ ਵੀ ਇੱਕ ਵਾਰ ਟੱਚ ਕਰੋ।</p>
+                            <p style="text-align:center; font-size:3.2vmin; font-weight:bold; color:#d35400;">ਆਟੋ ਮੋਡ ਬਿਲਕੁਲ ਸਾਫ਼ ਚੱਲੇਗਾ। ਰੋਕਣ ਜਾਂ ਚਲਾਉਣ ਲਈ ਸਕਰੀਨ ਤੇ ਕਿਤੇ ਵੀ ਇੱਕ ਵਾਰ ਟੱਚ ਕਰੋ।</p>
                             <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startAutoWithToc('exercise')">📘 ਪੂਰਾ ਅਭਿਆਸ</button></div>
                             <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startAutoWithToc('mcq')">📝 MCQ (ਬਹੁਵਿਕਲਪੀ)</button></div>
                             <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startAutoWithToc('activities')">🎨 ਹੋਰ ਗਤੀਵਿਧੀਆਂ</button></div>
@@ -269,7 +288,7 @@
                     <div class="mode-card" id="card-live">
                         <div class="mode-header" onclick="toggleAccordion('live')">📺 ਲਾਈਵ ਮੋਡ <span>▼</span></div>
                         <div class="mode-content" id="content-live">
-                            <p style="text-align:center; font-size:2.2vmin; font-weight:bold; color:#27ae60;">ਲਾਈਵ ਮੋਡ ਵਿੱਚ ਅਧਿਆਪਕ ਜਾਂ ਬੱਚਾ ਬਟਨ ਦਬਾ ਕੇ ਆਪ ਕੰਟਰੋਲ ਕਰੇਗਾ।</p>
+                            <p style="text-align:center; font-size:3.2vmin; font-weight:bold; color:#27ae60;">ਲਾਈਵ ਮੋਡ ਵਿੱਚ ਅਧਿਆਪਕ ਜਾਂ ਬੱਚਾ ਬਟਨ ਦਬਾ ਕੇ ਆਪ ਕੰਟਰੋਲ ਕਰੇਗਾ।</p>
                             <div class="btn-wrap"><button class="menu-btn btn-ex" onclick="startSection('exercise', 'live')">📘 ਪੂਰਾ ਅਭਿਆਸ</button></div>
                             <div class="btn-wrap"><button class="menu-btn btn-mcq" onclick="startSection('mcq', 'live')">📝 MCQ (ਬਹੁਵਿਕਲਪੀ)</button></div>
                             <div class="btn-wrap"><button class="menu-btn btn-act" onclick="startSection('activities', 'live')">🎨 ਹੋਰ ਗਤੀਵਿਧੀਆਂ</button></div>
@@ -280,25 +299,26 @@
             
             <div id="toc-overlay">
                 <div class="toc-box">
-                    <h2 style="color:#d32f2f; text-align:center; font-size:4vmin; border-bottom:2px solid #eee; padding-bottom:1vmin;">📑 ਪਾਠ ਤਤਕਰਾ</h2>
+                    <h2 style="color:#d32f2f; text-align:center; font-size:5.5vmin; border-bottom:2px solid #eee; padding-bottom:1.5vmin;">📑 ਪਾਠ ਤਤਕਰਾ</h2>
                     <div class="toc-list" id="toc-list"></div>
                 </div>
             </div>
             
             <div class="flash-card" id="master-card">
                 <div class="top-bar">ਜਮਾਤ ਚੌਥੀ ਵਿਸ਼ਾ ਪੰਜਾਬੀ ਪਾਠ-4 (ਹਾਥੀ)</div>
+                
                 <div class="text-container">
                     <h2 id="slide-title" class="title-text"></h2>
                     <p id="slide-instr" class="instr-text"></p>
-                    <div id="html-content" class="interactive-list" style="width: 100%; height: 100%;"></div>
+                    <div id="html-content"></div>
                 </div>
+                
                 <div class="bottom-ribbon">
                     <button class="nav-btn btn-prev" onclick="prevStep()">⏮ ਪਿੱਛੇ</button>
                     <button class="nav-btn btn-retry" onclick="retrySlide()">🔄 ਦੁਬਾਰਾ</button>
                     <button class="nav-btn btn-showall" onclick="showAllAnswers(event)">📑 ਸਾਰਾ</button>
                     <button class="nav-btn btn-skip" onclick="skipStep()">⏭ ਸਕਿਪ</button>
                     <button class="nav-btn btn-home" onclick="goHome()">🏠 ਮੇਨੂ</button>
-                    <!-- SPLIT BUTTONS AREA -->
                     <div class="action-btn-wrap">
                         <div id="bottom-listen-btn" class="bottom-listen" onclick="readAloud(event)">🔊 ਸੁਣੋ</div>
                         <div id="tap-indicator" onclick="if(mode === 'live') nextStep()">ਅੱਗੇ ⏭</div>
@@ -317,9 +337,8 @@
     let autoLoopRunning = false;
     let ttsSpeaking = false;
     let headingReadForStep = -1;
-    const TYPE_SPEED = 100;
+    const TYPE_SPEED = 60; 
     
-    // Mind Map Support
     let currentMindMapNodes = [];
     let mindMapIndex = 0;
     
@@ -328,7 +347,7 @@
         document.getElementById('disclaimer-screen').style.display = 'flex';
     }
     
-    // --- UPDATED CHAPTER 4 DATA ---
+    // --- UPDATED LESSON DATA ---
     const lessonData = {
       exercise: [
         {
@@ -377,13 +396,13 @@
           title: "4. ਹਾਥੀ ਬਾਰੇ ਦਸ ਵਾਕ ਲਿਖੋ :",
           instruction: "ਪੜ੍ਹਨ ਲਈ ਬਟਨ 'ਤੇ ਟੱਚ ਕਰੋ:",
           type: "typewriter",
-          content: "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 0.8vmin; font-size: 2vmin; width: 100%; text-align: left;'><div style='grid-column: 1 / -1; text-align:center; font-weight:900; color:#d32f2f;'>ਹਾਥੀ ਬਾਰੇ ਦਸ ਵਾਕ:</div><div>1. ਹਾਥੀ ਧਰਤੀ 'ਤੇ ਰਹਿਣ ਵਾਲਾ ਸਭ ਤੋਂ ਵੱਡਾ ਜਾਨਵਰ ਹੈ।</div><div>2. ਇਹ ਤੁਰਦਾ ਹੋਇਆ ਇੱਕ ਵੱਡੇ ਪਹਾੜ ਵਰਗਾ ਲੱਗਦਾ ਹੈ।</div><div>3. ਇਸਦੇ ਕੰਨ ਛੱਜਾਂ ਵਰਗੇ ਵੱਡੇ ਹੁੰਦੇ ਹਨ।</div><div>4. ਹਾਥੀ ਦੇ ਪੈਰ ਚੱਕੀ ਦੇ ਪੁੜਾਂ ਵਰਗੇ ਭਾਰੇ ਹੁੰਦੇ ਹਨ।</div><div>5. ਇਸਦੀ ਇੱਕ ਲੰਮ-ਸਲੰਮੀ ਸੁੰਡ ਹੁੰਦੀ ਹੈ ਜਿਸ ਨਾਲ ਇਹ ਖਾਣਾ ਖਾਂਦਾ ਹੈ।</div><div>6. ਮੂੰਹ ਵਿੱਚੋਂ ਬਾਹਰ ਨਿਕਲੇ ਇਸਦੇ ਦੋ ਦੰਦ ਲਿਸ਼ਕਦੀਆਂ ਤਲਵਾਰਾਂ ਵਰਗੇ ਲੱਗਦੇ ਹਨ।</div><div>7. ਹਾਥੀ ਨੂੰ ਹਰਾ ਚਾਰਾ ਅਤੇ ਗੰਨੇ ਖਾਣੇ ਬਹੁਤ ਪਸੰਦ ਹਨ।</div><div>8. ਇਹ ਨਹਿਰ ਵਿੱਚ ਨਹਾਉਣਾ ਅਤੇ ਸੁੰਡ ਨਾਲ ਫੁਹਾਰੇ ਛੱਡਣਾ ਪਸੰਦ ਕਰਦਾ ਹੈ।</div><div>9. ਕੁੱਤੇ ਹਾਥੀ ਨੂੰ ਦੇਖ ਕੇ ਭੌਂਕਦੇ ਹਨ ਪਰ ਇਹ ਬੇਪਰਵਾਹ ਚੱਲਦਾ ਰਹਿੰਦਾ ਹੈ।</div><div>10. ਇਹ ਬਹੁਤ ਤਾਕਤਵਰ ਅਤੇ ਸਮਝਦਾਰ ਜਾਨਵਰ ਹੈ।</div></div>"
+          content: "<div style='display: grid; grid-template-columns: 1fr 1fr; gap: 1.5vmin 3vmin; font-size: 3.4vmin; width: 100%; height: 100%; align-content: space-evenly; text-align: left; line-height: 1.4;'><div style='grid-column: 1 / -1; text-align:center; font-weight:900; color:#d32f2f; font-size: 4vmin;'>ਹਾਥੀ ਬਾਰੇ ਦਸ ਵਾਕ:</div><div>1. ਹਾਥੀ ਧਰਤੀ 'ਤੇ ਰਹਿਣ ਵਾਲਾ ਸਭ ਤੋਂ ਵੱਡਾ ਜਾਨਵਰ ਹੈ।</div><div>2. ਇਹ ਤੁਰਦਾ ਹੋਇਆ ਇੱਕ ਵੱਡੇ ਪਹਾੜ ਵਰਗਾ ਲੱਗਦਾ ਹੈ।</div><div>3. ਇਸਦੇ ਕੰਨ ਛੱਜਾਂ ਵਰਗੇ ਵੱਡੇ ਹੁੰਦੇ ਹਨ।</div><div>4. ਹਾਥੀ ਦੇ ਪੈਰ ਚੱਕੀ ਦੇ ਪੁੜਾਂ ਵਰਗੇ ਭਾਰੇ ਹੁੰਦੇ ਹਨ।</div><div>5. ਇਸਦੀ ਇੱਕ ਲੰਮ-ਸਲੰਮੀ ਸੁੰਡ ਹੁੰਦੀ ਹੈ ਜਿਸ ਨਾਲ ਇਹ ਖਾਣਾ ਖਾਂਦਾ ਹੈ।</div><div>6. ਮੂੰਹ ਵਿੱਚੋਂ ਬਾਹਰ ਨਿਕਲੇ ਇਸਦੇ ਦੋ ਦੰਦ ਲਿਸ਼ਕਦੀਆਂ ਤਲਵਾਰਾਂ ਵਰਗੇ ਲੱਗਦੇ ਹਨ।</div><div>7. ਹਾਥੀ ਨੂੰ ਹਰਾ ਚਾਰਾ ਅਤੇ ਗੰਨੇ ਖਾਣੇ ਬਹੁਤ ਪਸੰਦ ਹਨ।</div><div>8. ਇਹ ਨਹਿਰ ਵਿੱਚ ਨਹਾਉਣਾ ਅਤੇ ਸੁੰਡ ਨਾਲ ਫੁਹਾਰੇ ਛੱਡਣਾ ਪਸੰਦ ਕਰਦਾ ਹੈ।</div><div>9. ਕੁੱਤੇ ਹਾਥੀ ਨੂੰ ਦੇਖ ਕੇ ਭੌਂਕਦੇ ਹਨ ਪਰ ਇਹ ਬੇਪਰਵਾਹ ਚੱਲਦਾ ਰਹਿੰਦਾ ਹੈ।</div><div>10. ਇਹ ਬਹੁਤ ਤਾਕਤਵਰ ਅਤੇ ਸਮਝਦਾਰ ਜਾਨਵਰ ਹੈ।</div></div>"
         },
         {
           title: "5. ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਛੁੱਟੀ ਦੀ ਅਰਜ਼ੀ:",
           instruction: "ਅਰਜ਼ੀ ਦਾ ਸਹੀ ਫਾਰਮੈਟ ਪੜ੍ਹੋ:",
           type: "typewriter",
-          content: "<div style='width:95%; max-width:700px; display:flex; flex-direction:column; justify-content:center; text-align:left; font-size: 2.1vmin; line-height: 1.4; margin: 0 auto;'><div style='text-align:left;'>ਸੇਵਾ ਵਿਖੇ,<br><span style='margin-left:3vmin;'>ਮੁੱਖ ਅਧਿਆਪਕ ਜੀ,</span><br><span style='margin-left:3vmin;'>ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ,</span><br><span style='margin-left:3vmin;'>(ਆਪਣੇ ਪਿੰਡ/ਸ਼ਹਿਰ ਦਾ ਨਾਮ)</span></div><div style='text-align:center; font-weight:900; color:#d32f2f; margin: 1vmin 0; font-size: 2.4vmin;'>ਵਿਸ਼ਾ: ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਛੁੱਟੀ ਲੈਣ ਸੰਬੰਧੀ।</div><div style='text-align:left;'>ਸ੍ਰੀ ਮਾਨ ਜੀ / ਸ੍ਰੀਮਤੀ ਜੀ,</div><div style='text-align:justify; text-indent: 4vmin; margin-top: 0.5vmin;'>ਸਨਿਮਰ ਬੇਨਤੀ ਹੈ ਕਿ ਮੈਨੂੰ ਅੱਜ ਘਰ ਵਿੱਚ ਇੱਕ ਬਹੁਤ ਜ਼ਰੂਰੀ ਕੰਮ ਪੈ ਗਿਆ ਹੈ। ਇਸ ਕਾਰਨ ਮੈਂ ਅੱਜ ਸਕੂਲ ਹਾਜ਼ਰ ਨਹੀਂ ਹੋ ਸਕਦਾ/ਸਕਦੀ। ਕਿਰਪਾ ਕਰਕੇ ਮੈਨੂੰ ਅੱਜ ਇੱਕ ਦਿਨ ਦੀ ਛੁੱਟੀ ਦਿੱਤੀ ਜਾਵੇ। ਮੈਂ ਆਪ ਜੀ ਦਾ/ਦੀ ਬਹੁਤ ਧੰਨਵਾਦੀ ਹੋਵਾਂਗਾ/ਹੋਵਾਂਗੀ।</div><div style='text-align:center; font-weight:900; margin-top: 0.5vmin;'>ਧੰਨਵਾਦ ਸਹਿਤ!</div><div style='text-align:right; margin-top: 0.5vmin;'>ਆਪ ਜੀ ਦਾ ਆਗਿਆਕਾਰੀ ਵਿਦਿਆਰਥੀ,<br>ਨਾਮ: ........................<br>ਜਮਾਤ: ਚੌਥੀ<br>ਰੋਲ ਨੰ: ........ ਮਿਤੀ: ........</div></div>"
+          content: "<div style='width:100%; height:100%; display:flex; flex-direction:column; justify-content:space-evenly; text-align:left; font-size: 3.4vmin; line-height: 1.4;'><div style='text-align:left;'>ਸੇਵਾ ਵਿਖੇ,<br><span style='margin-left:4vmin;'>ਮੁੱਖ ਅਧਿਆਪਕ ਜੀ,</span><br><span style='margin-left:4vmin;'>ਸਰਕਾਰੀ ਪ੍ਰਾਇਮਰੀ ਸਕੂਲ,</span><br><span style='margin-left:4vmin;'>(ਆਪਣੇ ਪਿੰਡ/ਸ਼ਹਿਰ ਦਾ ਨਾਮ)</span></div><div style='text-align:center; font-weight:900; color:#d32f2f; font-size: 4vmin;'>ਵਿਸ਼ਾ: ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਛੁੱਟੀ ਲੈਣ ਸੰਬੰਧੀ।</div><div style='text-align:left;'>ਸ੍ਰੀ ਮਾਨ ਜੀ / ਸ੍ਰੀਮਤੀ ਜੀ,</div><div style='text-align:justify; text-indent: 5vmin;'>ਸਨਿਮਰ ਬੇਨਤੀ ਹੈ ਕਿ ਮੈਨੂੰ ਅੱਜ ਘਰ ਵਿੱਚ ਇੱਕ ਬਹੁਤ ਜ਼ਰੂਰੀ ਕੰਮ ਪੈ ਗਿਆ ਹੈ। ਇਸ ਕਾਰਨ ਮੈਂ ਅੱਜ ਸਕੂਲ ਹਾਜ਼ਰ ਨਹੀਂ ਹੋ ਸਕਦਾ/ਸਕਦੀ। ਕਿਰਪਾ ਕਰਕੇ ਮੈਨੂੰ ਅੱਜ ਇੱਕ ਦਿਨ ਦੀ ਛੁੱਟੀ ਦਿੱਤੀ ਜਾਵੇ। ਮੈਂ ਆਪ ਜੀ ਦਾ/ਦੀ ਬਹੁਤ ਧੰਨਵਾਦੀ ਹੋਵਾਂਗਾ/ਹੋਵਾਂਗੀ।</div><div style='text-align:right;'><strong>ਧੰਨਵਾਦ ਸਹਿਤ!</strong><br>ਆਪ ਜੀ ਦਾ ਆਗਿਆਕਾਰੀ ਵਿਦਿਆਰਥੀ,<br>ਨਾਮ: ........................<br>ਜਮਾਤ: ਚੌਥੀ<br>ਰੋਲ ਨੰ: ........ ਮਿਤੀ: ........</div></div>"
         },
         {
           title: "6. ਰਚਨਾਤਮਕ ਕੰਮ (ਬਿੰਦੀਆਂ ਮਿਲਾਓ)",
@@ -394,7 +413,7 @@
           title: "7. ਅਧਿਆਪਕਾਂ ਲਈ ਹਦਾਇਤ",
           instruction: "ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਢੰਗ ਪੜ੍ਹੋ:",
           type: "typewriter",
-          content: "<div style='background:#fdf0d5; padding:2vmin; border:2px solid #d32f2f; border-radius:2vmin;'><strong>ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਢੰਗ:</strong><br><br>ਜਦੋਂ ਵੀ ਅਸੀਂ ਦਫ਼ਤਰੀ ਕੰਮ, ਬਿਮਾਰੀ ਜਾਂ ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਲਿਖਤੀ ਰੂਪ ਵਿੱਚ ਛੁੱਟੀ ਮੰਗਣੀ ਹੁੰਦੀ ਹੈ, ਤਾਂ ਅਸੀਂ 'ਅਰਜ਼ੀ' ਲਿਖਦੇ ਹਾਂ।<br><br><span style='color:#d32f2f;'><strong>ਅਰਜ਼ੀ ਦੇ ਮੁੱਖ ਭਾਗ:</strong></span><br><span style='color:#1565c0;'>1. ਸਿਰਲੇਖ/ਪਤਾ:</span> ਜਿਸ ਨੂੰ ਅਰਜ਼ੀ ਲਿਖਣੀ ਹੈ ਉਸਦਾ ਅਹੁਦਾ।<br><span style='color:#1565c0;'>2. ਵਿਸ਼ਾ:</span> ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਕਾਰਨ ਸੰਖੇਪ ਵਿੱਚ।<br><span style='color:#1565c0;'>3. ਸਤਿਕਾਰਯੋਗ ਸੰਬੋਧਨ:</span> ਸ੍ਰੀ ਮਾਨ ਜੀ / ਸ੍ਰੀਮਤੀ ਜੀ।<br><span style='color:#1565c0;'>4. ਮੁੱਖ ਭਾਗ:</span> ਆਪਣੀ ਪੂਰੀ ਗੱਲ ਜਾਂ ਬੇਨਤੀ ਲਿਖਣਾ।<br><span style='color:#1565c0;'>5. ਧੰਨਵਾਦ ਅਤੇ ਆਗਿਆਕਾਰੀ:</span> ਅੰਤ ਵਿੱਚ ਆਪਣਾ ਵੇਰਵਾ ਦੇਣਾ।</div>"
+          content: "<div style='background:#fdf0d5; padding:2vmin; border:2px solid #d32f2f; border-radius:2vmin; height:100%; display:flex; flex-direction:column; justify-content:space-evenly; font-size:3.4vmin; line-height: 1.4;'><div style='text-align:center; color:#d32f2f; font-size:4.5vmin; font-weight:900;'>ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਢੰਗ:</div><div>ਜਦੋਂ ਵੀ ਅਸੀਂ ਦਫ਼ਤਰੀ ਕੰਮ, ਬਿਮਾਰੀ ਜਾਂ ਜ਼ਰੂਰੀ ਕੰਮ ਲਈ ਲਿਖਤੀ ਰੂਪ ਵਿੱਚ ਛੁੱਟੀ ਮੰਗਣੀ ਹੁੰਦੀ ਹੈ, ਤਾਂ ਅਸੀਂ 'ਅਰਜ਼ੀ' ਲਿਖਦੇ ਹਾਂ।</div><div><strong style='color:#d32f2f;'>ਅਰਜ਼ੀ ਦੇ ਮੁੱਖ ਭਾਗ:</strong><br><span style='color:#1565c0;'>1. ਸਿਰਲੇਖ/ਪਤਾ:</span> ਜਿਸ ਨੂੰ ਅਰਜ਼ੀ ਲਿਖਣੀ ਹੈ ਉਸਦਾ ਅਹੁਦਾ।<br><span style='color:#1565c0;'>2. ਵਿਸ਼ਾ:</span> ਅਰਜ਼ੀ ਲਿਖਣ ਦਾ ਕਾਰਨ ਸੰਖੇਪ ਵਿੱਚ।<br><span style='color:#1565c0;'>3. ਸਤਿਕਾਰਯੋਗ ਸੰਬੋਧਨ:</span> ਸ੍ਰੀ ਮਾਨ ਜੀ / ਸ੍ਰੀਮਤੀ ਜੀ।<br><span style='color:#1565c0;'>4. ਮੁੱਖ ਭਾਗ:</span> ਆਪਣੀ ਪੂਰੀ ਗੱਲ ਜਾਂ ਬੇਨਤੀ ਲਿਖਣਾ।<br><span style='color:#1565c0;'>5. ਧੰਨਵਾਦ ਅਤੇ ਆਗਿਆਕਾਰੀ:</span> ਅੰਤ ਵਿੱਚ ਆਪਣਾ ਵੇਰਵਾ ਦੇਣਾ।</div></div>"
         },
         { type: "conclude" }
       ],
@@ -486,11 +505,9 @@
         const text = document.getElementById('auto-status-text');
         if(!bubble || !text) return;
         if(paused) {
-            bubble.className = 'status-bubble status-paused';
-            text.innerText = 'ਰੁਕਿਆ ਹੋਇਆ'; text.style.color = '#e74c3c';
+            bubble.className = 'status-bubble status-paused'; text.innerText = 'ਰੁਕਿਆ ਹੋਇਆ'; text.style.color = '#e74c3c';
         } else {
-            bubble.className = 'status-bubble status-running';
-            text.innerText = 'ਚੱਲ ਰਿਹਾ ਹੈ'; text.style.color = '#2ecc71';
+            bubble.className = 'status-bubble status-running'; text.innerText = 'ਚੱਲ ਰਿਹਾ ਹੈ'; text.style.color = '#2ecc71';
         }
     }
     
@@ -552,19 +569,20 @@
     
     function drawMindMap(container, items) {
         container.className = 'mind-map-container';
+        // Allow container click to trigger sequential reveal (optional)
         container.onclick = (e) => {
             e.stopPropagation();
-            if (typing || mode === 'auto') return;
+            if (typing || mode === 'auto' || reviewMode) return;
             if (mindMapIndex < currentMindMapNodes.length) { revealSingleMindNode(mindMapIndex); }
         };
         const svgHTML = `
             <svg class="absolute inset-0 w-full h-full z-0" style="pointer-events: none; position:absolute; top:0; left:0; width:100%; height:100%;">
-                <line x1="50%" y1="50%" x2="50%" y2="15%" stroke="#1565c0" stroke-width="3" />
-                <line x1="50%" y1="50%" x2="85%" y2="35%" stroke="#1565c0" stroke-width="3" />
-                <line x1="50%" y1="50%" x2="85%" y2="65%" stroke="#1565c0" stroke-width="3" />
-                <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#1565c0" stroke-width="3" />
-                <line x1="50%" y1="50%" x2="15%" y2="65%" stroke="#1565c0" stroke-width="3" />
-                <line x1="50%" y1="50%" x2="15%" y2="35%" stroke="#1565c0" stroke-width="3" />
+                <line x1="50%" y1="50%" x2="50%" y2="15%" stroke="#1565c0" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="85%" y2="35%" stroke="#1565c0" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="85%" y2="65%" stroke="#1565c0" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="50%" y2="85%" stroke="#1565c0" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="15%" y2="65%" stroke="#1565c0" stroke-width="4" />
+                <line x1="50%" y1="50%" x2="15%" y2="35%" stroke="#1565c0" stroke-width="4" />
             </svg>
         `;
         container.innerHTML = svgHTML;
@@ -587,6 +605,17 @@
             node.style.top = pos.top; node.style.left = pos.left;
             node.innerHTML = "?";
             node.dataset.index = i; node.dataset.text = text;
+            
+            // Allow individual node click to reveal it and play audio
+            node.onclick = (e) => {
+                e.stopPropagation();
+                if (typing || mode === 'auto' || reviewMode) return;
+                if (node.innerHTML === "?") {
+                    const idx = currentMindMapNodes.findIndex(item => item.node === node);
+                    if(idx !== -1) revealSingleMindNode(idx);
+                }
+            };
+            
             container.appendChild(node);
             currentMindMapNodes.push({ node: node });
         });
@@ -594,20 +623,52 @@
     
     async function revealSingleMindNode(index) {
         if(typing) return; typing = true;
+
+        // Blur all already revealed nodes
+        for(let i = 0; i < currentMindMapNodes.length; i++) {
+            if (i !== index && currentMindMapNodes[i].node.innerHTML !== "?") {
+                currentMindMapNodes[i].node.style.opacity = '0.4';
+                currentMindMapNodes[i].node.style.filter = 'blur(2px)';
+            }
+        }
+
         const item = currentMindMapNodes[index];
-        item.node.style.color = '#0d47a1'; item.node.style.backgroundColor = '#bbdefb';
+        item.node.style.color = '#0d47a1';
+        item.node.style.backgroundColor = '#bbdefb';
         item.node.innerHTML = item.node.dataset.text;
         item.node.style.transform = 'translate(-50%, -50%) scale(1.15)';
+        item.node.style.opacity = '1';
+        item.node.style.filter = 'none';
+
+        // Speak this specific node immediately
+        if(!paused && ('speechSynthesis' in window)) {
+            speakText(cleanTextForSpeech(item.node.dataset.text));
+        }
+
         await new Promise(r => setTimeout(r, 400));
         item.node.style.transform = 'translate(-50%, -50%) scale(1)';
-        typing = false; mindMapIndex++;
+        typing = false;
         
-        if(mindMapIndex >= currentMindMapNodes.length) {
+        // Check how many nodes are revealed to update logic
+        let revealedCount = currentMindMapNodes.filter(n => n.node.innerHTML !== "?").length;
+        mindMapIndex = revealedCount;
+        
+        if(revealedCount >= currentMindMapNodes.length) {
             stepState = 'reveal'; reviewMode = true;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
+            
+            // After 2 seconds (time for the last audio to finish), unblur all and read the full map
+            setTimeout(() => {
+                for(let i = 0; i < currentMindMapNodes.length; i++) {
+                    currentMindMapNodes[i].node.style.opacity = '1';
+                    currentMindMapNodes[i].node.style.filter = 'none';
+                }
+                if(!paused) {
+                    readAloud();
+                }
+            }, 2000);
         }
         updateListenBtn();
-        if(mode === 'auto' && !paused) readAloud();
     }
     
     // --- TTS LOGIC ---
@@ -641,9 +702,7 @@
         let clean = text.replace(/<[^>]*>?/gm, '');
         clean = clean.replace(/^\s*\d+\.\s*/g, '');
         clean = clean.replace(/\([ੳਅੲਸਹਕਖਗਘਚਛਜਝਟਠਡਢਤਥਦਧਨਪਫਬਭਮਯਰਲਵੜ]\)\s*/g, '');
-        clean = clean.replace(/ਉੱਤਰ\s*:/g, '');
-        clean = clean.replace(/ਵਾਕ\s*:/g, '');
-        clean = clean.replace(/ਅਰਥ\s*(➔|:|-)?\s*/g, '');
+        clean = clean.replace(/ਉੱਤਰ\s*:/g, ''); clean = clean.replace(/ਵਾਕ\s*:/g, ''); clean = clean.replace(/ਅਰਥ\s*(➔|:|-)?\s*/g, '');
         clean = clean.replace(/-/g, ' ');
         return clean.replace(/\s+/g, ' ').trim();
     }
@@ -695,24 +754,18 @@
             
             if (reviewMode) {
                 if (d.type === 'mcq') {
-                    let correctOrd = getOrdinal(d.correct);
                     textToSpeak += "ਪ੍ਰਸ਼ਨ . " + cleanTextForSpeech(d.q) + " . ਇਸਦਾ ਸਹੀ ਉੱਤਰ ਹੈ , " + cleanTextForSpeech(d.a);
                 } else if (d.type === 'blanks_with_options' || d.type === 'blanks') {
                     d.items.forEach(item => {
-                        let blankVal = item.blank || item.b || "";
-                        let afterVal = item.after || item.a || "";
+                        let blankVal = item.blank || item.b || ""; let afterVal = item.after || item.a || "";
                         textToSpeak += "ਪੂਰਾ ਵਾਕ ਹੈ . " + cleanTextForSpeech(item.q) + " " + cleanTextForSpeech(blankVal) + " " + cleanTextForSpeech(afterVal) + " . ";
                     });
                 } else if (d.type === 'list') {
-                    d.items.forEach(item => {
-                        textToSpeak += "ਸ਼ਬਦ " + cleanTextForSpeech(item.q) + " . ਇਸਦਾ ਅਰਥ ਹੈ , " + cleanTextForSpeech(item.a) + " . ";
-                    });
+                    d.items.forEach(item => { textToSpeak += "ਸ਼ਬਦ " + cleanTextForSpeech(item.q) + " . ਇਸਦਾ ਅਰਥ ਹੈ , " + cleanTextForSpeech(item.a) + " . "; });
                 } else if (d.type === 'match_lines') {
-                    d.items.forEach(item => {
-                        textToSpeak += "ਸ਼ਬਦ " + cleanTextForSpeech(item.q) + " . ਇਸਦਾ ਸਹੀ ਮਿਲਾਨ ਹੈ , " + cleanTextForSpeech(item.a) + " . ";
-                    });
+                    d.items.forEach(item => { textToSpeak += "ਸ਼ਬਦ " + cleanTextForSpeech(item.q) + " . ਇਸਦਾ ਸਹੀ ਮਿਲਾਨ ਹੈ , " + cleanTextForSpeech(item.a) + " . "; });
                 } else if (d.type === 'mind_map') {
-                    textToSpeak += "ਮਾਈਂਡ ਮੈਪ . " + d.items.map(i => cleanTextForSpeech(i)).join(", ");
+                    textToSpeak += "ਸਾਰਾ ਮਾਈਂਡ ਮੈਪ . " + d.items.map(i => cleanTextForSpeech(i)).join(" . ");
                 } else if (d.type === 'typewriter' || d.type === 'creative_draw') {
                     if(d.title.includes('ਬਿੰਦੀਆਂ') || d.type === 'creative_draw') {
                         textToSpeak += "ਬੱਚਿਓ! ਇਨ੍ਹਾਂ ਬਿੰਦੀਆਂ ਨੂੰ ਮਿਲਾ ਕੇ ਹਾਥੀ ਬਣਾਓ ਅਤੇ ਰੰਗ ਭਰੋ।";
@@ -720,15 +773,13 @@
                         textToSpeak += cleanTextForSpeech(d.content);
                     }
                 } else {
-                    d.items.forEach(item => {
-                        textToSpeak += "ਪ੍ਰਸ਼ਨ ਹੈ . " + cleanTextForSpeech(item.q) + " . ਇਸਦਾ ਉੱਤਰ ਹੈ . " + cleanTextForSpeech(item.a) + " . ";
-                    });
+                    d.items.forEach(item => { textToSpeak += "ਪ੍ਰਸ਼ਨ ਹੈ . " + cleanTextForSpeech(item.q) + " . ਇਸਦਾ ਉੱਤਰ ਹੈ . " + cleanTextForSpeech(item.a) + " . "; });
                 }
             } else {
                 if (d.type === 'mcq') {
                     const box = document.getElementById('final-ans');
-                    let correctOrd = getOrdinal(d.correct);
                     if (box && box.classList.contains('revealed')) {
+                        let correctOrd = getOrdinal(d.correct);
                         textToSpeak = correctOrd + " ਆਪਸ਼ਨ ਸਹੀ ਹੈ . ਉੱਤਰ . " + cleanTextForSpeech(d.a);
                     } else {
                         let optsText = d.opts.map((opt, i) => getOrdinal(i) + " ਆਪਸ਼ਨ . " + cleanTextForSpeech(opt)).join(" . ");
@@ -736,6 +787,8 @@
                     }
                 } else if (d.type === 'mind_map') {
                     if(stepState === 'reveal' && currentMindMapNodes[mindMapIndex-1]) {
+                        // The single node read is handled directly inside revealSingleMindNode
+                        // So if we click the Listen button while a single node is revealed, read it again
                         textToSpeak = cleanTextForSpeech(currentMindMapNodes[mindMapIndex-1].node.dataset.text);
                     } else {
                         textToSpeak = slideHeading + "ਮਾਈਂਡ ਮੈਪ ਦੇਖੋ";
@@ -754,25 +807,15 @@
                     let currentAfter = d.items[subIdx].after ? cleanTextForSpeech(d.items[subIdx].after) : (d.type === 'blanks' ? cleanTextForSpeech(d.items[subIdx].a) : "");
                     
                     if (stepState === 'focus') {
-                        if (d.type === 'blanks_with_options' || d.type === 'blanks') {
-                            textToSpeak = slideHeading + " ਵਾਕ ਪੂਰਾ ਕਰੋ , " + currentQ + " ਖਾਲੀ ਥਾਂ " + currentAfter;
-                        } else if (d.type === 'list') {
-                            textToSpeak = slideHeading + " ਸ਼ਬਦ ਹੈ... " + currentQ;
-                        } else if (d.type === 'match_lines') {
-                            textToSpeak = slideHeading + " ਸਹੀ ਮਿਲਾਣ ਕਰੋ, ਖੱਬਾ ਸ਼ਬਦ ਹੈ... " + currentQ;
-                        } else {
-                            textToSpeak = slideHeading + " ਪ੍ਰਸ਼ਨ ਹੈ... " + currentQ;
-                        }
+                        if (d.type === 'blanks_with_options' || d.type === 'blanks') textToSpeak = slideHeading + " ਵਾਕ ਪੂਰਾ ਕਰੋ , " + currentQ + " ਖਾਲੀ ਥਾਂ " + currentAfter;
+                        else if (d.type === 'list') textToSpeak = slideHeading + " ਸ਼ਬਦ ਹੈ... " + currentQ;
+                        else if (d.type === 'match_lines') textToSpeak = slideHeading + " ਸਹੀ ਮਿਲਾਣ ਕਰੋ, ਖੱਬਾ ਸ਼ਬਦ ਹੈ... " + currentQ;
+                        else textToSpeak = slideHeading + " ਪ੍ਰਸ਼ਨ ਹੈ... " + currentQ;
                     } else if (stepState === 'reveal') {
-                        if (d.type === 'blanks_with_options' || d.type === 'blanks') {
-                            textToSpeak = "ਸਹੀ ਵਾਕ ਹੈ , " + currentQ + " " + currentA + " " + currentAfter;
-                        } else if (d.type === 'list') {
-                            textToSpeak = "ਇਸ ਸ਼ਬਦ ਦਾ ਅਰਥ ਹੈ... " + currentA;
-                        } else if (d.type === 'match_lines') {
-                            textToSpeak = "ਇਸਦਾ ਸਹੀ ਮਿਲਾਣ ਹੈ... " + currentA;
-                        } else {
-                            textToSpeak = "ਇਸਦਾ ਉੱਤਰ ਹੈ... " + currentA;
-                        }
+                        if (d.type === 'blanks_with_options' || d.type === 'blanks') textToSpeak = "ਸਹੀ ਵਾਕ ਹੈ , " + currentQ + " " + currentA + " " + currentAfter;
+                        else if (d.type === 'list') textToSpeak = "ਇਸ ਸ਼ਬਦ ਦਾ ਅਰਥ ਹੈ... " + currentA;
+                        else if (d.type === 'match_lines') textToSpeak = "ਇਸਦਾ ਸਹੀ ਮਿਲਾਨ ਹੈ... " + currentA;
+                        else textToSpeak = "ਇਸਦਾ ਉੱਤਰ ਹੈ... " + currentA;
                     }
                 }
             }
@@ -785,14 +828,23 @@
         const d = lessonData[section][step];
         const titleEl = document.getElementById('slide-title'), instrEl = document.getElementById('slide-instr'), hEl = document.getElementById('html-content');
         
+        // CURE FOR MENU-RETURN BUG (Clear leftover inline styles)
+        hEl.removeAttribute('style');
+        
         if(step === 'toc') {
             titleEl.innerHTML = "📑 ਪਾਠ ਤਤਕਰਾ (Index)"; instrEl.innerHTML = "ਸਿੱਧਾ ਕਿਸੇ ਵੀ ਭਾਗ 'ਤੇ ਜਾਣ ਲਈ ਕਲਿੱਕ ਕਰੋ :";
             hEl.className = 'interactive-list'; hEl.innerHTML = '';
+            
+            // Fix for TOC stretched buttons
+            hEl.style.alignContent = 'start'; 
+
             lessonData[section].forEach((data, idx) => {
                 if(data.type === 'conclude') return;
                 const row = document.createElement('div'); row.className = 'interactive-item';
                 row.style.flexDirection = 'row'; row.style.justifyContent = 'space-between';
-                row.innerHTML = `<span class="item-q" style="color:#000;">${data.title}</span><button class="item-reveal-btn" style="background:#2ecc71;" onclick="jumpTo('${section}', '${mode}', ${idx})">ਜਾਓ</button>`;
+                row.style.alignItems = 'center';
+                
+                row.innerHTML = `<span class="item-q" style="color:#000; flex:1;">${data.title}</span><button class="item-reveal-btn" style="background:#2ecc71; margin-left:2vmin; flex-shrink:0;" onclick="jumpTo('${section}', '${mode}', ${idx})">ਜਾਓ</button>`;
                 hEl.appendChild(row);
             });
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਸ਼ੁਰੂ ਕਰੋ ⏭";
@@ -825,7 +877,7 @@
                     </div>
                     <div class="ans-wrapper">
                         <div class="item-a" style="visibility:hidden; opacity:0; pointer-events:none;">${item.a}</div>
-                        <div class="item-a" id="ans-${idx}" style="position:absolute; top:0.6vmin; left:0;"></div>
+                        <div class="item-a" id="ans-${idx}" style="position:absolute; top:1vmin; left:0;"></div>
                     </div>`;
                 hEl.appendChild(row);
             });
@@ -833,18 +885,13 @@
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭";
             
         } else if(d.type === 'match_lines') {
-            hEl.className = 'interactive-list';
-            hEl.style.display = 'block';
+            hEl.className = 'interactive-list'; hEl.style.display = 'block';
 
             let rightItems = [];
-            if (d.rightOrder) {
-                rightItems = d.rightOrder.map(text => ({ text: text, origIdx: d.items.findIndex(item => item.a === text) }));
-            } else {
+            if (d.rightOrder) rightItems = d.rightOrder.map(text => ({ text: text, origIdx: d.items.findIndex(item => item.a === text) }));
+            else {
                 rightItems = d.items.map((item, idx) => ({ text: item.a, origIdx: idx }));
-                for (let i = rightItems.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [rightItems[i], rightItems[j]] = [rightItems[j], rightItems[i]];
-                }
+                for (let i = rightItems.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [rightItems[i], rightItems[j]] = [rightItems[j], rightItems[i]]; }
             }
 
             hEl.innerHTML = `
@@ -854,24 +901,12 @@
                     <div class="match-col" id="right-col"></div>
                 </div>
             `;
-
-            const leftCol = document.getElementById('left-col');
-            const rightCol = document.getElementById('right-col');
-
+            const leftCol = document.getElementById('left-col'); const rightCol = document.getElementById('right-col');
             d.items.forEach((item, idx) => {
-                leftCol.innerHTML += `
-                    <div class="match-box match-l" id="match-l-${idx}" onclick="revealAnswer(event, ${idx})">
-                        <span class="match-text">${item.q}</span>
-                    </div>
-                `;
+                leftCol.innerHTML += `<div class="match-box match-l" id="match-l-${idx}" onclick="revealAnswer(event, ${idx})"><span class="match-text">${item.q}</span></div>`;
             });
-
             rightItems.forEach((rItem) => {
-                rightCol.innerHTML += `
-                    <div class="match-box match-r" id="match-r-${rItem.origIdx}">
-                        <span class="match-text">${rItem.text}</span>
-                    </div>
-                `;
+                rightCol.innerHTML += `<div class="match-box match-r" id="match-r-${rItem.origIdx}"><span class="match-text">${rItem.text}</span></div>`;
             });
 
             subIdx = 0; stepState = 'focus';
@@ -880,7 +915,7 @@
         } else if(d.type === 'creative_draw') {
             hEl.className = 'interactive-list';
             hEl.innerHTML = `
-                <div style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; width: 100%; height: 100%;">
+                <div class="elephant-svg-container">
                     <svg id="elephantCanvas" viewBox="0 0 1000 900">
                         <g id="color-fills" class="color-layer">
                             <path d="M 250 600 L 250 770 L 330 770 L 320 650 Z" fill="#95a5a6" />
@@ -909,9 +944,9 @@
                             <path id="anim-toes" class="draw-line" style="stroke-dasharray: 1500; stroke-dashoffset: 1500;" d="M 220 800 Q 230 770 240 800 M 260 800 Q 270 770 280 800 M 300 800 Q 310 770 320 800 M 490 800 Q 500 770 510 800 M 530 800 Q 540 770 550 800 M 570 800 Q 580 770 590 800 M 240 780 Q 250 750 260 780 M 280 780 Q 290 750 300 780 M 310 780 Q 315 750 320 780 M 530 780 Q 540 750 550 780 M 570 780 Q 580 750 590 780 M 600 780 Q 605 750 610 780" />
                         </g>
                     </svg>
-                    <div style="display: flex; gap: 1.5vmin; margin-top: 2vmin; justify-content: center;">
-                        <button id="realStartBtn" class="action-btn" onclick="drawUserElephant(event)" style="background: #e74c3c;">✏️ ਬਿੰਦੀਆਂ ਮਿਲਾਓ</button>
-                        <button id="realResetBtn" class="action-btn" onclick="initUserElephantCanvas(event)" style="background: #3498db; display: none;">🔄 ਦੁਬਾਰਾ ਕਰੋ</button>
+                    <div style="display: flex; gap: 1.5vmin; margin-top: 1.5vmin; justify-content: center;">
+                        <button id="realStartBtn" class="item-reveal-btn" onclick="drawUserElephant(event)" style="font-size:3.5vmin; padding: 1.5vmin 3vmin; background: #e74c3c;">✏️ ਬਿੰਦੀਆਂ ਮਿਲਾਓ</button>
+                        <button id="realResetBtn" class="item-reveal-btn" onclick="initUserElephantCanvas(event)" style="font-size:3.5vmin; padding: 1.5vmin 3vmin; background: #3498db; display: none;">🔄 ਦੁਬਾਰਾ ਕਰੋ</button>
                     </div>
                 </div>
             `;
@@ -931,7 +966,7 @@
             hEl.appendChild(itemsContainer);
             
             const optBox = document.createElement('div'); optBox.className = 'options-box';
-            optBox.innerHTML = `<strong style="font-size:2.2vmin; color:#d35400;">ਵਿਕਲਪ:</strong> <div id="options-list" class="options-list"></div>`;
+            optBox.innerHTML = `<strong style="font-size:3.2vmin; color:#d35400;">ਵਿਕਲਪ:</strong> <div id="options-list" class="options-list"></div>`;
             hEl.appendChild(optBox);
             
             const optList = optBox.querySelector('#options-list');
@@ -954,33 +989,27 @@
             hEl.appendChild(optGrid);
             
             const wrapper = document.createElement('div'); wrapper.style.position = 'relative'; wrapper.style.width = '100%'; wrapper.style.marginTop = '1vmin';
-            const placeholder = document.createElement('div'); placeholder.className = 'item-a'; placeholder.style.visibility = 'hidden'; placeholder.style.opacity = '0'; placeholder.style.pointerEvents = 'none'; placeholder.innerHTML = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3vmin;'>" + d.a + "</span>";
+            const placeholder = document.createElement('div'); placeholder.className = 'item-a'; placeholder.style.visibility = 'hidden'; placeholder.style.opacity = '0'; placeholder.style.pointerEvents = 'none'; placeholder.innerHTML = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.8vmin;'>" + d.a + "</span>";
             const box = document.createElement('div'); box.id = "final-ans"; box.className = "item-a"; box.style.position = 'absolute'; box.style.top = '0'; box.style.left = '0'; box.style.textAlign = 'center';
             wrapper.appendChild(placeholder); wrapper.appendChild(box); hEl.appendChild(wrapper);
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
             
         } else if (d.type === 'mind_map') {
-            hEl.className = '';
-            drawMindMap(hEl, d.items);
-            stepState = 'focus';
+            hEl.className = ''; drawMindMap(hEl, d.items); stepState = 'focus';
             if (mode === 'auto' && !paused) { setTimeout(() => revealSingleMindNode(0), 1500); }
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਕਲਿੱਕ ਕਰੋ 👆";
             
         } else if (d.type === 'typewriter') {
-            hEl.className = ''; hEl.style.display = 'flex'; hEl.style.flexDirection = 'column'; hEl.style.width = '100%'; hEl.style.height = '100%';
+            hEl.className = ''; 
             const textContainer = document.createElement('div'); textContainer.className = 'typing-text-container'; textContainer.id = 'typewriter-box';
             
             const playBtn = document.createElement('button'); playBtn.className = 'item-reveal-btn'; playBtn.style.marginBottom = '2vmin'; playBtn.style.display = 'block'; playBtn.style.margin = '0 auto 2vmin auto'; playBtn.innerText = 'ਪੜ੍ਹੋ';
             playBtn.onclick = (e) => { e.stopPropagation(); playBtn.style.display = 'none'; startTypewriter(textContainer, d.content); };
             
-            if (mode === 'live') {
-                hEl.appendChild(playBtn);
-            }
+            if (mode === 'live') hEl.appendChild(playBtn);
             hEl.appendChild(textContainer); stepState = 'focus';
             
-            if (mode === 'auto') {
-                setTimeout(() => startTypewriter(textContainer, d.content), 1000);
-            }
+            if (mode === 'auto') setTimeout(() => startTypewriter(textContainer, d.content), 1000);
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਪੜ੍ਹੋ ✍";
         }
         
@@ -989,48 +1018,35 @@
     }
     
     async function startTypewriter(el, html) {
-        el.classList.add('typing-cursor');
-        await typeEffect(el, html, 60);
-        el.classList.remove('typing-cursor');
+        el.classList.add('typing-cursor'); await typeEffect(el, html, TYPE_SPEED); el.classList.remove('typing-cursor');
         stepState = 'reveal'; reviewMode = true;
         if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
-        updateListenBtn();
-        if(mode === 'auto' && !paused) readAloud();
+        updateListenBtn(); if(mode === 'auto' && !paused) readAloud();
     }
     
     async function revealAnswer(e, idx) {
-        if(e) e.stopPropagation();
-        if(typing) { typing = false; return; }
+        if(e) e.stopPropagation(); if(typing) { typing = false; return; }
         
         const d = lessonData[section][step];
         const btn = document.getElementById(`btn-${idx}`);
         
         if (d.type !== 'match_lines') {
-            document.querySelectorAll('.interactive-item').forEach((row, i) => {
-                if(i === idx) row.classList.remove('fade-out'); else row.classList.add('fade-out');
-            });
+            document.querySelectorAll('.interactive-item').forEach((row, i) => { if(i === idx) row.classList.remove('fade-out'); else row.classList.add('fade-out'); });
         }
         if(btn) btn.style.display = 'none';
         
         if (d.type === 'blanks_with_options') {
             const target = document.getElementById(`blank-${idx}`);
             target.classList.remove('blank-dash'); target.innerHTML = "";
-            const optPill = document.getElementById(`opt-${d.items[idx].blank}`);
-            if (optPill) optPill.classList.add('used');
+            const optPill = document.getElementById(`opt-${d.items[idx].blank}`); if (optPill) optPill.classList.add('used');
             subIdx = idx; stepState = 'reveal'; updateListenBtn();
             if(mode === 'auto' && !paused) readAloud();
             await typeEffect(target, `<span class="hl-red">${d.items[idx].blank}</span>`, TYPE_SPEED);
         } else if (d.type === 'match_lines') {
             const leftEl = document.getElementById(`match-l-${idx}`);
-            const rightEl = document.getElementById(`match-r-${d.items[idx].origIdx}`); 
-            // We use the same idx for left because we rendered it sequentially. For right, we just need the correct matching box.
-            // Wait, we need to locate the right box by matching text or known structure. 
-            // Let's modify the rightEl search:
             const allRightBoxes = document.querySelectorAll('.match-r');
             let correctRightEl = null;
-            allRightBoxes.forEach(rBox => {
-                if (rBox.innerText.trim() === d.items[idx].a) correctRightEl = rBox;
-            });
+            allRightBoxes.forEach(rBox => { if (rBox.innerText.trim() === d.items[idx].a) correctRightEl = rBox; });
 
             if(!leftEl || !correctRightEl || leftEl.dataset.matched) { typing=false; return; }
 
@@ -1038,28 +1054,19 @@
             leftEl.style.background = '#d4efdf'; leftEl.style.borderColor = '#27ae60';
             correctRightEl.style.background = '#d4efdf'; correctRightEl.style.borderColor = '#27ae60';
 
-            const svg = document.getElementById('match-svg');
-            const container = document.getElementById('match-container');
-            
-            const lRect = leftEl.getBoundingClientRect();
-            const rRect = correctRightEl.getBoundingClientRect();
-            const cRect = container.getBoundingClientRect();
+            const svg = document.getElementById('match-svg'); const container = document.getElementById('match-container');
+            const lRect = leftEl.getBoundingClientRect(); const rRect = correctRightEl.getBoundingClientRect(); const cRect = container.getBoundingClientRect();
 
-            const x1 = lRect.right - cRect.left;
-            const y1 = lRect.top + lRect.height / 2 - cRect.top;
-            const x2 = rRect.left - cRect.left;
-            const y2 = rRect.top + rRect.height / 2 - cRect.top;
-
-            const colors = ['#e74c3c', '#8e44ad', '#2980b9', '#27ae60', '#f39c12'];
-            const color = colors[idx % colors.length];
+            const x1 = lRect.right - cRect.left; const y1 = lRect.top + lRect.height / 2 - cRect.top;
+            const x2 = rRect.left - cRect.left; const y2 = rRect.top + rRect.height / 2 - cRect.top;
+            const colors = ['#e74c3c', '#8e44ad', '#2980b9', '#27ae60', '#f39c12']; const color = colors[idx % colors.length];
 
             const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-            line.setAttribute('x1', x1); line.setAttribute('y1', y1);
-            line.setAttribute('x2', x2); line.setAttribute('y2', y2);
+            line.setAttribute('x1', x1); line.setAttribute('y1', y1); line.setAttribute('x2', x2); line.setAttribute('y2', y2);
             line.setAttribute('stroke', color); line.setAttribute('stroke-width', '0'); line.setAttribute('stroke-linecap', 'round');
             svg.appendChild(line);
 
-            setTimeout(() => { line.style.transition = 'stroke-width 0.3s ease'; line.setAttribute('stroke-width', '4'); }, 10);
+            setTimeout(() => { line.style.transition = 'stroke-width 0.3s ease'; line.setAttribute('stroke-width', '6'); }, 10);
 
             subIdx = idx; stepState = 'reveal'; updateListenBtn();
             if(mode === 'auto' && !paused) readAloud();
@@ -1082,14 +1089,11 @@
     }
     
     async function checkMcq(btn, isCorrect) {
-        if(typing) return;
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        
+        if(typing) return; if ('speechSynthesis' in window) window.speechSynthesis.cancel();
         const d = lessonData[section][step];
         
         if(isCorrect) {
-            document.querySelectorAll('.mcq-btn').forEach(b => b.style.pointerEvents = 'none');
-            btn.classList.add('correct');
+            document.querySelectorAll('.mcq-btn').forEach(b => b.style.pointerEvents = 'none'); btn.classList.add('correct');
             const box = document.getElementById('final-ans'); box.classList.add('revealed'); box.style.color = '#2ecc71';
             updateListenBtn();
             
@@ -1097,28 +1101,23 @@
             let ttsMessage = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ । " + correctOrd + " ਆਪਸ਼ਨ ਸਹੀ ਹੈ । " + cleanTextForSpeech(d.a);
             speakText(ttsMessage);
             
-            await typeEffect(box, "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3vmin;'>" + d.a + "</span>", TYPE_SPEED);
+            await typeEffect(box, "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.8vmin;'>" + d.a + "</span>", TYPE_SPEED);
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else {
-            btn.classList.add('wrong');
-            document.getElementById('wrong-modal').style.display = 'flex';
-            btn.style.pointerEvents = 'none';
+            btn.classList.add('wrong'); document.getElementById('wrong-modal').style.display = 'flex'; btn.style.pointerEvents = 'none';
             speakText("ਗਲਤ ਉੱਤਰ , ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
         }
     }
     
     async function showAllAnswers(e) {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        if(e) e.stopPropagation();
-        if(step === 'toc' || lessonData[section][step].type === 'conclude') return;
+        if(e) e.stopPropagation(); if(step === 'toc' || lessonData[section][step].type === 'conclude') return;
         typing = false; const d = lessonData[section][step];
         
         if(d.type === 'list' || d.type === 'qa') {
             document.querySelectorAll('.interactive-item').forEach((row, idx) => {
-                row.classList.remove('fade-out');
-                const btn = document.getElementById(`btn-${idx}`); if(btn) btn.style.display = 'none';
-                const target = document.getElementById(`ans-${idx}`);
-                target.classList.add('revealed'); target.innerHTML = d.items[idx].a;
+                row.classList.remove('fade-out'); const btn = document.getElementById(`btn-${idx}`); if(btn) btn.style.display = 'none';
+                const target = document.getElementById(`ans-${idx}`); target.classList.add('revealed'); target.innerHTML = d.items[idx].a;
             });
             subIdx = d.items.length - 1; stepState = 'reveal'; reviewMode = true;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
@@ -1128,18 +1127,14 @@
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else if (d.type === 'blanks_with_options') {
             document.querySelectorAll('.interactive-item').forEach((row, idx) => {
-                row.classList.remove('fade-out');
-                const btn = document.getElementById(`btn-${idx}`); if(btn) btn.style.display = 'none';
-                const target = document.getElementById(`blank-${idx}`);
-                target.classList.remove('blank-dash'); target.innerHTML = `<span class="hl-red">${d.items[idx].blank}</span>`;
-                const optPill = document.getElementById(`opt-${d.items[idx].blank}`);
-                if (optPill) optPill.classList.add('used');
+                row.classList.remove('fade-out'); const btn = document.getElementById(`btn-${idx}`); if(btn) btn.style.display = 'none';
+                const target = document.getElementById(`blank-${idx}`); target.classList.remove('blank-dash'); target.innerHTML = `<span class="hl-red">${d.items[idx].blank}</span>`;
+                const optPill = document.getElementById(`opt-${d.items[idx].blank}`); if (optPill) optPill.classList.add('used');
             });
             subIdx = d.items.length - 1; stepState = 'reveal'; reviewMode = true;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else if (d.type === 'creative_draw') {
-            await drawUserElephant();
-            stepState = 'reveal'; reviewMode = true;
+            await drawUserElephant(); stepState = 'reveal'; reviewMode = true;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else if (d.type === 'mcq') {
             const box = document.getElementById('final-ans'); box.classList.add('revealed');
@@ -1147,10 +1142,7 @@
             box.innerHTML = "ਉੱਤਰ : " + d.a;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else if (d.type === 'mind_map') {
-            currentMindMapNodes.forEach((item) => {
-                item.node.style.color = '#0d47a1'; item.node.style.backgroundColor = '#bbdefb';
-                item.node.innerHTML = item.node.dataset.text;
-            });
+            currentMindMapNodes.forEach((item) => { item.node.style.color = '#0d47a1'; item.node.style.backgroundColor = '#bbdefb'; item.node.innerHTML = item.node.dataset.text; });
             mindMapIndex = currentMindMapNodes.length; stepState = 'reveal'; reviewMode = true;
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else if (d.type === 'typewriter') {
@@ -1172,81 +1164,61 @@
         
         if(d.type === 'list' || d.type === 'blanks_with_options' || d.type === 'qa' || d.type === 'match_lines') {
             const items = d.items || [];
-            if (reviewMode) {
-                if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); return;
-            }
+            if (reviewMode) { if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); return; }
+            
             if (stepState === 'focus') { await revealAnswer(null, subIdx < 0 ? 0 : subIdx); }
             else if (stepState === 'reveal') {
                 if (subIdx < items.length - 1) {
                     subIdx++; stepState = 'focus';
                     if (d.type !== 'match_lines') {
-                        document.querySelectorAll('.interactive-item').forEach((row, i) => {
-                            if (i === subIdx) row.classList.remove('fade-out'); else row.classList.add('fade-out');
-                        });
+                        document.querySelectorAll('.interactive-item').forEach((row, i) => { if (i === subIdx) row.classList.remove('fade-out'); else row.classList.add('fade-out'); });
                     }
                     if(mode === 'live') {
                         if(d.type === 'blanks_with_options') document.getElementById('tap-indicator').innerText = "ਭਰੋ ✍";
                         else if(d.type === 'match_lines') document.getElementById('tap-indicator').innerText = "ਮਿਲਾਓ ⏭";
                         else document.getElementById('tap-indicator').innerText = "ਉੱਤਰ ਦੇਖੋ ⏭";
                     }
-                    updateListenBtn();
-                    if(mode === 'auto' && !paused) readAloud();
+                    updateListenBtn(); if(mode === 'auto' && !paused) readAloud();
                 } else {
-                    if (d.type !== 'match_lines') {
-                        document.querySelectorAll('.interactive-item').forEach(row => row.classList.remove('fade-out'));
-                    }
+                    if (d.type !== 'match_lines') document.querySelectorAll('.interactive-item').forEach(row => row.classList.remove('fade-out'));
                     reviewMode = true;
                     if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
-                    updateListenBtn();
-                    if(mode === 'auto' && !paused) readAloud();
+                    updateListenBtn(); if(mode === 'auto' && !paused) readAloud();
                 }
             }
         } else if (d.type === 'mind_map') {
             if (stepState === 'focus') {
-                if (mindMapIndex < currentMindMapNodes.length) { revealSingleMindNode(mindMapIndex); }
+                if (mindMapIndex < currentMindMapNodes.length) revealSingleMindNode(mindMapIndex);
                 else {
                     reviewMode = true; stepState = 'reveal';
                     if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
-                    updateListenBtn();
-                    if(mode === 'auto' && !paused) readAloud();
+                    updateListenBtn(); if(mode === 'auto' && !paused) readAloud();
                 }
-            } else if (reviewMode) {
-                if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome();
-            }
+            } else if (reviewMode) { if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); }
         } else if (d.type === 'typewriter') {
             if (stepState === 'focus' && mode === 'live') {
                 const box = document.getElementById('typewriter-box');
                 const playBtn = document.querySelector('#html-content .item-reveal-btn'); if(playBtn) playBtn.style.display = 'none';
                 await startTypewriter(box, d.content);
-            } else if (reviewMode) {
-                if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome();
-            }
+            } else if (reviewMode) { if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); }
         } else if (d.type === 'creative_draw') {
-            if (reviewMode) {
-                if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); return;
-            } else {
-                await drawUserElephant();
-            }
+            if (reviewMode) { if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); return; }
+            else { await drawUserElephant(); }
         } else if(d.type !== 'conclude') {
             const box = document.getElementById('final-ans');
             if(box && !box.classList.contains('revealed')) {
                 box.classList.add('revealed');
                 if(d.type === 'mcq') { const btns = document.querySelectorAll('.mcq-btn'); if(btns[d.correct]) btns[d.correct].classList.add('correct'); }
                 updateListenBtn();
-                
                 if(d.type === 'mcq' && mode === 'auto' && !paused) {
                     let correctOrd = getOrdinal(d.correct);
                     speakText("ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ । " + correctOrd + " ਆਪਸ਼ਨ ਸਹੀ ਹੈ । " + cleanTextForSpeech(d.a));
-                } else if (mode === 'auto' && !paused) {
-                    readAloud();
-                }
+                } else if (mode === 'auto' && !paused) readAloud();
                 
                 await typeEffect(box, "ਉੱਤਰ : " + d.a, TYPE_SPEED);
                 if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
                 return;
-            } else {
-                if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome();
-            }
+            } else { if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome(); }
         } else { goHome(); }
     }
     
@@ -1255,45 +1227,27 @@
         typing = false; if (step === 'toc') { step = 0; renderSlide(); return; }
         if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome();
     }
-    
     function prevStep() {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
         if(typing) { typing = false; return; }
         if (step === 'toc') { goHome(); return; }
         if (step === 0) { step = 'toc'; renderSlide(); return; } step--; renderSlide();
     }
-    
-    function retrySlide() {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-        typing = false; renderSlide();
-    }
-    
+    function retrySlide() { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); typing = false; renderSlide(); }
     function goHome() {
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
         state = 'menu'; autoLoopRunning = false; document.body.classList.remove('auto-mode');
-        document.getElementById('master-card').classList.remove('active');
-        document.getElementById('main-menu-screen').style.display = 'flex';
+        document.getElementById('master-card').classList.remove('active'); document.getElementById('main-menu-screen').style.display = 'flex';
     }
     
     async function runAutoLoop() {
         if(autoLoopRunning) return; autoLoopRunning = true;
         while(state === 'slide' && mode === 'auto') {
             if(paused) { await new Promise(r => setTimeout(r, 200)); continue; }
-            
-            while(typing || ttsSpeaking) {
-                await new Promise(r => setTimeout(r, 200));
-                if(state !== 'slide' || mode !== 'auto') { autoLoopRunning = false; return; }
-            }
-            
+            while(typing || ttsSpeaking) { await new Promise(r => setTimeout(r, 200)); if(state !== 'slide' || mode !== 'auto') { autoLoopRunning = false; return; } }
             let gapElapsed = 0;
-            while(gapElapsed < 3000) {
-                await new Promise(r => setTimeout(r, 200));
-                if(state !== 'slide' || mode !== 'auto' || paused) break;
-                gapElapsed += 200;
-            }
-            
+            while(gapElapsed < 3000) { await new Promise(r => setTimeout(r, 200)); if(state !== 'slide' || mode !== 'auto' || paused) break; gapElapsed += 200; }
             if(paused || state !== 'slide' || mode !== 'auto') continue;
-            
             await nextStep(true);
         }
         autoLoopRunning = false;
@@ -1302,36 +1256,22 @@
     // --- ELEPHANT DRAWING FUNCTIONS ---
     function initUserElephantCanvas(event) {
         if(event) event.stopPropagation();
-        
         const animationSequence = [
             { id: 'anim-body' }, { id: 'anim-ear' }, { id: 'anim-tusk' },
             { id: 'anim-bg-leg1' }, { id: 'anim-bg-leg2' }, { id: 'anim-tail' }, { id: 'anim-toes' }
         ];
-        
         animationSequence.forEach(config => {
             const path = document.getElementById(config.id);
             if (path) {
                 const len = config.id === 'anim-body' ? 4000 : config.id === 'anim-ear' ? 2000 : config.id === 'anim-toes' ? 1500 : 1000;
-                path.style.transition = 'none';
-                path.style.strokeDasharray = len;
-                path.style.strokeDashoffset = len;
+                path.style.transition = 'none'; path.style.strokeDasharray = len; path.style.strokeDashoffset = len;
             }
         });
-        
-        const colorFills = document.getElementById('color-fills');
-        if(colorFills) colorFills.style.opacity = '0';
-        
+        const colorFills = document.getElementById('color-fills'); if(colorFills) colorFills.style.opacity = '0';
         const btn = document.getElementById('realStartBtn');
-        if(btn) {
-            btn.innerText = "✏️ ਬਿੰਦੀਆਂ ਮਿਲਾਓ";
-            btn.disabled = false;
-            btn.dataset.step = '0';
-            btn.style.background = "#e74c3c";
-            btn.style.opacity = "1";
-        }
-        
-        const rBtn = document.getElementById('realResetBtn');
-        if(rBtn) rBtn.style.display = 'none';
+        if(btn) { btn.innerText = "✏️ ਬਿੰਦੀਆਂ ਮਿਲਾਓ"; btn.disabled = false; btn.dataset.step = '0'; btn.style.background = "#e74c3c"; btn.style.opacity = "1"; }
+        const rBtn = document.getElementById('realResetBtn'); if(rBtn) rBtn.style.display = 'none';
+        reviewMode = false;
     }
 
     async function drawUserElephant(event) {
@@ -1342,67 +1282,29 @@
         let stepNum = btn.dataset.step || '0';
 
         if (stepNum === '0') {
-            btn.disabled = true;
-            btn.innerText = "ਮਿਲ ਰਹੀਆਂ ਹਨ...";
-            btn.style.opacity = "0.7";
-
+            btn.disabled = true; btn.innerText = "ਮਿਲ ਰਹੀਆਂ ਹਨ..."; btn.style.opacity = "0.7";
             const animationSequence = [
-                { id: 'anim-body', duration: 4000 },
-                { id: 'anim-ear', duration: 1500 },
-                { id: 'anim-tusk', duration: 1000 },
-                { id: 'anim-bg-leg1', duration: 1000 },
-                { id: 'anim-bg-leg2', duration: 1000 },
-                { id: 'anim-tail', duration: 1500 },
-                { id: 'anim-toes', duration: 2500 }
+                { id: 'anim-body', duration: 4000 }, { id: 'anim-ear', duration: 1500 }, { id: 'anim-tusk', duration: 1000 },
+                { id: 'anim-bg-leg1', duration: 1000 }, { id: 'anim-bg-leg2', duration: 1000 }, { id: 'anim-tail', duration: 1500 }, { id: 'anim-toes', duration: 2500 }
             ];
-
             for (let i = 0; i < animationSequence.length; i++) {
-                const config = animationSequence[i];
-                const path = document.getElementById(config.id);
-                if (path) {
-                    path.style.transition = `stroke-dashoffset ${config.duration}ms linear`;
-                    path.style.strokeDashoffset = '0';
-                    await new Promise(resolve => setTimeout(resolve, config.duration));
-                }
+                const config = animationSequence[i]; const path = document.getElementById(config.id);
+                if (path) { path.style.transition = `stroke-dashoffset ${config.duration}ms linear`; path.style.strokeDashoffset = '0'; await new Promise(resolve => setTimeout(resolve, config.duration)); }
             }
-
-            btn.dataset.step = '1';
-            btn.innerText = "🎨 ਰੰਗ ਭਰੋ";
-            btn.style.background = "#f39c12"; 
-            btn.style.opacity = "1";
-            btn.disabled = false;
+            btn.dataset.step = '1'; btn.innerText = "🎨 ਰੰਗ ਭਰੋ"; btn.style.background = "#f39c12"; btn.style.opacity = "1"; btn.disabled = false;
         } 
         else if (stepNum === '1') {
-            btn.disabled = true;
-            btn.innerText = "ਰੰਗ ਭਰਿਆ ਜਾ ਰਿਹਾ ਹੈ...";
-            btn.style.opacity = "0.7";
-
-            const colorFills = document.getElementById('color-fills');
-            if (colorFills) {
-                colorFills.style.opacity = '1';
-            }
-            
+            btn.disabled = true; btn.innerText = "ਰੰਗ ਭਰਿਆ ਜਾ ਰਿਹਾ ਹੈ..."; btn.style.opacity = "0.7";
+            const colorFills = document.getElementById('color-fills'); if (colorFills) colorFills.style.opacity = '1';
             await new Promise(r => setTimeout(r, 1500));
-            
-            btn.innerText = "ਮੁਕੰਮਲ!";
-            btn.style.background = "#27ae60"; 
-            btn.style.opacity = "1";
-            btn.dataset.step = '2';
-            
-            const rBtn = document.getElementById('realResetBtn');
-            if(rBtn) rBtn.style.display = 'block';
-
-            reviewMode = true;
-            stepState = 'reveal';
+            btn.innerText = "ਮੁਕੰਮਲ!"; btn.style.background = "#27ae60"; btn.style.opacity = "1"; btn.dataset.step = '2';
+            const rBtn = document.getElementById('realResetBtn'); if(rBtn) rBtn.style.display = 'block';
+            reviewMode = true; stepState = 'reveal';
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         }
     }
     
-    if ('speechSynthesis' in window) {
-        window.speechSynthesis.onvoiceschanged = function() {
-            window.speechSynthesis.getVoices();
-        };
-    }
+    if ('speechSynthesis' in window) { window.speechSynthesis.onvoiceschanged = function() { window.speechSynthesis.getVoices(); }; }
 </script>
 </body>
 </html>
