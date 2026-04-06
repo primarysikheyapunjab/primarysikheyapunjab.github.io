@@ -354,10 +354,24 @@
     let ttsSpeaking = false;
     let headingReadForStep = -1;
     const TYPE_SPEED = 60; 
+    let ttsTimeout = null;
     
     let currentMindMapNodes = [];
     let mindMapIndex = 0;
     
+    // --- MAIN STOP TTS FUNCTION ---
+    // ਇਹ ਫੰਕਸ਼ਨ ਕਿਸੇ ਵੀ ਤਰ੍ਹਾਂ ਦੀ ਚੱਲ ਰਹੀ ਆਵਾਜ਼ ਨੂੰ ਤੁਰੰਤ ਬੰਦ ਕਰ ਦਿੰਦਾ ਹੈ
+    function stopTTS() {
+        if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+        }
+        if (ttsTimeout) {
+            clearTimeout(ttsTimeout);
+            ttsTimeout = null;
+        }
+        ttsSpeaking = false;
+    }
+
     function initDisclaimer() {
         state = 'disclaimer';
         document.getElementById('disclaimer-screen').style.display = 'flex';
@@ -497,8 +511,10 @@
     }
     
     function showMainMenu() {
+        stopTTS();
         document.getElementById('intro-screen').style.display = 'none';
         document.getElementById('main-menu-screen').style.display = 'flex';
+        document.getElementById('global-listen-btn').style.display = 'none';
         state = 'menu';
     }
     
@@ -511,7 +527,7 @@
             if(!paused) {
                 readAloud();
             } else {
-                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                stopTTS();
             }
         }
     }
@@ -534,7 +550,7 @@
     }
     
     function jumpTo(sec, mod, idx) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        stopTTS();
         section = sec; mode = mod; step = idx; subIdx = -1; paused = false; reviewMode = false;
         document.getElementById('main-menu-screen').style.display = 'none';
         document.getElementById('master-card').classList.add('active');
@@ -545,11 +561,13 @@
     }
     
     function startSection(sec, mod) { 
+        stopTTS();
         if(sec === 'mcq') { jumpTo(sec, mod, 0); } 
         else { jumpTo(sec, mod, 'toc'); }
     }
     
     function startAutoWithToc(sec) {
+        stopTTS();
         mode = 'auto'; document.body.classList.add('auto-mode');
         if(sec === 'mcq') {
             document.getElementById('main-menu-screen').style.display = 'none';
@@ -566,7 +584,7 @@
     }
     
     function openToc(e, sec, mod) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        stopTTS();
         if (e && e.stopPropagation) e.stopPropagation();
         const list = document.getElementById('toc-list'); list.innerHTML = '';
         lessonData[sec].forEach((d, idx) => {
@@ -635,7 +653,7 @@
             node.onclick = (e) => {
                 e.stopPropagation();
                 if (!mapClickable || typing || mode === 'auto' || reviewMode) return;
-                if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+                stopTTS(); // ਨਵੀਂ ਕਲਿੱਕ ਤੇ ਪੁਰਾਣੀ ਆਵਾਜ਼ ਬੰਦ
                 if (node.innerHTML === "?") {
                     const idx = currentMindMapNodes.findIndex(item => item.node === node);
                     if(idx !== -1) revealSingleMindNode(idx);
@@ -665,7 +683,7 @@
         item.node.style.opacity = '1';
         item.node.style.filter = 'none';
 
-        if(!paused && ('speechSynthesis' in window)) {
+        if(mode === 'auto' && !paused && ('speechSynthesis' in window)) {
             speakText(cleanTextForSpeech(item.node.dataset.text));
         }
 
@@ -685,7 +703,7 @@
                     currentMindMapNodes[i].node.style.opacity = '1';
                     currentMindMapNodes[i].node.style.filter = 'none';
                 }
-                if(!paused) {
+                if(mode === 'auto' && !paused) {
                     readAloud();
                 }
             }, 2000);
@@ -694,11 +712,10 @@
     }
     
     // --- TTS LOGIC ---
-    let ttsTimeout;
     function speakText(text) {
+        if (state !== 'slide') return;
         if (!('speechSynthesis' in window)) return;
-        window.speechSynthesis.cancel();
-        if (ttsTimeout) clearTimeout(ttsTimeout);
+        stopTTS(); // ਬੋਲਣ ਤੋਂ ਪਹਿਲਾਂ ਪੁਰਾਣਾ ਸਭ ਕੁਝ ਬੰਦ
         ttsSpeaking = true;
         
         let msg = new SpeechSynthesisUtterance();
@@ -739,6 +756,12 @@
         const btnBottom = document.getElementById('bottom-listen-btn');
         if(!btn || !btnBottom) return;
         
+        if (state !== 'slide') {
+            btn.style.display = 'none';
+            btnBottom.style.display = 'none';
+            return;
+        }
+        
         if (step === 'toc') {
             btn.style.display = 'block'; btn.innerHTML = "🔊 ਜਾਣਕਾਰੀ ਸੁਣੋ";
             btnBottom.style.display = 'flex'; btnBottom.innerHTML = "🔊 ਸੁਣੋ";
@@ -759,7 +782,8 @@
     }
     
     function readAloud(e) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        if (state !== 'slide') return;
+        stopTTS(); // ਸੁਣੋ ਬਟਨ ਤੇ ਟੱਚ ਕਰਨ ਤੇ ਪਹਿਲਾਂ ਪੁਰਾਣਾ ਬੰਦ
         if(e) e.stopPropagation();
         let textToSpeak = "";
         
@@ -1039,7 +1063,7 @@
     }
     
     async function revealAnswer(e, idx) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        stopTTS(); // ਨਵਾਂ ਉੱਤਰ ਖੁੱਲ੍ਹਣ ਤੇ ਪੁਰਾਣੀ ਆਵਾਜ਼ ਬੰਦ
         if(e) e.stopPropagation(); if(typing) { typing = false; return; }
         
         const d = lessonData[section][step];
@@ -1104,7 +1128,7 @@
     }
     
     async function checkMcq(btn, isCorrect) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        stopTTS(); // MCQ ਚੈੱਕ ਕਰਨ ਤੇ ਪੁਰਾਣੀ ਆਵਾਜ਼ ਬੰਦ
         if(typing) return; 
         const d = lessonData[section][step];
         
@@ -1113,20 +1137,22 @@
             const box = document.getElementById('final-ans'); box.classList.add('revealed'); box.style.color = '#2ecc71';
             updateListenBtn();
             
-            let correctOrd = getOrdinal(d.correct);
-            let ttsMessage = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ । " + correctOrd + " ਆਪਸ਼ਨ ਸਹੀ ਹੈ । " + cleanTextForSpeech(d.a);
-            speakText(ttsMessage);
+            if(mode === 'auto') {
+                let correctOrd = getOrdinal(d.correct);
+                let ttsMessage = "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ । " + correctOrd + " ਆਪਸ਼ਨ ਸਹੀ ਹੈ । " + cleanTextForSpeech(d.a);
+                speakText(ttsMessage);
+            }
             
             await typeEffect(box, "ਸ਼ਾਬਾਸ਼ ! ਬਿਲਕੁਲ ਸਹੀ ਉੱਤਰ ।<br><span style='color:#1565c0; font-size:3.8vmin;'>" + d.a + "</span>", TYPE_SPEED);
             if(mode === 'live') document.getElementById('tap-indicator').innerText = "ਅਗਲਾ ⏭";
         } else {
             btn.classList.add('wrong'); document.getElementById('wrong-modal').style.display = 'flex'; btn.style.pointerEvents = 'none';
-            speakText("ਗਲਤ ਉੱਤਰ , ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
+            if(mode === 'auto') speakText("ਗਲਤ ਉੱਤਰ , ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।");
         }
     }
     
     async function showAllAnswers(e) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        stopTTS(); // ਸਾਰਾ ਦੇਖਣ ਤੇ ਪੁਰਾਣੀ ਆਵਾਜ਼ ਬੰਦ
         if(e) e.stopPropagation(); if(step === 'toc' || lessonData[section][step].type === 'conclude') return;
         typing = false; const d = lessonData[section][step];
         
@@ -1171,7 +1197,7 @@
     }
     
     async function nextStep(isAuto = false) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        stopTTS(); // ਅਗਲੀ ਸਕਰੀਨ ਤੇ ਜਾਣ ਤੇ ਪੁਰਾਣੀ ਆਵਾਜ਼ ਬੰਦ
         if(typing) { typing = false; return; }
         if(mode === 'auto' && !isAuto) return;
         
@@ -1239,12 +1265,12 @@
     }
     
     function skipStep() {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        stopTTS();
         typing = false; if (step === 'toc') { step = 0; renderSlide(); return; }
         if(step < lessonData[section].length - 1) { step++; renderSlide(); } else goHome();
     }
     function prevStep() {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        stopTTS();
         if(typing) { typing = false; return; }
         if (step === 'toc') { goHome(); return; }
         if (step === 0) { 
@@ -1253,11 +1279,12 @@
         } 
         step--; renderSlide();
     }
-    function retrySlide() { if ('speechSynthesis' in window) window.speechSynthesis.cancel(); typing = false; renderSlide(); }
+    function retrySlide() { stopTTS(); typing = false; renderSlide(); }
     function goHome() {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        stopTTS();
         state = 'menu'; autoLoopRunning = false; document.body.classList.remove('auto-mode');
         document.getElementById('master-card').classList.remove('active'); document.getElementById('main-menu-screen').style.display = 'flex';
+        document.getElementById('global-listen-btn').style.display = 'none';
     }
     
     async function runAutoLoop() {
@@ -1275,7 +1302,7 @@
 
     // --- ELEPHANT DRAWING FUNCTIONS ---
     function initUserElephantCanvas(event) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        stopTTS();
         if(event) event.stopPropagation();
         const animationSequence = [
             { id: 'anim-body' }, { id: 'anim-ear' }, { id: 'anim-tusk' },
@@ -1296,7 +1323,7 @@
     }
 
     async function drawUserElephant(event) {
-        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+        stopTTS();
         if(event) event.stopPropagation();
         const btn = document.getElementById('realStartBtn');
         if(!btn || btn.disabled) return;
